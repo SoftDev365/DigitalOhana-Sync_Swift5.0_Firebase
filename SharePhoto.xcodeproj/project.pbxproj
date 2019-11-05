@@ -7,15 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84BCF77A23717F8800367EAB /* client_440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84BCF77923717F8700367EAB /* client_440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com.plist */; };
 		84BE63C223717A45002F2C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE63C123717A45002F2C66 /* AppDelegate.swift */; };
 		84BE63C423717A45002F2C66 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE63C323717A45002F2C66 /* SceneDelegate.swift */; };
 		84BE63C623717A45002F2C66 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE63C523717A45002F2C66 /* ViewController.swift */; };
 		84BE63C923717A45002F2C66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63C723717A45002F2C66 /* Main.storyboard */; };
 		84BE63CB23717A48002F2C66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63CA23717A48002F2C66 /* Assets.xcassets */; };
 		84BE63CE23717A48002F2C66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63CC23717A48002F2C66 /* LaunchScreen.storyboard */; };
+		982CA3432B9D7D26CDCAC42C /* Pods_SharePhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23F3561F6651AAA6AEF9012F /* Pods-SharePhoto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SharePhoto.release.xcconfig"; path = "Target Support Files/Pods-SharePhoto/Pods-SharePhoto.release.xcconfig"; sourceTree = "<group>"; };
+		71F0A8DF713105CA5760F56E /* Pods-SharePhoto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SharePhoto.debug.xcconfig"; path = "Target Support Files/Pods-SharePhoto/Pods-SharePhoto.debug.xcconfig"; sourceTree = "<group>"; };
+		84BCF77923717F8700367EAB /* client_440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "client_440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com.plist"; sourceTree = "<group>"; };
 		84BE63BE23717A45002F2C66 /* SharePhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SharePhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BE63C123717A45002F2C66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84BE63C323717A45002F2C66 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +29,7 @@
 		84BE63CA23717A48002F2C66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84BE63CD23717A48002F2C66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84BE63CF23717A48002F2C66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SharePhoto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +37,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				982CA3432B9D7D26CDCAC42C /* Pods_SharePhoto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E46D195DE4483A0A4FCC7AE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				71F0A8DF713105CA5760F56E /* Pods-SharePhoto.debug.xcconfig */,
+				23F3561F6651AAA6AEF9012F /* Pods-SharePhoto.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		75671C38A7073525865E291A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		84BE63B523717A45002F2C66 = {
 			isa = PBXGroup;
 			children = (
 				84BE63C023717A45002F2C66 /* SharePhoto */,
 				84BE63BF23717A45002F2C66 /* Products */,
+				2E46D195DE4483A0A4FCC7AE /* Pods */,
+				75671C38A7073525865E291A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,6 +90,7 @@
 				84BE63CA23717A48002F2C66 /* Assets.xcassets */,
 				84BE63CC23717A48002F2C66 /* LaunchScreen.storyboard */,
 				84BE63CF23717A48002F2C66 /* Info.plist */,
+				84BCF77923717F8700367EAB /* client_440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com.plist */,
 			);
 			path = SharePhoto;
 			sourceTree = "<group>";
@@ -74,9 +102,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84BE63D223717A48002F2C66 /* Build configuration list for PBXNativeTarget "SharePhoto" */;
 			buildPhases = (
+				6DFD81F2C8B935438F19C6D2 /* [CP] Check Pods Manifest.lock */,
 				84BE63BA23717A45002F2C66 /* Sources */,
 				84BE63BB23717A45002F2C66 /* Frameworks */,
 				84BE63BC23717A45002F2C66 /* Resources */,
+				2EE77920DCCD3A30F44963FD /* [CP] Embed Pods Frameworks */,
+				4788DF8677311D3B44425430 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -127,11 +158,71 @@
 			files = (
 				84BE63CE23717A48002F2C66 /* LaunchScreen.storyboard in Resources */,
 				84BE63CB23717A48002F2C66 /* Assets.xcassets in Resources */,
+				84BCF77A23717F8800367EAB /* client_440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com.plist in Resources */,
 				84BE63C923717A45002F2C66 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2EE77920DCCD3A30F44963FD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4788DF8677311D3B44425430 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DFD81F2C8B935438F19C6D2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SharePhoto-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		84BE63BA23717A45002F2C66 /* Sources */ = {
@@ -282,6 +373,7 @@
 		};
 		84BE63D323717A48002F2C66 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71F0A8DF713105CA5760F56E /* Pods-SharePhoto.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -299,6 +391,7 @@
 		};
 		84BE63D423717A48002F2C66 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23F3561F6651AAA6AEF9012F /* Pods-SharePhoto.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
