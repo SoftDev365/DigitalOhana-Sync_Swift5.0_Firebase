@@ -14,6 +14,7 @@ import GTMSessionFetcher
 class SignInViewController: UIViewController {
     
     @IBOutlet weak var btnGoogleSignIn: UIButton!
+    let activityView = ActivityView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +29,24 @@ class SignInViewController: UIViewController {
         
         GIDSignIn.sharedInstance()?.scopes = [kGTLRAuthScopeDrive, kGTLRAuthScopeDriveFile]
 
+        activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+        
         // Attempt to renew a previously authenticated session without forcing the
         // user to go through the OAuth authentication flow.
         // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
         GIDSignIn.sharedInstance()?.signInSilently()
+        
+        replaceBackButtonToSignout()
+    }
+    
+    func replaceBackButtonToSignout() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: nil, action: nil)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        replaceBackButtonToSignout()
     }
 
     @IBAction func onBtnGoogleSiginIn(_ sender: Any) {
@@ -55,12 +70,14 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
     // MARK: - GIDSignInDelegate
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        activityView.hideActivitiIndicator()
+
         // A nil error indicates a successful login
         if error == nil {
             // Include authorization headers/values with each Drive API request.
             GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
             GDModule.user = user
-            btnGoogleSignIn.isHidden = true
+            //btnGoogleSignIn.isHidden = true
             
             initRootList()
         } else {

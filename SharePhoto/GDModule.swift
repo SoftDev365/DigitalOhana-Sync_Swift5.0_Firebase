@@ -16,6 +16,8 @@ class GDModule: NSObject {
     static var user: GIDGoogleUser?
     static var uploadFolderID: String?
     
+    static let imageCache = NSCache<NSString, UIImage>()
+    
     // listing files
     static func search(_ fileName: String, onCompleted: @escaping (String?, Error?) -> ()) {
         let query = GTLRDriveQuery_FilesList.query()
@@ -67,7 +69,27 @@ class GDModule: NSObject {
         }
     }
     
-    
+    static func downloadImageFile(_ fileID: String, onCompleted: @escaping (UIImage?) -> ()) {
+        // check cached image
+        if let cachedImage = self.imageCache.object(forKey: fileID as NSString)  {
+            onCompleted(cachedImage)
+        }
+
+        let imageUrl = "https://www.googleapis.com/drive/v3/files/\(fileID)?alt=media"
+        //let imageUrl = "https://drive.google.com/uc?export=view&id=\(fileID)"
+        let fetcher = service.fetcherService.fetcher(withURLString: imageUrl)
+        fetcher.beginFetch { (data, error) in
+            if error != nil {
+                onCompleted(nil)
+            } else {
+                let image = UIImage.init(data: data!)
+                if image != nil {
+                    self.imageCache.setObject(image!, forKey: fileID as NSString)
+                }
+                onCompleted(image)
+            }
+        }
+    }
 
     static func populateFolderID() {
         let myFolderName = "SharedPhoto"
@@ -76,9 +98,7 @@ class GDModule: NSObject {
             service: service,
             user: user!) { folderID in
             if folderID == nil {
-                self.createFolder(
-                    name: myFolderName,
-                    service: self.service) {
+                self.createFolder(name: myFolderName, parentFolderID: "root") {
                     self.uploadFolderID = $0
                 }
             } else {
@@ -121,12 +141,13 @@ class GDModule: NSObject {
     
     static func createFolder(
         name: String,
-        service: GTLRDriveService,
+        parentFolderID: String,
         completion: @escaping (String) -> Void) {
         
         let folder = GTLRDrive_File()
         folder.mimeType = "application/vnd.google-apps.folder"
         folder.name = name
+        folder.parents = [parentFolderID]
         
         // Google Drive folders are files with a special MIME-type.
         let query = GTLRDriveQuery_FilesCreate.query(withObject: folder, uploadParameters: nil)

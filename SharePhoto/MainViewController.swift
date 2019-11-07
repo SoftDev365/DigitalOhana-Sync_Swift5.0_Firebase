@@ -7,31 +7,130 @@
 //
 
 import UIKit
+import GoogleSignIn
+import GoogleAPIClientForREST
+import GTMSessionFetcher
 
 class MainViewController: UITableViewController {
-    
+
     @IBOutlet var fileListView: UITableView!
     
-    let fileArray = ["File1", "File2", "File3"]
+    var folderID: String?
+    var dataContents: [GTLRDrive_File]?
+    let activityView = ActivityView()
     
+    func setFolderID(_ folderID:String) {
+        self.folderID = folderID
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createNavigationButton()
+    }
+    
+    func createNavigationButton() {
+        let buttonSize: CGFloat = 36
+        
+        let button1 = UIButton(type: .custom)
+        button1.setImage(UIImage(named: "newfolder"), for: .normal)
+        button1.addTarget(self, action: #selector(onCreateNewFolder), for: .touchUpInside)
+        button1.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
+        button1.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        button1.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        let barButton1 = UIBarButtonItem(customView: button1)
+        
+        let button2 = UIButton(type: .custom)
+        button2.setImage(UIImage(named: "uploadphoto"), for: .normal)
+        button2.addTarget(self, action: #selector(onUploadPhoto), for: .touchUpInside)
+        button2.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
+        button2.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        button2.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        let barButton2 = UIBarButtonItem(customView: button2)
+        
+        self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
+    }
+    
+    func createNewFolder(_ name: String?) {
+        if name == nil || name == "" {
+            return
+        }
+        
+        var folderID = "root"
+        if self.folderID != nil {
+            folderID = self.folderID!
+        }
+        
+        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
+        GDModule.createFolder(name: name!, parentFolderID: folderID) { (folderID) in
+            self.activityView.hideActivitiIndicator()
+            self.loadFileList()
+        }
+    }
+    
+    @objc func onCreateNewFolder() {
+        //1. Create the alert controller.
+        let alert = UIAlertController(title: "", message: "Input new folder name", preferredStyle: .alert)
 
-        // Do any additional setup after loading the view.
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField { (textField) in
+            textField.text = ""
+        }
+
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+            self.createNewFolder(textField.text)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        // 4. Present the alert.
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func onUploadPhoto() {
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if self.isMovingFromParent {
+            if self.folderID == nil {
+                GIDSignIn.sharedInstance()?.signOut()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated:Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        GDModule.listFiles("root") { (fileList, error) in
-            
+        loadFileList()
+    }
+    
+    func loadFileList() {
+        var folderID = "root"
+        if self.folderID != nil {
+            folderID = self.folderID!
         }
+        
+        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
+        
+        GDModule.listFiles(folderID) { (fileList, error) in
+            self.activityView.hideActivitiIndicator()
 
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "MainVC")
-        self.present(controller, animated: true, completion: nil)
-        */
+            if error != nil {
+                
+            } else {
+                self.dataContents = fileList!.files
+                self.tableView.reloadData()
+            }
+        }
     }
 
     /*
@@ -49,19 +148,32 @@ class MainViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fileArray.count
+        if self.dataContents == nil {
+            return 0
+        }
+        
+        return self.dataContents!.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for:indexPath) as! FileTableViewCell
         
-        if indexPath.row%2 == 0 {
+        let file = self.dataContents![indexPath.row]
+        
+        if file.mimeType! == "application/vnd.google-apps.folder" {
             cell.imgThumb.image = UIImage.init(named: "folder_icon")
         } else {
-            cell.imgThumb.loadImageUsingCache(withUrl: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg")
+            
+            GDModule.downloadImageFile(file.identifier!) { (image) in
+                cell.imgThumb.image = image
+            }
+            
+            //let imageUrl = "https://drive.google.com/uc?export=view&id=\(file.identifier!)"
+            //cell.imgThumb.loadImageUsingCache(withUrl: imageUrl)
+            //cell.imgThumb.loadImageUsingCache(withUrl: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg")
         }
         
-        cell.lblTitle.text = fileArray[indexPath.row]
+        cell.lblTitle.text = file.name!
         
         return cell
     }
@@ -69,10 +181,40 @@ class MainViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
+    
+    func deleteRow(_ rowIndex: Int) {
+        var actions: [(String, UIAlertAction.Style)] = []
+        actions.append(("Delete", UIAlertAction.Style.default))
+        actions.append(("Cancel", UIAlertAction.Style.cancel))
+
+        //self = ViewController
+        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this image?", actions: actions) { (index) in
+            print("call action \(index)")
+            
+            if index == 0 {
+                self.dataContents!.remove(at: rowIndex)
+                self.tableView.deleteRows(at: [IndexPath.init(row: rowIndex, section: 0)], with: .automatic)
+            }
+        }
+    }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             // handle delete (by removing the data from your array and updating the tableview)
+            self.deleteRow(indexPath.row)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let file = self.dataContents![indexPath.row]
+        
+        if file.mimeType! == "application/vnd.google-apps.folder" {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainViewController
+            {
+                vc.setFolderID(file.identifier!)
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        } else {
         }
     }
 }
