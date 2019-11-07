@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  GDModule.swift
 //  SharePhoto
 //
-//  Created by Admin on 11/5/19.
+//  Created by Admin on 11/6/19.
 //  Copyright © 2019 Admin. All rights reserved.
 //
 
@@ -11,49 +11,74 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 
-class ViewController: UIViewController {
+class GDModule: NSObject {
+    static let service = GTLRDriveService()
+    static var user: GIDGoogleUser?
+    static var uploadFolderID: String?
     
-    @IBOutlet weak var btnGoogleSignIn: UIButton!
-    
-    let googleDriveService = GTLRDriveService()
-    var googleUser: GIDGoogleUser?
-    var uploadFolderID: String?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-                
-        /***** Configure Google Sign In *****/
-        GIDSignIn.sharedInstance()?.delegate = self
-
-        // GIDSignIn.sharedInstance()?.signIn() will throw an exception if not set.
-        GIDSignIn.sharedInstance()?.uiDelegate = self
-        
-        GIDSignIn.sharedInstance()?.scopes = [kGTLRAuthScopeDrive]
-        
-        // Attempt to renew a previously authenticated session without forcing the
-        // user to go through the OAuth authentication flow.
-        // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
-        GIDSignIn.sharedInstance()?.signInSilently()
-    }
-
-    @IBAction func onBtnGoogleSiginIn(_ sender: Any) {
-        // Start Google's OAuth authentication flow
-        GIDSignIn.sharedInstance()?.signIn()
-        //GIDSignIn.sharedInstance()?.signOut()
+    // listing files
+    static func search(_ fileName: String, onCompleted: @escaping (String?, Error?) -> ()) {
+        let query = GTLRDriveQuery_FilesList.query()
+        query.pageSize = 1
+        query.q = "name contains '\(fileName)'"
+            
+        service.executeQuery(query) { (ticket, results, error) in
+            onCompleted((results as? GTLRDrive_FileList)?.files?.first?.identifier, error)
+        }
     }
     
-    func populateFolderID() {
-        let myFolderName = "my-folder"
+    static func listFiles(_ folderID: String, onCompleted: @escaping (GTLRDrive_FileList?, Error?) -> ()) {
+        
+        let query = GTLRDriveQuery_FilesList.query()
+        
+        if self.user == nil {
+            return
+        }
+        
+        //query.pageSize = 100
+
+        // Comma-separated list of areas the search applies to. E.g., appDataFolder, photos, drive.
+        query.spaces = "drive"
+        
+        // Comma-separated list of access levels to search in. Some possible values are "user,allTeamDrives" or "user"
+        query.corpora = "user"
+
+        let fileFilter = "(mimeType = 'application/vnd.google-apps.folder' or mimeType = 'image/jpeg' or mimeType = 'image/png') and trashed=false"
+
+        //let ownedByUser = "'\(user!.profile!.email!)' in owners"
+        
+        //query.q = "'root' in parents"
+        //query.q = "'\(folderID)' in parents"
+        //query.q = "\(foldersOnly) and \(ownedByUser)"
+        query.q = "\(fileFilter) and '\(folderID)' in parents"
+            
+        service.executeQuery(query) { (ticket, result, error) in
+            onCompleted(result as? GTLRDrive_FileList, error)
+        }
+    }
+    
+    static func listFilesInFolder(_ folder: String, onCompleted: @escaping (GTLRDrive_FileList?, Error?) -> ()) {
+        search(folder) { (folderID, error) in
+            guard let ID = folderID else {
+                onCompleted(nil, error)
+                return
+            }
+            self.listFiles(ID, onCompleted: onCompleted)
+        }
+    }
+    
+    
+
+    static func populateFolderID() {
+        let myFolderName = "SharedPhoto"
         getFolderID(
             name: myFolderName,
-            service: googleDriveService,
-            user: googleUser!) { folderID in
+            service: service,
+            user: user!) { folderID in
             if folderID == nil {
                 self.createFolder(
                     name: myFolderName,
-                    service: self.googleDriveService) {
+                    service: self.service) {
                     self.uploadFolderID = $0
                 }
             } else {
@@ -63,7 +88,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func getFolderID(
+    static func getFolderID(
         name: String,
         service: GTLRDriveService,
         user: GIDGoogleUser,
@@ -94,7 +119,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func createFolder(
+    static func createFolder(
         name: String,
         service: GTLRDriveService,
         completion: @escaping (String) -> Void) {
@@ -106,7 +131,7 @@ class ViewController: UIViewController {
         // Google Drive folders are files with a special MIME-type.
         let query = GTLRDriveQuery_FilesCreate.query(withObject: folder, uploadParameters: nil)
         
-        self.googleDriveService.executeQuery(query) { (_, file, error) in
+        self.service.executeQuery(query) { (_, file, error) in
             guard error == nil else {
                 fatalError(error!.localizedDescription)
             }
@@ -116,7 +141,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func uploadFile(
+    static func uploadFile(
         name: String,
         folderID: String,
         fileURL: URL,
@@ -146,7 +171,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func uploadMyFile() {
+    static func uploadMyFile() {
         let fileURL = Bundle.main.url(
             forResource: "my-image", withExtension: ".png")
         uploadFile(
@@ -154,25 +179,6 @@ class ViewController: UIViewController {
             folderID: uploadFolderID!,
             fileURL: fileURL!,
             mimeType: "image/png",
-            service: googleDriveService)
+            service: service)
     }
 }
-
-extension ViewController: GIDSignInDelegate, GIDSignInUIDelegate {
-    // MARK: - GIDSignInDelegate
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        // A nil error indicates a successful login
-        if error == nil {
-            // Include authorization headers/values with each Drive API request.
-            self.googleDriveService.authorizer = user.authentication.fetcherAuthorizer()
-            self.googleUser = user
-        } else {
-            self.googleDriveService.authorizer = nil
-            self.googleUser = nil
-        }
-        
-        btnGoogleSignIn.isHidden = error == nil
-    }
-}
-
