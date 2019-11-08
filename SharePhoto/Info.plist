@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BUNDLE_ID</key>
-	<string>com.cleancode.sharephoto</string>
+	<string>io.leruths.family-media-sync</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
