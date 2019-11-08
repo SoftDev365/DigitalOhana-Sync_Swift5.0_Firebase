@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher

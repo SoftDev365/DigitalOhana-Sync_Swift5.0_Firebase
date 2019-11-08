@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import GoogleSignIn
 
 @UIApplicationMain
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         GIDSignIn.sharedInstance()?.clientID = "440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com"
+        
+        FirebaseApp.configure()
         
         return true
     }
