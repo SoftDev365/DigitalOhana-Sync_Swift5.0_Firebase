@@ -73,6 +73,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		846589A92376291D0050AE40 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				840EEE012374957000361FB9 /* ActivityView.swift */,
+				840EEDFF2374215800361FB9 /* Alerts.swift */,
+				843DF2DF2373D00E00F856ED /* ImageView+Download.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		84BE63B523717A45002F2C66 = {
 			isa = PBXGroup;
 			children = (
@@ -94,9 +104,7 @@
 		84BE63C023717A45002F2C66 /* SharePhoto */ = {
 			isa = PBXGroup;
 			children = (
-				840EEE012374957000361FB9 /* ActivityView.swift */,
-				840EEDFF2374215800361FB9 /* Alerts.swift */,
-				843DF2DF2373D00E00F856ED /* ImageView+Download.swift */,
+				846589A92376291D0050AE40 /* Common */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
 				84BE63C323717A45002F2C66 /* SceneDelegate.swift */,
 				84BCF77B237268FE00367EAB /* GDModule.swift */,
@@ -406,7 +414,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync";
+				PRODUCT_BUNDLE_IDENTIFIER = cleancode.sharephoto;
 				PRODUCT_NAME = "Family Media Sync";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -425,7 +433,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync";
+				PRODUCT_BUNDLE_IDENTIFIER = cleancode.sharephoto;
 				PRODUCT_NAME = "Family Media Sync";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

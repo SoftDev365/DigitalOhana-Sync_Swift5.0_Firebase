@@ -19,9 +19,7 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-                
+
         // Configure Google Sign In
         GIDSignIn.sharedInstance()?.delegate = self
 
@@ -75,6 +73,18 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
 
         // A nil error indicates a successful login
         if error == nil {
+            guard let authentication = user.authentication else { return }
+            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
+            
+            Auth.auth().signIn(with: credential) { (authResult, error) in
+                if error != nil {
+                    return
+                }
+                
+                // User is signed in
+                debugPrint("----Firebase signin complete");
+            }
+            
             // Include authorization headers/values with each Drive API request.
             GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
             GDModule.user = user
@@ -85,6 +95,11 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             GDModule.service.authorizer = nil
             GDModule.user = nil
         }
+    }
+
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
     }
 }
 
