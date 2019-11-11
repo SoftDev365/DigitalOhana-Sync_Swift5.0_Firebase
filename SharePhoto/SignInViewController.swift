@@ -56,7 +56,7 @@ class SignInViewController: UIViewController {
     
     func initRootList() {
         // Safe Present
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainViewController
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? GDExplorerController
         {
             //present(vc, animated: true, completion: nil)
             navigationController?.pushViewController(vc, animated: true)

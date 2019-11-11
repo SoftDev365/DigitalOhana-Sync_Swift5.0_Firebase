@@ -13,7 +13,7 @@ import GTMSessionFetcher
 import Firebase
 import FirebaseStorage
 
-class MainViewController: UITableViewController {
+class GDExplorerController: UITableViewController {
 
     @IBOutlet var fileListView: UITableView!
     
@@ -238,7 +238,7 @@ class MainViewController: UITableViewController {
         let file = self.dataContents![indexPath.row]
         
         if file.mimeType! == "application/vnd.google-apps.folder" {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainViewController
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? GDExplorerController
             {
                 vc.setFolderID(file.identifier!)
                 navigationController?.pushViewController(vc, animated: true)
