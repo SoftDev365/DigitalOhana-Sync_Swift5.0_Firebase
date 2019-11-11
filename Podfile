@@ -13,5 +13,6 @@ target 'SharePhoto' do
   
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
 
 end

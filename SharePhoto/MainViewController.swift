@@ -10,6 +10,8 @@ import UIKit
 import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
+import Firebase
+import FirebaseStorage
 
 class MainViewController: UITableViewController {
 
@@ -113,7 +115,34 @@ class MainViewController: UITableViewController {
         loadFileList()
     }
     
+    func loadCloud() {
+        // Get a reference to the storage service using the default Firebase App
+        let storage = Storage.storage()
+
+        // Create a storage reference from our storage service
+        let storageRef = storage.reference()
+        let centralRef = storageRef.child("central")
+        
+        
+        
+        centralRef.listAll() { (result, error) in
+            if let error = error {
+                //...
+            }
+            
+            for prefix in result.prefixes {
+                
+            }
+            
+            for item in result.items {
+                
+            }
+        }
+    }
+    
     func loadFileList() {
+        loadCloud()
+        
         var folderID = "root"
         if self.folderID != nil {
             folderID = self.folderID!

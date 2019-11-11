@@ -83,14 +83,14 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 
                 // User is signed in
                 debugPrint("----Firebase signin complete");
+                
+                self.initRootList()
             }
             
             // Include authorization headers/values with each Drive API request.
             GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
             GDModule.user = user
             //btnGoogleSignIn.isHidden = true
-            
-            initRootList()
         } else {
             GDModule.service.authorizer = nil
             GDModule.user = nil
