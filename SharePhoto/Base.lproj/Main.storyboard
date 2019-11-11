@@ -126,7 +126,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIS-xG-jes" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1045" y="-538"/>
+            <point key="canvasLocation" x="-1003" y="-538"/>
         </scene>
         <!--Explorer Controller-->
         <scene sceneID="j8E-qI-oQH">
@@ -137,7 +137,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="vIm-5I-zyr" customClass="FileTableViewCell" customModule="Family_Media_Sync" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="vIm-5I-zyr" customClass="FileTableViewCell" customModule="Family_Media_Sync" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vIm-5I-zyr" id="nHX-tx-3j2">
@@ -171,6 +171,10 @@
                                         <constraint firstItem="Ffe-Y9-bXI" firstAttribute="top" secondItem="nHX-tx-3j2" secondAttribute="top" constant="5" id="snT-dm-a9j"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="imgThumb" destination="Ffe-Y9-bXI" id="JjW-XN-pLb"/>
+                                    <outlet property="lblTitle" destination="BTt-bE-XVO" id="Kgs-aq-e3s"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -184,7 +188,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nj2-vy-moZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-346" y="-538"/>
+            <point key="canvasLocation" x="-222" y="-538"/>
         </scene>
     </scenes>
     <resources>

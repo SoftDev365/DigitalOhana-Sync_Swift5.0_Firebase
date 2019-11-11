@@ -10,5 +10,13 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "closure #1 in GSExplorerController.loadCloud():GSExplorerController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "result.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

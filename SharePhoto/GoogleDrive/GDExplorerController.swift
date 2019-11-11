@@ -115,34 +115,7 @@ class GDExplorerController: UITableViewController {
         loadFileList()
     }
     
-    func loadCloud() {
-        // Get a reference to the storage service using the default Firebase App
-        let storage = Storage.storage()
-
-        // Create a storage reference from our storage service
-        let storageRef = storage.reference()
-        let centralRef = storageRef.child("central")
-        
-        
-        
-        centralRef.listAll() { (result, error) in
-            if let error = error {
-                //...
-            }
-            
-            for prefix in result.prefixes {
-                
-            }
-            
-            for item in result.items {
-                
-            }
-        }
-    }
-    
     func loadFileList() {
-        loadCloud()
-        
         var folderID = "root"
         if self.folderID != nil {
             folderID = self.folderID!
@@ -196,10 +169,6 @@ class GDExplorerController: UITableViewController {
             GDModule.downloadImageFile(file.identifier!) { (image) in
                 cell.imgThumb.image = image
             }
-            
-            //let imageUrl = "https://drive.google.com/uc?export=view&id=\(file.identifier!)"
-            //cell.imgThumb.loadImageUsingCache(withUrl: imageUrl)
-            //cell.imgThumb.loadImageUsingCache(withUrl: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg")
         }
         
         cell.lblTitle.text = file.name!

@@ -18,9 +18,13 @@ class GSExplorerController: UITableViewController {
     @IBOutlet var fileListView: UITableView!
     
     var folderID: String?
-    var dataContents: [GTLRDrive_File]?
+    var fileLists: StorageListResult?
     let activityView = ActivityView()
     
+    func GSExplorerController() {
+        folderID = "central"
+    }
+
     func setFolderID(_ folderID:String) {
         self.folderID = folderID
     }
@@ -115,49 +119,38 @@ class GSExplorerController: UITableViewController {
         loadFileList()
     }
     
-    func loadCloud() {
-        // Get a reference to the storage service using the default Firebase App
-        let storage = Storage.storage()
-
-        // Create a storage reference from our storage service
-        let storageRef = storage.reference()
-        let centralRef = storageRef.child("central")
-        
-        
-        
-        centralRef.listAll() { (result, error) in
-            if let error = error {
-                //...
-            }
-            
-            for prefix in result.prefixes {
-                
-            }
-            
-            for item in result.items {
-                
-            }
-        }
-    }
-    
     func loadFileList() {
-        loadCloud()
         
-        var folderID = "root"
+        var folderID = "central"
         if self.folderID != nil {
             folderID = self.folderID!
         }
         
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
-        
-        GDModule.listFiles(folderID) { (fileList, error) in
-            self.activityView.hideActivitiIndicator()
 
-            if error != nil {
-                
+        // Get a reference to the storage service using the default Firebase App
+        let storage = Storage.storage()
+
+        // Create a storage reference from our storage service
+        let storageRef = storage.reference()
+        let centralRef = storageRef.child(folderID)
+
+        centralRef.listAll() { (result, error) in
+            if let error = error {
+                //...
+                debugPrint(error)
             } else {
-                self.dataContents = fileList!.files
+                //for prefix in result.prefixes {
+                //
+                //}
+
+                self.fileLists = result
                 self.tableView.reloadData()
+
+                for item in result.items {
+                    let i = item
+                    debugPrint(i)
+                }
             }
         }
     }
@@ -177,32 +170,23 @@ class GSExplorerController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.dataContents == nil {
+        if self.fileLists == nil {
             return 0
         }
-        
-        return self.dataContents!.count
+
+        return self.fileLists!.items.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for:indexPath) as! FileTableViewCell
         
-        let file = self.dataContents![indexPath.row]
-        
-        if file.mimeType! == "application/vnd.google-apps.folder" {
-            cell.imgThumb.image = UIImage.init(named: "folder_icon")
-        } else {
-            
-            GDModule.downloadImageFile(file.identifier!) { (image) in
-                cell.imgThumb.image = image
-            }
-            
-            //let imageUrl = "https://drive.google.com/uc?export=view&id=\(file.identifier!)"
-            //cell.imgThumb.loadImageUsingCache(withUrl: imageUrl)
-            //cell.imgThumb.loadImageUsingCache(withUrl: "https://cdn.arstechnica.net/wp-content/uploads/2018/06/macOS-Mojave-Dynamic-Wallpaper-transition.jpg")
+        let file = self.fileLists!.items[indexPath.row]
+
+        GSModule.downloadImageFile(file) { (image) in
+            cell.imgThumb.image = image
         }
-        
-        cell.lblTitle.text = file.name!
+
+        cell.lblTitle.text = file.name
         
         return cell
     }
@@ -221,8 +205,8 @@ class GSExplorerController: UITableViewController {
             print("call action \(index)")
             
             if index == 0 {
-                self.dataContents!.remove(at: rowIndex)
-                self.tableView.deleteRows(at: [IndexPath.init(row: rowIndex, section: 0)], with: .automatic)
+                //self.fileLists!.items.remove(at: rowIndex)
+                //self.tableView.deleteRows(at: [IndexPath.init(row: rowIndex, section: 0)], with: .automatic)
             }
         }
     }
@@ -235,15 +219,6 @@ class GSExplorerController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let file = self.dataContents![indexPath.row]
         
-        if file.mimeType! == "application/vnd.google-apps.folder" {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? GDExplorerController
-            {
-                vc.setFolderID(file.identifier!)
-                navigationController?.pushViewController(vc, animated: true)
-            }
-        } else {
-        }
     }
 }
