@@ -3,6 +3,22 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in GSExplorerController.loadCloud():GSExplorerController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "result.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "file.name">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in GSExplorerController.loadFileList():GSExplorerController.swift">
          <PersistentStrings>
             <PersistentString
@@ -15,14 +31,6 @@
       </ContextState>
       <ContextState
          contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "result.items">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in GSExplorerController.loadCloud():GSExplorerController.swift">
          <PersistentStrings>
             <PersistentString
                value = "result.items">

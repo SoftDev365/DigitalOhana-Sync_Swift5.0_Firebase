@@ -17,16 +17,12 @@ class GSExplorerController: UITableViewController {
 
     @IBOutlet var fileListView: UITableView!
     
-    var folderID: String?
+    var folderPath: String?
     var fileLists: StorageListResult?
     let activityView = ActivityView()
-    
-    func GSExplorerController() {
-        folderID = "central"
-    }
 
-    func setFolderID(_ folderID:String) {
-        self.folderID = folderID
+    func setFolderPath(_ folderID:String) {
+        self.folderPath = folderID
     }
 
     override func viewDidLoad() {
@@ -63,8 +59,8 @@ class GSExplorerController: UITableViewController {
         }
         
         var folderID = "root"
-        if self.folderID != nil {
-            folderID = self.folderID!
+        if self.folderPath != nil {
+            folderID = self.folderPath!
         }
         
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
@@ -103,7 +99,7 @@ class GSExplorerController: UITableViewController {
         super.viewWillDisappear(animated)
 
         if self.isMovingFromParent {
-            if self.folderID == nil {
+            if self.folderPath == nil {
                 GIDSignIn.sharedInstance()?.signOut()
             }
         }
@@ -122,8 +118,8 @@ class GSExplorerController: UITableViewController {
     func loadFileList() {
         
         var folderID = "central"
-        if self.folderID != nil {
-            folderID = self.folderID!
+        if self.folderPath != nil {
+            folderID = self.folderPath!
         }
         
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
@@ -219,6 +215,18 @@ class GSExplorerController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let prefixCount = self.fileLists!.prefixes.count
         
+        // sub folders
+        if indexPath.row < prefixCount {
+            let file = self.fileLists!.prefixes[indexPath.row]
+            
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GSExpVC") as? GSExplorerController
+            {
+                let folderPath = self.folderPath! + "/" + file.name
+                vc.setFolderPath(folderPath)
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
 }

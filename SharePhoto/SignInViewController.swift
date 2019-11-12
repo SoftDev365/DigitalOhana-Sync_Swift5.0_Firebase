@@ -58,7 +58,8 @@ class SignInViewController: UIViewController {
         // Safe Present
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GSExpVC") as? GSExplorerController
         {
-            //present(vc, animated: true, completion: nil)
+            let folderPath = "central"
+            vc.setFolderPath(folderPath)            
             navigationController?.pushViewController(vc, animated: true)
         }
     }
