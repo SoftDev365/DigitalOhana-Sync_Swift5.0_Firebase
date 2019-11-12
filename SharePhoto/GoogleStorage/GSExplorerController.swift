@@ -137,20 +137,10 @@ class GSExplorerController: UITableViewController {
 
         centralRef.listAll() { (result, error) in
             if let error = error {
-                //...
                 debugPrint(error)
             } else {
-                //for prefix in result.prefixes {
-                //
-                //}
-
                 self.fileLists = result
                 self.tableView.reloadData()
-
-                for item in result.items {
-                    let i = item
-                    debugPrint(i)
-                }
             }
             
             self.activityView.hideActivitiIndicator()
@@ -175,20 +165,28 @@ class GSExplorerController: UITableViewController {
         if self.fileLists == nil {
             return 0
         }
+        
+        let prefixCount = self.fileLists!.prefixes.count
+        let fileCount = self.fileLists!.items.count
 
-        return self.fileLists!.items.count
+        return prefixCount + fileCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for:indexPath) as! FileTableViewCell
+        let prefixCount = self.fileLists!.prefixes.count
         
-        let file = self.fileLists!.items[indexPath.row]
-
-        GSModule.downloadImageFile(file) { (image) in
-            cell.imgThumb.image = image
+        if indexPath.row < prefixCount {
+            let file = self.fileLists!.prefixes[indexPath.row]
+            cell.imgThumb.image = UIImage.init(named: "folder_icon")
+            cell.lblTitle.text = file.name
+        } else {
+            let file = self.fileLists!.items[indexPath.row-prefixCount]
+            GSModule.downloadImageFile(file) { (image) in
+                cell.imgThumb.image = image
+            }
+            cell.lblTitle.text = file.name
         }
-
-        cell.lblTitle.text = file.name
         
         return cell
     }

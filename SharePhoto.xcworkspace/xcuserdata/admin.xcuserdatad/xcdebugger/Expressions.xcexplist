@@ -3,6 +3,17 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in GSExplorerController.loadFileList():GSExplorerController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "result.items">
+            </PersistentString>
+            <PersistentString
+               value = "result.prefixes">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
          <PersistentStrings>
             <PersistentString
