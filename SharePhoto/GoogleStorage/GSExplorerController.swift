@@ -152,6 +152,8 @@ class GSExplorerController: UITableViewController {
                     debugPrint(i)
                 }
             }
+            
+            self.activityView.hideActivitiIndicator()
         }
     }
 
