@@ -153,12 +153,13 @@ class GDModule: NSObject {
         let query = GTLRDriveQuery_FilesCreate.query(withObject: folder, uploadParameters: nil)
         
         self.service.executeQuery(query) { (_, file, error) in
-            guard error == nil else {
+            if error == nil {
+                let folder = file as! GTLRDrive_File
+                completion(folder.identifier!)
+            } else {
                 fatalError(error!.localizedDescription)
+                completion("")
             }
-            
-            let folder = file as! GTLRDrive_File
-            completion(folder.identifier!)
         }
     }
     

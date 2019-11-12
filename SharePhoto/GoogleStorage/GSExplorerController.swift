@@ -57,14 +57,9 @@ class GSExplorerController: UITableViewController {
         if name == nil || name == "" {
             return
         }
-        
-        var folderID = "root"
-        if self.folderPath != nil {
-            folderID = self.folderPath!
-        }
-        
+
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
-        GDModule.createFolder(name: name!, parentFolderID: folderID) { (folderID) in
+        GSModule.createFolder(name: name!, parentFolder: self.folderPath!) { (success) in
             self.activityView.hideActivitiIndicator()
             self.loadFileList()
         }
@@ -116,20 +111,13 @@ class GSExplorerController: UITableViewController {
     }
     
     func loadFileList() {
-        
-        var folderID = "central"
-        if self.folderPath != nil {
-            folderID = self.folderPath!
-        }
-        
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
 
         // Get a reference to the storage service using the default Firebase App
         let storage = Storage.storage()
-
         // Create a storage reference from our storage service
         let storageRef = storage.reference()
-        let centralRef = storageRef.child(folderID)
+        let centralRef = storageRef.child(self.folderPath!)
 
         centralRef.listAll() { (result, error) in
             if let error = error {
