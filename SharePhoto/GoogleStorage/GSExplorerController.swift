@@ -18,7 +18,7 @@ class GSExplorerController: UITableViewController {
     @IBOutlet var fileListView: UITableView!
     
     var folderPath: String?
-    var fileLists: StorageListResult?
+    var fileLists: [StorageItem]?
     let activityView = ActivityView()
 
     func setFolderPath(_ folderID:String) {
@@ -112,11 +112,20 @@ class GSExplorerController: UITableViewController {
     
     func loadFileList() {
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
+        
+        GSModule.getImageFileList(self.folderPath!) { (fileList) in
+            self.fileLists = fileList
+            self.tableView.reloadData()
+            
+            self.activityView.hideActivitiIndicator()
+        }
 
+        /*
         // Get a reference to the storage service using the default Firebase App
         let storage = Storage.storage()
         // Create a storage reference from our storage service
         let storageRef = storage.reference()
+        //let centralRef = storageRef.child(self.folderPath!)
         let centralRef = storageRef.child(self.folderPath!)
 
         centralRef.listAll() { (result, error) in
@@ -128,7 +137,7 @@ class GSExplorerController: UITableViewController {
             }
             
             self.activityView.hideActivitiIndicator()
-        }
+        }*/
     }
 
     /*
@@ -149,24 +158,19 @@ class GSExplorerController: UITableViewController {
         if self.fileLists == nil {
             return 0
         }
-        
-        let prefixCount = self.fileLists!.prefixes.count
-        let fileCount = self.fileLists!.items.count
 
-        return prefixCount + fileCount
+        return self.fileLists!.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for:indexPath) as! FileTableViewCell
-        let prefixCount = self.fileLists!.prefixes.count
+        let file = self.fileLists![indexPath.row]
         
-        if indexPath.row < prefixCount {
-            let file = self.fileLists!.prefixes[indexPath.row]
+        if file.isFolder {
             cell.imgThumb.image = UIImage.init(named: "folder_icon")
             cell.lblTitle.text = file.name
         } else {
-            let file = self.fileLists!.items[indexPath.row-prefixCount]
-            GSModule.downloadImageFile(file) { (image) in
+            GSModule.downloadImageFile(file.file) { (image) in
                 cell.imgThumb.image = image
             }
             cell.lblTitle.text = file.name
@@ -203,12 +207,10 @@ class GSExplorerController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let prefixCount = self.fileLists!.prefixes.count
+        let file = self.fileLists![indexPath.row]
         
         // sub folders
-        if indexPath.row < prefixCount {
-            let file = self.fileLists!.prefixes[indexPath.row]
-            
+        if file.isFolder {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GSExpVC") as? GSExplorerController
             {
                 let folderPath = self.folderPath! + "/" + file.name

@@ -450,7 +450,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cleancode.sharephoto;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync";
 				PRODUCT_NAME = "Family Media Sync";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -469,7 +469,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cleancode.sharephoto;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync";
 				PRODUCT_NAME = "Family Media Sync";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

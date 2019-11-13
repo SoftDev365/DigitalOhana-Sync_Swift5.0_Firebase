@@ -62,6 +62,14 @@ class SignInViewController: UIViewController {
             vc.setFolderPath(folderPath)            
             navigationController?.pushViewController(vc, animated: true)
         }
+        
+        /*
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GDExpVC") as? GDExplorerController
+        {
+            let folderPath = "central"
+            vc.setFolderID(folderPath)
+            navigationController?.pushViewController(vc, animated: true)
+        }*/
     }
     
 }

@@ -13,9 +13,56 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 
+struct StorageItem {
+    var isFolder: Bool
+    var name: String
+    var file: StorageReference
+    
+    init(isFolder: Bool, name: String, file: StorageReference) {
+        self.isFolder = isFolder
+        self.name = name
+        self.file = file
+    }
+}
+
 class GSModule: NSObject {
     static var user: GIDGoogleUser?
     static let imageCache = NSCache<NSString, UIImage>()
+    
+    static func getImageFileList(_ folderName: String, onCompleted: @escaping ([StorageItem])->()) {
+        // Get a reference to the storage service using the default Firebase App
+        let storage = Storage.storage()
+        // Create a storage reference from our storage service
+        let storageRef = storage.reference()
+        //let centralRef = storageRef.child(self.folderPath!)
+        let folderRef = storageRef.child(folderName)
+
+        folderRef.listAll() { (result, error) in
+            var listFiles = [StorageItem]()
+            if let error = error {
+                debugPrint(error)
+            } else {
+                
+                for prefix in result.prefixes {
+                    let folder = StorageItem(isFolder: true, name: prefix.name, file: prefix)
+                    listFiles.append(folder)
+                }
+                
+                for item in result.items {
+                    let filename = item.name as NSString
+                    let fileExt = filename.pathExtension.lowercased()
+                    if fileExt != "png" && fileExt != "jpg" {
+                        continue
+                    }
+
+                    let file = StorageItem(isFolder: false, name: item.name, file: item)
+                    listFiles.append(file)
+                }
+            }
+            
+            onCompleted(listFiles)
+        }
+    }
     
     static func downloadImageFile(_ file: StorageReference, onCompleted: @escaping (UIImage?) -> ()) {
         // check cached image
@@ -46,7 +93,7 @@ class GSModule: NSObject {
         completion: @escaping (Bool) -> Void) {
 
         let filePath = folderPath + "/" + name
-        
+
         // Get a reference to the storage service using the default Firebase App
         let storage = Storage.storage()
         // Create a storage reference from our storage service
@@ -100,7 +147,31 @@ class GSModule: NSObject {
         
         let data = Data()
         let folderPath = parentFolder + "/" + name
-               
-        uploadFile(name: "empty_folder.dat", folderPath: folderPath, data: data, completion: completion)
+        let filePath = folderPath + "/empty_file_for_create_folder.dat"
+
+        // Get a reference to the storage service using the default Firebase App
+        let storage = Storage.storage()
+        // Create a storage reference from our storage service
+        let storageRef = storage.reference()
+        // Create a reference to the file you want to upload
+        let fileRef = storageRef.child(filePath)
+
+        // Upload the file to the path "images/rivers.jpg"
+        fileRef.putData(data, metadata: nil) { (metadata, error) in
+            if error != nil {
+                // Uh-oh, an error occurred!
+                completion(false)
+                return
+            }
+            
+            /*
+            fileRef.delete { (error) in
+                if error != nil {
+                    debugPrint(error!)
+                }
+
+                completion(true)
+            }*/
+        }
     }
 }
