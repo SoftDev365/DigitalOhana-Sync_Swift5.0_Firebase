@@ -42,6 +42,8 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         
         self.minimumZoomScale = 1.0
         self.maximumZoomScale = 5.0
+        self.showsHorizontalScrollIndicator = false
+        self.showsVerticalScrollIndicator = false
         
         GSModule.downloadImageFile(file) { (image) in
             self.imgView!.image = image

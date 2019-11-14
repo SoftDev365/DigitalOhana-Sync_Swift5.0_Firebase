@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ImageSlideViewController: UIViewController {
+class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     
-    var fileList: [StorageItem]?
+    var fileList: [StorageItem]!
+    var imgViewList: [ImageZoomView]?
     
     func setFileList(_ list: [StorageItem]) {
         self.fileList = list
@@ -32,27 +33,48 @@ class ImageSlideViewController: UIViewController {
     }
     
     func initContentImageViews() {
+        if self.imgViewList != nil {
+            return
+        }
+        
+        self.imgViewList = [ImageZoomView]()
+        
         let w = self.scrView.bounds.size.width
         let h = self.scrView.bounds.size.height
-        var k = 0
 
-        for i in 0...(fileList!.count-1) {
+        for i in 0...(fileList.count-1) {
             if fileList![i].isFolder == true {
                 continue
             }
             
-            let rect = CGRect(x: w*CGFloat(k), y: 0, width: w, height: h)
-            let item = ImageZoomView(frame: rect, file: fileList![i].file)
+            let index = self.imgViewList!.count
+            let rect = CGRect(x: w*CGFloat(index), y: 0, width: w, height: h)
+            let item = ImageZoomView(frame: rect, file: fileList[i].file)
             
-            //self.contentView.addSubview(item)
+            self.imgViewList!.append(item)
             self.scrView.addSubview(item)
-            k += 1
         }
         
-        self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(k), height: h)
-        //self.scrView.contentSize = self.contentView.bounds.size
-        self.scrView.contentSize = CGSize(width: w*CGFloat(k), height: h)
+        self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(self.imgViewList!.count), height: h)
+        self.scrView.contentSize = CGSize(width: w*CGFloat(self.imgViewList!.count), height: h)
         self.scrView.isPagingEnabled = true
+        self.scrView.delegate = self
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if self.imgViewList == nil {
+            return
+        }
+        
+        let curPage = (Int)(self.scrView.contentOffset.x / self.scrView.bounds.width)
+        
+        for i in 0...(imgViewList!.count-1) {
+            let item = imgViewList![i]
+            
+            if i != curPage {
+                item.setZoomScale(1.0, animated: false)
+            }
+        }
     }
 
     /*
