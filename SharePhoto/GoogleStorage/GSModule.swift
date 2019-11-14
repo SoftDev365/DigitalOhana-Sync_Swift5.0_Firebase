@@ -164,4 +164,41 @@ class GSModule: NSObject {
             }*/
         }
     }
+    
+    static func deleteFile(
+        file: StorageReference,
+        completion: @escaping (Bool) -> Void) {
+
+        file.delete { (error) in
+            if error != nil {
+                debugPrint(error!)
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+    
+    static func deleteFile(
+        name: String,
+        parentFolder: String,
+        completion: @escaping (Bool) -> Void) {
+
+        let filePath = parentFolder + "/" + name
+        // Get a reference to the storage service using the default Firebase App
+        let storage = Storage.storage()
+        // Create a storage reference from our storage service
+        let storageRef = storage.reference()
+        // Create a reference to the file you want to upload
+        let fileRef = storageRef.child(filePath)
+
+        fileRef.delete { (error) in
+            if error != nil {
+                debugPrint(error!)
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
 }
