@@ -108,19 +108,8 @@ class GSModule: NSObject {
                 completion(false)
                 return
             }
-            // Metadata contains file metadata such as size, content-type.
-            //let size = metadata.size
-            
-            completion(true)
 
-            /*
-            // You can also access to download URL after upload.
-            fileRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                    // Uh-oh, an error occurred!
-                    return
-                }
-            }*/
+            completion(true)
         }
         
         uploadTask.resume()
@@ -164,12 +153,13 @@ class GSModule: NSObject {
                 return
             }
             
+            completion(true)
+            
             /*
             fileRef.delete { (error) in
                 if error != nil {
                     debugPrint(error!)
                 }
-
                 completion(true)
             }*/
         }

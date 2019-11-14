@@ -13,13 +13,109 @@ import GTMSessionFetcher
 import Firebase
 import FirebaseStorage
 
-class GSExplorerController: UITableViewController {
+class GSExplorerController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var fileListView: UITableView!
     
     var folderPath: String?
     var fileLists: [StorageItem]?
     let activityView = ActivityView()
+    
+    var imagePicker = UIImagePickerController()
+    
+    func chooseImagePickerSource(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+            self.openCamera()
+        }))
+
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
+            self.openGallary()
+        }))
+
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+        /*If you want work actionsheet on ipad
+        then you have to use popoverPresentationController to present the actionsheet,
+        otherwise app will crash on iPad */
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            alert.popoverPresentationController?.sourceView = sender
+            alert.popoverPresentationController?.sourceRect = sender.bounds
+            alert.popoverPresentationController?.permittedArrowDirections = .up
+        default:
+            break
+        }
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func openCamera() {
+        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera))
+        {
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera
+            imagePicker.allowsEditing = false
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        else
+        {
+            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    func openGallary() {
+        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        imagePicker.allowsEditing = false
+        imagePicker.delegate = self
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func uploadPhoto(_ imageData: Data, fileName: String?) {
+        if fileName == nil || fileName == "" {
+            return
+        }
+
+        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
+        let imageFileName = fileName! + ".jpg"
+        GSModule.uploadFile(name: imageFileName, folderPath: self.folderPath!, data: imageData) { (success) in
+            self.activityView.hideActivitiIndicator()
+            self.loadFileList()
+        }
+    }
+    
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let tempImage: UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        //let imageData = tempImage.pngData()
+        let imageData = tempImage.jpegData(compressionQuality: 1.0)
+
+        picker.dismiss(animated: true) {
+            if( imageData != nil ) {
+                //1. Create the alert controller.
+                let alert = UIAlertController(title: "", message: "Input upload file name", preferredStyle: .alert)
+                //2. Add the text field. You can configure it however you need.
+                alert.addTextField { (textField) in
+                    textField.text = ""
+                }
+                // 3. Grab the value from the text field, and print it when the user clicks OK.
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                    let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+                    self.uploadPhoto(imageData!, fileName: textField.text)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                // 4. Present the alert.
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true) {
+        }
+    }
 
     func setFolderPath(_ folderID:String) {
         self.folderPath = folderID
@@ -86,15 +182,15 @@ class GSExplorerController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func onUploadPhoto() {
-        
+    @objc func onUploadPhoto(_ sender: UIButton) {
+        chooseImagePickerSource(sender)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         if self.isMovingFromParent {
-            if self.folderPath == nil {
+            if self.folderPath == nil || self.folderPath == "central" {
                 GIDSignIn.sharedInstance()?.signOut()
             }
         }
