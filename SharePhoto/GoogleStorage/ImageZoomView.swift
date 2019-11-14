@@ -45,6 +45,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         
         GSModule.downloadImageFile(file) { (image) in
             self.imgView!.image = image
+            self.imgView!.contentMode = .scaleAspectFit
         }
     }
     

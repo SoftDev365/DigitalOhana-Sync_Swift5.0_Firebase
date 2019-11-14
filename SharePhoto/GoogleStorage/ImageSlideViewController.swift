@@ -48,6 +48,8 @@ class ImageSlideViewController: UIViewController {
             k += 1
         }
         
+        self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(k), height: h)
+        self.scrView.contentSize = self.contentView.bounds.size
         self.scrView.isPagingEnabled = true
     }
 
