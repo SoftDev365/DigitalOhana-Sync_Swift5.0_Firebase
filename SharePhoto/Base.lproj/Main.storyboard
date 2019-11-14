@@ -190,28 +190,52 @@
             </objects>
             <point key="canvasLocation" x="-222" y="-538"/>
         </scene>
-        <!--View Controller-->
+        <!--Image Slide View Controller-->
         <scene sceneID="VF5-e8-hl2">
             <objects>
-                <viewController id="yaW-V9-67A" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SlideVC" id="yaW-V9-67A" customClass="ImageSlideViewController" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9bl-rs-Hl4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IE3-vB-zjf">
-                                <rect key="frame" x="0.0" y="157" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="LZP-Kc-g8o"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="wYF-pv-7Di"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xxJ-aL-PQV">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QFd-s7-GUh" userLabel="ContentView">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="QFd-s7-GUh" secondAttribute="bottom" id="VCh-Y0-0gs"/>
+                                    <constraint firstItem="QFd-s7-GUh" firstAttribute="leading" secondItem="xxJ-aL-PQV" secondAttribute="leading" id="gM7-wz-Kdl"/>
+                                    <constraint firstItem="QFd-s7-GUh" firstAttribute="top" secondItem="xxJ-aL-PQV" secondAttribute="top" id="u35-F7-GbY"/>
+                                    <constraint firstAttribute="trailing" secondItem="QFd-s7-GUh" secondAttribute="trailing" id="vPh-h7-blk"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="ncb-6K-o3K"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="is8-8L-L7Q"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="xxJ-aL-PQV" firstAttribute="top" secondItem="RjN-GP-gkr" secondAttribute="top" id="6iH-vL-bXO"/>
+                            <constraint firstItem="QFd-s7-GUh" firstAttribute="width" secondItem="RjN-GP-gkr" secondAttribute="width" id="COP-6A-1gM"/>
+                            <constraint firstItem="QFd-s7-GUh" firstAttribute="height" secondItem="RjN-GP-gkr" secondAttribute="height" id="H5B-mZ-fFN"/>
+                            <constraint firstAttribute="bottom" secondItem="xxJ-aL-PQV" secondAttribute="bottom" id="Pid-6s-aSd"/>
+                            <constraint firstItem="xxJ-aL-PQV" firstAttribute="leading" secondItem="RjN-GP-gkr" secondAttribute="leading" id="hUr-Xe-Nh2"/>
+                            <constraint firstItem="xxJ-aL-PQV" firstAttribute="trailing" secondItem="RjN-GP-gkr" secondAttribute="trailing" id="s8P-QF-ujl"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="RjN-GP-gkr"/>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="contentView" destination="QFd-s7-GUh" id="9wU-7V-NMe"/>
+                        <outlet property="scrView" destination="xxJ-aL-PQV" id="K9g-3P-6d5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Agv-dr-cpw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="538" y="-540"/>
+            <point key="canvasLocation" x="540.57971014492762" y="-538.39285714285711"/>
         </scene>
     </scenes>
     <resources>

@@ -18,7 +18,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     @IBOutlet var fileListView: UITableView!
     
     var folderPath: String?
-    var fileLists: [StorageItem]?
+    var fileList: [StorageItem]?
     let activityView = ActivityView()
     
     var imagePicker = UIImagePickerController()
@@ -116,7 +116,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
         
         GSModule.getImageFileList(self.folderPath!) { (fileList) in
-            self.fileLists = fileList
+            self.fileList = fileList
             self.tableView.reloadData()
             
             self.activityView.hideActivitiIndicator()
@@ -137,16 +137,16 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.fileLists == nil {
+        if self.fileList == nil {
             return 0
         }
 
-        return self.fileLists!.count
+        return self.fileList!.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for:indexPath) as! FileTableViewCell
-        let file = self.fileLists![indexPath.row]
+        let file = self.fileList![indexPath.row]
         
         if file.isFolder {
             cell.imgThumb.image = UIImage.init(named: "folder_icon")
@@ -162,7 +162,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let file = self.fileLists![indexPath.row]
+        let file = self.fileList![indexPath.row]
         
         if file.isFolder {
             return false
@@ -172,12 +172,12 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     }
     
     func deleteFile(_ rowIndex: Int) {
-        let file = self.fileLists![rowIndex]
+        let file = self.fileList![rowIndex]
         
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
         GSModule.deleteFile(file: file.file) { (result) in
             if result == true {
-                self.fileLists!.remove(at: rowIndex)
+                self.fileList!.remove(at: rowIndex)
                 self.tableView.deleteRows(at: [IndexPath.init(row: rowIndex, section: 0)], with: .automatic)
                 
                 self.activityView.hideActivitiIndicator()
@@ -208,7 +208,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let file = self.fileLists![indexPath.row]
+        let file = self.fileList![indexPath.row]
         
         // sub folders
         if file.isFolder {
@@ -216,6 +216,12 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
             {
                 let folderPath = self.folderPath! + "/" + file.name
                 vc.setFolderPath(folderPath)
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        } else {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? ImageSlideViewController
+            {
+                vc.setFileList(self.fileList!)
                 navigationController?.pushViewController(vc, animated: true)
             }
         }
