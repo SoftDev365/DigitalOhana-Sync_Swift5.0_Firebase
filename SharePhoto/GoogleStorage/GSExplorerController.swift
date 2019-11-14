@@ -175,7 +175,6 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         let file = self.fileLists![rowIndex]
         
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
-        
         GSModule.deleteFile(file: file.file) { (result) in
             if result == true {
                 self.fileLists!.remove(at: rowIndex)

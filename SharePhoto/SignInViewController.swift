@@ -36,6 +36,8 @@ class SignInViewController: UIViewController {
         GIDSignIn.sharedInstance()?.signInSilently()
         
         replaceBackButtonToSignout()
+        
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     func replaceBackButtonToSignout() {
