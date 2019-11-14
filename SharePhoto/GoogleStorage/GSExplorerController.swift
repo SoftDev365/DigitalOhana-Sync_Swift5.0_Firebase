@@ -30,7 +30,9 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationController?.isNavigationBarHidden = false
+        
         createNavigationButton()
     }
     
