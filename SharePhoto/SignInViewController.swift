@@ -80,8 +80,6 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
     // MARK: - GIDSignInDelegate
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        activityView.hideActivitiIndicator()
-
         // A nil error indicates a successful login
         if error == nil {
             guard let authentication = user.authentication else { return }
@@ -95,6 +93,7 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 // User is signed in
                 debugPrint("----Firebase signin complete");
                 
+                self.activityView.hideActivitiIndicator()
                 self.initRootList()
             }
             
@@ -103,6 +102,8 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             GDModule.user = user
             //btnGoogleSignIn.isHidden = true
         } else {
+            activityView.hideActivitiIndicator()
+            
             GDModule.service.authorizer = nil
             GDModule.user = nil
         }
