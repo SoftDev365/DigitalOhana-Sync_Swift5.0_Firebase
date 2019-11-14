@@ -44,12 +44,14 @@ class ImageSlideViewController: UIViewController {
             let rect = CGRect(x: w*CGFloat(k), y: 0, width: w, height: h)
             let item = ImageZoomView(frame: rect, file: fileList![i].file)
             
-            self.contentView.addSubview(item)
+            //self.contentView.addSubview(item)
+            self.scrView.addSubview(item)
             k += 1
         }
         
         self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(k), height: h)
-        self.scrView.contentSize = self.contentView.bounds.size
+        //self.scrView.contentSize = self.contentView.bounds.size
+        self.scrView.contentSize = CGSize(width: w*CGFloat(k), height: h)
         self.scrView.isPagingEnabled = true
     }
 
