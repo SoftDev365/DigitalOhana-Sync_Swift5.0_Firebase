@@ -17,6 +17,12 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var btnGoogleSignIn: UIButton!
     let activityView = ActivityView()
     
+    var orientationLock = UIInterfaceOrientationMask.portraitUpsideDown
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+            return self.orientationLock
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -85,6 +91,16 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             guard let authentication = user.authentication else { return }
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
             
+            // Include authorization headers/values with each Drive API request.
+            GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
+            GDModule.user = user
+            
+            GSModule.user = user
+            
+            let auth = user!.authentication
+            let email = auth!.value(forKey: "userEmail") as! String
+            GSModule.userEmail = email
+
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if error != nil {
                     return
@@ -97,17 +113,15 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 self.initRootList()
             }
             
-            // Include authorization headers/values with each Drive API request.
-            GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
-            GDModule.user = user
-            
-            GSModule.user = user
             //btnGoogleSignIn.isHidden = true
         } else {
             activityView.hideActivitiIndicator()
             
             GDModule.service.authorizer = nil
             GDModule.user = nil
+            
+            GSModule.user = nil
+            GSModule.userEmail = nil
         }
     }
 

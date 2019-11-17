@@ -15,24 +15,23 @@ import GTMSessionFetcher
 
 struct StorageItem {
     var isFolder: Bool
-    var name: String
-    var owner: String
+    var title: String
+    var ownerEmail: String
+    var ownerName: String
     var file: StorageReference
     
-    init(isFolder: Bool, name: String, owner: String?, file: StorageReference) {
+    init(isFolder: Bool, name: String, file: StorageReference) {
         self.isFolder = isFolder
-        self.name = name
-        if owner != nil{
-            self.owner = owner!
-        } else {
-            self.owner = ""
-        }
+        self.title = name
+        self.ownerEmail = ""
+        self.ownerName = ""
         self.file = file
     }
 }
 
 class GSModule: NSObject {
     static var user: GIDGoogleUser?
+    static var userEmail: String?
     static let imageCache = NSCache<NSString, UIImage>()
     
     static func getImageFileList(_ folderName: String, onCompleted: @escaping ([StorageItem])->()) {
@@ -47,35 +46,54 @@ class GSModule: NSObject {
             var listFiles = [StorageItem]()
             if let error = error {
                 debugPrint(error)
-            } else {
+                onCompleted(listFiles)
+                return
+            }
+            /*
+            for prefix in result.prefixes {
+                let folder = StorageItem(isFolder: true, name: prefix.name, file: prefix)
+                listFiles.append(folder)
+            }*/
+
+            if result.items.count <= 0 {
+                onCompleted(listFiles)
+                return
+            }
+            
+            var nCount = 0
+            
+            for i in 0...(result.items.count-1) {
+                let item = result.items[i]
+                let filename = item.name as NSString
+                let fileExt = filename.pathExtension.lowercased()
+                if fileExt != "png" && fileExt != "jpg" {
+                    continue
+                }
                 
-                /*
-                for prefix in result.prefixes {
-                    let folder = StorageItem(isFolder: true, name: prefix.name, file: prefix)
-                    listFiles.append(folder)
-                }*/
+                let file = StorageItem(isFolder: false, name: item.name, owner: "", file: item)
+                listFiles.append(file)
                 
-                for item in result.items {
-                    let filename = item.name as NSString
-                    let fileExt = filename.pathExtension.lowercased()
-                    if fileExt != "png" && fileExt != "jpg" {
-                        continue
-                    }
-                    
-                    item.getMetadata { metadata, error in
-                        if error != nil {
-                            debugPrint(error!)
-                        } else {
-                            let cmdata = metadata?.customMetadata
-                            let owner = cmdata?["owner"]
-                            let file = StorageItem(isFolder: false, name: item.name, owner: owner, file: item)
-                            listFiles.append(file)
+                item.getMetadata { metadata, error in
+                    if error != nil {
+                        debugPrint(error!)
+                    } else {
+                        let cmdata = metadata?.customMetadata
+                        if let ownerEmail = cmdata?["ownerEmail"] {
+                            listFiles[i].ownerEmail = ownerEmail
                         }
+                        
+                        if let ownerName = cmdata?["ownerName"] {
+                            listFiles[i].ownerName = ownerName
+                        }
+                    }
+
+                    nCount += 1
+                    // all metadata extracted
+                    if nCount == result.items.count {
+                        onCompleted(listFiles)
                     }
                 }
             }
-            
-            onCompleted(listFiles)
         }
     }
     
@@ -121,9 +139,16 @@ class GSModule: NSObject {
             if metadata != nil {
                 //auth.email
                 let newMetadata = StorageMetadata()
-                //let auth = user!.authentication
-                //let email = auth!.value(forKey: "userEmail") as! NSString
-                newMetadata.customMetadata = ["owner":user!.userID]
+                var email = user!.profile.email
+                var name = user!.profile.name
+                
+                if email == nil {
+                    email = ""
+                }
+                if name == nil {
+                    name = ""
+                }               
+                newMetadata.customMetadata = ["ownerEmail": email!, "ownerName": name!]
                 fileRef.updateMetadata(newMetadata) { metadata, error in
                     if let error = error {
                         // Uh-oh, an error occurred!

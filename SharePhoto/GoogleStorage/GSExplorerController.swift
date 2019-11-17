@@ -23,6 +23,12 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     
     var imagePicker = UIImagePickerController()
 
+    var orientationLock = UIInterfaceOrientationMask.portraitUpsideDown
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+            return self.orientationLock
+    }
+    
     func setFolderPath(_ folderID:String) {
         self.folderPath = folderID
     }
@@ -156,12 +162,12 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         
         if file.isFolder {
             cell.imgThumb.image = UIImage.init(named: "folder_icon")
-            cell.lblTitle.text = file.name
+            cell.lblTitle.text = file.title
         } else {
             GSModule.downloadImageFile(file.file) { (image) in
                 cell.imgThumb.image = image
             }
-            cell.lblTitle.text = file.name
+            cell.lblTitle.text = file.title
         }
         
         return cell
@@ -173,7 +179,11 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         if file.isFolder {
             return false
         } else {
-            return true
+            if file.ownerEmail == GSModule.userEmail {
+                return true
+            } else {
+                return false
+            }
         }
     }
     
@@ -220,7 +230,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         if file.isFolder {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GSExpVC") as? GSExplorerController
             {
-                let folderPath = self.folderPath! + "/" + file.name
+                let folderPath = self.folderPath! + "/" + file.title
                 vc.setFolderPath(folderPath)
                 navigationController?.pushViewController(vc, animated: true)
             }

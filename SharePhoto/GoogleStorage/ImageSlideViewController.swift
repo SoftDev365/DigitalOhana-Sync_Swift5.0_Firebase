@@ -16,6 +16,12 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
     var fileList: [StorageItem]!
     var imgViewList: [ImageZoomView]?
     
+    var orientationLock = UIInterfaceOrientationMask.all
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+            return self.orientationLock
+    }
+    
     func setFileList(_ list: [StorageItem]) {
         self.fileList = list
     }
