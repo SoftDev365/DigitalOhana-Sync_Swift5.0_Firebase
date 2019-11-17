@@ -16,11 +16,17 @@ import GTMSessionFetcher
 struct StorageItem {
     var isFolder: Bool
     var name: String
+    var owner: String
     var file: StorageReference
     
-    init(isFolder: Bool, name: String, file: StorageReference) {
+    init(isFolder: Bool, name: String, owner: String?, file: StorageReference) {
         self.isFolder = isFolder
         self.name = name
+        if owner != nil{
+            self.owner = owner!
+        } else {
+            self.owner = ""
+        }
         self.file = file
     }
 }
@@ -43,10 +49,11 @@ class GSModule: NSObject {
                 debugPrint(error)
             } else {
                 
+                /*
                 for prefix in result.prefixes {
                     let folder = StorageItem(isFolder: true, name: prefix.name, file: prefix)
                     listFiles.append(folder)
-                }
+                }*/
                 
                 for item in result.items {
                     let filename = item.name as NSString
@@ -54,9 +61,17 @@ class GSModule: NSObject {
                     if fileExt != "png" && fileExt != "jpg" {
                         continue
                     }
-
-                    let file = StorageItem(isFolder: false, name: item.name, file: item)
-                    listFiles.append(file)
+                    
+                    item.getMetadata { metadata, error in
+                        if error != nil {
+                            debugPrint(error!)
+                        } else {
+                            let cmdata = metadata?.customMetadata
+                            let owner = cmdata?["owner"]
+                            let file = StorageItem(isFolder: false, name: item.name, owner: owner, file: item)
+                            listFiles.append(file)
+                        }
+                    }
                 }
             }
             
@@ -104,12 +119,25 @@ class GSModule: NSObject {
         // Upload the file to the path "images/rivers.jpg"
         let uploadTask = fileRef.putData(data, metadata: nil) { (metadata, error) in
             if metadata != nil {
+                //auth.email
+                let newMetadata = StorageMetadata()
+                //let auth = user!.authentication
+                //let email = auth!.value(forKey: "userEmail") as! NSString
+                newMetadata.customMetadata = ["owner":user!.userID]
+                fileRef.updateMetadata(newMetadata) { metadata, error in
+                    if let error = error {
+                        // Uh-oh, an error occurred!
+                        debugPrint(error)
+                        completion(false)
+                    } else {
+                        // metadata.contentType should be nil
+                        completion(true)
+                    }
+                }
+            } else {
                 // Uh-oh, an error occurred!
                 completion(false)
-                return
             }
-
-            completion(true)
         }
         
         uploadTask.resume()

@@ -100,6 +100,8 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             // Include authorization headers/values with each Drive API request.
             GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
             GDModule.user = user
+            
+            GSModule.user = user
             //btnGoogleSignIn.isHidden = true
         } else {
             activityView.hideActivitiIndicator()
