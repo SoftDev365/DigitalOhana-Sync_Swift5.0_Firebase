@@ -39,6 +39,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     func createNavigationButton() {
         let buttonSize: CGFloat = 36
         
+        /*
         let button1 = UIButton(type: .custom)
         button1.setImage(UIImage(named: "newfolder"), for: .normal)
         button1.addTarget(self, action: #selector(onCreateNewFolder), for: .touchUpInside)
@@ -46,6 +47,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         button1.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
         button1.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
         let barButton1 = UIBarButtonItem(customView: button1)
+        */
         
         let button2 = UIButton(type: .custom)
         button2.setImage(UIImage(named: "uploadphoto"), for: .normal)
@@ -55,7 +57,8 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         button2.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
         let barButton2 = UIBarButtonItem(customView: button2)
         
-        self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
+        //self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
+        self.navigationItem.rightBarButtonItems = [barButton2]
     }
     
     func createNewFolder(_ name: String?) {
