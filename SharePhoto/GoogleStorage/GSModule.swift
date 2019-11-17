@@ -70,7 +70,7 @@ class GSModule: NSObject {
                     continue
                 }
                 
-                let file = StorageItem(isFolder: false, name: item.name, owner: "", file: item)
+                let file = StorageItem(isFolder: false, name: item.name, file: item)
                 listFiles.append(file)
                 
                 item.getMetadata { metadata, error in
@@ -147,7 +147,7 @@ class GSModule: NSObject {
                 }
                 if name == nil {
                     name = ""
-                }               
+                }
                 newMetadata.customMetadata = ["ownerEmail": email!, "ownerName": name!]
                 fileRef.updateMetadata(newMetadata) { metadata, error in
                     if let error = error {
