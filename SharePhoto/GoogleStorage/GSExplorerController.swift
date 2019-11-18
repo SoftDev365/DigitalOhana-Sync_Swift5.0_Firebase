@@ -148,15 +148,6 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
             self.activityView.hideActivitiIndicator()
         }
     }
-
-    /*
-    // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -251,7 +242,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         } else {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? ImageSlideViewController
             {
-                vc.setFileList(self.fileList!)
+                vc.setFileList(self.fileList!, page:indexPath.row)
                 navigationController?.pushViewController(vc, animated: true)
             }
         }

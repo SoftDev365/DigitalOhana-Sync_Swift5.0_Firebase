@@ -15,6 +15,7 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
     
     var fileList: [StorageItem]!
     var imgViewList: [ImageZoomView]?
+    var curPage: Int = 0
     
     override open var shouldAutorotate: Bool {
         return true
@@ -24,13 +25,24 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
         return .all
     }
 
-    
-    func setFileList(_ list: [StorageItem]) {
+    func setFileList(_ list: [StorageItem], page:Int) {
         self.fileList = list
+        self.curPage = page
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        guard sender.view != nil else {
+            return
+        }
+        
+        self.navigationController!.isNavigationBarHidden = !self.navigationController!.isNavigationBarHidden
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,23 +75,24 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
         self.relayoutImageItemViews(self.scrView.bounds.size)
     }
     
-    func relayoutImageItemViews(_ size1: CGSize) {
+    func relayoutImageItemViews(_ size: CGSize) {
         if self.imgViewList == nil {
             return
         }
 
-        let size = self.scrView.bounds.size
         let w = size.width
         let h = size.height
 
         for i in 0...(self.imgViewList!.count-1) {
             let rect = CGRect(x: w*CGFloat(i), y: 0, width: w, height: h)
+            self.imgViewList![i].setZoomScale(1.0, animated: false)
             self.imgViewList![i].frame = rect
+            self.imgViewList![i].setZoomScale(1.0, animated: false)
         }
         
         //self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(self.imgViewList!.count), height: h)
         self.scrView.contentSize = CGSize(width: w*CGFloat(self.imgViewList!.count), height: h)
-        
+        self.scrView.contentOffset = CGPoint(x: w*CGFloat(curPage), y: 0)
         self.scrView.isPagingEnabled = true
         self.scrView.delegate = self
     }
@@ -89,7 +102,7 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
             return
         }
         
-        let curPage = (Int)(self.scrView.contentOffset.x / self.scrView.bounds.width)
+        curPage = (Int)(self.scrView.contentOffset.x / self.scrView.bounds.width)
         
         for i in 0...(imgViewList!.count-1) {
             let item = imgViewList![i]
@@ -108,6 +121,7 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
         super.viewWillTransition(to: size, with: coordinator)
         
         //self.relayoutImageItemViews(size)
+        curPage = (Int)(self.scrView.contentOffset.x / self.scrView.bounds.width)
     }
     
     override func viewDidLayoutSubviews() {
@@ -115,15 +129,4 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
         
         self.relayoutImageItemViews(self.scrView.bounds.size)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
