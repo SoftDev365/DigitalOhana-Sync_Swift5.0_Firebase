@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Custom Navigation Controller-->
         <scene sceneID="Mmi-7t-2LI">
             <objects>
-                <navigationController id="ufD-xw-e8s" sceneMemberID="viewController">
+                <navigationController id="ufD-xw-e8s" customClass="CustomNavigationController" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nlm-2k-2rZ">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -121,7 +121,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="fileListView" destination="WEJ-2W-Ujr" id="LJz-dG-NRt"/>
+                        <outlet property="fileListView" destination="WEJ-2W-Ujr" id="yQo-V0-dDO"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIS-xG-jes" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -182,9 +182,6 @@
                             <outlet property="delegate" destination="TPG-bh-X1x" id="K0U-cV-9nB"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="fileListView" destination="dJg-uc-DCg" id="0s1-ve-FpJ"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nj2-vy-moZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -203,9 +200,10 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QFd-s7-GUh" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="QFd-s7-GUh" secondAttribute="bottom" id="VCh-Y0-0gs"/>
                                     <constraint firstItem="QFd-s7-GUh" firstAttribute="leading" secondItem="xxJ-aL-PQV" secondAttribute="leading" id="gM7-wz-Kdl"/>

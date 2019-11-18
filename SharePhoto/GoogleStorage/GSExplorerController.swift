@@ -14,21 +14,21 @@ import Firebase
 import FirebaseStorage
 
 class GSExplorerController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    @IBOutlet var fileListView: UITableView!
     
     var folderPath: String?
     var fileList: [StorageItem]?
     let activityView = ActivityView()
     
     var imagePicker = UIImagePickerController()
-
-    var orientationLock = UIInterfaceOrientationMask.portraitUpsideDown
-
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-            return self.orientationLock
+    
+    override open var shouldAutorotate: Bool {
+        return false
     }
     
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
     func setFolderPath(_ folderID:String) {
         self.folderPath = folderID
     }
@@ -112,10 +112,6 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
                 GIDSignIn.sharedInstance()?.signOut()
             }
         }
-    }
-    
-    override func viewWillAppear(_ animated:Bool) {
-        super.viewWillAppear(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {

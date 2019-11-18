@@ -17,10 +17,12 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var btnGoogleSignIn: UIButton!
     let activityView = ActivityView()
     
-    var orientationLock = UIInterfaceOrientationMask.portraitUpsideDown
-
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-            return self.orientationLock
+    override open var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
     
     override func viewDidLoad() {

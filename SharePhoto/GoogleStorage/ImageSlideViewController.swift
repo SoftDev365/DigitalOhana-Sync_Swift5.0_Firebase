@@ -16,11 +16,14 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
     var fileList: [StorageItem]!
     var imgViewList: [ImageZoomView]?
     
-    var orientationLock = UIInterfaceOrientationMask.all
-
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-            return self.orientationLock
+    override open var shouldAutorotate: Bool {
+        return true
     }
+    
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+
     
     func setFileList(_ list: [StorageItem]) {
         self.fileList = list
@@ -28,13 +31,11 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         initContentImageViews()
     }
     
@@ -44,25 +45,41 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
         }
         
         self.imgViewList = [ImageZoomView]()
-        
-        let w = self.scrView.bounds.size.width
-        let h = self.scrView.bounds.size.height
 
         for i in 0...(fileList.count-1) {
             if fileList![i].isFolder == true {
                 continue
             }
-            
-            let index = self.imgViewList!.count
-            let rect = CGRect(x: w*CGFloat(index), y: 0, width: w, height: h)
-            let item = ImageZoomView(frame: rect, file: fileList[i].file)
-            
+
+            let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), file: fileList[i].file)
             self.imgViewList!.append(item)
             self.scrView.addSubview(item)
         }
         
-        self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(self.imgViewList!.count), height: h)
+        self.scrView.isPagingEnabled = true
+        self.scrView.delegate = self
+        self.contentView.removeFromSuperview()
+        
+        self.relayoutImageItemViews(self.scrView.bounds.size)
+    }
+    
+    func relayoutImageItemViews(_ size1: CGSize) {
+        if self.imgViewList == nil {
+            return
+        }
+
+        let size = self.scrView.bounds.size
+        let w = size.width
+        let h = size.height
+
+        for i in 0...(self.imgViewList!.count-1) {
+            let rect = CGRect(x: w*CGFloat(i), y: 0, width: w, height: h)
+            self.imgViewList![i].frame = rect
+        }
+        
+        //self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(self.imgViewList!.count), height: h)
         self.scrView.contentSize = CGSize(width: w*CGFloat(self.imgViewList!.count), height: h)
+        
         self.scrView.isPagingEnabled = true
         self.scrView.delegate = self
     }
@@ -81,6 +98,22 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
                 item.setZoomScale(1.0, animated: false)
             }
         }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        //self.relayoutImageItemViews(size)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.relayoutImageItemViews(self.scrView.bounds.size)
     }
 
     /*
