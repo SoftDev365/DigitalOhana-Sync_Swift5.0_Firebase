@@ -15,6 +15,12 @@ class ActivityView {
     var strLabel = UILabel()
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     
+    func relayoutPosition(_ view: UIView) {
+        effectView.frame = CGRect(x: view.frame.midX - 60, y: view.frame.midY - 60 , width: 120, height: 120)
+        effectView.layer.cornerRadius = 15
+        effectView.layer.masksToBounds = true
+    }
+    
     func showActivityIndicator(_ view: UIView, withTitle title: String) {
 
         hideActivitiIndicator()

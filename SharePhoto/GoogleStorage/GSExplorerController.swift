@@ -107,6 +107,18 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
+        /*
+        if self.isMovingFromParent {
+            if self.folderPath == nil || self.folderPath == "central" {
+                GIDSignIn.sharedInstance()?.signOut()
+            }
+        }
+        */
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
         if self.isMovingFromParent {
             if self.folderPath == nil || self.folderPath == "central" {
                 GIDSignIn.sharedInstance()?.signOut()
@@ -118,6 +130,12 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         super.viewDidAppear(animated)
         
         loadFileList()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        activityView.relayoutPosition(self.view)
     }
     
     func loadFileList() {
