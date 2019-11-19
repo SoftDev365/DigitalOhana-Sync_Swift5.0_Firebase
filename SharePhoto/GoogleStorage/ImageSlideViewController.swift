@@ -85,9 +85,10 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
 
         for i in 0...(self.imgViewList!.count-1) {
             let rect = CGRect(x: w*CGFloat(i), y: 0, width: w, height: h)
-            self.imgViewList![i].setZoomScale(1.0, animated: false)
+            //self.imgViewList![i].setZoomScale(1.0, animated: false)
             self.imgViewList![i].frame = rect
-            self.imgViewList![i].setZoomScale(1.0, animated: false)
+            //self.imgViewList![i].setZoomScale(1.0, animated: false)
+            self.imgViewList![i].fitViewSizeToImage()
         }
         
         //self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(self.imgViewList!.count), height: h)
@@ -108,7 +109,8 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
             let item = imgViewList![i]
             
             if i != curPage {
-                item.setZoomScale(1.0, animated: false)
+                //item.setZoomScale(1.0, animated: false)
+                item.fitViewSizeToImage()
             }
         }
     }
