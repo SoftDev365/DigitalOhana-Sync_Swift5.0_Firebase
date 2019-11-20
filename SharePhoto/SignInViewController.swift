@@ -104,7 +104,10 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             
             GDBModule.user = user
             GDBModule.userEmail = email
-            GDBModule.registerUser()
+            
+            GFSModule.user = user
+            GFSModule.userEmail = email            
+            GFSModule.registerUser()
 
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if error != nil {
