@@ -16,6 +16,7 @@
 		843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */; };
 		843DF2E02373D00E00F856ED /* ImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DF2373D00E00F856ED /* ImageView+Download.swift */; };
 		846589A8237623520050AE40 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846589A7237623510050AE40 /* GoogleService-Info.plist */; };
+		848E2DD32385F11300620877 /* GFSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E2DD22385F11300620877 /* GFSModule.swift */; };
 		849A974323822F8D003E985E /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849A974223822F8D003E985E /* CustomNavigationController.swift */; };
 		84BCF77C237268FE00367EAB /* GDModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCF77B237268FE00367EAB /* GDModule.swift */; };
 		84BE63C223717A45002F2C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE63C123717A45002F2C66 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 		843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
 		843DF2DF2373D00E00F856ED /* ImageView+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+Download.swift"; sourceTree = "<group>"; };
 		846589A7237623510050AE40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		848E2DD22385F11300620877 /* GFSModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GFSModule.swift; sourceTree = "<group>"; };
 		849A974223822F8D003E985E /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		84BCF77B237268FE00367EAB /* GDModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDModule.swift; sourceTree = "<group>"; };
 		84BE63BE23717A45002F2C66 /* Family Media Sync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Family Media Sync.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,8 +158,9 @@
 		84D004CB2379137E00929662 /* GoogleStorage */ = {
 			isa = PBXGroup;
 			children = (
-				84D004CD237913CD00929662 /* GSModule.swift */,
 				84D85D472384A1710042C4DF /* GDBModule.swift */,
+				848E2DD22385F11300620877 /* GFSModule.swift */,
+				84D004CD237913CD00929662 /* GSModule.swift */,
 				84D004CC237913CD00929662 /* GSExplorerController.swift */,
 				8425689E237D475C00F4CD7A /* ImageZoomView.swift */,
 				842568A0237D4C1100F4CD7A /* ImageSlideViewController.swift */,
@@ -300,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				848E2DD32385F11300620877 /* GFSModule.swift in Sources */,
 				84BE63C623717A45002F2C66 /* SignInViewController.swift in Sources */,
 				843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */,
 				842568A1237D4C1100F4CD7A /* ImageSlideViewController.swift in Sources */,

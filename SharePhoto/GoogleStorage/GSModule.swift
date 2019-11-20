@@ -5,13 +5,7 @@
 //  Created by Admin on 11/6/19.
 //  Copyright © 2019 Admin. All rights reserved.
 //
-//
-//  GDModule.swift
-//  SharePhoto
-//
-//  Created by Admin on 11/6/19.
-//  Copyright © 2019 Admin. All rights reserved.
-//
+//  Google Storage Module
 
 import UIKit
 import Firebase

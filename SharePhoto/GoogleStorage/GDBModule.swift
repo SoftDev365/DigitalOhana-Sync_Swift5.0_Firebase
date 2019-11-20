@@ -1,4 +1,5 @@
 
+// Google Realtime Database Module
 
 import UIKit
 import Firebase
@@ -8,14 +9,13 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 
-
 class GDBModule: NSObject {
     static var user: GIDGoogleUser?
     static var userEmail: String?
     
     static func registerUser() {
         guard let user = self.user else { return }
-        
+
         let dbRef = Database.database().reference()
         let keyPath = "users/\(user.userID!)"
         var userInfo = [String:String]()
