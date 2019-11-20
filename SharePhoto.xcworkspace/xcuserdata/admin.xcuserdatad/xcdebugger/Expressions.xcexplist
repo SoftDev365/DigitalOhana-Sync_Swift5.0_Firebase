@@ -11,10 +11,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
+         contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "file.name">
+               value = "result.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ImageSlideViewController.relayoutImageItemViews(_:):ImageSlideViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "size">
+            </PersistentString>
+            <PersistentString
+               value = "self.imgViewList">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -30,10 +41,67 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
+         contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "result.items">
+               value = "file.name">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in static GSModule.uploadFile(name:folderPath:data:completion:):GSModule.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user!.authentication">
+            </PersistentString>
+            <PersistentString
+               value = "auth!">
+            </PersistentString>
+            <PersistentString
+               value = "user!.authentication.clientID">
+            </PersistentString>
+            <PersistentString
+               value = "user.userID">
+            </PersistentString>
+            <PersistentString
+               value = "email">
+            </PersistentString>
+            <PersistentString
+               value = "user!">
+            </PersistentString>
+            <PersistentString
+               value = "auth">
+            </PersistentString>
+            <PersistentString
+               value = "user">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SignInViewController.sign(_:didSignInFor:withError:):SignInViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user.name">
+            </PersistentString>
+            <PersistentString
+               value = "authentication.clientID">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ImageZoomView.fitViewSizeToImage():ImageZoomView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "size">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

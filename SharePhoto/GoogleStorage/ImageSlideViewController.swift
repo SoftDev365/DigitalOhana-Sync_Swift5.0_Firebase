@@ -35,6 +35,8 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
         self.view.addGestureRecognizer(tap)
+        
+        self.contentView.removeFromSuperview()
     }
     
     @objc func handleTap(sender: UITapGestureRecognizer) {
@@ -70,7 +72,6 @@ class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
         
         self.scrView.isPagingEnabled = true
         self.scrView.delegate = self
-        self.contentView.removeFromSuperview()
         
         self.relayoutImageItemViews(self.scrView.bounds.size)
     }

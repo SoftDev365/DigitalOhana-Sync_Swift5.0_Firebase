@@ -99,9 +99,12 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             
             GSModule.user = user
             
-            let auth = user!.authentication
-            let email = auth!.value(forKey: "userEmail") as! String
+            let email = user!.profile.email
             GSModule.userEmail = email
+            
+            GDBModule.user = user
+            GDBModule.userEmail = email
+            GDBModule.registerUser()
 
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if error != nil {

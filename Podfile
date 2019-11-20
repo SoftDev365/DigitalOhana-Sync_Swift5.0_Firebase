@@ -11,8 +11,12 @@ target 'SharePhoto' do
   pod 'GoogleSignIn', '~> 4.4.0'
   pod 'GoogleAPIClientForREST/Drive', '~> 1.3.7'
   
-  pod 'Firebase/Analytics'
+  pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
-
+  pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Analytics'
+  
+  pod 'FirebaseFirestoreSwift'
 end
