@@ -13,7 +13,6 @@ import GTMSessionFetcher
 
 class GDModule: NSObject {
     static let service = GTLRDriveService()
-    static var user: GIDGoogleUser?
     static var uploadFolderID: String?
     
     static let imageCache = NSCache<NSString, UIImage>()
@@ -32,10 +31,6 @@ class GDModule: NSObject {
     static func listFiles(_ folderID: String, onCompleted: @escaping (GTLRDrive_FileList?, Error?) -> ()) {
         
         let query = GTLRDriveQuery_FilesList.query()
-        
-        if self.user == nil {
-            return
-        }
         
         //query.pageSize = 100
 
@@ -96,7 +91,7 @@ class GDModule: NSObject {
         getFolderID(
             name: myFolderName,
             service: service,
-            user: user!) { folderID in
+            user: GUser.user!) { folderID in
             if folderID == nil {
                 self.createFolder(name: myFolderName, parentFolderID: "root") {
                     self.uploadFolderID = $0

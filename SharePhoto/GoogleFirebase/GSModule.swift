@@ -1,6 +1,6 @@
 //
-//  GDModule.swift
-//  SharePhoto
+//  GSModule.swift
+//  Google Sotrage Module
 //
 //  Created by Admin on 11/6/19.
 //  Copyright © 2019 Admin. All rights reserved.
@@ -31,8 +31,6 @@ struct StorageItem {
 }
 
 class GSModule: NSObject {
-    static var user: GIDGoogleUser?
-    static var userEmail: String?
     static let imageCache = NSCache<NSString, UIImage>()
     
     static func getImageFileList(_ folderName: String, onCompleted: @escaping ([StorageItem])->()) {
@@ -140,8 +138,8 @@ class GSModule: NSObject {
             if metadata != nil {
                 //auth.email
                 let newMetadata = StorageMetadata()
-                var email = user!.profile.email
-                var name = user!.profile.name
+                var email = GUser.user!.profile.email
+                var name = GUser.user!.profile.name
                 
                 if email == nil {
                     email = ""

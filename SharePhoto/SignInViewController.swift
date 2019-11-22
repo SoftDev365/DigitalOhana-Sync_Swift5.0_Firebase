@@ -59,6 +59,9 @@ class SignInViewController: UIViewController {
     }
 
     @IBAction func onBtnGoogleSiginIn(_ sender: Any) {
+        
+        activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+        
         // Start Google's OAuth authentication flow
         GIDSignIn.sharedInstance()?.signIn()
         //GIDSignIn.sharedInstance()?.signOut()
@@ -66,20 +69,19 @@ class SignInViewController: UIViewController {
     
     func initRootList() {
         // Safe Present
+        /*
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GSExpVC") as? GSExplorerController
         {
             let folderPath = "central"
             vc.setFolderPath(folderPath)            
             navigationController?.pushViewController(vc, animated: true)
-        }
-        
-        /*
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GDExpVC") as? GDExplorerController
-        {
-            let folderPath = "central"
-            vc.setFolderID(folderPath)
-            navigationController?.pushViewController(vc, animated: true)
         }*/
+        
+        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoCVC") as? PhotoCollectionViewController
+        {
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 }
@@ -95,21 +97,16 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             
             // Include authorization headers/values with each Drive API request.
             GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
-            GDModule.user = user
-            
-            GSModule.user = user
             
             let email = user!.profile.email
-            GSModule.userEmail = email
-            
-            GDBModule.user = user
-            GDBModule.userEmail = email
-            
-            GFSModule.user = user
-            GFSModule.userEmail = email            
+            GUser.user = user
+            GUser.email = email
+     
             GFSModule.registerUser()
 
             Auth.auth().signIn(with: credential) { (authResult, error) in
+                self.activityView.hideActivitiIndicator()
+
                 if error != nil {
                     return
                 }
@@ -117,7 +114,6 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 // User is signed in
                 debugPrint("----Firebase signin complete");
                 
-                self.activityView.hideActivitiIndicator()
                 self.initRootList()
             }
             
@@ -126,10 +122,8 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             activityView.hideActivitiIndicator()
             
             GDModule.service.authorizer = nil
-            GDModule.user = nil
-            
-            GSModule.user = nil
-            GSModule.userEmail = nil
+            GUser.user = nil
+            GUser.email = nil
         }
     }
 

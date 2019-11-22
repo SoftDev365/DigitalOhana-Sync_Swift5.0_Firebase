@@ -3,18 +3,13 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "closure #1 in GSExplorerController.loadCloud():GSExplorerController.swift">
+         contextName = "SignInViewController.sign(_:didSignInFor:withError:):SignInViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "result.items">
+               value = "user.name">
             </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
-         <PersistentStrings>
             <PersistentString
-               value = "result.items">
+               value = "authentication.clientID">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -41,16 +36,37 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
-      </ContextState>
-      <ContextState
-         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
-      </ContextState>
-      <ContextState
          contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
          <PersistentStrings>
             <PersistentString
                value = "file.name">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ImageZoomView.fitViewSizeToImage():ImageZoomView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "size">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhotoCollectionViewController.viewWillAppear(_:):PhotoCollectionViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "layout.itemSize">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in GSExplorerController.loadCloud():GSExplorerController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "result.items">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -84,26 +100,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
+         contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
       </ContextState>
       <ContextState
-         contextName = "SignInViewController.sign(_:didSignInFor:withError:):SignInViewController.swift">
+         contextName = "PhotoCollectionViewController.collectionView(_:numberOfItemsInSection:):PhotoCollectionViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "user.name">
-            </PersistentString>
-            <PersistentString
-               value = "authentication.clientID">
+               value = "result.items">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ImageZoomView.fitViewSizeToImage():ImageZoomView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "size">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

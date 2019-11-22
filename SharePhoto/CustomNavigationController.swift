@@ -16,11 +16,19 @@ class CustomNavigationController: UINavigationController {
             return true
         }
         
+        if visibleViewController is PhotoCollectionViewController {
+            return true
+        }
+        
         return false
     }
     
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if visibleViewController is ImageSlideViewController {
+            return .all
+        }
+        
+        if visibleViewController is PhotoCollectionViewController {
             return .all
         }
 

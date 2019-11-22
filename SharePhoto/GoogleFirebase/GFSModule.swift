@@ -10,12 +10,10 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 
 class GFSModule: NSObject {
-    static var user: GIDGoogleUser?
-    static var userEmail: String?
     static var userID: String?
     
     static func registerUser() {
-        guard let user = self.user else { return }
+        guard let user = GUser.user else { return }
 
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
