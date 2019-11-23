@@ -7,12 +7,20 @@
 //
 
 import UIKit
+import GoogleSignIn
+import GoogleAPIClientForREST
+import GTMSessionFetcher
+import Firebase
+import FirebaseStorage
 
 private let reuseIdentifier = "PhotoCell"
 
 class PhotoCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout  {
 
-    var collectionData = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+    var fileList: [StorageItem]?
+    let activityView = ActivityView()
+    
+    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,24 +30,48 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
 
         // Register cell classes
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        self.navigationController?.isNavigationBarHidden = false
+        //self.collectionView.automaticallyAdjustsScrollIndicatorInsets = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.collectionView.contentInset = UIEdgeInsets.zero
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        loadFileList()
+        self.collectionView.collectionViewLayout.invalidateLayout()
     }
-    */
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        activityView.relayoutPosition(self.view)
+    }
+    
+    func loadFileList() {
+        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
+        
+        GSModule.getImageFileList("central") { (fileList) in
+            self.fileList = fileList
+            self.collectionView.reloadData()
+            
+            self.activityView.hideActivitiIndicator()
+        }
+    }
 
     // MARK: UICollectionViewDataSource
-
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -47,22 +79,39 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return collectionData.count
+        guard let fileList = self.fileList else { return 0 }
+        
+        return fileList.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        guard let fileList = self.fileList else { return cell }
     
-        // Configure the cell
-        if let label = cell.viewWithTag(100) as? UILabel {
-            label.text = collectionData[indexPath.row]
+        let file = fileList[indexPath.row]
+        
+        if file.isFolder {
+            //cell.imgThumb.image = UIImage.init(named: "folder_icon")
+            //cell.lblTitle.text = file.title
+        } else {
+            // Configure the cell
+            if let label = cell.viewWithTag(2) as? UILabel {
+                label.text = file.title
+            }
+
+            GSModule.downloadImageFile(file.file) { (image) in
+                if let imgView = cell.viewWithTag(1) as? UIImageView {
+                    imgView.image = image
+                }
+            }
         }
-    
+        
         return cell
     }
 
     // MARK: UICollectionViewDelegate
+    /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
@@ -71,6 +120,14 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
+    }*/
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? ImageSlideViewController
+        {
+            vc.setFileList(self.fileList!, page:indexPath.row)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
@@ -90,20 +147,19 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (self.view.frame.size.width - 17)/3
+        let width = (self.view.frame.size.width - 8)/3
         return CGSize(width:width, height:width)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 5.0
+        return 2.0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout
         collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 5.0
+        return 2.0
     }
-
 }

@@ -77,7 +77,6 @@ class SignInViewController: UIViewController {
             navigationController?.pushViewController(vc, animated: true)
         }*/
         
-        
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoCVC") as? PhotoCollectionViewController
         {
             navigationController?.pushViewController(vc, animated: true)

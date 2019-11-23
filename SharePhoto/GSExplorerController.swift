@@ -20,14 +20,6 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     let activityView = ActivityView()
     
     var imagePicker = UIImagePickerController()
-    
-    override open var shouldAutorotate: Bool {
-        return false
-    }
-    
-    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
 
     func setFolderPath(_ folderID:String) {
         self.folderPath = folderID

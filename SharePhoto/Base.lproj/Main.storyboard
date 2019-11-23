@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="ldQ-qu-ERc" kind="relationship" relationship="rootViewController" id="aop-dL-yGf"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="p2G-Jw-QNh"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T70-z7-b0E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -36,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U8-VP-Q65">
-                                <rect key="frame" x="124" y="420" width="166" height="66"/>
+                                <rect key="frame" x="124" y="442" width="166" height="66"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="0U8-VP-Q65" secondAttribute="height" multiplier="80:32" id="acb-9I-kyy"/>
                                 </constraints>
@@ -151,18 +151,19 @@
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs6-SL-HBV">
-                                            <rect key="frame" x="129" y="139.5" width="42" height="21"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n6p-Du-QZS">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs6-SL-HBV">
+                                            <rect key="frame" x="0.0" y="279" width="300" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <constraints>
-                                        <constraint firstItem="hs6-SL-HBV" firstAttribute="centerX" secondItem="MUS-um-6OH" secondAttribute="centerX" id="RPO-zL-MIo"/>
-                                        <constraint firstItem="hs6-SL-HBV" firstAttribute="centerY" secondItem="MUS-um-6OH" secondAttribute="centerY" id="Raa-ot-sUp"/>
-                                    </constraints>
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="300" height="300"/>
                             </collectionViewCell>
