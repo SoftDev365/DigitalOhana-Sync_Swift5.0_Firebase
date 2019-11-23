@@ -14,7 +14,7 @@ import Firebase
 import FirebaseStorage
 
 class GSExplorerController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+
     var folderPath: String?
     var fileList: [StorageItem]?
     let activityView = ActivityView()
@@ -94,18 +94,6 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
     
     @objc func onUploadPhoto(_ sender: UIButton) {
         chooseImagePickerSource(sender)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        /*
-        if self.isMovingFromParent {
-            if self.folderPath == nil || self.folderPath == "central" {
-                GIDSignIn.sharedInstance()?.signOut()
-            }
-        }
-        */
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -204,7 +192,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         actions.append(("Cancel", UIAlertAction.Style.cancel))
 
         //self = ViewController
-        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this image?", actions: actions) { (index) in
+        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this item?", actions: actions) { (index) in
             print("call action \(index)")
 
             if index == 0 {

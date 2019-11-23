@@ -36,7 +36,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>For taking pictures</string>
+	<string>For take photo and upload</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app want to see all photo album pictures</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>REVERSED_CLIENT_ID</key>

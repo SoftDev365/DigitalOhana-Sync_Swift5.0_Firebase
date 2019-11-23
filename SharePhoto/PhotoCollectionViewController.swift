@@ -12,11 +12,13 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 import Firebase
 import FirebaseStorage
+import Photos
 
 private let reuseIdentifier = "PhotoCell"
 
-class PhotoCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout  {
+class PhotoCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
+    var folderPath: String?
     var fileList: [StorageItem]?
     let activityView = ActivityView()
     
@@ -31,9 +33,70 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         // Register cell classes
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
+        self.folderPath = "central"
+        
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationController?.isNavigationBarHidden = false
         //self.collectionView.automaticallyAdjustsScrollIndicatorInsets = false
+        
+        let buttonSize: CGFloat = 36
+        let button2 = UIButton(type: .custom)
+        button2.setImage(UIImage(named: "uploadphoto"), for: .normal)
+        button2.addTarget(self, action: #selector(onUploadPhoto), for: .touchUpInside)
+        button2.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
+        button2.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        button2.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+        let barButton2 = UIBarButtonItem(customView: button2)
+        
+        //self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
+        self.navigationItem.rightBarButtonItems = [barButton2]
+    
+        self.fetchCustomAlbumPhotos()
+    }
+
+    // get the assets in a collection
+    func getAssets(fromCollection collection: PHAssetCollection) -> PHFetchResult<PHAsset> {
+        let photosOptions = PHFetchOptions()
+        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+
+        return PHAsset.fetchAssets(in: collection, options: photosOptions)
+    }
+    
+    func fetchCustomAlbumPhotos()
+    {
+        let albumTitle = "Is"
+        let fetchOptions = PHFetchOptions()
+
+        fetchOptions.predicate = NSPredicate(format: "title = %@", albumTitle)
+        // get the albums list
+        //let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: nil)
+        let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+
+        // you can access the number of albums with
+        let acount = albumList.count
+        // individual objects with
+        let album = albumList.object(at: 0)
+        // eg. get the name of the album
+        let ss = album.localizedTitle
+
+        albumList.enumerateObjects { (coll, _, _) in
+            let result = self.getAssets(fromCollection: coll)
+            print("\(coll.localizedTitle): \(result.count)")
+            
+            // Now you can:
+            // access the count of assets in the PHFetchResult
+            let count1 = result.count
+
+            // get an asset (eg. in a UITableView)
+            //let asset = result.object(at: indexPath.row)
+
+            // get the "real" image
+            //PHCachingImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: nil) { (image, _) in
+                   // do something with the image
+                
+            //}
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,14 +112,14 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         activityView.relayoutPosition(self.view)
+    }
+    
+    @objc func onUploadPhoto(_ sender: UIButton) {
+        chooseImagePickerSource(sender)
     }
     
     func loadFileList() {
@@ -161,5 +224,123 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2.0
+    }
+    
+    func deleteFile(_ rowIndex: Int) {
+        let file = self.fileList![rowIndex]
+        
+        activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
+        GSModule.deleteFile(file: file.file) { (result) in
+            if result == true {
+                self.fileList!.remove(at: rowIndex)
+                self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
+                self.activityView.hideActivitiIndicator()
+            }
+        }
+    }
+    
+    func deleteRow(_ rowIndex: Int) {
+        var actions: [(String, UIAlertAction.Style)] = []
+        actions.append(("Delete", UIAlertAction.Style.default))
+        actions.append(("Cancel", UIAlertAction.Style.cancel))
+
+        //self = ViewController
+        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this item?", actions: actions) { (index) in
+            print("call action \(index)")
+
+            if index == 0 {
+                self.deleteFile(rowIndex)
+            }
+        }
+    }
+    
+    func chooseImagePickerSource(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+            self.openCamera()
+        }))
+
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
+            self.openGallary()
+        }))
+
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+
+        /*If you want work actionsheet on ipad
+        then you have to use popoverPresentationController to present the actionsheet,
+        otherwise app will crash on iPad */
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            alert.popoverPresentationController?.sourceView = sender
+            alert.popoverPresentationController?.sourceRect = sender.bounds
+            alert.popoverPresentationController?.permittedArrowDirections = .up
+        default:
+            break
+        }
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func openCamera() {
+        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera)) {
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera
+            imagePicker.allowsEditing = false
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        else {
+            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    func openGallary() {
+        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        imagePicker.allowsEditing = false
+        imagePicker.delegate = self
+        imagePicker.modalPresentationStyle = .fullScreen
+
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func uploadPhoto(_ imageData: Data, fileName: String?) {
+        if fileName == nil || fileName == "" {
+            return
+        }
+
+        activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
+        let imageFileName = fileName! + ".jpg"
+        GSModule.uploadFile(name: imageFileName, folderPath: self.folderPath!, data: imageData) { (success) in
+            self.activityView.hideActivitiIndicator()
+            self.loadFileList()
+        }
+    }
+    
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let tempImage: UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        let imageData = tempImage.jpegData(compressionQuality: 1.0)
+
+        picker.dismiss(animated: true) {
+            if( imageData != nil ) {
+
+                let alert = UIAlertController(title: "", message: "Input upload file name", preferredStyle: .alert)
+                alert.addTextField { (textField) in
+                    textField.text = ""
+                }
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                    let textField = alert!.textFields![0]
+                    self.uploadPhoto(imageData!, fileName: textField.text)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true) {
+        }
     }
 }

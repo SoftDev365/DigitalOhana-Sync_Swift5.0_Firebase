@@ -25,11 +25,13 @@
 		84BE63C923717A45002F2C66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63C723717A45002F2C66 /* Main.storyboard */; };
 		84BE63CB23717A48002F2C66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63CA23717A48002F2C66 /* Assets.xcassets */; };
 		84BE63CE23717A48002F2C66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63CC23717A48002F2C66 /* LaunchScreen.storyboard */; };
+		84C90ED12389F1FC00EFFCCE /* LocalAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */; };
 		84D004CE237913CD00929662 /* GSExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D004CC237913CD00929662 /* GSExplorerController.swift */; };
 		84D004CF237913CD00929662 /* GSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D004CD237913CD00929662 /* GSModule.swift */; };
 		84D85D482384A1710042C4DF /* GDBModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85D472384A1710042C4DF /* GDBModule.swift */; };
 		84FAF7082387CF0500A0E76C /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF7072387CF0500A0E76C /* PhotoCollectionViewController.swift */; };
 		84FAF70A23884E9100A0E76C /* GUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF70923884E9100A0E76C /* GUser.swift */; };
+		84FAF70C2389277300A0E76C /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF70B2389277300A0E76C /* AlbumModel.swift */; };
 		982CA3432B9D7D26CDCAC42C /* Pods_SharePhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,11 +58,13 @@
 		84BE63CA23717A48002F2C66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84BE63CD23717A48002F2C66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84BE63CF23717A48002F2C66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalAlbumVC.swift; sourceTree = "<group>"; };
 		84D004CC237913CD00929662 /* GSExplorerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSExplorerController.swift; sourceTree = "<group>"; };
 		84D004CD237913CD00929662 /* GSModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSModule.swift; sourceTree = "<group>"; };
 		84D85D472384A1710042C4DF /* GDBModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBModule.swift; sourceTree = "<group>"; };
 		84FAF7072387CF0500A0E76C /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
 		84FAF70923884E9100A0E76C /* GUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GUser.swift; sourceTree = "<group>"; };
+		84FAF70B2389277300A0E76C /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 		A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SharePhoto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -137,10 +141,12 @@
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
 				84D004CB2379137E00929662 /* ImageSlide */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
+				84FAF70B2389277300A0E76C /* AlbumModel.swift */,
 				84BE63C323717A45002F2C66 /* SceneDelegate.swift */,
 				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
 				843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */,
 				84D004CC237913CD00929662 /* GSExplorerController.swift */,
+				84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */,
 				84FAF7072387CF0500A0E76C /* PhotoCollectionViewController.swift */,
 				849A974223822F8D003E985E /* CustomNavigationController.swift */,
 				84BE63C723717A45002F2C66 /* Main.storyboard */,
@@ -315,9 +321,11 @@
 				84FAF7082387CF0500A0E76C /* PhotoCollectionViewController.swift in Sources */,
 				842568A1237D4C1100F4CD7A /* ImageSlideViewController.swift in Sources */,
 				840EEE002374215900361FB9 /* Alerts.swift in Sources */,
+				84C90ED12389F1FC00EFFCCE /* LocalAlbumVC.swift in Sources */,
 				84BE63C223717A45002F2C66 /* AppDelegate.swift in Sources */,
 				84BCF77C237268FE00367EAB /* GDModule.swift in Sources */,
 				849A974323822F8D003E985E /* CustomNavigationController.swift in Sources */,
+				84FAF70C2389277300A0E76C /* AlbumModel.swift in Sources */,
 				8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */,
 				84FAF70A23884E9100A0E76C /* GUser.swift in Sources */,
 				84D85D482384A1710042C4DF /* GDBModule.swift in Sources */,

@@ -11,6 +11,7 @@ import Firebase
 import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
+import Photos
 
 class SignInViewController: UIViewController {
     
@@ -45,7 +46,7 @@ class SignInViewController: UIViewController {
         
         replaceBackButtonToSignout()
         
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true   
     }
     
     func replaceBackButtonToSignout() {

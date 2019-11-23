@@ -3,15 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "SignInViewController.sign(_:didSignInFor:withError:):SignInViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "user.name">
-            </PersistentString>
-            <PersistentString
-               value = "authentication.clientID">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
       </ContextState>
       <ContextState
          contextName = "ImageSlideViewController.relayoutImageItemViews(_:):ImageSlideViewController.swift">
@@ -47,6 +39,14 @@
          contextName = "closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
       </ContextState>
       <ContextState
+         contextName = "PhotoCollectionViewController.viewWillAppear(_:):PhotoCollectionViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "layout.itemSize">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ImageZoomView.fitViewSizeToImage():ImageZoomView.swift">
          <PersistentStrings>
             <PersistentString
@@ -55,10 +55,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "PhotoCollectionViewController.viewWillAppear(_:):PhotoCollectionViewController.swift">
+         contextName = "PhotoCollectionViewController.fetchCustomAlbumPhotos():PhotoCollectionViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "layout.itemSize">
+               value = "collection.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -114,7 +114,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
+         contextName = "SignInViewController.sign(_:didSignInFor:withError:):SignInViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user.name">
+            </PersistentString>
+            <PersistentString
+               value = "authentication.clientID">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>
