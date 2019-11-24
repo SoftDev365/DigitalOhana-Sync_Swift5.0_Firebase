@@ -34,38 +34,6 @@
             endingLineNumber = "83"
             landmarkName = "fetchCustomAlbumPhotos()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D911FA68-9665-4486-90CD-665CD9247644 - ecc4829b059cb8a2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Family_Media_Sync.PhotoCollectionViewController.fetchCustomAlbumPhotos() -&gt; ()"
-                  moduleName = "Family Media Sync"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/PhotoCollectionViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "83"
-                  endingLineNumber = "83"
-                  offsetFromSymbolStart = "912">
-               </Location>
-               <Location
-                  uuid = "D911FA68-9665-4486-90CD-665CD9247644 - afa54dfafd6af179"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.PHAssetCollection, Swift.Int, Swift.UnsafeMutablePointer&lt;ObjectiveC.ObjCBool&gt;) -&gt; () in Family_Media_Sync.PhotoCollectionViewController.fetchCustomAlbumPhotos() -&gt; ()"
-                  moduleName = "Family Media Sync"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/PhotoCollectionViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "84"
-                  endingLineNumber = "84"
-                  offsetFromSymbolStart = "148">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

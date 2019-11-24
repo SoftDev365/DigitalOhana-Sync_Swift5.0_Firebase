@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/MainVC.swift">
+   </FileRef>
+   <FileRef
       location = "group:SharePhoto.xcodeproj">
    </FileRef>
    <FileRef

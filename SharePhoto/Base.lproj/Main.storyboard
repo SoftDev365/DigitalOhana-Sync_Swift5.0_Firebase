@@ -24,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="-3813" y="-277"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--MainVC-->
         <scene sceneID="sSw-wc-f9U">
             <objects>
-                <tabBarController id="j6d-kl-oFC" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainVC" id="j6d-kl-oFC" customClass="MainVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GtA-Wg-L45">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

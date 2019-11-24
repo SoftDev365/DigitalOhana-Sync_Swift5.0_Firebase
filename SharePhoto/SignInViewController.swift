@@ -76,11 +76,16 @@ class SignInViewController: UIViewController {
             let folderPath = "central"
             vc.setFolderPath(folderPath)            
             navigationController?.pushViewController(vc, animated: true)
-        }*/
+        }
         
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoCVC") as? PhotoCollectionViewController
         {
             navigationController?.pushViewController(vc, animated: true)
+        }*/
+        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainVC {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
@@ -112,7 +117,7 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 }
                 
                 // User is signed in
-                debugPrint("----Firebase signin complete");
+                debugPrint("----Firebase signin complete-----");
                 
                 self.initRootList()
             }
