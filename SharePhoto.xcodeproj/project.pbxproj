@@ -142,14 +142,12 @@
 				846589A92376291D0050AE40 /* Common */,
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
 				84D004CB2379137E00929662 /* ImageSlide */,
+				84D7CE3D238B3D7E00C15CF6 /* TableVC */,
+				84D7CE3E238B3DAA00C15CF6 /* CollectionVC */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
 				84FAF70B2389277300A0E76C /* AlbumModel.swift */,
 				84BE63C323717A45002F2C66 /* SceneDelegate.swift */,
 				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
-				843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */,
-				84D004CC237913CD00929662 /* GSExplorerController.swift */,
-				84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */,
-				84FAF7072387CF0500A0E76C /* PhotoCollectionViewController.swift */,
 				849A974223822F8D003E985E /* CustomNavigationController.swift */,
 				84BE63C723717A45002F2C66 /* Main.storyboard */,
 				84BE63CC23717A48002F2C66 /* LaunchScreen.storyboard */,
@@ -169,6 +167,24 @@
 				84D7CE3B238AD47400C15CF6 /* GalleryVC.swift */,
 			);
 			path = ImageSlide;
+			sourceTree = "<group>";
+		};
+		84D7CE3D238B3D7E00C15CF6 /* TableVC */ = {
+			isa = PBXGroup;
+			children = (
+				843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */,
+				84D004CC237913CD00929662 /* GSExplorerController.swift */,
+			);
+			path = TableVC;
+			sourceTree = "<group>";
+		};
+		84D7CE3E238B3DAA00C15CF6 /* CollectionVC */ = {
+			isa = PBXGroup;
+			children = (
+				84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */,
+				84FAF7072387CF0500A0E76C /* PhotoCollectionViewController.swift */,
+			);
+			path = CollectionVC;
 			sourceTree = "<group>";
 		};
 		84FAF70623877F4400A0E76C /* GoogleFirebase */ = {

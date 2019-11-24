@@ -21,7 +21,7 @@ class CustomNavigationController: UINavigationController {
             return true
         }
         
-        return true
+        return false
     }
     
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {

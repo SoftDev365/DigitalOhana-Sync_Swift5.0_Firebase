@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ufD-xw-e8s">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_5" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
@@ -18,27 +18,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Xqh-NJ-7MM"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Shared Storage" id="bqs-i0-9vI"/>
+                    <tabBarItem key="tabBarItem" title="Shared Storage" image="person.icloud" catalog="system" id="bqs-i0-9vI"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nJB-aE-oSr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3813" y="-277"/>
-        </scene>
-        <!--Family Album-->
-        <scene sceneID="lCa-yj-Afj">
-            <objects>
-                <viewController id="jwk-H3-Cvd" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="uzM-4v-Jow">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="Zd1-78-lmY"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Family Album" id="vVj-aw-I2u"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ceC-mz-hbk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3812" y="-944"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="sSw-wc-f9U">
@@ -50,18 +34,19 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="jwk-H3-Cvd" kind="relationship" relationship="viewControllers" id="H1K-zC-LHo"/>
-                        <segue destination="K3T-KM-Pfn" kind="relationship" relationship="viewControllers" id="xXh-hq-X5h"/>
+                        <segue destination="ufD-xw-e8s" kind="relationship" relationship="viewControllers" id="2Ur-2W-LUl"/>
+                        <segue destination="K3T-KM-Pfn" kind="relationship" relationship="viewControllers" id="Klk-dS-0UP"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iSt-BY-dtv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4712" y="-627"/>
+            <point key="canvasLocation" x="-4678" y="-630"/>
         </scene>
-        <!--Custom Navigation Controller-->
+        <!--Family Album-->
         <scene sceneID="Mmi-7t-2LI">
             <objects>
                 <navigationController id="ufD-xw-e8s" customClass="CustomNavigationController" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Family Album" image="photo.on.rectangle" catalog="system" id="IC2-r9-2qF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nlm-2k-2rZ">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -75,7 +60,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T70-z7-b0E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2580" y="-538"/>
+            <point key="canvasLocation" x="-3813" y="-1015"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -114,7 +99,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1771" y="-538"/>
+            <point key="canvasLocation" x="-5522" y="-630"/>
         </scene>
         <!--Explorer Controller-->
         <scene sceneID="jhT-8g-T0d">
@@ -246,7 +231,7 @@
             </objects>
             <point key="canvasLocation" x="-988" y="201"/>
         </scene>
-        <!--Local AlbumVC-->
+        <!--Family Album-->
         <scene sceneID="Rvl-nP-8yl">
             <objects>
                 <collectionViewController id="sgj-ax-9uQ" customClass="LocalAlbumVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
@@ -308,11 +293,17 @@
                             <outlet property="delegate" destination="sgj-ax-9uQ" id="KdU-cL-1R7"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="EJz-oU-XU7"/>
+                    <navigationItem key="navigationItem" title="Family Album" id="EJz-oU-XU7">
+                        <barButtonItem key="rightBarButtonItem" title="Add" image="plus" catalog="system" id="rpv-4o-d6F">
+                            <connections>
+                                <action selector="onAddPhoto:" destination="sgj-ax-9uQ" id="kGx-hq-kvC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kkN-JJ-TYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-226.08695652173915" y="200.89285714285714"/>
+            <point key="canvasLocation" x="-2893" y="-1015"/>
         </scene>
         <!--Explorer Controller-->
         <scene sceneID="j8E-qI-oQH">
@@ -466,10 +457,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtO-Gf-s63" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="475" y="-538"/>
+            <point key="canvasLocation" x="-2019" y="-1015"/>
         </scene>
     </scenes>
     <resources>
         <image name="noimage" width="240" height="240"/>
+        <image name="person.icloud" catalog="system" width="64" height="44"/>
+        <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
+        <image name="plus" catalog="system" width="64" height="56"/>
     </resources>
 </document>

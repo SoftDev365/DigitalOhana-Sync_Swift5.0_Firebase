@@ -35,20 +35,12 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationController?.isNavigationBarHidden = false
         //self.collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        
-        let buttonSize: CGFloat = 36
-        let button2 = UIButton(type: .custom)
-        button2.setImage(UIImage(named: "uploadphoto"), for: .normal)
-        button2.addTarget(self, action: #selector(onUploadPhoto), for: .touchUpInside)
-        button2.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
-        button2.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
-        button2.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
-        let barButton2 = UIBarButtonItem(customView: button2)
-        
-        //self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
-        self.navigationItem.rightBarButtonItems = [barButton2]
 
         self.fetchFamilyAlbumPhotos()
+    }
+    
+    @IBAction func onAddPhoto(_ sender: UIButton) {
+        chooseImagePickerSource(sender)
     }
 
     // get the assets in a collection
@@ -59,8 +51,8 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
 
         return PHAsset.fetchAssets(in: collection, options: photosOptions)
     }
-
-    func fetchFamilyAlbumPhotos() {
+    
+    func fetchFamilyAlbumCollection() -> PHAssetCollection? {
         let albumTitle = "Is"
         let fetchOptions = PHFetchOptions()
 
@@ -72,15 +64,21 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         // you can access the number of albums with
         let albumCount = albumList.count
         if albumCount <= 0 {
-            return
+            return nil
         }
 
         // individual objects with
-        let firstAlbum = albumList.object(at: 0)
+        let familyAlbum = albumList.object(at: 0)
+        
+        return familyAlbum
+    }
 
+    func fetchFamilyAlbumPhotos() {
+        guard let familyAlbum = fetchFamilyAlbumCollection() else { return }
+        
         // get the name of the album
         // let albumTitle = firstAlbum.localizedTitle
-        albumPhotos = self.getAssets(fromCollection: firstAlbum)
+        albumPhotos = self.getAssets(fromCollection: familyAlbum)
         
         self.collectionView.reloadData()
 
@@ -107,6 +105,8 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
+        
+        self.tabBarController?.tabBar.isHidden = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -119,10 +119,6 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         super.viewDidLayoutSubviews()
         
         activityView.relayoutPosition(self.view)
-    }
-    
-    @objc func onUploadPhoto(_ sender: UIButton) {
-        chooseImagePickerSource(sender)
     }
 
     // MARK: UICollectionViewDataSource
@@ -219,7 +215,7 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
     }
     
     func chooseImagePickerSource(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Choose Photo Source", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
             self.openCamera()
         }))
@@ -280,26 +276,39 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let tempImage: UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        let imageData = tempImage.jpegData(compressionQuality: 1.0)
-
-        picker.dismiss(animated: true) {
-            if( imageData != nil ) {
-
-                let alert = UIAlertController(title: "", message: "Input upload file name", preferredStyle: .alert)
-                alert.addTextField { (textField) in
-                    textField.text = ""
-                }
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-                    let textField = alert!.textFields![0]
-                    self.uploadPhoto(imageData!, fileName: textField.text)
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
+    /*
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            //showAlertWith(title: "Save error", message: error.localizedDescription)
+            print(error)
+        } else {
+            //showAlertWith(title: "Saved!", message: "Your image has been saved to your photos.")
+            fetchFamilyAlbumPhotos()
         }
+    }*/
+    
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let imagePhoto: UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        
+        //UIImageWriteToSavedPhotosAlbum(tempImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        
+        guard let familyAlbum = fetchFamilyAlbumCollection() else { return }
+        
+        PHPhotoLibrary.shared().performChanges({
+            let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: imagePhoto)
+            let assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset!
+            let albumChangeRequest = PHAssetCollectionChangeRequest(for: familyAlbum)
+            let enumeration: NSArray = [assetPlaceholder]
+            albumChangeRequest!.addAssets(enumeration)
+        }, completionHandler: { (bSucces, error) in
+            DispatchQueue.main.sync {
+                // update UI
+                self.fetchFamilyAlbumPhotos()
+            }
+        })
+        
+        picker.dismiss(animated: true, completion: nil)
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
