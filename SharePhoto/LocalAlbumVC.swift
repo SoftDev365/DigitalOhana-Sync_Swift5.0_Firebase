@@ -1,6 +1,6 @@
 //
-//  PhotoCollectionViewController.swift
-//  SharePhoto
+//  LocalAlbumVC.swift
+//  iPhone Family Album
 //
 //  Created by Admin on 11/22/19.
 //  Copyright © 2019 Admin. All rights reserved.
@@ -16,10 +16,9 @@ import Photos
 
 private let reuseIdentifier = "PhotoCell"
 
-class PhotoCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
+class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
-    var folderPath: String?
-    var fileList: [StorageItem]?
+    var albumPhotos: PHFetchResult<PHAsset>? = nil
     let activityView = ActivityView()
     
     var imagePicker = UIImagePickerController()
@@ -32,8 +31,6 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
 
         // Register cell classes
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        self.folderPath = "central"
         
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationController?.isNavigationBarHidden = false
@@ -50,8 +47,8 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
         
         //self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
         self.navigationItem.rightBarButtonItems = [barButton2]
-    
-        self.fetchCustomAlbumPhotos()
+
+        self.fetchFamilyAlbumPhotos()
     }
 
     // get the assets in a collection
@@ -62,9 +59,8 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
 
         return PHAsset.fetchAssets(in: collection, options: photosOptions)
     }
-    
-    func fetchCustomAlbumPhotos()
-    {
+
+    func fetchFamilyAlbumPhotos() {
         let albumTitle = "Is"
         let fetchOptions = PHFetchOptions()
 
@@ -74,41 +70,48 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
         let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
 
         // you can access the number of albums with
-        let acount = albumList.count
-        // individual objects with
-        let album = albumList.object(at: 0)
-        // eg. get the name of the album
-        let ss = album.localizedTitle
+        let albumCount = albumList.count
+        if albumCount <= 0 {
+            return
+        }
 
+        // individual objects with
+        let firstAlbum = albumList.object(at: 0)
+
+        // get the name of the album
+        // let albumTitle = firstAlbum.localizedTitle
+        albumPhotos = self.getAssets(fromCollection: firstAlbum)
+        
+        self.collectionView.reloadData()
+
+        /*
         albumList.enumerateObjects { (coll, _, _) in
             let result = self.getAssets(fromCollection: coll)
-            print("\(coll.localizedTitle): \(result.count)")
-            
-            // Now you can:
-            // access the count of assets in the PHFetchResult
-            let count1 = result.count
+            print("\(coll.localizedTitle ?? "noname"): \(result.count)")
 
             // get an asset (eg. in a UITableView)
-            //let asset = result.object(at: indexPath.row)
-
+            let asset = result.object(at: indexPath.row)
             // get the "real" image
-            //PHCachingImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: nil) { (image, _) in
-                   // do something with the image
-                
-            //}
-        }
+            PHCachingImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: nil) { (image, _) in
+                // do something with the image
+            }
+        }*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.collectionView.contentInset = UIEdgeInsets.zero
+        
+        // manually roate to portrait  mode
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        loadFileList()
+
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -121,17 +124,6 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
     @objc func onUploadPhoto(_ sender: UIButton) {
         chooseImagePickerSource(sender)
     }
-    
-    func loadFileList() {
-        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
-        
-        GSModule.getImageFileList("central") { (fileList) in
-            self.fileList = fileList
-            self.collectionView.reloadData()
-            
-            self.activityView.hideActivitiIndicator()
-        }
-    }
 
     // MARK: UICollectionViewDataSource
     
@@ -140,77 +132,49 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
         return 1
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let fileList = self.fileList else { return 0 }
+        guard let photoList = self.albumPhotos else { return 0 }
         
-        return fileList.count
+        return photoList.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        guard let fileList = self.fileList else { return cell }
+        guard let photoList = self.albumPhotos else { return cell }
     
-        let file = fileList[indexPath.row]
-        
-        if file.isFolder {
-            //cell.imgThumb.image = UIImage.init(named: "folder_icon")
-            //cell.lblTitle.text = file.title
-        } else {
-            // Configure the cell
-            if let label = cell.viewWithTag(2) as? UILabel {
-                label.text = file.title
-            }
+        let asset = photoList.object(at: indexPath.row)
 
-            GSModule.downloadImageFile(file.file) { (image) in
-                if let imgView = cell.viewWithTag(1) as? UIImageView {
-                    imgView.image = image
-                }
+        // Configure the cell
+        if let label = cell.viewWithTag(2) as? UILabel {
+            label.text = "title"
+        }
+        
+        //let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+        let width = UIScreen.main.scale*(self.view.frame.size.width - 5)/3
+        let size = CGSize(width:width, height:width)
+
+        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+            if let imgView = cell.viewWithTag(1) as? UIImageView {
+                imgView.image = image
             }
         }
         
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }*/
-    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? ImageSlideVC
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? GalleryVC
         {
-            vc.setFileList(self.fileList!, page:indexPath.row)
+            vc.setPhotoAlbum(self.albumPhotos!, page:indexPath.row)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    /*
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }*/
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (self.view.frame.size.width - 8)/3
+        let width = (self.view.frame.size.width - 5)/3
         return CGSize(width:width, height:width)
     }
 
@@ -227,16 +191,16 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
     }
     
     func deleteFile(_ rowIndex: Int) {
-        let file = self.fileList![rowIndex]
-        
-        activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
-        GSModule.deleteFile(file: file.file) { (result) in
-            if result == true {
-                self.fileList!.remove(at: rowIndex)
-                self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
-                self.activityView.hideActivitiIndicator()
-            }
-        }
+        guard let photoList = self.albumPhotos else { return }
+        let asset = photoList.object(at: rowIndex)
+        let arrayToDelete = NSArray(object: asset)
+
+        PHPhotoLibrary.shared().performChanges( {
+            PHAssetChangeRequest.deleteAssets(arrayToDelete)},
+            completionHandler: {
+                success, error in
+                print("Finished deleting asset. %@", (success ? "Success" : error!))
+        })
     }
     
     func deleteRow(_ rowIndex: Int) {
@@ -311,9 +275,8 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
 
         activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
         let imageFileName = fileName! + ".jpg"
-        GSModule.uploadFile(name: imageFileName, folderPath: self.folderPath!, data: imageData) { (success) in
+        GSModule.uploadFile(name: imageFileName, folderPath: "central", data: imageData) { (success) in
             self.activityView.hideActivitiIndicator()
-            self.loadFileList()
         }
     }
     

@@ -13,10 +13,10 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 import Firebase
 import FirebaseStorage
+import Photos
 
 class ImageZoomView: UIScrollView, UIScrollViewDelegate {
-    
-    var file: StorageReference?
+
     var imgView: UIImageView?
 
     required init?(coder: NSCoder) {
@@ -30,7 +30,29 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
     init(frame: CGRect, file: StorageReference) {
         super.init(frame: frame)
 
-        self.file = file
+        initControls()
+
+        GSModule.downloadImageFile(file) { (image) in
+            self.imgView!.image = image
+            self.imgView!.contentMode = .scaleAspectFit
+            self.fitViewSizeToImage()
+        }
+    }
+    
+    init(frame: CGRect, asset: PHAsset) {
+        super.init(frame: frame)
+
+        initControls()
+        
+        let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+            self.imgView!.image = image
+            self.imgView!.contentMode = .scaleAspectFit
+            self.fitViewSizeToImage()
+        }
+    }
+    
+    func initControls() {
         self.delegate = self
         
         self.imgView = UIImageView()
@@ -47,23 +69,20 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         self.maximumZoomScale = 5.0
         self.showsHorizontalScrollIndicator = false
         self.showsVerticalScrollIndicator = false
-        
-        GSModule.downloadImageFile(file) { (image) in
-            self.imgView!.image = image
-            self.imgView!.contentMode = .scaleAspectFit
-            self.fitViewSizeToImage()
-        }
     }
     
-    func fitViewSizeToImage() {
+    func recalcZoomScale() {
+        
+        let orgScale = self.zoomScale
+        
         self.zoomScale = 1.0
         
         guard let imgView = self.imgView else { return }
         guard let image = imgView.image else { return }
 
         let size = self.bounds.size
-        let wr = size.width/image.size.width
-        let hr = size.height/image.size.height
+        let wr = UIScreen.main.scale*size.width/image.size.width
+        let hr = UIScreen.main.scale*size.height/image.size.height
         
         if wr < hr {
             let w = size.width
@@ -80,6 +99,15 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
             self.minimumZoomScale = 1.0
             self.maximumZoomScale = 1/hr
         }
+
+        self.zoomScale = orgScale
+        
+        moveCotentToCenter()
+    }
+    
+    func fitViewSizeToImage() {
+        self.zoomScale = 1.0
+        recalcZoomScale()
         self.zoomScale = 1.0
         
         moveCotentToCenter()

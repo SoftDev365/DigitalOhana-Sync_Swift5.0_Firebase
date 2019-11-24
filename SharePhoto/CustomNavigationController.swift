@@ -11,23 +11,26 @@ import UIKit
 class CustomNavigationController: UINavigationController {
 
     override open var shouldAutorotate: Bool {
-
-        if visibleViewController is ImageSlideViewController {
+        if visibleViewController is ImageSlideVC {
             return true
         }
-        
+        if visibleViewController is GalleryVC {
+            return true
+        }
         if visibleViewController is PhotoCollectionViewController {
             return true
         }
         
-        return false
+        return true
     }
     
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if visibleViewController is ImageSlideViewController {
+        if visibleViewController is ImageSlideVC {
             return .all
         }
-        
+        if visibleViewController is GalleryVC {
+            return .all
+        }
         if visibleViewController is PhotoCollectionViewController {
             return .all
         }

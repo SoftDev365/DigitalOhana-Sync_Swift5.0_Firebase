@@ -1,6 +1,6 @@
 //
-//  ImageSlideViewController.swift
-//  SharePhoto
+//  ImageSlideVC.swift
+//  Storage Photo Gallery
 //
 //  Created by Admin on 11/14/19.
 //  Copyright © 2019 Admin. All rights reserved.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageSlideViewController: UIViewController, UIScrollViewDelegate {
+class ImageSlideVC: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrView: UIScrollView!
     @IBOutlet weak var contentView: UIView!

@@ -3,7 +3,15 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
+         contextName = "SignInViewController.sign(_:didSignInFor:withError:):SignInViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user.name">
+            </PersistentString>
+            <PersistentString
+               value = "authentication.clientID">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "ImageSlideViewController.relayoutImageItemViews(_:):ImageSlideViewController.swift">
@@ -13,6 +21,17 @@
             </PersistentString>
             <PersistentString
                value = "self.imgViewList">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GalleryVC.recalcZoomScaleOfPhotos():GalleryVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrView.bounds">
+            </PersistentString>
+            <PersistentString
+               value = "self.view.bounds">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -39,6 +58,14 @@
          contextName = "closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
       </ContextState>
       <ContextState
+         contextName = "PhotoCollectionViewController.fetchCustomAlbumPhotos():PhotoCollectionViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "collection.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "PhotoCollectionViewController.viewWillAppear(_:):PhotoCollectionViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -50,15 +77,13 @@
          contextName = "ImageZoomView.fitViewSizeToImage():ImageZoomView.swift">
          <PersistentStrings>
             <PersistentString
+               value = "image.size">
+            </PersistentString>
+            <PersistentString
                value = "size">
             </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "PhotoCollectionViewController.fetchCustomAlbumPhotos():PhotoCollectionViewController.swift">
-         <PersistentStrings>
             <PersistentString
-               value = "collection.count">
+               value = "UIScreen.main.scale">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -67,6 +92,20 @@
          <PersistentStrings>
             <PersistentString
                value = "result.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ImageZoomView.recalcZoomScale():ImageZoomView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.bounds">
+            </PersistentString>
+            <PersistentString
+               value = "size">
+            </PersistentString>
+            <PersistentString
+               value = "self.frame">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -100,27 +139,25 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ImageZoomView.init(frame:asset:):ImageZoomView.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
       </ContextState>
       <ContextState
          contextName = "PhotoCollectionViewController.collectionView(_:numberOfItemsInSection:):PhotoCollectionViewController.swift">
       </ContextState>
       <ContextState
+         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "result.items">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "SignInViewController.sign(_:didSignInFor:withError:):SignInViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "user.name">
-            </PersistentString>
-            <PersistentString
-               value = "authentication.clientID">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
