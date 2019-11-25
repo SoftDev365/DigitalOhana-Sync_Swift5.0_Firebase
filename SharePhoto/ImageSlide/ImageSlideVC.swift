@@ -37,7 +37,7 @@ class ImageSlideVC: UIViewController, UIScrollViewDelegate {
         self.view.addGestureRecognizer(tap)
         
         self.contentView.removeFromSuperview()
-        self.tabBarController?.tabBar.isHidden = true
+        //self.tabBarController?.tabBar.isHidden = true
     }
     
     @objc func handleTap(sender: UITapGestureRecognizer) {

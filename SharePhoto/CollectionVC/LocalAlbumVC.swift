@@ -105,8 +105,8 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
-        
-        self.tabBarController?.tabBar.isHidden = false
+
+        //self.tabBarController?.tabBar.isHidden = false
     }
 
     override func viewDidAppear(_ animated: Bool) {

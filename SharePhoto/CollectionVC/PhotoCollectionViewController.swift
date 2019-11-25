@@ -50,53 +50,6 @@ class PhotoCollectionViewController: UICollectionViewController, UIImagePickerCo
         
         //self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
         self.navigationItem.rightBarButtonItems = [barButton2]
-    
-        self.fetchCustomAlbumPhotos()
-    }
-
-    // get the assets in a collection
-    func getAssets(fromCollection collection: PHAssetCollection) -> PHFetchResult<PHAsset> {
-        let photosOptions = PHFetchOptions()
-        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-        photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
-
-        return PHAsset.fetchAssets(in: collection, options: photosOptions)
-    }
-    
-    func fetchCustomAlbumPhotos()
-    {
-        let albumTitle = "Is"
-        let fetchOptions = PHFetchOptions()
-
-        fetchOptions.predicate = NSPredicate(format: "title = %@", albumTitle)
-        // get the albums list
-        //let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: nil)
-        let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
-
-        // you can access the number of albums with
-        let acount = albumList.count
-        // individual objects with
-        let album = albumList.object(at: 0)
-        // eg. get the name of the album
-        let ss = album.localizedTitle
-
-        albumList.enumerateObjects { (coll, _, _) in
-            let result = self.getAssets(fromCollection: coll)
-            print("\(coll.localizedTitle): \(result.count)")
-            
-            // Now you can:
-            // access the count of assets in the PHFetchResult
-            let count1 = result.count
-
-            // get an asset (eg. in a UITableView)
-            //let asset = result.object(at: indexPath.row)
-
-            // get the "real" image
-            //PHCachingImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: nil) { (image, _) in
-                   // do something with the image
-                
-            //}
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

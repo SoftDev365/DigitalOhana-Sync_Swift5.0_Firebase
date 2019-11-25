@@ -69,23 +69,11 @@ class SignInViewController: UIViewController {
     }
     
     func initRootList() {
-        // Safe Present
-        /*
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GSExpVC") as? GSExplorerController
-        {
-            let folderPath = "central"
-            vc.setFolderPath(folderPath)            
-            navigationController?.pushViewController(vc, animated: true)
-        }
-        
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoCVC") as? PhotoCollectionViewController
-        {
-            navigationController?.pushViewController(vc, animated: true)
-        }*/
-        
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainVC {
+        // Safe Present        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavRootVC") as? NavigationRootVC {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
+            //navigationController?.pushViewController(vc, animated: true)
         }
     }
     
