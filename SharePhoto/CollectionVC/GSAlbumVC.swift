@@ -139,7 +139,7 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     }*/
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? ImageSlideVC
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC
         {
             vc.setFileList(self.fileList!, page:indexPath.row)
             navigationController?.pushViewController(vc, animated: true)

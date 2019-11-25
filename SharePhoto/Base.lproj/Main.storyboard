@@ -399,10 +399,10 @@
             </objects>
             <point key="canvasLocation" x="-1351" y="-258"/>
         </scene>
-        <!--Image SlideVC-->
+        <!--GalleryVC-->
         <scene sceneID="VF5-e8-hl2">
             <objects>
-                <viewController storyboardIdentifier="SlideVC" id="yaW-V9-67A" customClass="ImageSlideVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SlideVC" id="yaW-V9-67A" customClass="GSGalleryVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9bl-rs-Hl4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -446,10 +446,10 @@
             </objects>
             <point key="canvasLocation" x="-2988" y="-277"/>
         </scene>
-        <!--GalleryVC-->
+        <!--Local GalleryVC-->
         <scene sceneID="Bnw-MG-mDe">
             <objects>
-                <viewController storyboardIdentifier="GalleryVC" id="MqG-H5-2aI" customClass="GalleryVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GalleryVC" id="MqG-H5-2aI" customClass="LocalGalleryVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AQO-Ov-UOs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

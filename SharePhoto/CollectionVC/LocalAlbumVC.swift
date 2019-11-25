@@ -97,7 +97,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? GalleryVC
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? LocalGalleryVC
         {
             vc.setPhotoAlbum(self.albumPhotos!, page:indexPath.row)
             navigationController?.pushViewController(vc, animated: true)

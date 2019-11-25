@@ -1,21 +1,23 @@
 //
-//  ImageSlideVC.swift
-//  Storage Photo Gallery
+//  LocalGalleryVC.swift
+//  Local Photo Album Gallery
 //
 //  Created by Admin on 11/14/19.
 //  Copyright © 2019 Admin. All rights reserved.
 //
 
 import UIKit
+import Photos
 
-class ImageSlideVC: UIViewController, UIScrollViewDelegate {
+class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     
-    var fileList: [StorageItem]!
+    var albumPhotos: PHFetchResult<PHAsset>? = nil
     var imgViewList: [ImageZoomView]?
     var curPage: Int = 0
+    var bIsFullscreen = false
     
     override open var shouldAutorotate: Bool {
         return true
@@ -25,11 +27,11 @@ class ImageSlideVC: UIViewController, UIScrollViewDelegate {
         return .all
     }
 
-    func setFileList(_ list: [StorageItem], page:Int) {
-        self.fileList = list
+    func setPhotoAlbum(_ photos: PHFetchResult<PHAsset>, page:Int) {
+        self.albumPhotos = photos
         self.curPage = page
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +39,6 @@ class ImageSlideVC: UIViewController, UIScrollViewDelegate {
         self.view.addGestureRecognizer(tap)
         
         self.contentView.removeFromSuperview()
-        //self.tabBarController?.tabBar.isHidden = true
     }
     
     @objc func handleTap(sender: UITapGestureRecognizer) {
@@ -45,7 +46,14 @@ class ImageSlideVC: UIViewController, UIScrollViewDelegate {
             return
         }
         
-        self.navigationController!.isNavigationBarHidden = !self.navigationController!.isNavigationBarHidden
+        bIsFullscreen = !bIsFullscreen
+
+        self.navigationController!.isNavigationBarHidden = bIsFullscreen
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return bIsFullscreen
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,18 +63,12 @@ class ImageSlideVC: UIViewController, UIScrollViewDelegate {
     }
     
     func initContentImageViews() {
-        if self.imgViewList != nil {
-            return
-        }
+        guard let photoList = self.albumPhotos else { return }
         
         self.imgViewList = [ImageZoomView]()
 
-        for i in 0...(fileList.count-1) {
-            if fileList![i].isFolder == true {
-                continue
-            }
-
-            let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), file: fileList[i].file)
+        for i in 0...(photoList.count-1) {
+            let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), asset: photoList[i])
             self.imgViewList!.append(item)
             self.scrView.addSubview(item)
         }
@@ -74,63 +76,62 @@ class ImageSlideVC: UIViewController, UIScrollViewDelegate {
         self.scrView.isPagingEnabled = true
         self.scrView.delegate = self
         
-        self.relayoutImageItemViews(self.scrView.bounds.size)
+        self.relayoutImageViews(false)
     }
     
-    func relayoutImageItemViews(_ size: CGSize) {
-        if self.imgViewList == nil {
-            return
-        }
-
+    func relayoutImageViews(_ recalcZoomScale:Bool) {
+        guard let imgViewList = self.imgViewList else { return }
+        
+        let size = self.scrView.bounds.size
         let w = size.width
         let h = size.height
-
-        for i in 0...(self.imgViewList!.count-1) {
+        
+        for i in 0...(imgViewList.count-1) {
+            let item = imgViewList[i]
             let rect = CGRect(x: w*CGFloat(i), y: 0, width: w, height: h)
-            //self.imgViewList![i].setZoomScale(1.0, animated: false)
-            self.imgViewList![i].frame = rect
-            //self.imgViewList![i].setZoomScale(1.0, animated: false)
-            self.imgViewList![i].fitViewSizeToImage()
+            item.frame = rect
+            
+            if recalcZoomScale {
+                item.recalcZoomScale()
+            }
         }
         
-        //self.contentView.frame = CGRect(x: 0, y: 0, width: w*CGFloat(self.imgViewList!.count), height: h)
-        self.scrView.contentSize = CGSize(width: w*CGFloat(self.imgViewList!.count), height: h)
+        self.scrView.contentSize = CGSize(width: w*CGFloat(imgViewList.count), height: h)
         self.scrView.contentOffset = CGPoint(x: w*CGFloat(curPage), y: 0)
         self.scrView.isPagingEnabled = true
         self.scrView.delegate = self
     }
     
+    func recalcZoomScaleOfPhotos() {
+        relayoutImageViews(true)
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if self.imgViewList == nil {
-            return
-        }
-        
+        guard let imgViewList = self.imgViewList else { return }
+
         curPage = (Int)(self.scrView.contentOffset.x / self.scrView.bounds.width)
         
-        for i in 0...(imgViewList!.count-1) {
-            let item = imgViewList![i]
+        for i in 0...(imgViewList.count-1) {
+            let item = imgViewList[i]
             
             if i != curPage {
-                //item.setZoomScale(1.0, animated: false)
                 item.fitViewSizeToImage()
             }
         }
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
-        //self.relayoutImageItemViews(size)
+
         curPage = (Int)(self.scrView.contentOffset.x / self.scrView.bounds.width)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        recalcZoomScaleOfPhotos()
+    }
+    
+    @IBAction func onBtnUpload(_ sender: Any) {
         
-        self.relayoutImageItemViews(self.scrView.bounds.size)
     }
 }

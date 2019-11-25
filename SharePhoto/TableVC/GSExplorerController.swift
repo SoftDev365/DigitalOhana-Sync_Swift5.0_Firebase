@@ -220,7 +220,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? ImageSlideVC
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC
             {
                 vc.setFileList(self.fileList!, page:indexPath.row)
                 navigationController?.pushViewController(vc, animated: true)

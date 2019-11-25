@@ -11,7 +11,7 @@
 		840EEE022374957000361FB9 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEE012374957000361FB9 /* ActivityView.swift */; };
 		841963DE237B37D4009E11D6 /* folder.dat in Resources */ = {isa = PBXBuildFile; fileRef = 841963DD237B37D4009E11D6 /* folder.dat */; };
 		8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425689E237D475C00F4CD7A /* ImageZoomView.swift */; };
-		842568A1237D4C1100F4CD7A /* ImageSlideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842568A0237D4C1100F4CD7A /* ImageSlideVC.swift */; };
+		842568A1237D4C1100F4CD7A /* GSGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842568A0237D4C1100F4CD7A /* GSGalleryVC.swift */; };
 		843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */; };
 		843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */; };
 		843DF2E02373D00E00F856ED /* ImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DF2373D00E00F856ED /* ImageView+Download.swift */; };
@@ -30,7 +30,7 @@
 		84C90ED12389F1FC00EFFCCE /* LocalAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */; };
 		84D004CE237913CD00929662 /* GSExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D004CC237913CD00929662 /* GSExplorerController.swift */; };
 		84D004CF237913CD00929662 /* GSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D004CD237913CD00929662 /* GSModule.swift */; };
-		84D7CE3C238AD47400C15CF6 /* GalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D7CE3B238AD47400C15CF6 /* GalleryVC.swift */; };
+		84D7CE3C238AD47400C15CF6 /* LocalGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D7CE3B238AD47400C15CF6 /* LocalGalleryVC.swift */; };
 		84D7CE42238B3F2E00C15CF6 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D7CE41238B3F2E00C15CF6 /* MainVC.swift */; };
 		84D85D482384A1710042C4DF /* GDBModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85D472384A1710042C4DF /* GDBModule.swift */; };
 		84FAF7082387CF0500A0E76C /* GSAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */; };
@@ -46,7 +46,7 @@
 		840EEE012374957000361FB9 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		841963DD237B37D4009E11D6 /* folder.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = folder.dat; sourceTree = "<group>"; };
 		8425689E237D475C00F4CD7A /* ImageZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
-		842568A0237D4C1100F4CD7A /* ImageSlideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlideVC.swift; sourceTree = "<group>"; };
+		842568A0237D4C1100F4CD7A /* GSGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSGalleryVC.swift; sourceTree = "<group>"; };
 		843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDExplorerController.swift; sourceTree = "<group>"; };
 		843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
 		843DF2DF2373D00E00F856ED /* ImageView+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+Download.swift"; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 		84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalAlbumVC.swift; sourceTree = "<group>"; };
 		84D004CC237913CD00929662 /* GSExplorerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSExplorerController.swift; sourceTree = "<group>"; };
 		84D004CD237913CD00929662 /* GSModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSModule.swift; sourceTree = "<group>"; };
-		84D7CE3B238AD47400C15CF6 /* GalleryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryVC.swift; sourceTree = "<group>"; };
+		84D7CE3B238AD47400C15CF6 /* LocalGalleryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalGalleryVC.swift; sourceTree = "<group>"; };
 		84D7CE41238B3F2E00C15CF6 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = /Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/MainVC.swift; sourceTree = "<absolute>"; };
 		84D85D472384A1710042C4DF /* GDBModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBModule.swift; sourceTree = "<group>"; };
 		84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAlbumVC.swift; sourceTree = "<group>"; };
@@ -180,8 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				8425689E237D475C00F4CD7A /* ImageZoomView.swift */,
-				842568A0237D4C1100F4CD7A /* ImageSlideVC.swift */,
-				84D7CE3B238AD47400C15CF6 /* GalleryVC.swift */,
+				842568A0237D4C1100F4CD7A /* GSGalleryVC.swift */,
+				84D7CE3B238AD47400C15CF6 /* LocalGalleryVC.swift */,
 			);
 			path = ImageSlide;
 			sourceTree = "<group>";
@@ -357,7 +357,7 @@
 				843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */,
 				84A28E44238C85F20017DD06 /* PHModule.swift in Sources */,
 				84FAF7082387CF0500A0E76C /* GSAlbumVC.swift in Sources */,
-				842568A1237D4C1100F4CD7A /* ImageSlideVC.swift in Sources */,
+				842568A1237D4C1100F4CD7A /* GSGalleryVC.swift in Sources */,
 				840EEE002374215900361FB9 /* Alerts.swift in Sources */,
 				84C90ED12389F1FC00EFFCCE /* LocalAlbumVC.swift in Sources */,
 				84BE63C223717A45002F2C66 /* AppDelegate.swift in Sources */,
@@ -373,7 +373,7 @@
 				843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */,
 				84D004CE237913CD00929662 /* GSExplorerController.swift in Sources */,
 				84D004CF237913CD00929662 /* GSModule.swift in Sources */,
-				84D7CE3C238AD47400C15CF6 /* GalleryVC.swift in Sources */,
+				84D7CE3C238AD47400C15CF6 /* LocalGalleryVC.swift in Sources */,
 				843DF2E02373D00E00F856ED /* ImageView+Download.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
