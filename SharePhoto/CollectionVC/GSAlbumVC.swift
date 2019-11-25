@@ -1,5 +1,5 @@
 //
-//  PhotoCollectionViewController.swift
+//  GSAlbumVC.swift
 //  SharePhoto
 //
 //  Created by Admin on 11/22/19.
@@ -16,7 +16,7 @@ import Photos
 
 private let reuseIdentifier = "PhotoCell"
 
-class PhotoCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
+class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
     var folderPath: String?
     var fileList: [StorageItem]?

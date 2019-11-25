@@ -183,7 +183,7 @@
         <!--Shared Storage-->
         <scene sceneID="cbI-2j-9iQ">
             <objects>
-                <collectionViewController storyboardIdentifier="SharedVC" id="ldQ-qu-ERc" customClass="PhotoCollectionViewController" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="SharedVC" id="ldQ-qu-ERc" customClass="GSAlbumVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="TVs-Hk-3BI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -203,7 +203,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n6p-Du-QZS">
-                                            <rect key="frame" x="-2" y="-3" width="300" height="300"/>
+                                            <rect key="frame" x="-1" y="-2" width="300" height="300"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7C-RV-17r" userLabel="TitleBG">

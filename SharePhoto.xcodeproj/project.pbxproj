@@ -33,7 +33,7 @@
 		84D7CE3C238AD47400C15CF6 /* GalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D7CE3B238AD47400C15CF6 /* GalleryVC.swift */; };
 		84D7CE42238B3F2E00C15CF6 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D7CE41238B3F2E00C15CF6 /* MainVC.swift */; };
 		84D85D482384A1710042C4DF /* GDBModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85D472384A1710042C4DF /* GDBModule.swift */; };
-		84FAF7082387CF0500A0E76C /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF7072387CF0500A0E76C /* PhotoCollectionViewController.swift */; };
+		84FAF7082387CF0500A0E76C /* GSAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */; };
 		84FAF70A23884E9100A0E76C /* GUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF70923884E9100A0E76C /* GUser.swift */; };
 		84FAF70C2389277300A0E76C /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF70B2389277300A0E76C /* AlbumModel.swift */; };
 		982CA3432B9D7D26CDCAC42C /* Pods_SharePhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */; };
@@ -70,7 +70,7 @@
 		84D7CE3B238AD47400C15CF6 /* GalleryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryVC.swift; sourceTree = "<group>"; };
 		84D7CE41238B3F2E00C15CF6 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = /Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/MainVC.swift; sourceTree = "<absolute>"; };
 		84D85D472384A1710042C4DF /* GDBModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBModule.swift; sourceTree = "<group>"; };
-		84FAF7072387CF0500A0E76C /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAlbumVC.swift; sourceTree = "<group>"; };
 		84FAF70923884E9100A0E76C /* GUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GUser.swift; sourceTree = "<group>"; };
 		84FAF70B2389277300A0E76C /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 		A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SharePhoto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,7 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */,
-				84FAF7072387CF0500A0E76C /* PhotoCollectionViewController.swift */,
+				84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */,
 			);
 			path = CollectionVC;
 			sourceTree = "<group>";
@@ -356,7 +356,7 @@
 				84BE63C623717A45002F2C66 /* SignInViewController.swift in Sources */,
 				843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */,
 				84A28E44238C85F20017DD06 /* PHModule.swift in Sources */,
-				84FAF7082387CF0500A0E76C /* PhotoCollectionViewController.swift in Sources */,
+				84FAF7082387CF0500A0E76C /* GSAlbumVC.swift in Sources */,
 				842568A1237D4C1100F4CD7A /* ImageSlideVC.swift in Sources */,
 				840EEE002374215900361FB9 /* Alerts.swift in Sources */,
 				84C90ED12389F1FC00EFFCCE /* LocalAlbumVC.swift in Sources */,
