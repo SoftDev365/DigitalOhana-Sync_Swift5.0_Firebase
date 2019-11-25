@@ -31,7 +31,7 @@ class GalleryVC: UIViewController, UIScrollViewDelegate {
         self.albumPhotos = photos
         self.curPage = page
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,8 +39,6 @@ class GalleryVC: UIViewController, UIScrollViewDelegate {
         self.view.addGestureRecognizer(tap)
         
         self.contentView.removeFromSuperview()
-        
-        //self.tabBarController?.tabBar.isHidden = true
     }
     
     @objc func handleTap(sender: UITapGestureRecognizer) {
@@ -49,13 +47,7 @@ class GalleryVC: UIViewController, UIScrollViewDelegate {
         }
         
         bIsFullscreen = !bIsFullscreen
-        /*
-        if bIsFullscreen {
-            self.scrView.backgroundColor = UIColor.black
-        } else {
-            self.scrView.backgroundColor = UIColor.white
-        }*/
-        
+
         self.navigationController!.isNavigationBarHidden = bIsFullscreen
         setNeedsStatusBarAppearanceUpdate()
     }
@@ -137,5 +129,9 @@ class GalleryVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         recalcZoomScaleOfPhotos()
+    }
+    
+    @IBAction func onBtnUpload(_ sender: Any) {
+        
     }
 }
