@@ -6,14 +6,24 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
+import GoogleAPIClientForREST
+import GTMSessionFetcher
+import Photos
 
-class MainVC: UITabBarController, UITabBarControllerDelegate {
+class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleDelegate {
     @IBOutlet weak var btnUpload: UIBarButtonItem!
+    
+    let activityView = ActivityView()
+    var imagePicker = UIImagePickerController()
+    var imagePickerModule: ImagePickerModule!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        imagePickerModule = ImagePickerModule(self)
+        imagePickerModule.delegate = self
     }
     
     override open var shouldAutorotate: Bool {
@@ -48,12 +58,32 @@ class MainVC: UITabBarController, UITabBarControllerDelegate {
         print("Selected view controller")
     }
     
-    @IBAction func onBtnSignout(_ sender: Any) {
+    func doLogout() {
+        let alert = UIAlertController(title: "Are you sure you log out?", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            GIDSignIn.sharedInstance()?.signOut()
+            self.navigationController!.dismiss(animated: true, completion: nil)
+        }))
+
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+            
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func imagePickerModule(_ module: ImagePickerModule, completeWithImage image: UIImage) {
+        
     }
     
+    @IBAction func onBtnSignout(_ sender: Any) {
+        doLogout()
+    }
+
     @IBAction func onBtnReload(_ sender: Any) {
     }
     
     @IBAction func onBtnUpload(_ sender: Any) {
+        imagePickerModule.startImagePicking()
     }
 }

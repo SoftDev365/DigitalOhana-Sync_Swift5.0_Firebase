@@ -16,78 +16,25 @@ import Photos
 
 private let reuseIdentifier = "PhotoCell"
 
-class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
+class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayout  {
 
     var albumPhotos: PHFetchResult<PHAsset>? = nil
     let activityView = ActivityView()
     
-    var imagePicker = UIImagePickerController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        self.navigationController?.isNavigationBarHidden = false
-        //self.collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-
+        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        //self.navigationController?.isNavigationBarHidden = false
         self.fetchFamilyAlbumPhotos()
     }
     
-    @IBAction func onAddPhoto(_ sender: UIButton) {
-        chooseImagePickerSource(sender)
-    }
-
-    // get the assets in a collection
-    func getAssets(fromCollection collection: PHAssetCollection) -> PHFetchResult<PHAsset> {
-        let photosOptions = PHFetchOptions()
-        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-        photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
-
-        return PHAsset.fetchAssets(in: collection, options: photosOptions)
-    }
-    
-    func fetchFamilyAlbumCollection() -> PHAssetCollection? {
-        let albumTitle = "Is"
-        let fetchOptions = PHFetchOptions()
-
-        fetchOptions.predicate = NSPredicate(format: "title = %@", albumTitle)
-        // get the albums list
-        //let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: nil)
-        let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
-
-        // you can access the number of albums with
-        let albumCount = albumList.count
-        if albumCount <= 0 {
-            return nil
-        }
-
-        // individual objects with
-        let familyAlbum = albumList.object(at: 0)
-        
-        return familyAlbum
-    }
-
     func fetchFamilyAlbumPhotos() {
-        guard let familyAlbum = fetchFamilyAlbumCollection() else { return }
-        
-        // get the name of the album
-        // let albumTitle = firstAlbum.localizedTitle
-        albumPhotos = self.getAssets(fromCollection: familyAlbum)
+        guard let familyAlbum = PHModule.fetchFamilyAlbumCollection() else { return }
+
+        albumPhotos = PHModule.getAssets(fromCollection: familyAlbum)
         
         self.collectionView.reloadData()
-
-        /*
-        albumList.enumerateObjects { (coll, _, _) in
-            let result = self.getAssets(fromCollection: coll)
-            print("\(coll.localizedTitle ?? "noname"): \(result.count)")
-
-            // get an asset (eg. in a UITableView)
-            let asset = result.object(at: indexPath.row)
-            // get the "real" image
-            PHCachingImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: nil) { (image, _) in
-                // do something with the image
-            }
-        }*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,7 +46,6 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
-
         //self.tabBarController?.tabBar.isHidden = false
     }
 
@@ -111,11 +57,8 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         activityView.relayoutPosition(self.view)
     }
-
-    // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -184,13 +127,10 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         guard let photoList = self.albumPhotos else { return }
         let asset = photoList.object(at: rowIndex)
         let arrayToDelete = NSArray(object: asset)
-
-        PHPhotoLibrary.shared().performChanges( {
-            PHAssetChangeRequest.deleteAssets(arrayToDelete)},
-            completionHandler: {
-                success, error in
-                print("Finished deleting asset. %@", (success ? "Success" : error!))
-        })
+        
+        PHModule.deleteAssets(arrayToDelete) { (bSuccess) in
+            print("Finished deleting asset. %@", (bSuccess ? "Success" : "Fail to Delete"))
+        }
     }
     
     func deleteRow(_ rowIndex: Int) {
@@ -208,56 +148,6 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    func chooseImagePickerSource(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Choose Photo Source", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
-            self.openCamera()
-        }))
-
-        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
-            self.openGallary()
-        }))
-
-        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-        /*If you want work actionsheet on ipad
-        then you have to use popoverPresentationController to present the actionsheet,
-        otherwise app will crash on iPad */
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            alert.popoverPresentationController?.sourceView = sender
-            alert.popoverPresentationController?.sourceRect = sender.bounds
-            alert.popoverPresentationController?.permittedArrowDirections = .up
-        default:
-            break
-        }
-
-        self.present(alert, animated: true, completion: nil)
-    }
-
-    func openCamera() {
-        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera)) {
-            imagePicker.sourceType = UIImagePickerController.SourceType.camera
-            imagePicker.allowsEditing = false
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        else {
-            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-
-    func openGallary() {
-        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-        imagePicker.allowsEditing = false
-        imagePicker.delegate = self
-        imagePicker.modalPresentationStyle = .fullScreen
-
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
     func uploadPhoto(_ imageData: Data, fileName: String?) {
         if fileName == nil || fileName == "" {
             return
@@ -270,43 +160,16 @@ class LocalAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    /*
-    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            // we got back an error!
-            //showAlertWith(title: "Save error", message: error.localizedDescription)
-            print(error)
-        } else {
-            //showAlertWith(title: "Saved!", message: "Your image has been saved to your photos.")
-            fetchFamilyAlbumPhotos()
-        }
-    }*/
-    
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let imagePhoto: UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        
-        //UIImageWriteToSavedPhotosAlbum(tempImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-        
-        guard let familyAlbum = fetchFamilyAlbumCollection() else { return }
-        
-        PHPhotoLibrary.shared().performChanges({
-            let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: imagePhoto)
-            let assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset!
-            let albumChangeRequest = PHAssetCollectionChangeRequest(for: familyAlbum)
-            let enumeration: NSArray = [assetPlaceholder]
-            albumChangeRequest!.addAssets(enumeration)
-        }, completionHandler: { (bSucces, error) in
+    func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {
+        PHModule.addPhotoToAsset(imagePhoto) { (bSuccess) in
             DispatchQueue.main.sync {
                 // update UI
                 self.fetchFamilyAlbumPhotos()
             }
-        })
-        
-        picker.dismiss(animated: true, completion: nil)
-    }
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.dismiss(animated: true) {
         }
+    }
+    
+    @IBAction func onAddPhoto(_ sender: UIButton) {
+        
     }
 }

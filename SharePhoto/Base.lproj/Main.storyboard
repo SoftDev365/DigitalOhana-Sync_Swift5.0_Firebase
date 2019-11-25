@@ -298,11 +298,11 @@
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwe-rV-3Nl">
-                                            <rect key="frame" x="260" y="260" width="40" height="40"/>
+                                            <rect key="frame" x="256" y="256" width="44" height="44"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="7rG-rO-2t1"/>
-                                                <constraint firstAttribute="width" constant="40" id="Fc2-vJ-SaS"/>
+                                                <constraint firstAttribute="height" constant="44" id="7rG-rO-2t1"/>
+                                                <constraint firstAttribute="width" constant="44" id="Fc2-vJ-SaS"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" image="square.and.arrow.up" catalog="system"/>
