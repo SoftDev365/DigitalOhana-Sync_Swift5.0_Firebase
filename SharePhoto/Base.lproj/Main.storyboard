@@ -24,17 +24,29 @@
             </objects>
             <point key="canvasLocation" x="-5443" y="-630"/>
         </scene>
-        <!--MainVC-->
+        <!--Family Album-->
         <scene sceneID="sSw-wc-f9U">
             <objects>
                 <tabBarController storyboardIdentifier="MainVC" id="j6d-kl-oFC" customClass="MainVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Ouq-xb-hbf"/>
+                    <navigationItem key="navigationItem" title="Family Album" id="Ouq-xb-hbf">
+                        <barButtonItem key="leftBarButtonItem" title="Sign Out" image="arrow.uturn.left" catalog="system" id="FdF-ai-2ov">
+                            <connections>
+                                <action selector="onBtnSignout:" destination="j6d-kl-oFC" id="DJF-fy-7Xd"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Add" image="plus" catalog="system" id="ZuN-Yf-QUG">
+                            <connections>
+                                <action selector="onBtnUpload:" destination="j6d-kl-oFC" id="l9h-yC-VJV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GtA-Wg-L45">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <outlet property="btnUpload" destination="ZuN-Yf-QUG" id="HvL-kH-fwp"/>
                         <segue destination="sgj-ax-9uQ" kind="relationship" relationship="viewControllers" id="ryn-jR-T9Z"/>
                         <segue destination="ldQ-qu-ERc" kind="relationship" relationship="viewControllers" id="x7m-Hr-rtH"/>
                     </connections>
@@ -168,7 +180,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n6p-Du-QZS">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                            <rect key="frame" x="0.0" y="-1" width="299" height="300"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7C-RV-17r" userLabel="TitleBG">
@@ -206,7 +218,7 @@
                             <outlet property="delegate" destination="ldQ-qu-ERc" id="lXR-Wv-YM5"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Shared Storage" image="person.icloud" catalog="system" id="8KY-6I-caP"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Shared Storage" image="person.icloud" catalog="system" id="8KY-6I-caP"/>
                     <navigationItem key="navigationItem" title="Shared Storage" id="oWN-hG-gXA"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </collectionViewController>
@@ -217,7 +229,6 @@
         <!--Family Album-->
         <scene sceneID="Rvl-nP-8yl">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kkN-JJ-TYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <collectionViewController storyboardIdentifier="FamilyAlbum" id="sgj-ax-9uQ" customClass="LocalAlbumVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="pq9-GZ-RfO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -277,9 +288,9 @@
                             <outlet property="delegate" destination="sgj-ax-9uQ" id="KdU-cL-1R7"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Family Album" image="photo.on.rectangle" catalog="system" id="b8P-hx-qJK"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Family Album" image="photo.on.rectangle" catalog="system" id="b8P-hx-qJK"/>
                     <navigationItem key="navigationItem" title="Family Album" id="EJz-oU-XU7">
-                        <barButtonItem key="rightBarButtonItem" title="Add" image="plus" catalog="system" id="rpv-4o-d6F">
+                        <barButtonItem key="rightBarButtonItem" title="Add" image="plus.square" catalog="system" id="rpv-4o-d6F">
                             <connections>
                                 <action selector="onAddPhoto:" destination="sgj-ax-9uQ" id="kGx-hq-kvC"/>
                             </connections>
@@ -287,6 +298,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kkN-JJ-TYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3813" y="-999"/>
         </scene>
@@ -446,9 +458,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.uturn.left" catalog="system" width="64" height="56"/>
         <image name="noimage" width="240" height="240"/>
         <image name="person.icloud" catalog="system" width="64" height="44"/>
         <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
         <image name="plus" catalog="system" width="64" height="56"/>
+        <image name="plus.square" catalog="system" width="64" height="56"/>
     </resources>
 </document>

@@ -7,8 +7,9 @@
 
 import UIKit
 
-class MainVC: UITabBarController {
-
+class MainVC: UITabBarController, UITabBarControllerDelegate {
+    @IBOutlet weak var btnUpload: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,5 +32,25 @@ class MainVC: UITabBarController {
 
         return .portrait
     }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        print("Selected item")
+        if item.tag == 1 {
+            self.navigationItem.title = "Family Album"
+            btnUpload.image = UIImage.init(systemName: "plus.square")
+        } else {
+            self.navigationItem.title = "Shared Storage"
+            btnUpload.image = UIImage.init(systemName: "square.and.arrow.up")
+        }
+    }
 
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        print("Selected view controller")
+    }
+    
+    @IBAction func onBtnSignout(_ sender: Any) {
+    }
+    
+    @IBAction func onBtnUpload(_ sender: Any) {
+    }
 }
