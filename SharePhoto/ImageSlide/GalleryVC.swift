@@ -49,11 +49,12 @@ class GalleryVC: UIViewController, UIScrollViewDelegate {
         }
         
         bIsFullscreen = !bIsFullscreen
+        /*
         if bIsFullscreen {
             self.scrView.backgroundColor = UIColor.black
         } else {
             self.scrView.backgroundColor = UIColor.white
-        }
+        }*/
         
         self.navigationController!.isNavigationBarHidden = bIsFullscreen
         setNeedsStatusBarAppearanceUpdate()

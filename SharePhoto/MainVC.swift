@@ -51,6 +51,9 @@ class MainVC: UITabBarController, UITabBarControllerDelegate {
     @IBAction func onBtnSignout(_ sender: Any) {
     }
     
+    @IBAction func onBtnReload(_ sender: Any) {
+    }
+    
     @IBAction func onBtnUpload(_ sender: Any) {
     }
 }
