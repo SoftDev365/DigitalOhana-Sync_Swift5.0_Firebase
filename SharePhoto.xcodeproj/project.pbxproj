@@ -157,7 +157,7 @@
 				846589A92376291D0050AE40 /* Common */,
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
 				84A28E42238C85A30017DD06 /* Cells */,
-				84D004CB2379137E00929662 /* ImageSlide */,
+				84D004CB2379137E00929662 /* PhotoGallery */,
 				84D7CE3D238B3D7E00C15CF6 /* TableVC */,
 				84D7CE3E238B3DAA00C15CF6 /* CollectionVC */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
@@ -176,14 +176,14 @@
 			path = SharePhoto;
 			sourceTree = "<group>";
 		};
-		84D004CB2379137E00929662 /* ImageSlide */ = {
+		84D004CB2379137E00929662 /* PhotoGallery */ = {
 			isa = PBXGroup;
 			children = (
 				8425689E237D475C00F4CD7A /* ImageZoomView.swift */,
 				842568A0237D4C1100F4CD7A /* GSGalleryVC.swift */,
 				84D7CE3B238AD47400C15CF6 /* LocalGalleryVC.swift */,
 			);
-			path = ImageSlide;
+			path = PhotoGallery;
 			sourceTree = "<group>";
 		};
 		84D7CE3D238B3D7E00C15CF6 /* TableVC */ = {
