@@ -3,6 +3,25 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
+      </ContextState>
+      <ContextState
+         contextName = "PhotoCollectionViewController.viewWillAppear(_:):PhotoCollectionViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "layout.itemSize">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static GFSModule.registerUser():GFSModule.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user.userID">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "SignInViewController.sign(_:didSignInFor:withError:):SignInViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -14,62 +33,24 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ImageSlideViewController.relayoutImageItemViews(_:):ImageSlideViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "size">
-            </PersistentString>
-            <PersistentString
-               value = "self.imgViewList">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "ImageZoomView.init(frame:asset:):ImageZoomView.swift">
       </ContextState>
       <ContextState
-         contextName = "GalleryVC.recalcZoomScaleOfPhotos():GalleryVC.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.scrView.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "self.view.bounds">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in GSExplorerController.loadFileList():GSExplorerController.swift">
+         contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "result.items">
             </PersistentString>
-            <PersistentString
-               value = "result.prefixes">
-            </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhotoCollectionViewController.collectionView(_:numberOfItemsInSection:):PhotoCollectionViewController.swift">
       </ContextState>
       <ContextState
          contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
          <PersistentStrings>
             <PersistentString
                value = "file.name">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
-      </ContextState>
-      <ContextState
-         contextName = "PhotoCollectionViewController.fetchCustomAlbumPhotos():PhotoCollectionViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "collection.count">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "PhotoCollectionViewController.viewWillAppear(_:):PhotoCollectionViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "layout.itemSize">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -88,12 +69,46 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in GSExplorerController.loadCloud():GSExplorerController.swift">
+         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in GSExplorerController.loadFileList():GSExplorerController.swift">
          <PersistentStrings>
             <PersistentString
                value = "result.items">
             </PersistentString>
+            <PersistentString
+               value = "result.prefixes">
+            </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GalleryVC.recalcZoomScaleOfPhotos():GalleryVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrView.bounds">
+            </PersistentString>
+            <PersistentString
+               value = "self.view.bounds">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ImageSlideViewController.relayoutImageItemViews(_:):ImageSlideViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "size">
+            </PersistentString>
+            <PersistentString
+               value = "self.imgViewList">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
       </ContextState>
       <ContextState
          contextName = "ImageZoomView.recalcZoomScale():ImageZoomView.swift">
@@ -139,25 +154,29 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ImageZoomView.init(frame:asset:):ImageZoomView.swift">
-      </ContextState>
-      <ContextState
-         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
-      </ContextState>
-      <ContextState
-         contextName = "PhotoCollectionViewController.collectionView(_:numberOfItemsInSection:):PhotoCollectionViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in MainViewController.loadCloud():MainViewController.swift">
+         contextName = "closure #1 in GSExplorerController.loadCloud():GSExplorerController.swift">
          <PersistentStrings>
             <PersistentString
                value = "result.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in static GFSModule.fetchUsers():GFSModule.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "document.data()">
+            </PersistentString>
+            <PersistentString
+               value = "querySnapshot!.documents">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhotoCollectionViewController.fetchCustomAlbumPhotos():PhotoCollectionViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "collection.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

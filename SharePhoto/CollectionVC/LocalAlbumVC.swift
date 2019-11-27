@@ -160,13 +160,30 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {
+    open func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {
         PHModule.addPhotoToAsset(imagePhoto) { (bSuccess) in
             DispatchQueue.main.sync {
                 // update UI
                 self.fetchFamilyAlbumPhotos()
             }
         }
+    }
+    
+    open func refreshAlbum() {
+        self.fetchFamilyAlbumPhotos()
+    }
+    
+    @IBAction func onBtnUploadPhoto(_ sender: Any) {
+        guard let listPhoto = self.albumPhotos else { return }
+        
+        let button = sender as! UIButton
+        let cell = button.superview!.superview! as! UICollectionViewCell
+        let indexPath = self.collectionView.indexPath(for: cell)!
+        
+        print("--- UploadPhoto \(indexPath.row)")
+        
+        let asset = listPhoto[indexPath.row]
+        print(asset)
     }
     
     @IBAction func onAddPhoto(_ sender: UIButton) {

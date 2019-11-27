@@ -73,7 +73,12 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
     }
 
     func imagePickerModule(_ module: ImagePickerModule, completeWithImage image: UIImage) {
-        
+        if selectedIndex == 0 {
+            let vc = selectedViewController as! LocalAlbumVC
+            vc.addPhotoToLocalAlbum(image)
+        } else {
+            
+        }
     }
     
     @IBAction func onBtnSignout(_ sender: Any) {
@@ -81,6 +86,12 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
     }
 
     @IBAction func onBtnReload(_ sender: Any) {
+        if selectedIndex == 0 {
+            let vc = selectedViewController as! LocalAlbumVC
+            vc.refreshAlbum()
+        } else {
+            
+        }
     }
     
     @IBAction func onBtnUpload(_ sender: Any) {

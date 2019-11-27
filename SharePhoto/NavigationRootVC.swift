@@ -11,13 +11,13 @@ import UIKit
 class NavigationRootVC: UINavigationController {
 
     override open var shouldAutorotate: Bool {
-        if visibleViewController is ImageSlideVC {
+        if visibleViewController is GSGalleryVC {
             return true
         }
-        if visibleViewController is GalleryVC {
+        if visibleViewController is LocalGalleryVC {
             return true
         }
-        if visibleViewController is PhotoCollectionViewController {
+        if visibleViewController is GSAlbumVC {
             return true
         }
         
@@ -25,13 +25,13 @@ class NavigationRootVC: UINavigationController {
     }
     
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if visibleViewController is ImageSlideVC {
+        if visibleViewController is GSGalleryVC {
             return .all
         }
-        if visibleViewController is GalleryVC {
+        if visibleViewController is LocalGalleryVC {
             return .all
         }
-        if visibleViewController is PhotoCollectionViewController {
+        if visibleViewController is GSAlbumVC {
             return .all
         }
 

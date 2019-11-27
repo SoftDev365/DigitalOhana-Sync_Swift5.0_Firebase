@@ -306,6 +306,9 @@
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" image="square.and.arrow.up" catalog="system"/>
+                                            <connections>
+                                                <action selector="onBtnUploadPhoto:" destination="sgj-ax-9uQ" eventType="touchUpInside" id="xiR-k0-sNB"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
