@@ -19,4 +19,6 @@ target 'SharePhoto' do
   pod 'Firebase/Analytics'
   
   pod 'FirebaseFirestoreSwift'
+  
+  pod 'SQLite.swift', '~> 0.12.0'
 end

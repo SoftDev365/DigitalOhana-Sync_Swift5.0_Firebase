@@ -58,15 +58,24 @@ class PHModule: NSObject {
         //UIImageWriteToSavedPhotosAlbum(tempImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         
         let familyAlbum = self.fetchFamilyAlbumCollection()
+        
+        var assetPlaceholder: PHObjectPlaceholder?
 
         PHPhotoLibrary.shared().performChanges({
             let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: imagePhoto)
-            let assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset!
+            assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset!
             let albumChangeRequest = PHAssetCollectionChangeRequest(for: familyAlbum!)
-            let enumeration: NSArray = [assetPlaceholder]
+            let enumeration: NSArray = [assetPlaceholder!]
             albumChangeRequest!.addAssets(enumeration)
-        }, completionHandler: { (bSuccess, error) in
-            completion(bSuccess)
+        }, completionHandler: { (success, error) in
+            NSLog("Creation of folder -> %@", (success ? "Success":"Error!"))
+            //self.albumFound = (success ? true:false)
+            if(success){
+                //let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [assetPlaceholder!.localIdentifier], options: nil)
+                //self.assetCollection = collection.firstObject as! PHAssetCollection
+            }
+
+            completion(success)
         })
     }
     

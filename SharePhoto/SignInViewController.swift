@@ -28,6 +28,15 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SqliteManager.open()
+        
+        SqliteManager.insertFileInfo(isMine: true, fname: "12345", fsID: "4567")
+        SqliteManager.insertFileInfo(isMine: true, fname: "12346", fsID: "4568")
+        SqliteManager.insertFileInfo(isMine: true, fname: "12347", fsID: "4569")
+
+        let arrFiles = SqliteManager.getAllFileInfos()
+        
 
         // Configure Google Sign In
         GIDSignIn.sharedInstance()?.delegate = self
