@@ -28,8 +28,7 @@ class GFSModule: NSObject {
     }
     
     static func registerUser() {
-        
-        fetchUsers()
+        //fetchUsers()
         
         guard let user = GUser.user else { return }
 
@@ -47,5 +46,9 @@ class GFSModule: NSObject {
                 //self.userID = ref!.documentID
             }
         }
+    }
+    
+    static func uploadPhoto() {
+        
     }
 }

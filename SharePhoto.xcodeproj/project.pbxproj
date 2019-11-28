@@ -125,12 +125,12 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		84A28E42238C85A30017DD06 /* Cells */ = {
+		84A28E42238C85A30017DD06 /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
 				843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */,
 			);
-			path = Cells;
+			path = TableCells;
 			sourceTree = "<group>";
 		};
 		84BE63B523717A45002F2C66 = {
@@ -156,10 +156,9 @@
 			children = (
 				846589A92376291D0050AE40 /* Common */,
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
-				84A28E42238C85A30017DD06 /* Cells */,
 				84D004CB2379137E00929662 /* PhotoGallery */,
 				84D7CE3D238B3D7E00C15CF6 /* TableVC */,
-				84D7CE3E238B3DAA00C15CF6 /* CollectionVC */,
+				84D7CE3E238B3DAA00C15CF6 /* AlbumVC */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
 				84FAF70B2389277300A0E76C /* AlbumModel.swift */,
 				84BE63C323717A45002F2C66 /* SceneDelegate.swift */,
@@ -189,19 +188,20 @@
 		84D7CE3D238B3D7E00C15CF6 /* TableVC */ = {
 			isa = PBXGroup;
 			children = (
+				84A28E42238C85A30017DD06 /* TableCells */,
 				843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */,
 				84D004CC237913CD00929662 /* GSExplorerController.swift */,
 			);
 			path = TableVC;
 			sourceTree = "<group>";
 		};
-		84D7CE3E238B3DAA00C15CF6 /* CollectionVC */ = {
+		84D7CE3E238B3DAA00C15CF6 /* AlbumVC */ = {
 			isa = PBXGroup;
 			children = (
 				84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */,
 				84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */,
 			);
-			path = CollectionVC;
+			path = AlbumVC;
 			sourceTree = "<group>";
 		};
 		84FAF70623877F4400A0E76C /* GoogleFirebase */ = {
