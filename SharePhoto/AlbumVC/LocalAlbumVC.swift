@@ -26,10 +26,37 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         
         //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         //self.navigationController?.isNavigationBarHidden = false
-        self.fetchFamilyAlbumPhotos()
+
+        self.accessToPHLibrary();
     }
     
-    func fetchFamilyAlbumPhotos() {
+    func accessToPHLibrary() {
+        let status = PHPhotoLibrary.authorizationStatus()
+
+        if (status == PHAuthorizationStatus.authorized) {
+            // Access has been granted.
+            self.fetchFamilyAlbumPhotos()
+        }
+        else if (status == PHAuthorizationStatus.denied) {
+            // Access has been denied.
+        }
+        else if (status == PHAuthorizationStatus.notDetermined) {
+            // Access has not been determined.
+            PHPhotoLibrary.requestAuthorization({ (newStatus) in
+                if (newStatus == PHAuthorizationStatus.authorized) {
+                    self.performSelector(onMainThread: #selector(self.fetchFamilyAlbumPhotos), with: nil, waitUntilDone: false)
+                }
+                else {
+
+                }
+            })
+        }
+        else if (status == PHAuthorizationStatus.restricted) {
+            // Restricted access - normally won't happen.
+        }
+    }
+    
+    @objc func fetchFamilyAlbumPhotos() {
         guard let familyAlbum = PHModule.fetchFamilyAlbumCollection() else { return }
 
         albumPhotos = PHModule.getAssets(fromCollection: familyAlbum)

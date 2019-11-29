@@ -22,7 +22,7 @@ class PHModule: NSObject {
         return PHAsset.fetchAssets(in: collection, options: photosOptions)
     }
     
-    static func fetchFamilyAlbumCollection() -> PHAssetCollection? {
+    static func fetchFamilyAlbumCollection() -> PHAssetCollection? {        
         let fetchOptions = PHFetchOptions()
 
         fetchOptions.predicate = NSPredicate(format: "title = %@", albumTitle)
