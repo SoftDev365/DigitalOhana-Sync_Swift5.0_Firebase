@@ -25,12 +25,14 @@ class SqliteManager: NSObject {
             let fd_mine = Expression<Bool>("mine")
             let fd_fname = Expression<String>("fname")
             let fd_fsid = Expression<String>("fs_id")
+            let fd_sync = Expression<Bool>("sync")
 
             try db.run(users.create { t in
                 t.column(fd_id, primaryKey: true)
                 t.column(fd_mine)
                 t.column(fd_fname)
                 t.column(fd_fsid)
+                t.column(fd_sync, defaultValue: true)
             })
         } catch let error {
             print(error)
@@ -49,8 +51,9 @@ class SqliteManager: NSObject {
             let fd_mine = Expression<Bool>("mine")
             let fd_fname = Expression<String>("fname")
             let fd_fsid = Expression<String>("fs_id")
+            let fd_sync = Expression<Bool>("sync")
 
-            let insert = users.insert(fd_mine <- isMine, fd_fname <- fname, fd_fsid <- fsID)
+            let insert = users.insert(fd_mine <- isMine, fd_fname <- fname, fd_fsid <- fsID, fd_sync <- true)
             //let rowid = try db.run(insert)
             try db.run(insert)
         } catch let error {
@@ -70,11 +73,12 @@ class SqliteManager: NSObject {
             let fd_mine = Expression<Bool>("mine")
             let fd_fname = Expression<String>("fname")
             let fd_fsid = Expression<String>("fs_id")
+            let fd_sync = Expression<Bool>("sync")
             
             var arrFiles = [[String:Any]]()
 
             for user in try db.prepare(users) {
-                let file = ["id":user[fd_id], "mine":user[fd_mine], "fname": user[fd_fname], "fs_id": user[fd_fsid]] as [String : Any]
+                let file = ["id":user[fd_id], "mine":user[fd_mine], "fname": user[fd_fname], "fs_id": user[fd_fsid], "sync": user[fd_sync]] as [String : Any]
                 arrFiles += [file]
             }
             
@@ -82,6 +86,49 @@ class SqliteManager: NSObject {
         } catch let error {
             print(error)
             return [[String:Any]]()
+        }
+    }
+    
+    static func syncFileInfos(arrFiles: [String]) {
+        do {
+            let db = try Connection(dbFilePath)
+
+            let users = Table("photos")
+            //let fd_id = Expression<Int64>("id")
+            //let fd_mine = Expression<Bool>("mine")
+            let fd_fname = Expression<String>("fname")
+            //let fd_fsid = Expression<String>("fs_id")
+            let fd_sync = Expression<Bool>("sync")
+
+            //try db.run(users.update(email <- email.replace("mac.com", with: "me.com")))
+            try db.run(users.update(fd_sync <- false))
+
+            for file in arrFiles {
+                let alice = users.filter(fd_fname == file)
+                try db.run(alice.update(fd_sync <- true))
+            }
+            
+            //delete no exist files
+            let alice = users.filter(fd_sync == false)
+            try db.run(alice.delete())
+            
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    static func deleteNoExistFiles() {
+        do {
+            let db = try Connection(dbFilePath)
+
+            let users = Table("photos")
+            let fd_sync = Expression<Bool>("sync")
+            
+            let alice = users.filter(fd_sync == false)
+
+            try db.run(alice.delete())
+        } catch let error {
+            print(error)
         }
     }
     
@@ -118,8 +165,6 @@ class SqliteManager: NSObject {
                 // SELECT * FROM "users"
 
                 let alice = users.filter(id == rowid)
-            
-
                 try db.run(alice.update(email <- email.replace("mac.com", with: "me.com")))
                 // UPDATE "users" SET "email" = replace("email", 'mac.com', 'me.com')
                 // WHERE ("id" = 1)
