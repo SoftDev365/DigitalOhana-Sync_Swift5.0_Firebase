@@ -20,6 +20,8 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FirebaseScreenReportingEnabled</key>
+	<false/>
 	<key>CLIENT_ID</key>
 	<string>440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>

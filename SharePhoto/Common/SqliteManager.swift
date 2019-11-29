@@ -20,20 +20,26 @@ class SqliteManager: NSObject {
             dbFilePath += "/" + dbFileName
             let db = try Connection(dbFilePath)
 
-            let users = Table("photos")
+            let tblPhotos = Table("photos")
             let fd_id = Expression<Int64>("id")
             let fd_mine = Expression<Bool>("mine")
             let fd_fname = Expression<String>("fname")
             let fd_fsid = Expression<String>("fs_id")
             let fd_sync = Expression<Bool>("sync")
-
-            try db.run(users.create { t in
-                t.column(fd_id, primaryKey: true)
-                t.column(fd_mine)
-                t.column(fd_fname)
-                t.column(fd_fsid)
-                t.column(fd_sync, defaultValue: true)
-            })
+            
+            do {
+                try db.scalar(tblPhotos.exists)
+                // exists
+            } catch {
+                // don't exist
+                try db.run(tblPhotos.create { t in
+                    t.column(fd_id, primaryKey: true)
+                    t.column(fd_mine)
+                    t.column(fd_fname)
+                    t.column(fd_fsid)
+                    t.column(fd_sync, defaultValue: true)
+                })
+            }
         } catch let error {
             print(error)
             return false
@@ -63,7 +69,7 @@ class SqliteManager: NSObject {
 
         return true
     }
-    
+
     static func getAllFileInfos() -> [[String:Any]] {
         do {
             let db = try Connection(dbFilePath)
@@ -133,7 +139,7 @@ class SqliteManager: NSObject {
     }
     
     /*
-    static func insert() -> Bool {
+    static func all() -> Bool {
         do {
             let db = try Connection(dbFileName)
 
