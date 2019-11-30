@@ -175,16 +175,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    func uploadPhoto(_ imageData: Data, fileName: String?) {
-        if fileName == nil || fileName == "" {
-            return
-        }
-
-        activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
-        let imageFileName = fileName! + ".jpg"
-        GSModule.uploadFile(name: imageFileName, folderPath: "central", data: imageData) { (success) in
-            self.activityView.hideActivitiIndicator()
-        }
+    func uploadPhoto(asset: PHAsset) {
+        activityView.showActivityIndicator(self.view, withTitle: "Uploading...")        
+        SyncModule.uploadPhoto(asset: asset, onCompleted: <#T##(Bool) -> ()#>)
     }
     
     open func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {

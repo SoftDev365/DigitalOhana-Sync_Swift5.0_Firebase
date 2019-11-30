@@ -28,26 +28,45 @@ class SyncModule: NSObject {
     }
     
     static func uploadPhoto(asset: PHAsset, onCompleted:@escaping (Bool) -> ()) {
+        // register photo to firestore & get document id (primary key)
         regiserPhotoToFirestore(asset: asset) { (success, documentID) in
             if !success {
+                debugPrint("-----register photo to firestore failed------")
                 onCompleted(false)
                 return
             }
 
             let filename = documentID! + ".jpg"
             let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+            
+            // extract image data
             PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
-                guard let image = image else { return }
+                guard let image = image else {
+                    debugPrint("-----extract image from asset failed ------")
+                    onCompleted(false)
+                    return
+                }
                 let imageData = image.jpegData(compressionQuality: 1.0)
 
+                // upload image data to cloud storage
                 GSModule.uploadFile(name: filename, folderPath: self.sharedFolderName, data: imageData!) { (success) in
-                    onCompleted(success)
-
+                    
                     if success {
-                        GFSModule.updatePhotoToValid(photoID: documentID!) { (success) in
-                            // success update valid to true
+                        // register to local sqlite db (local filename & firestore id)
+                        if SqliteManager.insertFileInfo(isMine: true, fname: asset.localIdentifier, fsID: documentID!) == true {
+                            // update firestore valid flag to true
+                            GFSModule.updatePhotoToValid(photoID: documentID!) { (success) in
+                                // success update valid to true
+                                onCompleted(success)
+                            }
+                        } else {
+                            debugPrint("-----register photo to local db failed------")
+                            onCompleted(success)
                         }
-                    }
+                    } else {
+                        debugPrint("----- uploading image data to cloud storage failed ------")
+                        onCompleted(success)
+                    }                    
                 }
             }
         }

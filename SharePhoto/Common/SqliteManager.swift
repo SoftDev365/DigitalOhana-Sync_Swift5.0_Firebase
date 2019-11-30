@@ -28,8 +28,11 @@ class SqliteManager: NSObject {
             let fd_sync = Expression<Bool>("sync")
             
             do {
-                try db.scalar(tblPhotos.exists)
-                // exists
+                let bExists = try db.scalar(tblPhotos.exists)
+                if bExists {
+                    // exists
+                    debugPrint("------sqlite db photos table already exists-------")
+                }
             } catch {
                 // don't exist
                 try db.run(tblPhotos.create { t in
@@ -41,7 +44,7 @@ class SqliteManager: NSObject {
                 })
             }
         } catch let error {
-            print(error)
+            debugPrint(error)
             return false
         }
 
