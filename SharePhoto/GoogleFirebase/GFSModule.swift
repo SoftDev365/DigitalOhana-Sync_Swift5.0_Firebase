@@ -48,6 +48,51 @@ class GFSModule: NSObject {
         }
     }
     
+    static func registerPhoto(createDate: String, onCompleted: @escaping (Bool, String?) -> ()) {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let dateNow = df.string(from: Date())
+        
+        let userID = GUser.user!.userID!
+        let email = GUser.email!
+        let username = GUser.user!.profile.name!
+        
+        let db = Firestore.firestore()
+        var ref: DocumentReference? = nil
+
+        ref = db.collection("photos").addDocument(data: [
+            "create": createDate,
+            "upload": dateNow,
+            "userid": userID,
+            "email": email,
+            "name": username,
+            "valid": false
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false, nil)
+            } else {
+                debugPrint("---------register photo id:\(ref!.documentID)----------")
+                onCompleted(true, ref!.documentID)
+            }
+        }
+    }
+    
+    static func updatePhotoToValid(photoID: String, onCompleted: @escaping (Bool) -> ()) {
+        let db = Firestore.firestore()
+
+        db.collection("users").document(photoID).updateData([
+            "valid": true
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false)
+            } else {
+                onCompleted(true)
+            }
+        }
+    }
+    
     static func uploadPhoto() {
         
     }

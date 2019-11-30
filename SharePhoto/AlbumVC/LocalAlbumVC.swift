@@ -207,7 +207,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         let cell = button.superview!.superview! as! UICollectionViewCell
         let indexPath = self.collectionView.indexPath(for: cell)!
         
-        print("--- UploadPhoto \(indexPath.row)")
+        print("----- UploadPhoto \(indexPath.row)-----")
         
         let asset = listPhoto[indexPath.row]
         print(asset)
