@@ -60,7 +60,16 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         guard let familyAlbum = PHModule.fetchFamilyAlbumCollection() else { return }
 
         albumPhotos = PHModule.getAssets(fromCollection: familyAlbum)
+        guard let photoList = self.albumPhotos else { return }
         
+        var fileNames: [String] = []
+        for index in 0...photoList.count {
+            let asset = photoList[index]
+            fileNames += [asset.localIdentifier]
+        }
+        
+        SqliteManager.syncFileInfos(arrFiles: fileNames)
+
         self.collectionView.reloadData()
     }
     
@@ -117,6 +126,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
             if let imgView = cell.viewWithTag(1) as? UIImageView {
                 imgView.image = image
+            }
+            
+            if SqliteManager.checkPhotoIsUploaded(fname: asset.localIdentifier) {
+                if let btnUpload = cell.viewWithTag(3) as? UIButton {
+                    btnUpload.isHidden = true
+                }
             }
         }
         
@@ -177,7 +192,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     func uploadPhoto(asset: PHAsset) {
         activityView.showActivityIndicator(self.view, withTitle: "Uploading...")        
-        SyncModule.uploadPhoto(asset: asset, onCompleted: <#T##(Bool) -> ()#>)
+        SyncModule.uploadPhoto(asset: asset) { (success) in
+            self.activityView.hideActivitiIndicator()
+            self.fetchFamilyAlbumPhotos()
+        }
     }
     
     open func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {
@@ -203,7 +221,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         print("----- UploadPhoto \(indexPath.row)-----")
         
         let asset = listPhoto[indexPath.row]
-        print(asset)
+        uploadPhoto(asset: asset)
     }
     
     @IBAction func onAddPhoto(_ sender: UIButton) {

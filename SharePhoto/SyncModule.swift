@@ -66,7 +66,7 @@ class SyncModule: NSObject {
                     } else {
                         debugPrint("----- uploading image data to cloud storage failed ------")
                         onCompleted(success)
-                    }                    
+                    }
                 }
             }
         }

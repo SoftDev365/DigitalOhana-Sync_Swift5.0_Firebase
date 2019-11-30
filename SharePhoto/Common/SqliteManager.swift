@@ -72,22 +72,41 @@ class SqliteManager: NSObject {
 
         return true
     }
+    
+    static func checkPhotoIsUploaded(fname: String) -> Bool {
+        do {
+            let db = try Connection(dbFilePath)
+
+            let photos = Table("photos")
+            let fd_fname = Expression<String>("fname")
+            let alice = photos.filter(fd_fname == fname)
+
+            for _ in try db.prepare(alice.select([])) {
+                return true
+            }
+            
+            return false
+        } catch let error {
+            print(error)
+            return false
+        }
+    }
 
     static func getAllFileInfos() -> [[String:Any]] {
         do {
             let db = try Connection(dbFilePath)
 
-            let users = Table("photos")
+            let photos = Table("photos")
             let fd_id = Expression<Int64>("id")
             let fd_mine = Expression<Bool>("mine")
             let fd_fname = Expression<String>("fname")
             let fd_fsid = Expression<String>("fs_id")
             let fd_sync = Expression<Bool>("sync")
-            
+
             var arrFiles = [[String:Any]]()
 
-            for user in try db.prepare(users) {
-                let file = ["id":user[fd_id], "mine":user[fd_mine], "fname": user[fd_fname], "fs_id": user[fd_fsid], "sync": user[fd_sync]] as [String : Any]
+            for photo in try db.prepare(photos) {
+                let file = ["id":photo[fd_id], "mine":photo[fd_mine], "fname": photo[fd_fname], "fs_id": photo[fd_fsid], "sync": photo[fd_sync]] as [String : Any]
                 arrFiles += [file]
             }
             
@@ -102,7 +121,7 @@ class SqliteManager: NSObject {
         do {
             let db = try Connection(dbFilePath)
 
-            let users = Table("photos")
+            let photos = Table("photos")
             //let fd_id = Expression<Int64>("id")
             //let fd_mine = Expression<Bool>("mine")
             let fd_fname = Expression<String>("fname")
@@ -110,15 +129,15 @@ class SqliteManager: NSObject {
             let fd_sync = Expression<Bool>("sync")
 
             //try db.run(users.update(email <- email.replace("mac.com", with: "me.com")))
-            try db.run(users.update(fd_sync <- false))
+            try db.run(photos.update(fd_sync <- false))
 
             for file in arrFiles {
-                let alice = users.filter(fd_fname == file)
+                let alice = photos.filter(fd_fname == file)
                 try db.run(alice.update(fd_sync <- true))
             }
             
             //delete no exist files
-            let alice = users.filter(fd_sync == false)
+            let alice = photos.filter(fd_sync == false)
             try db.run(alice.delete())
             
         } catch let error {
@@ -130,10 +149,10 @@ class SqliteManager: NSObject {
         do {
             let db = try Connection(dbFilePath)
 
-            let users = Table("photos")
+            let photos = Table("photos")
             let fd_sync = Expression<Bool>("sync")
             
-            let alice = users.filter(fd_sync == false)
+            let alice = photos.filter(fd_sync == false)
 
             try db.run(alice.delete())
         } catch let error {
