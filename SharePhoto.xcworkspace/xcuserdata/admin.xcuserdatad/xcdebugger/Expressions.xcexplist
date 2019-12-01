@@ -47,6 +47,22 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "specialized static SqliteManager.checkPhotoIsUploaded(fname:):SqliteManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "id">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in static SyncModule.uploadPhoto(asset:onCompleted:):SyncModule.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "isDegraded">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
          <PersistentStrings>
             <PersistentString
@@ -149,6 +165,9 @@
                value = "auth">
             </PersistentString>
             <PersistentString
+               value = "filePath">
+            </PersistentString>
+            <PersistentString
                value = "user">
             </PersistentString>
          </PersistentStrings>
@@ -187,6 +206,9 @@
                value = "itExists">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AppDelegate.application(_:didFinishLaunchingWithOptions:):AppDelegate.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

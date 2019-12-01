@@ -24,9 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         
         if( SqliteManager.open() ) {
-            print("----db open success------")
+            let files = SqliteManager.getAllFileInfos()
+            debugPrint("----db open success------")
+            debugPrint(files)
         } else {
-            print("----db open fail------")
+            debugPrint("----db open fail------")
         }
         
         return true

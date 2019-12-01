@@ -119,6 +119,13 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             label.text = "title"
         }
         
+        // hide upload button if already uploaded
+        if SqliteManager.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
+            if let btnUpload = cell.viewWithTag(3) as? UIButton {
+                btnUpload.isHidden = true
+            }
+        }
+        
         //let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
         let width = UIScreen.main.scale*(self.view.frame.size.width - 5)/3
         let size = CGSize(width:width, height:width)
@@ -126,12 +133,6 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
             if let imgView = cell.viewWithTag(1) as? UIImageView {
                 imgView.image = image
-            }
-            
-            if SqliteManager.checkPhotoIsUploaded(fname: asset.localIdentifier) {
-                if let btnUpload = cell.viewWithTag(3) as? UIButton {
-                    btnUpload.isHidden = true
-                }
             }
         }
  

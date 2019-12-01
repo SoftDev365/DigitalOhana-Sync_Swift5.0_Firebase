@@ -134,7 +134,14 @@ class GSModule: NSObject {
         let fileRef = storageRef.child(filePath)
 
         // Upload the file to the path "images/rivers.jpg"
-        let uploadTask = fileRef.putData(data, metadata: nil) { (metadata, error) in
+        let _ = fileRef.putData(data, metadata: nil) { (metadata, error) in
+            if let error = error {
+                debugPrint(error)
+                completion(false)
+            } else {
+                completion(true)
+            }
+            /*
             if metadata != nil {
                 //auth.email
                 let newMetadata = StorageMetadata()
@@ -161,10 +168,8 @@ class GSModule: NSObject {
             } else {
                 // Uh-oh, an error occurred!
                 completion(false)
-            }
+            }*/
         }
-        
-        uploadTask.resume()
     }
     
     static func uploadFile(

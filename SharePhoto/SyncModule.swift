@@ -40,7 +40,14 @@ class SyncModule: NSObject {
             let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
             
             // extract image data
-            PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+            PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
+                // skip twice calls
+                let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
+                if isDegraded {
+                   return
+                }
+                
+                // check image is not null
                 guard let image = image else {
                     debugPrint("-----extract image from asset failed ------")
                     onCompleted(false)

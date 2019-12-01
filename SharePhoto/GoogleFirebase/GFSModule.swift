@@ -72,7 +72,7 @@ class GFSModule: NSObject {
                 debugPrint(err)
                 onCompleted(false, nil)
             } else {
-                debugPrint("---------register photo id:\(ref!.documentID)----------")
+                debugPrint("---------register photo document id:\(ref!.documentID)----------")
                 onCompleted(true, ref!.documentID)
             }
         }
