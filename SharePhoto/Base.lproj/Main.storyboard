@@ -203,17 +203,17 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n6p-Du-QZS">
-                                            <rect key="frame" x="-2" y="-2" width="300" height="300"/>
+                                            <rect key="frame" x="-3" y="-3" width="300" height="300"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7C-RV-17r" userLabel="TitleBG">
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7C-RV-17r" userLabel="TitleBG">
                                             <rect key="frame" x="0.0" y="40" width="50" height="10"/>
                                             <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="0.76000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" secondItem="b7C-RV-17r" secondAttribute="width" multiplier="2:10" id="Ep8-nA-9ZC"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs6-SL-HBV" userLabel="TItle">
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs6-SL-HBV" userLabel="TItle">
                                             <rect key="frame" x="3" y="34.666666666666664" width="44" height="21"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -223,10 +223,26 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             </variation>
                                         </label>
+                                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cch-AQ-5PD">
+                                            <rect key="frame" x="6" y="6" width="44" height="44"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="dAu-wM-B4E"/>
+                                                <constraint firstAttribute="width" constant="44" id="m0U-NZ-Tj2"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" image="square.and.arrow.down" catalog="system"/>
+                                            <connections>
+                                                <action selector="onBtnDownload:" destination="ldQ-qu-ERc" eventType="touchUpInside" id="dtz-sP-ZBM"/>
+                                                <action selector="onBtnUploadPhoto:" destination="sgj-ax-9uQ" eventType="touchUpInside" id="9R4-ri-iJg"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="b7C-RV-17r" firstAttribute="width" secondItem="MUS-um-6OH" secondAttribute="width" id="7fS-Yz-DBi"/>
+                                        <constraint firstAttribute="trailing" secondItem="cch-AQ-5PD" secondAttribute="trailing" id="OJt-WJ-IVH"/>
+                                        <constraint firstAttribute="bottom" secondItem="cch-AQ-5PD" secondAttribute="bottom" id="PtA-Xd-6hf"/>
                                         <constraint firstItem="b7C-RV-17r" firstAttribute="centerX" secondItem="MUS-um-6OH" secondAttribute="centerX" id="VWT-xl-f36"/>
                                         <constraint firstItem="hs6-SL-HBV" firstAttribute="centerX" secondItem="b7C-RV-17r" secondAttribute="centerX" id="c4s-M8-WUI"/>
                                         <constraint firstItem="hs6-SL-HBV" firstAttribute="centerY" secondItem="b7C-RV-17r" secondAttribute="centerY" id="kzj-0i-Jwd"/>
@@ -516,6 +532,7 @@
         <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
         <image name="plus" catalog="system" width="64" height="56"/>
         <image name="plus.square" catalog="system" width="64" height="56"/>
+        <image name="square.and.arrow.down" catalog="system" width="60" height="64"/>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
     </resources>
 </document>

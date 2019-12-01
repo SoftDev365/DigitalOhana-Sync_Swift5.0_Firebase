@@ -18,7 +18,7 @@ class GFSModule: NSObject {
         
         refUsers.getDocuments { (querySnapshot, err) in
             if let err = err {
-                print("Error getting docuemts:\(err)")
+                print("Error getting users docuemts:\(err)")
             } else {
                 for document in querySnapshot!.documents {
                     print("\(document.documentID) => \(document.data())")
@@ -44,6 +44,26 @@ class GFSModule: NSObject {
                 debugPrint(err)
             } else {
                 //self.userID = ref!.documentID
+            }
+        }
+    }
+    
+    static func getAllPhotos(onCompleted: @escaping (Bool, [[String:Any]]) -> ()) {
+        let db = Firestore.firestore()
+        let refPhotos = db.collection("photos")
+        
+        refPhotos.getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting photos docuemts:\(err)")
+                onCompleted(false, [])
+            } else {
+                var result = [[String:Any]]()
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    let item = ["id":document.documentID, "data":document.data()] as [String:Any]
+                    result += [item]
+                }
+                onCompleted(true, result)
             }
         }
     }
@@ -91,9 +111,5 @@ class GFSModule: NSObject {
                 onCompleted(true)
             }
         }
-    }
-    
-    static func uploadPhoto() {
-        
     }
 }
