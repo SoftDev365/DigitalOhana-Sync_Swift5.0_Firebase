@@ -120,12 +120,14 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
         
         // hide upload button if already uploaded
-        if SqliteManager.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
-            if let btnUpload = cell.viewWithTag(3) as? UIButton {
+        if let btnUpload = cell.viewWithTag(3) as? UIButton {
+            if SqliteManager.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
                 btnUpload.isHidden = true
+            } else {
+                btnUpload.isHidden = false
             }
         }
-        
+
         //let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
         let width = UIScreen.main.scale*(self.view.frame.size.width - 5)/3
         let size = CGSize(width:width, height:width)

@@ -81,7 +81,7 @@ class GFSModule: NSObject {
     static func updatePhotoToValid(photoID: String, onCompleted: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
 
-        db.collection("users").document(photoID).updateData([
+        db.collection("photos").document(photoID).updateData([
             "valid": true
         ]) { err in
             if let err = err {
