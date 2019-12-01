@@ -10,6 +10,7 @@ import UIKit
 import SQLite
 
 class SqliteManager: NSObject {
+
     static let dbFileName = "sync.db"
     static var dbFilePath = ""
     
@@ -78,26 +79,22 @@ class SqliteManager: NSObject {
             let db = try Connection(dbFilePath)
 
             let photos = Table("photos")
-            let fd_id = Expression<Int64>("id")
-            let fd_mine = Expression<Bool>("mine")
             let fd_fname = Expression<String>("fname")
             let alice = photos.filter(fd_fname == fname)
             //db.prepare(photos.select([*]).filter)
             
             let count = try db.scalar(alice.count)
-            
-            for photo in try db.prepare(alice) {
-                
-                let file = ["id":photo[fd_id], "mine":photo[fd_mine], "fname": photo[fd_fname]] as [String : Any]
-                
-                debugPrint(file)
-                //let id = photo[fd_id]
-                //if id > 0 {
-                    return true
-                //} else {
-                //    return false
-                //}
+            if count > 0 {
+                return true
             }
+            /*
+            let fd_id = Expression<Int64>("id")
+            let fd_mine = Expression<Bool>("mine")
+            for photo in try db.prepare(alice) {
+                let file = ["id":photo[fd_id], "mine":photo[fd_mine], "fname": photo[fd_fname]] as [String : Any]
+                debugPrint(file)
+                return true
+            }*/
 
             return false
         } catch let error {
