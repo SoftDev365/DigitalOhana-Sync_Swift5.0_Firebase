@@ -79,9 +79,9 @@ class SqliteManager: NSObject {
 
             let photos = Table("photos")
             let fd_fname = Expression<String>("fname")
-            let alice = photos.filter(fd_fname == fname)
+            //let alice = photos.filter(fd_fname == fname)
 
-            for _ in try db.prepare(alice.select([])) {
+            for _ in try db.prepare("select * from photos where fname='\(fname)'") {
                 return true
             }
             

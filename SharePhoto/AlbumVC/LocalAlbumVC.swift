@@ -63,7 +63,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         guard let photoList = self.albumPhotos else { return }
         
         var fileNames: [String] = []
-        for index in 0...photoList.count {
+        for index in 0...photoList.count-1 {
             let asset = photoList[index]
             fileNames += [asset.localIdentifier]
         }
@@ -134,7 +134,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 }
             }
         }
-        
+ 
         return cell
     }
 
