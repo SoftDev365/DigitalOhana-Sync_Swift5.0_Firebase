@@ -127,6 +127,9 @@
          contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
       </ContextState>
       <ContextState
+         contextName = "closure #1 in LocalAlbumVC.fetchFamilyAlbumPhotos():LocalAlbumVC.swift">
+      </ContextState>
+      <ContextState
          contextName = "ImageZoomView.recalcZoomScale():ImageZoomView.swift">
          <PersistentStrings>
             <PersistentString
@@ -200,6 +203,9 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "GSAlbumVC.collectionView(_:didSelectItemAt:):GSAlbumVC.swift">
+      </ContextState>
+      <ContextState
          contextName = "specialized static SqliteManager.open():SqliteManager.swift">
          <PersistentStrings>
             <PersistentString
@@ -209,6 +215,14 @@
       </ContextState>
       <ContextState
          contextName = "AppDelegate.application(_:didFinishLaunchingWithOptions:):AppDelegate.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GSGalleryVC.scrollViewDidEndDecelerating(_:):GSGalleryVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "curPage">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

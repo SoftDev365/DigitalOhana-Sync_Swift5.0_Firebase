@@ -20,19 +20,12 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
 
     var photoList: [[String:Any]]?
     var folderPath: String?
-    var fileList: [StorageItem]?
     let activityView = ActivityView()
     
     var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         self.folderPath = "central"
         
@@ -144,7 +137,7 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC
         {
-            vc.setFileList(self.fileList!, page:indexPath.row)
+            vc.setFileList(self.photoList!, page:indexPath.row)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -169,6 +162,7 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     }
     
     func deleteFile(_ rowIndex: Int) {
+        /*
         let file = self.fileList![rowIndex]
         
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
@@ -178,7 +172,7 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
                 self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
                 self.activityView.hideActivitiIndicator()
             }
-        }
+        }*/
     }
     
     func deleteRow(_ rowIndex: Int) {

@@ -17,7 +17,10 @@ import Photos
 
 class ImageZoomView: UIScrollView, UIScrollViewDelegate {
 
-    var imgView: UIImageView?
+    let sharedFolder = "central"
+    var strGSFileID: String? = nil
+    var bDownloadStarted = false
+    var imgView: UIImageView? = nil
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -27,16 +30,12 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         super.init(frame: frame)
     }
     
-    init(frame: CGRect, file: StorageReference) {
+    init(frame: CGRect, fileID: String) {
         super.init(frame: frame)
 
         initControls()
-
-        GSModule.downloadImageFile(file) { (image) in
-            self.imgView!.image = image
-            self.imgView!.contentMode = .scaleAspectFit
-            self.fitViewSizeToImage()
-        }
+        self.strGSFileID = fileID
+        self.bDownloadStarted = false
     }
     
     init(frame: CGRect, asset: PHAsset) {
@@ -46,6 +45,20 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         
         let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
         PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+            self.imgView!.image = image
+            self.imgView!.contentMode = .scaleAspectFit
+            self.fitViewSizeToImage()
+        }
+    }
+    
+    func showImage() {
+        guard let fileID = self.strGSFileID else { return }
+        if self.bDownloadStarted == true {
+            return
+        }
+        
+        self.bDownloadStarted = false
+        GSModule.downloadImageFile(fileID: fileID, folderPath: self.sharedFolder) { (image) in
             self.imgView!.image = image
             self.imgView!.contentMode = .scaleAspectFit
             self.fitViewSizeToImage()

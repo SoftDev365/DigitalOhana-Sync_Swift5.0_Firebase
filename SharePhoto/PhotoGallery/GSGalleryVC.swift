@@ -13,7 +13,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     
-    var fileList: [StorageItem]!
+    var photoList: [[String:Any]]?
     var imgViewList: [ImageZoomView]?
     var curPage: Int = 0
     
@@ -25,8 +25,8 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         return .all
     }
 
-    func setFileList(_ list: [StorageItem], page:Int) {
-        self.fileList = list
+    func setFileList(_ list: [[String:Any]], page:Int) {
+        self.photoList = list
         self.curPage = page
     }
 
@@ -59,14 +59,20 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
             return
         }
         
+        guard let photoList = self.photoList else { return }
+        
         self.imgViewList = [ImageZoomView]()
 
-        for i in 0...(fileList.count-1) {
-            if fileList![i].isFolder == true {
-                continue
+        for i in 0..<photoList.count {
+            
+            let photoInfo = photoList[i]
+            let fileID = photoInfo["id"] as! String
+            
+            let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), fileID: fileID)
+            if abs(i - self.curPage) <= 1 {
+                item.showImage()
             }
-
-            let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), file: fileList[i].file)
+            
             self.imgViewList!.append(item)
             self.scrView.addSubview(item)
         }
@@ -113,6 +119,10 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
             if i != curPage {
                 //item.setZoomScale(1.0, animated: false)
                 item.fitViewSizeToImage()
+            }
+            
+            if abs(i - self.curPage) <= 1 {
+                item.showImage()
             }
         }
     }
