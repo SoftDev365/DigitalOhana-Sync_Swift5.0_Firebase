@@ -18,6 +18,7 @@ private let reuseIdentifier = "PhotoCell"
 
 class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
+    var photoList: [[String:Any]]?
     var folderPath: String?
     var fileList: [StorageItem]?
     let activityView = ActivityView()
@@ -61,7 +62,9 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        loadFileList()
+        if self.photoList == nil {
+            loadFileList()
+        }
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -78,50 +81,62 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     func loadFileList() {
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
         
+        GFSModule.getAllPhotos { (success, result) in
+            if !success {
+                return
+            }
+            
+            self.photoList = result
+            self.collectionView.reloadData()
+            self.activityView.hideActivitiIndicator()
+        }
+        
+        /*
         GSModule.getImageFileList("central") { (fileList) in
             self.fileList = fileList
             self.collectionView.reloadData()
             
             self.activityView.hideActivitiIndicator()
-        }
+        }*/
     }
 
     // MARK: UICollectionViewDataSource
-    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let fileList = self.fileList else { return 0 }
-        
-        return fileList.count
+        guard let photoList = self.photoList else { return 0 }
+
+        return photoList.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        guard let fileList = self.fileList else { return cell }
+        guard let photoList = self.photoList else { return cell }
     
-        let file = fileList[indexPath.row]
-        
-        if file.isFolder {
-            //cell.imgThumb.image = UIImage.init(named: "folder_icon")
-            //cell.lblTitle.text = file.title
-        } else {
-            // Configure the cell
-            if let label = cell.viewWithTag(2) as? UILabel {
-                label.text = file.title
-            }
+        let photoInfo = photoList[indexPath.row]
 
-            GSModule.downloadImageFile(file.file) { (image) in
-                if let imgView = cell.viewWithTag(1) as? UIImageView {
-                    imgView.image = image
-                }
+        // Configure the cell
+        //if let label = cell.viewWithTag(2) as? UILabel {
+            //label.text = file.title
+        //}
+        
+        guard let imgView = cell.viewWithTag(1) as? UIImageView else { return cell }
+        guard let btnDownload = cell.viewWithTag(3) as? UIButton else { return cell }
+
+        btnDownload.isHidden = true
+        imgView.image = UIImage(named: "noimage")
+
+        let fileID = photoInfo["id"] as! String
+        GSModule.downloadImageFile(fileID: fileID, folderPath: self.folderPath!, onCompleted: { (image) in
+            imgView.image = image
+            if SyncModule.checkPhotoIsDownloaded(fileID: fileID) == false {
+                btnDownload.isHidden = false
             }
-        }
+        })
         
         return cell
     }
@@ -269,6 +284,10 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true) {
         }
+    }
+    
+    open func refreshFileList() {
+        self.loadFileList()
     }
     
     @IBAction func onBtnDownload(_ sender: Any) {

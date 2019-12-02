@@ -102,6 +102,26 @@ class SqliteManager: NSObject {
             return false
         }
     }
+    
+    static func checkPhotoIsDownloaded(fileID: String) -> Bool {
+        do {
+            let db = try Connection(dbFilePath)
+
+            let photos = Table("photos")
+            let fd_fsid = Expression<String>("fs_id")
+            let alice = photos.filter(fd_fsid == fileID)
+            
+            let count = try db.scalar(alice.count)
+            if count > 0 {
+                return true
+            }
+
+            return false
+        } catch let error {
+            print(error)
+            return false
+        }
+    }
 
     static func getAllFileInfos() -> [[String:Any]] {
         do {

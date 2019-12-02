@@ -11,15 +11,25 @@ import Photos
 
 class PHModule: NSObject {
     
-    static let albumTitle = "Is"
+    static let albumTitle = "Family Album"
     
-    // get the assets in a collection
-    static func getAssets(fromCollection collection: PHAssetCollection) -> PHFetchResult<PHAsset> {
-        let photosOptions = PHFetchOptions()
-        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-        photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+    static func createAlbum(withTitle title: String, completionHandler: @escaping (PHAssetCollection?) -> ()) {
+        DispatchQueue.global(qos: .background).async {
+            var placeholder: PHObjectPlaceholder?
 
-        return PHAsset.fetchAssets(in: collection, options: photosOptions)
+            PHPhotoLibrary.shared().performChanges({
+                let createAlbumRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: title)
+                placeholder = createAlbumRequest.placeholderForCreatedAssetCollection
+            }, completionHandler: { (created, error) in
+                var album: PHAssetCollection?
+                if created {
+                    let collectionFetchResult = placeholder.map { PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [$0.localIdentifier], options: nil) }
+                    album = collectionFetchResult?.firstObject
+                }
+
+                completionHandler(album)
+            })
+        }
     }
     
     static func fetchFamilyAlbumCollection() -> PHAssetCollection? {        
@@ -42,6 +52,32 @@ class PHModule: NSObject {
         return familyAlbum
     }
     
+    // get the assets in a collection
+    static func getAssets(fromCollection collection: PHAssetCollection) -> PHFetchResult<PHAsset> {
+        let photosOptions = PHFetchOptions()
+        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+
+        return PHAsset.fetchAssets(in: collection, options: photosOptions)
+    }
+    
+    static func getFamilyAlbumAssets(_ onCompletion: @escaping (PHFetchResult<PHAsset>?) -> ()) {
+        let familyAlbum = self.fetchFamilyAlbumCollection()
+        if let album = familyAlbum {
+            let assets = getAssets(fromCollection: album)
+            onCompletion(assets)
+        } else {
+            createAlbum(withTitle: self.albumTitle) { (album) in
+                if let album = album {
+                    let assets = getAssets(fromCollection: album)
+                    onCompletion(assets)
+                } else {
+                    onCompletion(nil)
+                }
+            }
+        }
+    }
+    
     /*
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
@@ -54,22 +90,18 @@ class PHModule: NSObject {
         }
     }*/
     
-    static func addPhotoToAsset(_ imagePhoto: UIImage, completion: @escaping (Bool) -> Void) {
+    static func addPhotoToAlbumCollection(album: PHAssetCollection, imagePhoto: UIImage, completion: @escaping(Bool) -> Void) {
         //UIImageWriteToSavedPhotosAlbum(tempImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-        
-        let familyAlbum = self.fetchFamilyAlbumCollection()
-        
+
         var assetPlaceholder: PHObjectPlaceholder?
 
         PHPhotoLibrary.shared().performChanges({
             let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: imagePhoto)
             assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset!
-            let albumChangeRequest = PHAssetCollectionChangeRequest(for: familyAlbum!)
+            let albumChangeRequest = PHAssetCollectionChangeRequest(for: album)
             let enumeration: NSArray = [assetPlaceholder!]
             albumChangeRequest!.addAssets(enumeration)
         }, completionHandler: { (success, error) in
-            NSLog("Creation of folder -> %@", (success ? "Success":"Error!"))
-            //self.albumFound = (success ? true:false)
             if(success){
                 //let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [assetPlaceholder!.localIdentifier], options: nil)
                 //self.assetCollection = collection.firstObject as! PHAssetCollection
@@ -77,6 +109,21 @@ class PHModule: NSObject {
 
             completion(success)
         })
+    }
+    
+    static func addPhotoToFamilyAssets(_ imagePhoto: UIImage, completion: @escaping (Bool) -> Void) {
+        let familyAlbum = self.fetchFamilyAlbumCollection()
+        if let album = familyAlbum {
+            addPhotoToAlbumCollection(album: album, imagePhoto: imagePhoto, completion: completion)
+        } else {
+            createAlbum(withTitle: self.albumTitle) { (album) in
+                if let album = album {
+                    addPhotoToAlbumCollection(album: album, imagePhoto: imagePhoto, completion: completion)
+                } else {
+                    completion(false)
+                }
+            }
+        }
     }
     
     static func deleteAssets(_ assets: NSArray, completion: @escaping (Bool) -> Void) {

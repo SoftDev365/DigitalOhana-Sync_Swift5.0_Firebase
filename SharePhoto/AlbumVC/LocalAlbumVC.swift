@@ -57,20 +57,22 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     @objc func fetchFamilyAlbumPhotos() {
-        guard let familyAlbum = PHModule.fetchFamilyAlbumCollection() else { return }
+        PHModule.getFamilyAlbumAssets { (result) in
+            guard let photoList = result else { return }
+            self.albumPhotos = photoList
+            
+            var fileNames: [String] = []
+            for index in 0..<photoList.count {
+                let asset = photoList[index]
+                fileNames += [asset.localIdentifier]
+            }
+            
+            SqliteManager.syncFileInfos(arrFiles: fileNames)
 
-        albumPhotos = PHModule.getAssets(fromCollection: familyAlbum)
-        guard let photoList = self.albumPhotos else { return }
-        
-        var fileNames: [String] = []
-        for index in 0...photoList.count-1 {
-            let asset = photoList[index]
-            fileNames += [asset.localIdentifier]
+            DispatchQueue.main.async() {
+                self.collectionView.reloadData()
+            }
         }
-        
-        SqliteManager.syncFileInfos(arrFiles: fileNames)
-
-        self.collectionView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,7 +123,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         
         // hide upload button if already uploaded
         if let btnUpload = cell.viewWithTag(3) as? UIButton {
-            if SqliteManager.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
+            if SyncModule.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
                 btnUpload.isHidden = true
             } else {
                 btnUpload.isHidden = false
@@ -202,7 +204,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     open func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {
-        PHModule.addPhotoToAsset(imagePhoto) { (bSuccess) in
+        PHModule.addPhotoToFamilyAssets(imagePhoto) { (bSuccess) in
             DispatchQueue.main.sync {
                 // update UI
                 self.fetchFamilyAlbumPhotos()

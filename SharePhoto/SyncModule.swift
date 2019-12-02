@@ -78,4 +78,13 @@ class SyncModule: NSObject {
             }
         }
     }
+    
+    static func checkPhotoIsUploaded(fname: String) -> Bool {
+        return SqliteManager.checkPhotoIsUploaded(fname: fname)
+    }
+    
+    static func checkPhotoIsDownloaded(fileID: String) -> Bool {
+        return SqliteManager.checkPhotoIsDownloaded(fileID: fileID)
+    }
+
 }

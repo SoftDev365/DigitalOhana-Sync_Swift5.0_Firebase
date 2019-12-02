@@ -117,6 +117,32 @@ class GSModule: NSObject {
             }
         }
     }
+
+    static func downloadImageFile(fileID:String, folderPath: String, onCompleted: @escaping (UIImage?) -> ()) {
+        // check cached image
+        if let cachedImage = self.imageCache.object(forKey: fileID as NSString)  {
+            onCompleted(cachedImage)
+        }
+
+        let filePath = folderPath + "/" + fileID + ".jpg"
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let fileRef = storageRef.child(filePath)
+
+        // Download in memory with a maximum allowed size of 1MB (50 * 1024 * 1024 bytes)
+        fileRef.getData(maxSize: 50 * 1024 * 1024) { data, error in
+            if let error = error {
+                debugPrint(error)
+                onCompleted(nil)
+            } else {
+                let image = UIImage(data: data!)
+                if image != nil {
+                    self.imageCache.setObject(image!, forKey: fileID as NSString)
+                }
+                onCompleted(image)
+            }
+        }
+    }
     
     static func uploadFile(
         name: String,
