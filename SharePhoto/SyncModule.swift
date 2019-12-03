@@ -86,5 +86,33 @@ class SyncModule: NSObject {
     static func checkPhotoIsDownloaded(fileID: String) -> Bool {
         return SqliteManager.checkPhotoIsDownloaded(fileID: fileID)
     }
+    
+    static func downloadImage(photoInfo: [String:Any], image: UIImage, onCompleted: @escaping(Bool)->()) {
+
+        PHModule.addPhotoToFamilyAssets(image) { (bSuccess, localIdentifier) in
+            if bSuccess == false {
+                onCompleted(false)
+            } else {
+                
+                //"create",
+                //"upload",
+                //"userid",
+                //"email,
+                //"name",
+                //"valid": false
+                let fsID = photoInfo["id"] as! String
+                let data = photoInfo["data"] as! [String: String]
+                let email = data["email"]
+                
+                if email == GUser.email {
+                    _ = SqliteManager.insertFileInfo(isMine: true, fname: localIdentifier!, fsID: fsID)
+                } else {
+                    _ = SqliteManager.insertFileInfo(isMine: false, fname: localIdentifier!, fsID: fsID)
+                }
+                
+                onCompleted(true)
+            }
+        }
+    }
 
 }

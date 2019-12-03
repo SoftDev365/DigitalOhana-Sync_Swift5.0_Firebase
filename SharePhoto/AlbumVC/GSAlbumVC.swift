@@ -284,13 +284,12 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
         self.loadFileList()
     }
     
-    func downloadImage(image: UIImage, atRow: Int) {
-        //guard let listPhoto = self.albumPhotos else { return }
-
-        PHModule.addPhotoToFamilyAssets(image) { (bSuccess, localIdentifier) in
+    func downloadImage(image: UIImage, photoInfo: [String: Any]) {
+        
+        SyncModule.downloadImage(photoInfo: photoInfo, image: image) { (success) in
             DispatchQueue.main.sync {
                 // update UI
-                // self.fetchFamilyAlbumPhotos()
+                self.fetchFamilyAlbumPhotos()
             }
         }
     }
@@ -309,12 +308,11 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
         if SyncModule.checkPhotoIsDownloaded(fileID: fileID) == false {
             print("----- Download Photo \(indexPath.row)-----")
             if imgView.image != nil {
-                downloadImage(image: imgView.image!, atRow: indexPath.row)
+                downloadImage(image: imgView.image!, photoInfo: photoInfo)
             }
         } else {
             // delete ?
             // check if photo is uploaded by me (check email or user id)
-            
         }
     }
 }

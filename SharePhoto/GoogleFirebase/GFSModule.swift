@@ -60,8 +60,15 @@ class GFSModule: NSObject {
                 var result = [[String:Any]]()
                 for document in querySnapshot!.documents {
                     print("\(document.documentID) => \(document.data())")
-                    let item = ["id":document.documentID, "data":document.data()] as [String:Any]
-                    result += [item]
+                    
+                    // check validation
+                    let data = document.data()
+                    let valid = data["valid"] as Bool
+                    
+                    if valid == true {
+                        let item = ["id": document.documentID, "data": data] as [String:Any]
+                        result += [item]
+                    }
                 }
                 onCompleted(true, result)
             }
