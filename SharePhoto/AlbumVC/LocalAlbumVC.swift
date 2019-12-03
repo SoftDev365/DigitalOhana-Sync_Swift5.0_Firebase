@@ -204,7 +204,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     open func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {
-        PHModule.addPhotoToFamilyAssets(imagePhoto) { (bSuccess) in
+        PHModule.addPhotoToFamilyAssets(imagePhoto) { (bSuccess, _) in
             DispatchQueue.main.sync {
                 // update UI
                 self.fetchFamilyAlbumPhotos()

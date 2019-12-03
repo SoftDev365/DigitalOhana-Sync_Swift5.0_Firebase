@@ -284,16 +284,37 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
         self.loadFileList()
     }
     
-    @IBAction func onBtnDownload(_ sender: Any) {
+    func downloadImage(image: UIImage, atRow: Int) {
         //guard let listPhoto = self.albumPhotos else { return }
-        
+
+        PHModule.addPhotoToFamilyAssets(image) { (bSuccess, localIdentifier) in
+            DispatchQueue.main.sync {
+                // update UI
+                // self.fetchFamilyAlbumPhotos()
+            }
+        }
+    }
+    
+    @IBAction func onBtnDownload(_ sender: Any) {
         let button = sender as! UIButton
         let cell = button.superview!.superview! as! UICollectionViewCell
         let indexPath = self.collectionView.indexPath(for: cell)!
+        guard let imgView = cell.viewWithTag(1) as? UIImageView else { return }
 
-        print("----- Download Photo \(indexPath.row)-----")
+        guard let photoList = self.photoList else { return }
+        let photoInfo = photoList[indexPath.row]
+        let fileID = photoInfo["id"] as! String
         
-        //let asset = listPhoto[indexPath.row]
-        //uploadPhoto(asset: asset)
+        // not downloaded yet
+        if SyncModule.checkPhotoIsDownloaded(fileID: fileID) == false {
+            print("----- Download Photo \(indexPath.row)-----")
+            if imgView.image != nil {
+                downloadImage(image: imgView.image!, atRow: indexPath.row)
+            }
+        } else {
+            // delete ?
+            // check if photo is uploaded by me (check email or user id)
+            
+        }
     }
 }

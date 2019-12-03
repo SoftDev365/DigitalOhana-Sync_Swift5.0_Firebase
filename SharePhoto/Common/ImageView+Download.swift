@@ -43,7 +43,13 @@ extension UIImageView {
             return
         }
 
-        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.init(style: .medium)
+        var activityIndicator: UIActivityIndicatorView!
+        if #available(iOS 13.0, *) {
+            activityIndicator = UIActivityIndicatorView.init(style: .medium)
+        } else {
+            activityIndicator = UIActivityIndicatorView.init(style: .white)
+        }
+        
         addSubview(activityIndicator)
         activityIndicator.startAnimating()
         activityIndicator.center = self.center

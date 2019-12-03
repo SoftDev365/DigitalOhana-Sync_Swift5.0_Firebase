@@ -523,6 +523,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
+                        <outlet property="btnUpload" destination="5ft-eZ-G5h" id="X8F-JC-DaP"/>
                         <outlet property="contentView" destination="gEO-Ik-A2y" id="RoW-5Q-tJE"/>
                         <outlet property="scrView" destination="eW9-u3-KTt" id="BBj-Ws-mDE"/>
                     </connections>

@@ -90,7 +90,7 @@ class PHModule: NSObject {
         }
     }*/
     
-    static func addPhotoToAlbumCollection(album: PHAssetCollection, imagePhoto: UIImage, completion: @escaping(Bool) -> Void) {
+    static func addPhotoToAlbumCollection(album: PHAssetCollection, imagePhoto: UIImage, completion: @escaping(Bool, String?) -> Void) {
         //UIImageWriteToSavedPhotosAlbum(tempImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
 
         var assetPlaceholder: PHObjectPlaceholder?
@@ -102,16 +102,18 @@ class PHModule: NSObject {
             let enumeration: NSArray = [assetPlaceholder!]
             albumChangeRequest!.addAssets(enumeration)
         }, completionHandler: { (success, error) in
-            if(success){
+            
+            if success {
                 //let collection = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [assetPlaceholder!.localIdentifier], options: nil)
                 //self.assetCollection = collection.firstObject as! PHAssetCollection
+                completion(true, assetPlaceholder!.localIdentifier)
+            } else {
+                completion(false, nil)
             }
-
-            completion(success)
         })
     }
     
-    static func addPhotoToFamilyAssets(_ imagePhoto: UIImage, completion: @escaping (Bool) -> Void) {
+    static func addPhotoToFamilyAssets(_ imagePhoto: UIImage, completion: @escaping (Bool, String?) -> Void) {
         let familyAlbum = self.fetchFamilyAlbumCollection()
         if let album = familyAlbum {
             addPhotoToAlbumCollection(album: album, imagePhoto: imagePhoto, completion: completion)
@@ -120,7 +122,7 @@ class PHModule: NSObject {
                 if let album = album {
                     addPhotoToAlbumCollection(album: album, imagePhoto: imagePhoto, completion: completion)
                 } else {
-                    completion(false)
+                    completion(false, nil)
                 }
             }
         }

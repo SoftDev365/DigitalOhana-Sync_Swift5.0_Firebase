@@ -35,7 +35,13 @@ class ActivityView {
         effectView.layer.cornerRadius = 15
         effectView.layer.masksToBounds = true
 
-        activityIndicator = UIActivityIndicatorView(style: .large)
+        if #available(iOS 13.0, *) {
+            activityIndicator = UIActivityIndicatorView(style: .large)
+        } else {
+            // Fallback on earlier versions
+            activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
+        }
+        
         activityIndicator.color = UIColor.white
         activityIndicator.frame = CGRect(x: 30, y: 20, width: 60, height: 60)
         activityIndicator.startAnimating()

@@ -13,11 +13,14 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
-    
+    @IBOutlet weak var btnUpload: UIBarButtonItem!
+
     var albumPhotos: PHFetchResult<PHAsset>? = nil
     var imgViewList: [ImageZoomView]?
     var curPage: Int = 0
     var bIsFullscreen = false
+    
+    let activityView = ActivityView()
     
     override open var shouldAutorotate: Bool {
         return true
@@ -79,6 +82,20 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         self.relayoutImageViews(false)
     }
     
+    func refreshUploadButtonStatus() {
+        guard let photoList = self.albumPhotos else { return }
+        let asset = photoList[curPage]
+        
+        // hide upload button if already uploaded
+        if SyncModule.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
+            btnUpload.isEnabled = false
+            btnUpload.tintColor = UIColor.clear
+        } else {
+            btnUpload.isEnabled = true
+            btnUpload.tintColor = UIColor.white
+        }
+    }
+    
     func relayoutImageViews(_ recalcZoomScale:Bool) {
         guard let imgViewList = self.imgViewList else { return }
         
@@ -100,6 +117,8 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         self.scrView.contentOffset = CGPoint(x: w*CGFloat(curPage), y: 0)
         self.scrView.isPagingEnabled = true
         self.scrView.delegate = self
+        
+        refreshUploadButtonStatus()
     }
     
     func recalcZoomScaleOfPhotos() {
@@ -118,6 +137,8 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
                 item.fitViewSizeToImage()
             }
         }
+        
+        refreshUploadButtonStatus()
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -131,7 +152,18 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         recalcZoomScaleOfPhotos()
     }
     
+    func uploadPhoto(asset: PHAsset) {
+        activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
+        SyncModule.uploadPhoto(asset: asset) { (success) in
+            self.activityView.hideActivitiIndicator()
+            self.refreshUploadButtonStatus()
+        }
+    }
+    
     @IBAction func onBtnUpload(_ sender: Any) {
+        guard let photoList = self.albumPhotos else { return }
+        let asset = photoList[curPage]
         
+        uploadPhoto(asset: asset)
     }
 }

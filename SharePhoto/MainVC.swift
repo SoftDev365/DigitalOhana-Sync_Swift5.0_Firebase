@@ -47,10 +47,18 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
         print("Selected item")
         if item.tag == 1 {
             self.navigationItem.title = "Family Album"
-            btnUpload.image = UIImage.init(systemName: "plus.square")
+            if #available(iOS 13.0, *) {
+                btnUpload.image = UIImage.init(systemName: "plus.square")
+            } else {
+                // Fallback on earlier versions
+            }
         } else {
             self.navigationItem.title = "Shared Storage"
-            btnUpload.image = UIImage.init(systemName: "square.and.arrow.up")
+            if #available(iOS 13.0, *) {
+                btnUpload.image = UIImage.init(systemName: "square.and.arrow.up")
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 
