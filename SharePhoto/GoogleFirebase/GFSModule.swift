@@ -63,7 +63,7 @@ class GFSModule: NSObject {
                     
                     // check validation
                     let data = document.data()
-                    let valid = data["valid"] as Bool
+                    let valid = data["valid"] as! Bool
                     
                     if valid == true {
                         let item = ["id": document.documentID, "data": data] as [String:Any]

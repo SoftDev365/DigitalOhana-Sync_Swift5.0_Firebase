@@ -285,11 +285,12 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     }
     
     func downloadImage(image: UIImage, photoInfo: [String: Any]) {
-        
+        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
         SyncModule.downloadImage(photoInfo: photoInfo, image: image) { (success) in
             DispatchQueue.main.sync {
+                self.activityView.hideActivitiIndicator()
                 // update UI
-                self.fetchFamilyAlbumPhotos()
+                self.loadFileList()
             }
         }
     }

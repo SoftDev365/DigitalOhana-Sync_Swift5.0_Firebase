@@ -145,6 +145,7 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         super.viewWillTransition(to: size, with: coordinator)
 
         curPage = (Int)(self.scrView.contentOffset.x / self.scrView.bounds.width)
+        refreshUploadButtonStatus()
     }
     
     override func viewDidLayoutSubviews() {
