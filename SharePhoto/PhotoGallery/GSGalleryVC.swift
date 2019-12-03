@@ -176,6 +176,8 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
                 self.activityView.hideActivitiIndicator()
                 // update UI
                 self.refreshDownloadButtonStatus()
+                
+                Global.setNeedRefresh()
             }
         }
     }

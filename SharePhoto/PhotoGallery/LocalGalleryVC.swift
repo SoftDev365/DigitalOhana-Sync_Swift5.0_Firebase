@@ -158,6 +158,8 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         SyncModule.uploadPhoto(asset: asset) { (success) in
             self.activityView.hideActivitiIndicator()
             self.refreshUploadButtonStatus()
+            
+            Global.setNeedRefresh()
         }
     }
     

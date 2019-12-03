@@ -54,10 +54,8 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if self.photoList == nil {
-            loadFileList()
-        }
+
+        refreshFileList()
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -281,7 +279,10 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     }
     
     open func refreshFileList() {
-        self.loadFileList()
+        if Global.needRefreshStorage == true {
+            Global.needRefreshStorage = false
+            self.loadFileList()
+        }
     }
     
     func downloadImage(image: UIImage, photoInfo: [String: Any]) {
@@ -289,8 +290,10 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
         SyncModule.downloadImage(photoInfo: photoInfo, image: image) { (success) in
             DispatchQueue.main.sync {
                 self.activityView.hideActivitiIndicator()
+                
+                Global.setNeedRefresh()
                 // update UI
-                self.loadFileList()
+                self.refreshFileList()
             }
         }
     }

@@ -91,6 +91,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         super.viewDidAppear(animated)
 
         self.collectionView.collectionViewLayout.invalidateLayout()
+        refreshAlbum()
     }
     
     override func viewDidLayoutSubviews() {
@@ -199,7 +200,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         activityView.showActivityIndicator(self.view, withTitle: "Uploading...")        
         SyncModule.uploadPhoto(asset: asset) { (success) in
             self.activityView.hideActivitiIndicator()
-            self.fetchFamilyAlbumPhotos()
+            
+            Global.setNeedRefresh()
+            // update UI
+            self.refreshAlbum()
         }
     }
     
@@ -213,7 +217,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     open func refreshAlbum() {
-        self.fetchFamilyAlbumPhotos()
+        if Global.needRefreshLocal == true {
+            Global.needRefreshLocal = false
+            self.fetchFamilyAlbumPhotos()
+        }
     }
     
     @IBAction func onBtnUploadPhoto(_ sender: Any) {

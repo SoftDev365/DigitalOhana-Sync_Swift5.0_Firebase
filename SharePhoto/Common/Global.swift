@@ -14,4 +14,12 @@ import GTMSessionFetcher
 class Global: NSObject {
     static var user: GIDGoogleUser?
     static var email: String?
+    
+    static var needRefreshLocal = true
+    static var needRefreshStorage = true
+    
+    static func setNeedRefresh() {
+        needRefreshLocal = true
+        needRefreshStorage = true
+    }
 }
