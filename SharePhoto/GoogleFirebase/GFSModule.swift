@@ -30,7 +30,7 @@ class GFSModule: NSObject {
     static func registerUser() {
         //fetchUsers()
         
-        guard let user = GUser.user else { return }
+        guard let user = Global.user else { return }
 
         let db = Firestore.firestore()
         //var ref: DocumentReference? = nil
@@ -80,9 +80,9 @@ class GFSModule: NSObject {
         df.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let dateNow = df.string(from: Date())
         
-        let userID = GUser.user!.userID!
-        let email = GUser.email!
-        let username = GUser.user!.profile.name!
+        let userID = Global.user!.userID!
+        let email = Global.email!
+        let username = Global.user!.profile.name!
         
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil

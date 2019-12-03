@@ -91,7 +91,7 @@ class GDModule: NSObject {
         getFolderID(
             name: myFolderName,
             service: service,
-            user: GUser.user!) { folderID in
+            user: Global.user!) { folderID in
             if folderID == nil {
                 self.createFolder(name: myFolderName, parentFolderID: "root") {
                     self.uploadFolderID = $0

@@ -1,5 +1,5 @@
 //
-//  GUser.swift
+//  Global.swift
 //  Google User
 //
 //  Created by Admin on 11/6/19.
@@ -11,7 +11,7 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 
-class GUser: NSObject {
+class Global: NSObject {
     static var user: GIDGoogleUser?
     static var email: String?
 }

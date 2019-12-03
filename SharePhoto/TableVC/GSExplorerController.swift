@@ -164,7 +164,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         if file.isFolder {
             return false
         } else {
-            if file.ownerEmail == GUser.email! {
+            if file.ownerEmail == Global.email! {
                 return true
             } else {
                 return false

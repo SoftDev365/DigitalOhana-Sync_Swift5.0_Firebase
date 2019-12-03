@@ -171,8 +171,8 @@ class GSModule: NSObject {
             if metadata != nil {
                 //auth.email
                 let newMetadata = StorageMetadata()
-                var email = GUser.user!.profile.email
-                var name = GUser.user!.profile.name
+                var email = Global.user!.profile.email
+                var name = Global.user!.profile.name
                 
                 if email == nil {
                     email = ""

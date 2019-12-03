@@ -11,7 +11,7 @@ import GTMSessionFetcher
 
 class GDBModule: NSObject {
     static func registerUser() {
-        guard let user = GUser.user else { return }
+        guard let user = Global.user else { return }
 
         let dbRef = Database.database().reference()
         let keyPath = "users/\(user.userID!)"

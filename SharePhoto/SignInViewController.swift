@@ -92,8 +92,8 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
             
             let email = user!.profile.email
-            GUser.user = user
-            GUser.email = email
+            Global.user = user
+            Global.email = email
      
             GFSModule.registerUser()
 
@@ -115,8 +115,8 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             activityView.hideActivitiIndicator()
             
             GDModule.service.authorizer = nil
-            GUser.user = nil
-            GUser.email = nil
+            Global.user = nil
+            Global.email = nil
         }
     }
 

@@ -104,7 +104,7 @@ class SyncModule: NSObject {
                 let data = photoInfo["data"] as! [String: Any]
                 let email = data["email"] as! String
                 
-                if email == GUser.email {
+                if email == Global.email {
                     _ = SqliteManager.insertFileInfo(isMine: true, fname: localIdentifier!, fsID: fsID)
                 } else {
                     _ = SqliteManager.insertFileInfo(isMine: false, fname: localIdentifier!, fsID: fsID)
