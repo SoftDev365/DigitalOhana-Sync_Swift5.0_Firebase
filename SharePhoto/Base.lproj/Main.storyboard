@@ -234,7 +234,6 @@
                                             <state key="normal" image="square.and.arrow.down" catalog="system"/>
                                             <connections>
                                                 <action selector="onBtnDownload:" destination="ldQ-qu-ERc" eventType="touchUpInside" id="dtz-sP-ZBM"/>
-                                                <action selector="onBtnUploadPhoto:" destination="sgj-ax-9uQ" eventType="touchUpInside" id="9R4-ri-iJg"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -427,10 +426,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxJ-aL-PQV">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QFd-s7-GUh" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
@@ -446,7 +445,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="is8-8L-L7Q"/>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xxJ-aL-PQV" firstAttribute="top" secondItem="RjN-GP-gkr" secondAttribute="top" id="6iH-vL-bXO"/>
                             <constraint firstItem="QFd-s7-GUh" firstAttribute="width" secondItem="RjN-GP-gkr" secondAttribute="width" id="COP-6A-1gM"/>
@@ -457,6 +456,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RjN-GP-gkr"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Zvt-Ye-jXK">
+                        <barButtonItem key="rightBarButtonItem" image="square.and.arrow.down" catalog="system" style="plain" id="4lr-h6-9ZK">
+                            <connections>
+                                <action selector="onBtnDownload:" destination="yaW-V9-67A" id="DnR-Ta-X9K"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
                         <outlet property="contentView" destination="QFd-s7-GUh" id="9wU-7V-NMe"/>
                         <outlet property="scrView" destination="xxJ-aL-PQV" id="K9g-3P-6d5"/>
