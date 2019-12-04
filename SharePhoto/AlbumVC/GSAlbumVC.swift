@@ -16,13 +16,11 @@ import Photos
 
 private let reuseIdentifier = "PhotoCell"
 
-class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
+class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
     var photoList: [[String:Any]]?
     var folderPath: String?
     let activityView = ActivityView()
-    
-    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +64,7 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
     }
     
     @objc func onUploadPhoto(_ sender: UIButton) {
-        chooseImagePickerSource(sender)
+
     }
     
     func loadFileList() {
@@ -188,93 +186,13 @@ class GSAlbumVC: UICollectionViewController, UIImagePickerControllerDelegate, UI
         }
     }
     
-    func chooseImagePickerSource(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
-            self.openCamera()
-        }))
-
-        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
-            self.openGallary()
-        }))
-
-        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
-
-        /*If you want work actionsheet on ipad
-        then you have to use popoverPresentationController to present the actionsheet,
-        otherwise app will crash on iPad */
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            alert.popoverPresentationController?.sourceView = sender
-            alert.popoverPresentationController?.sourceRect = sender.bounds
-            alert.popoverPresentationController?.permittedArrowDirections = .up
-        default:
-            break
-        }
-
-        self.present(alert, animated: true, completion: nil)
-    }
-
-    func openCamera() {
-        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera)) {
-            imagePicker.sourceType = UIImagePickerController.SourceType.camera
-            imagePicker.allowsEditing = false
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        else {
-            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-
-    func openGallary() {
-        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-        imagePicker.allowsEditing = false
-        imagePicker.delegate = self
-        imagePicker.modalPresentationStyle = .fullScreen
-
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    func uploadPhoto(_ imageData: Data, fileName: String?) {
-        if fileName == nil || fileName == "" {
-            return
-        }
-
+    open func uploadPhoto(_ image: UIImage ) {
         activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
-        let imageFileName = fileName! + ".jpg"
-        GSModule.uploadFile(name: imageFileName, folderPath: self.folderPath!, data: imageData) { (success) in
+        SyncModule.uploadPhoto(image: image) { (success) in
             self.activityView.hideActivitiIndicator()
-            self.loadFileList()
-        }
-    }
-    
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let tempImage: UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        let imageData = tempImage.jpegData(compressionQuality: 1.0)
-
-        picker.dismiss(animated: true) {
-            if( imageData != nil ) {
-
-                let alert = UIAlertController(title: "", message: "Input upload file name", preferredStyle: .alert)
-                alert.addTextField { (textField) in
-                    textField.text = ""
-                }
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-                    let textField = alert!.textFields![0]
-                    self.uploadPhoto(imageData!, fileName: textField.text)
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-    }
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.dismiss(animated: true) {
+            Global.setNeedRefresh()
+            // update UI
+            self.refreshFileList()
         }
     }
     

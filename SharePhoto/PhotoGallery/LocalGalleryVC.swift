@@ -166,7 +166,7 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
     @IBAction func onBtnUpload(_ sender: Any) {
         guard let photoList = self.albumPhotos else { return }
         let asset = photoList[curPage]
-        
+
         uploadPhoto(asset: asset)
     }
 }

@@ -27,6 +27,19 @@ class SyncModule: NSObject {
         }
     }
     
+    static func uploadPhoto(image: UIImage, onCompleted:@escaping (Bool) -> ()) {
+        PHModule.addPhotoToFamilyAssets(image) { (bSuccess, localIdentifier) in
+            if bSuccess == false {
+                onCompleted(false)
+            } else {
+                let assets = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier!], options: nil)
+                let asset = assets[0]
+
+                uploadPhoto(asset: asset, onCompleted: onCompleted)
+            }
+        }
+    }
+    
     static func uploadPhoto(asset: PHAsset, onCompleted:@escaping (Bool) -> ()) {
         // register photo to firestore & get document id (primary key)
         regiserPhotoToFirestore(asset: asset) { (success, documentID) in
@@ -57,7 +70,6 @@ class SyncModule: NSObject {
 
                 // upload image data to cloud storage
                 GSModule.uploadFile(name: filename, folderPath: self.sharedFolderName, data: imageData!) { (success) in
-                    
                     if success {
                         // register to local sqlite db (local filename & firestore id)
                         if SqliteManager.insertFileInfo(isMine: true, fname: asset.localIdentifier, fsID: documentID!) == true {

@@ -85,8 +85,8 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
             let vc = selectedViewController as! LocalAlbumVC
             vc.addPhotoToLocalAlbum(image)
         } else {
-            //let vc = selectedViewController as! GSAlbumVC
-            //vc.addPhoto
+            let vc = selectedViewController as! GSAlbumVC
+            vc.uploadPhoto(image)
         }
     }
     
