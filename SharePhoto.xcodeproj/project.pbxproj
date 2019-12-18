@@ -66,7 +66,7 @@
 		84BCF77B237268FE00367EAB /* GDModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDModule.swift; sourceTree = "<group>"; };
 		84BE2AAB23904B9400F1BE53 /* SqliteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqliteManager.swift; sourceTree = "<group>"; };
 		84BE2AAD2390B8A000F1BE53 /* SyncModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncModule.swift; sourceTree = "<group>"; };
-		84BE63BE23717A45002F2C66 /* Family Media Sync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Family Media Sync.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84BE63BE23717A45002F2C66 /* Ohana Memory Sync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ohana Memory Sync.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BE63C123717A45002F2C66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84BE63C523717A45002F2C66 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		84BE63C823717A45002F2C66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -125,8 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				840A34C72397118500A14491 /* Global.swift */,
-				84BE2AAB23904B9400F1BE53 /* SqliteManager.swift */,
 				84A28E43238C85F20017DD06 /* PHModule.swift */,
+				84BE2AAB23904B9400F1BE53 /* SqliteManager.swift */,
 				840EEE012374957000361FB9 /* ActivityView.swift */,
 				840EEDFF2374215800361FB9 /* Alerts.swift */,
 				843DF2DF2373D00E00F856ED /* ImageView+Download.swift */,
@@ -156,7 +156,7 @@
 		84BE63BF23717A45002F2C66 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84BE63BE23717A45002F2C66 /* Family Media Sync.app */,
+				84BE63BE23717A45002F2C66 /* Ohana Memory Sync.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,7 +248,7 @@
 			);
 			name = SharePhoto;
 			productName = SharePhoto;
-			productReference = 84BE63BE23717A45002F2C66 /* Family Media Sync.app */;
+			productReference = 84BE63BE23717A45002F2C66 /* Ohana Memory Sync.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -545,7 +545,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync";
-				PRODUCT_NAME = "Family Media Sync";
+				PRODUCT_NAME = "Ohana Memory Sync";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -566,7 +566,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync";
-				PRODUCT_NAME = "Family Media Sync";
+				PRODUCT_NAME = "Ohana Memory Sync";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

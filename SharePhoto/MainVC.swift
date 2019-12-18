@@ -46,14 +46,21 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         print("Selected item")
         if item.tag == 1 {
-            self.navigationItem.title = "Family Album"
+            self.navigationItem.title = "Home"
             if #available(iOS 13.0, *) {
                 btnUpload.image = UIImage.init(systemName: "plus.square")
             } else {
                 // Fallback on earlier versions
             }
+        } else if item.tag == 2 {
+            self.navigationItem.title = "Location"
+            if #available(iOS 13.0, *) {
+                btnUpload.image = UIImage.init(systemName: "square.and.arrow.up")
+            } else {
+                // Fallback on earlier versions
+            }
         } else {
-            self.navigationItem.title = "Shared Storage"
+            self.navigationItem.title = "Setting"
             if #available(iOS 13.0, *) {
                 btnUpload.image = UIImage.init(systemName: "square.and.arrow.up")
             } else {

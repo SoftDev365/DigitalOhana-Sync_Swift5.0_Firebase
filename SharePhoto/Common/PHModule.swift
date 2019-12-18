@@ -11,7 +11,7 @@ import Photos
 
 class PHModule: NSObject {
     
-    static let albumTitle = "Family Album"
+    static let albumTitle = "Ohana Memory Sync"
     
     static func createAlbum(withTitle title: String, completionHandler: @escaping (PHAssetCollection?) -> ()) {
         DispatchQueue.global(qos: .background).async {

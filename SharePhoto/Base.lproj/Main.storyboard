@@ -12,7 +12,7 @@
         <!--Navigation RootVC-->
         <scene sceneID="Ih8-97-cAl">
             <objects>
-                <navigationController storyboardIdentifier="NavRootVC" id="nCP-JG-5tK" customClass="NavigationRootVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavRootVC" id="nCP-JG-5tK" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="09z-a2-Ze7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -33,7 +33,7 @@
         <!--Home-->
         <scene sceneID="sSw-wc-f9U">
             <objects>
-                <tabBarController storyboardIdentifier="MainVC" id="j6d-kl-oFC" customClass="MainVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainVC" id="j6d-kl-oFC" customClass="MainVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Home" id="Ouq-xb-hbf">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="icon_alarm" id="FdF-ai-2ov">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -60,7 +60,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -70,8 +69,8 @@
                     <connections>
                         <outlet property="btnUpload" destination="ZuN-Yf-QUG" id="HvL-kH-fwp"/>
                         <segue destination="02r-wp-CBO" kind="relationship" relationship="viewControllers" id="bc3-hA-8wQ"/>
-                        <segue destination="w9X-5K-wgt" kind="relationship" relationship="viewControllers" id="tAx-14-FT2"/>
-                        <segue destination="yCb-Lo-X4K" kind="relationship" relationship="viewControllers" id="ll9-A6-G7q"/>
+                        <segue destination="w9X-5K-wgt" kind="relationship" relationship="viewControllers" id="Y5D-4I-KAE"/>
+                        <segue destination="yCb-Lo-X4K" kind="relationship" relationship="viewControllers" id="Idk-r5-H01"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iSt-BY-dtv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -81,7 +80,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SignInViewController" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SignInViewController" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -122,13 +121,13 @@
         <!--Explorer Controller-->
         <scene sceneID="jhT-8g-T0d">
             <objects>
-                <tableViewController storyboardIdentifier="GDExpVC" id="Xis-27-3jI" customClass="GDExplorerController" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GDExpVC" id="Xis-27-3jI" customClass="GDExplorerController" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="WEJ-2W-Ujr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="LRd-hh-GBe" customClass="FileTableViewCell" customModule="Family_Media_Sync" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="LRd-hh-GBe" customClass="FileTableViewCell" customModule="Ohana_Memory_Sync" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LRd-hh-GBe" id="khy-vL-DEP">
@@ -185,13 +184,13 @@
         <!--Shared Storage-->
         <scene sceneID="cbI-2j-9iQ">
             <objects>
-                <collectionViewController storyboardIdentifier="SharedVC" id="ldQ-qu-ERc" customClass="GSAlbumVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="SharedVC" id="ldQ-qu-ERc" customClass="GSAlbumVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="TVs-Hk-3BI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3u0-hk-oYO">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="300" height="300"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -209,14 +208,14 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7C-RV-17r" userLabel="TitleBG">
-                                            <rect key="frame" x="0.0" y="40" width="50" height="10"/>
+                                            <rect key="frame" x="0.0" y="240" width="300" height="60"/>
                                             <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="0.76000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" secondItem="b7C-RV-17r" secondAttribute="width" multiplier="2:10" id="Ep8-nA-9ZC"/>
                                             </constraints>
                                         </view>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs6-SL-HBV" userLabel="TItle">
-                                            <rect key="frame" x="3" y="34.666666666666664" width="44" height="21"/>
+                                            <rect key="frame" x="128" y="259.66666666666669" width="44" height="21"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -226,7 +225,7 @@
                                             </variation>
                                         </label>
                                         <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cch-AQ-5PD">
-                                            <rect key="frame" x="6" y="6" width="44" height="44"/>
+                                            <rect key="frame" x="256" y="256" width="44" height="44"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="dAu-wM-B4E"/>
@@ -269,14 +268,14 @@
         <!--SettingVC-->
         <scene sceneID="BWK-yX-fYu">
             <objects>
-                <viewController id="yCb-Lo-X4K" customClass="SettingVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yCb-Lo-X4K" customClass="SettingVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bjL-KP-yRd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="VMA-vI-IQ0"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="icon_setting" id="L1g-ef-COT"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="" image="icon_setting" id="L1g-ef-COT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ivR-FQ-f3d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -285,7 +284,7 @@
         <!--HomeVC-->
         <scene sceneID="ftK-mV-gf8">
             <objects>
-                <viewController id="02r-wp-CBO" customClass="HomeVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="02r-wp-CBO" customClass="HomeVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C1a-6i-90k">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -293,7 +292,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0dx-9g-C5k">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LIK-b2-y7Q">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LIK-b2-y7Q">
                                     <size key="itemSize" width="300" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -319,6 +318,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="A6i-xX-nXx" secondAttribute="trailing" id="g3L-Ri-E1V"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="customSize" width="300" height="300"/>
                                     </collectionViewCell>
                                 </cells>
@@ -343,7 +343,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yIq-YR-aDy"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="icon_home" id="BL4-yO-LZk"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="" image="icon_home" id="BL4-yO-LZk"/>
                     <connections>
                         <outlet property="collectionView" destination="0dx-9g-C5k" id="cYt-gj-O7O"/>
                     </connections>
@@ -355,7 +355,7 @@
         <!--LocationVC-->
         <scene sceneID="Jnf-pI-Akh">
             <objects>
-                <viewController id="w9X-5K-wgt" customClass="LocationVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="w9X-5K-wgt" customClass="LocationVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BwW-pe-ulD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -363,15 +363,15 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-9n-Nwp">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pGs-xQ-e0y">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pGs-xQ-e0y">
                                     <size key="itemSize" width="300" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FrameCell" id="WOj-3n-WJt">
-                                        <rect key="frame" x="57" y="0.0" width="300" height="300"/>
+                                        <rect key="frame" x="57" y="10" width="300" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jfr-6U-hP6">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
@@ -380,21 +380,21 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loc_drive" translatesAutoresizingMaskIntoConstraints="NO" id="ce4-QU-O5Z">
                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="240"/>
                                                 </imageView>
-                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Max-MF-qPb" userLabel="TitleBG">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Max-MF-qPb" userLabel="TitleBG">
                                                     <rect key="frame" x="0.0" y="240" width="300" height="60"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NgT-7A-VuQ" userLabel="TItle">
                                                             <rect key="frame" x="128" y="19.666666666666686" width="44" height="21"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                             <variation key="heightClass=regular-widthClass=compact">
                                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             </variation>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="0.76000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" white="0.1485050279800206" alpha="0.76040132705479457" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="NgT-7A-VuQ" firstAttribute="centerY" secondItem="Max-MF-qPb" secondAttribute="centerY" id="0bO-r6-b7E"/>
                                                         <constraint firstAttribute="width" secondItem="Max-MF-qPb" secondAttribute="height" multiplier="100:20" id="6Jq-eK-srN"/>
@@ -402,6 +402,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="Max-MF-qPb" firstAttribute="top" secondItem="ce4-QU-O5Z" secondAttribute="bottom" id="6Bl-aU-cJe"/>
                                                 <constraint firstAttribute="bottom" secondItem="Max-MF-qPb" secondAttribute="bottom" id="9cx-3w-kOq"/>
@@ -418,7 +419,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="oRM-ad-KRk" firstAttribute="trailing" secondItem="ixI-9n-Nwp" secondAttribute="trailing" id="NBo-fY-WAh"/>
                             <constraint firstItem="ixI-9n-Nwp" firstAttribute="leading" secondItem="oRM-ad-KRk" secondAttribute="leading" id="PaQ-nH-HmE"/>
@@ -427,7 +428,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oRM-ad-KRk"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="icon_album" id="gPh-aT-lKm"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="" image="icon_album" id="gPh-aT-lKm"/>
                     <connections>
                         <outlet property="collectionView" destination="ixI-9n-Nwp" id="UWY-sX-tnw"/>
                     </connections>
@@ -436,10 +437,10 @@
             </objects>
             <point key="canvasLocation" x="-3565.217391304348" y="-646.20535714285711"/>
         </scene>
-        <!--Family Album-->
+        <!--Location-->
         <scene sceneID="Rvl-nP-8yl">
             <objects>
-                <collectionViewController storyboardIdentifier="FamilyAlbum" id="sgj-ax-9uQ" customClass="LocalAlbumVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="LocalAlbum" id="sgj-ax-9uQ" customClass="LocalAlbumVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" dataMode="prototypes" id="pq9-GZ-RfO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -517,7 +518,7 @@
                     <tabBarItem key="tabBarItem" tag="1" title="Family Album" image="photo.on.rectangle" catalog="system" id="b8P-hx-qJK">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
-                    <navigationItem key="navigationItem" title="Family Album" id="EJz-oU-XU7">
+                    <navigationItem key="navigationItem" title="Location" id="EJz-oU-XU7">
                         <barButtonItem key="rightBarButtonItem" title="Add" image="plus.square" catalog="system" id="rpv-4o-d6F">
                             <connections>
                                 <action selector="onAddPhoto:" destination="sgj-ax-9uQ" id="kGx-hq-kvC"/>
@@ -533,13 +534,13 @@
         <!--Explorer Controller-->
         <scene sceneID="j8E-qI-oQH">
             <objects>
-                <tableViewController storyboardIdentifier="GSExpVC" id="TPG-bh-X1x" customClass="GSExplorerController" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GSExpVC" id="TPG-bh-X1x" customClass="GSExplorerController" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dJg-uc-DCg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="vIm-5I-zyr" customClass="FileTableViewCell" customModule="Family_Media_Sync" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="vIm-5I-zyr" customClass="FileTableViewCell" customModule="Ohana_Memory_Sync" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vIm-5I-zyr" id="nHX-tx-3j2">
@@ -592,7 +593,7 @@
         <!--GalleryVC-->
         <scene sceneID="VF5-e8-hl2">
             <objects>
-                <viewController storyboardIdentifier="SlideVC" id="yaW-V9-67A" customClass="GSGalleryVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SlideVC" id="yaW-V9-67A" customClass="GSGalleryVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9bl-rs-Hl4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -649,7 +650,7 @@
         <!--Local GalleryVC-->
         <scene sceneID="Bnw-MG-mDe">
             <objects>
-                <viewController storyboardIdentifier="GalleryVC" id="MqG-H5-2aI" customClass="LocalGalleryVC" customModule="Family_Media_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GalleryVC" id="MqG-H5-2aI" customClass="LocalGalleryVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AQO-Ov-UOs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
