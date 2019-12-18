@@ -89,7 +89,7 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
             vc.uploadPhoto(image)
         }
     }
-    
+
     @IBAction func onBtnSignout(_ sender: Any) {
         doLogout()
     }
