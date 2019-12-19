@@ -148,7 +148,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
 
         cell.setEmpty()
-        cell.setCheckboxStatus(self.bEditMode, checked: true)
+        cell.setCheckboxStatus(self.bEditMode, checked: false)
 
         guard let photoList = self.photoList else { return cell }
         if indexPath.row >= photoList.count {
@@ -269,7 +269,12 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             showTabBar()
         }
 
-        self.collectionView.reloadData()
+        let indexs = self.collectionView.indexPathsForVisibleItems
+        for indexPath in indexs {
+            let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
+            cell.setCheckboxStatus(editMode, checked: false)
+        }
+        //self.collectionView.reloadData()
     }
     
     @objc func handleLongPress(gesture : UILongPressGestureRecognizer!) {
@@ -279,11 +284,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 
         let p = gesture.location(in: self.collectionView)
 
-        if let _ = self.collectionView.indexPathForItem(at: p) {
-            // get the cell at indexPath (the one you long pressed)
-            // let cell = self.collectionView.cellForItem(at: indexPath)
-            
+        if let indexPath = self.collectionView.indexPathForItem(at: p) {
             switchModeTo(editMode:true)
+            let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
+            cell.setCheckboxStatus(true, checked: true)
         } else {
             print("couldn't find index path")
         }

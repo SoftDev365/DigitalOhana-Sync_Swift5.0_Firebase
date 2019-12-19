@@ -51,22 +51,25 @@ class PhotoCell: UICollectionViewCell {
             return
         }
         
-        for constraint in self.contentView.constraints {
-            if constraint.identifier == "left_padding" {
-               constraint.constant = size
+        UIView.animate(withDuration: 0.2, animations: {
+            for constraint in self.contentView.constraints {
+                if constraint.identifier == "left_padding" {
+                   constraint.constant = size
+                }
+                if constraint.identifier == "right_padding" {
+                   constraint.constant = size
+                }
+                if constraint.identifier == "top_padding" {
+                   constraint.constant = size
+                }
+                if constraint.identifier == "bottom_padding" {
+                   constraint.constant = size
+                }
             }
-            if constraint.identifier == "right_padding" {
-               constraint.constant = size
-            }
-            if constraint.identifier == "top_padding" {
-               constraint.constant = size
-            }
-            if constraint.identifier == "bottom_padding" {
-               constraint.constant = size
-            }
-        }
 
-        self.layoutIfNeeded()
+            self.layoutIfNeeded()
+        }) { (success) in
+        }
     }
     
     open func setCheckboxStatus(_ bShow: Bool, checked: Bool) {
