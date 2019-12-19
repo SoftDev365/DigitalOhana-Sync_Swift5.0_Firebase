@@ -12,7 +12,7 @@
         <!--Item-->
         <scene sceneID="Ih8-97-cAl">
             <objects>
-                <navigationController storyboardIdentifier="NavHomeVC" id="nCP-JG-5tK" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavHomeVC" toolbarHidden="NO" id="nCP-JG-5tK" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="daj-Ai-JMI"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="09z-a2-Ze7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -23,8 +23,14 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="ccM-gT-yYN">
+                        <rect key="frame" x="0.0" y="764" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </toolbar>
                     <connections>
-                        <segue destination="02r-wp-CBO" kind="relationship" relationship="rootViewController" id="Z8V-Lv-v2w"/>
+                        <segue destination="02r-wp-CBO" kind="relationship" relationship="rootViewController" id="YbJ-FF-rxh"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aqd-jy-a5j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -305,7 +311,7 @@
         <!--Home-->
         <scene sceneID="ftK-mV-gf8">
             <objects>
-                <viewController id="02r-wp-CBO" customClass="HomeVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="02r-wp-CBO" customClass="HomeVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C1a-6i-90k">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -368,7 +374,10 @@
                         <viewLayoutGuide key="safeArea" id="yIq-YR-aDy"/>
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="" image="icon_home" id="BL4-yO-LZk"/>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem title="Item" image="square.and.arrow.down" catalog="system" id="9ni-iH-mjd"/>
+                        <barButtonItem title="Item" image="trash.fill" catalog="system" id="hKH-yh-IBB"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Home" id="bYQ-Xf-wQM">
                         <barButtonItem key="leftBarButtonItem" image="icon_alarm" id="Dpi-G4-cA4">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -384,6 +393,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
                         <outlet property="btnAdd" destination="WLD-jS-OAi" id="Yu0-iY-zi4"/>
                         <outlet property="btnNavLeft" destination="Dpi-G4-cA4" id="nrV-5n-oQ5"/>
@@ -794,5 +804,6 @@
         <image name="plus.square" catalog="system" width="64" height="56"/>
         <image name="square.and.arrow.down" catalog="system" width="60" height="64"/>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
+        <image name="trash.fill" catalog="system" width="60" height="64"/>
     </resources>
 </document>

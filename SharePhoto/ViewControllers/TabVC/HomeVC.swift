@@ -41,6 +41,13 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.navigationController?.isNavigationBarHidden = false
         //self.collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: attributes)
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
+        refreshControl.tintColor = .white
+        
+        self.collectionView.addSubview(refreshControl) // not required when using UITableViewController
+        
         let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
         lpgr.minimumPressDuration = 0.5
         lpgr.delegate = self
@@ -60,9 +67,6 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         //self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
         self.navigationItem.rightBarButtonItems = [barButton2]
         */
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
-        self.collectionView.addSubview(refreshControl) // not required when using UITableViewController
     }
 
     @objc func refresh(_ sender: Any) {
@@ -80,6 +84,9 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         let value = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
+        
+        //self.navigationController?.setToolbarHidden(true, animated: true)
+        switchModeTo(editMode:false)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -130,13 +137,18 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let photoList = self.photoList else { return 0 }
 
-        return photoList.count
+        //return photoList.count
+        return 20
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         guard let photoList = self.photoList else { return cell }
+        
+        if indexPath.row >= photoList.count {
+            return cell
+        }
     
         let photoInfo = photoList[indexPath.row]
 
@@ -164,6 +176,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC
         {
+            //self.tabBarController?.tabBar.isHidden = true//bIsFullscreen
+            self.navigationController?.setToolbarHidden(true, animated: false)
+            hideTabBar()
+            
             vc.setFileList(self.photoList!, page:indexPath.row)
             navigationController?.pushViewController(vc, animated: true)
         }
@@ -248,17 +264,32 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    func switchModeTo(editMode:Bool) {
+        self.navigationController?.setToolbarHidden(false, animated: false)
+        
+        if editMode == true {
+            //self.hidesBottomBarWhenPushed = false
+            self.tabBarController?.tabBar.isHidden = true
+            //self.navigationController?.setToolbarHidden(false, animated: true)
+        } else {
+            //self.hidesBottomBarWhenPushed = true
+            self.tabBarController?.tabBar.isHidden = false
+            //self.navigationController?.setToolbarHidden(true, animated: true)
+        }
+    }
+    
     @objc func handleLongPress(gesture : UILongPressGestureRecognizer!) {
-        if gesture.state != .ended {
+        if gesture.state != .began {
             return
         }
 
         let p = gesture.location(in: self.collectionView)
 
-        if let indexPath = self.collectionView.indexPathForItem(at: p) {
+        if let _ = self.collectionView.indexPathForItem(at: p) {
             // get the cell at indexPath (the one you long pressed)
-            let cell = self.collectionView.cellForItem(at: indexPath)
-            // do stuff with the cell
+            // let cell = self.collectionView.cellForItem(at: indexPath)
+            
+            switchModeTo(editMode:true)
         } else {
             print("couldn't find index path")
         }
@@ -287,7 +318,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     @IBAction func onBtnNavLeft(_ sender: Any) {
-        
+        switchModeTo(editMode:false)
     }
     
     @IBAction func onBtnNavRight(_ sender: Any) {
@@ -296,5 +327,21 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     @IBAction func onBtAdd(_ sender: Any) {
         
+    }
+    
+    func hideTabBar() {
+        var fram = self.tabBarController!.tabBar.frame
+        fram.origin.y = self.view.frame.size.height + (fram.size.height)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.tabBarController?.tabBar.frame = fram
+        })
+    }
+
+    func showTabBar() {
+        var fram = self.tabBarController!.tabBar.frame
+        fram.origin.y = self.view.frame.size.height - (fram.size.height)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.tabBarController?.tabBar.frame = fram
+        })
     }
 }
