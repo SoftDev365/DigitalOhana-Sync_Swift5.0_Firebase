@@ -346,10 +346,10 @@
                                             <constraints>
                                                 <constraint firstItem="Dzm-X7-IqA" firstAttribute="width" secondItem="L9h-pJ-Q99" secondAttribute="width" multiplier="0.25" id="RMx-17-vtL"/>
                                                 <constraint firstAttribute="trailing" secondItem="Dzm-X7-IqA" secondAttribute="trailing" constant="8" id="Wjo-eQ-KbC"/>
-                                                <constraint firstItem="A6i-xX-nXx" firstAttribute="top" secondItem="L9h-pJ-Q99" secondAttribute="top" id="XMq-JC-bjY"/>
-                                                <constraint firstItem="A6i-xX-nXx" firstAttribute="leading" secondItem="L9h-pJ-Q99" secondAttribute="leading" id="YhP-d2-Z9v"/>
-                                                <constraint firstAttribute="bottom" secondItem="A6i-xX-nXx" secondAttribute="bottom" id="a71-M1-HYg"/>
-                                                <constraint firstAttribute="trailing" secondItem="A6i-xX-nXx" secondAttribute="trailing" id="g3L-Ri-E1V"/>
+                                                <constraint firstItem="A6i-xX-nXx" firstAttribute="top" secondItem="L9h-pJ-Q99" secondAttribute="top" identifier="top_padding" id="XMq-JC-bjY"/>
+                                                <constraint firstItem="A6i-xX-nXx" firstAttribute="leading" secondItem="L9h-pJ-Q99" secondAttribute="leading" identifier="left_padding" id="YhP-d2-Z9v"/>
+                                                <constraint firstAttribute="bottom" secondItem="A6i-xX-nXx" secondAttribute="bottom" identifier="bottom_padding" id="a71-M1-HYg"/>
+                                                <constraint firstAttribute="trailing" secondItem="A6i-xX-nXx" secondAttribute="trailing" identifier="right_padding" id="g3L-Ri-E1V"/>
                                                 <constraint firstItem="Dzm-X7-IqA" firstAttribute="top" secondItem="L9h-pJ-Q99" secondAttribute="top" constant="8" id="yqD-Y9-Cyy"/>
                                             </constraints>
                                         </collectionViewCellContentView>

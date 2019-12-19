@@ -40,15 +40,48 @@ class PhotoCell: UICollectionViewCell {
         self.filePath = ""
     }
     
+    open func setPaddingToPhoto(_ size: CGFloat) {
+        /*
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: ivPhoto, attribute: .leading, multiplier: 1, constant: 10))
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: ivPhoto, attribute: .trailing, multiplier: 1, constant: 10))
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: ivPhoto, attribute: .top, multiplier: 1, constant: 10))
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: ivPhoto, attribute: .bottom, multiplier: 1, constant: 10))
+        */
+        if ivPhoto == nil {
+            return
+        }
+        
+        for constraint in self.contentView.constraints {
+            if constraint.identifier == "left_padding" {
+               constraint.constant = size
+            }
+            if constraint.identifier == "right_padding" {
+               constraint.constant = size
+            }
+            if constraint.identifier == "top_padding" {
+               constraint.constant = size
+            }
+            if constraint.identifier == "bottom_padding" {
+               constraint.constant = size
+            }
+        }
+
+        self.layoutIfNeeded()
+    }
+    
     open func setCheckboxStatus(_ bShow: Bool, checked: Bool) {
         if bShow == false {
             ivChkBox?.isHidden = true
+            setPaddingToPhoto(0)
         } else {
             ivChkBox?.isHidden = false
             if checked {
                 ivChkBox?.image = UIImage(named: "checkbox_d")
+                
+                setPaddingToPhoto(10)
             } else {
                 ivChkBox?.image = UIImage(named: "checkbox_n")
+                setPaddingToPhoto(0)
             }
         }
     }
