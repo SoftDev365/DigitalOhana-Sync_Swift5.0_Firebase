@@ -55,6 +55,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "HomeVC.handleLongPress(gesture:):HomeVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in closure #1 in static SyncModule.uploadPhoto(asset:onCompleted:):SyncModule.swift">
          <PersistentStrings>
             <PersistentString
@@ -85,7 +93,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
+         contextName = "closure #1 in LocalAlbumVC.fetchFamilyAlbumPhotos():LocalAlbumVC.swift">
       </ContextState>
       <ContextState
          contextName = "closure #1 in GSExplorerController.loadFileList():GSExplorerController.swift">
@@ -99,7 +107,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
+         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
       </ContextState>
       <ContextState
          contextName = "GalleryVC.recalcZoomScaleOfPhotos():GalleryVC.swift">
@@ -127,7 +135,7 @@
          contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
       </ContextState>
       <ContextState
-         contextName = "closure #1 in LocalAlbumVC.fetchFamilyAlbumPhotos():LocalAlbumVC.swift">
+         contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
       </ContextState>
       <ContextState
          contextName = "ImageZoomView.recalcZoomScale():ImageZoomView.swift">

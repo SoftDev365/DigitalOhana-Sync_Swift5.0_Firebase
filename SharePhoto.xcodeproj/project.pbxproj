@@ -166,6 +166,7 @@
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
 				84C7815023AB72A500D8F92B /* ViewControllers */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
+				84BE63CF23717A48002F2C66 /* Info.plist */,
 				84C7815123AB732200D8F92B /* SupportFiles */,
 			);
 			path = SharePhoto;
@@ -192,7 +193,6 @@
 				84BE63CC23717A48002F2C66 /* LaunchScreen.storyboard */,
 				84BE63CA23717A48002F2C66 /* Assets.xcassets */,
 				846589A7237623510050AE40 /* GoogleService-Info.plist */,
-				84BE63CF23717A48002F2C66 /* Info.plist */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";

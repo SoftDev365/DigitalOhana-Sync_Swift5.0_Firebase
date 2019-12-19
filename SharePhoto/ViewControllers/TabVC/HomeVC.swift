@@ -16,7 +16,7 @@ import Photos
 
 private let reuseIdentifier = "PhotoCell"
 
-class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
+class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate  {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var btnNavLeft: UIBarButtonItem!
@@ -28,7 +28,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     let activityView = ActivityView()
     
     var refreshControl = UIRefreshControl()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +40,12 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationController?.isNavigationBarHidden = false
         //self.collectionView.automaticallyAdjustsScrollIndicatorInsets = false
+        
+        let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delegate = self
+        lpgr.delaysTouchesBegan = true
+        self.collectionView?.addGestureRecognizer(lpgr)
         
         /*
         let buttonSize: CGFloat = 36
@@ -239,6 +245,22 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 // update UI
                 self.refreshFileList()
             }
+        }
+    }
+    
+    @objc func handleLongPress(gesture : UILongPressGestureRecognizer!) {
+        if gesture.state != .ended {
+            return
+        }
+
+        let p = gesture.location(in: self.collectionView)
+
+        if let indexPath = self.collectionView.indexPathForItem(at: p) {
+            // get the cell at indexPath (the one you long pressed)
+            let cell = self.collectionView.cellForItem(at: indexPath)
+            // do stuff with the cell
+        } else {
+            print("couldn't find index path")
         }
     }
     
