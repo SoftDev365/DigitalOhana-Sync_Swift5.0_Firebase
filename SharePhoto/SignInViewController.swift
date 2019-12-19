@@ -69,14 +69,14 @@ class SignInViewController: UIViewController {
     }
     
     func initRootList() {
-        // Safe Present        
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavRootVC") as? NavigationRootVC {
+        // Safe Present
+        //if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavRootVC") as? NavigationRootVC {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainVC {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
             //navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
 }
 
 extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
