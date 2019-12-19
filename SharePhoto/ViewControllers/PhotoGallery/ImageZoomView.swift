@@ -58,7 +58,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         }
         
         self.bDownloadStarted = false
-        GSModule.downloadImageFile(fileID: fileID, folderPath: self.sharedFolder) { (image) in
+        GSModule.downloadImageFile(fileID: fileID, folderPath: self.sharedFolder) { (fileID, image) in
             self.imgView!.image = image
             self.imgView!.contentMode = .scaleAspectFit
             self.fitViewSizeToImage()

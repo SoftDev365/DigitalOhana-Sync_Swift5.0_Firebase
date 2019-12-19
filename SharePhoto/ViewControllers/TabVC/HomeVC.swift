@@ -145,32 +145,20 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
+
+        cell.setEmpty()
+        cell.setCheckboxStatus(self.bEditMode, checked: true)
+
         guard let photoList = self.photoList else { return cell }
-        
         if indexPath.row >= photoList.count {
             return cell
         }
-    
-        let photoInfo = photoList[indexPath.row]
-
-        // Configure the cell
-        //if let label = cell.viewWithTag(2) as? UILabel {
-            //label.text = file.title
-        //}
         
-        guard let imgView = cell.viewWithTag(1) as? UIImageView else { return cell }
-        //guard let btnDownload = cell.viewWithTag(3) as? UIButton else { return cell }
-        //btnDownload.isHidden = true
-        imgView.image = UIImage(named: "noimage")
-
+        let photoInfo = photoList[indexPath.row]
         let fileID = photoInfo["id"] as! String
-        GSModule.downloadImageFile(fileID: fileID, folderPath: self.folderPath!, onCompleted: { (image) in
-            imgView.image = image
-            if SyncModule.checkPhotoIsDownloaded(fileID: fileID) == false {
-                //btnDownload.isHidden = false
-            }
-        })
+        
+        cell.setCloudFile(fileID)
         
         return cell
     }

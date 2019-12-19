@@ -120,7 +120,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
         imgView.image = UIImage(named: "noimage")
 
         let fileID = photoInfo["id"] as! String
-        GSModule.downloadImageFile(fileID: fileID, folderPath: self.folderPath!, onCompleted: { (image) in
+        GSModule.downloadImageFile(fileID: fileID, folderPath: self.folderPath!, onCompleted: { (fileID, image) in
             imgView.image = image
             if SyncModule.checkPhotoIsDownloaded(fileID: fileID) == false {
                 btnDownload.isHidden = false

@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -326,7 +325,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="OBv-hM-JCW">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="OBv-hM-JCW" customClass="PhotoCell" customModule="Ohana_Memory_Sync" customModuleProvider="target">
                                         <rect key="frame" x="57" y="0.0" width="300" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="L9h-pJ-Q99">
@@ -336,13 +335,22 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A6i-xX-nXx">
                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                                 </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox_d" translatesAutoresizingMaskIntoConstraints="NO" id="Dzm-X7-IqA">
+                                                    <rect key="frame" x="217" y="8" width="75" height="75"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="Dzm-X7-IqA" secondAttribute="height" multiplier="1:1" id="ZQH-zY-XvT"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstItem="Dzm-X7-IqA" firstAttribute="width" secondItem="L9h-pJ-Q99" secondAttribute="width" multiplier="0.25" id="RMx-17-vtL"/>
+                                                <constraint firstAttribute="trailing" secondItem="Dzm-X7-IqA" secondAttribute="trailing" constant="8" id="Wjo-eQ-KbC"/>
                                                 <constraint firstItem="A6i-xX-nXx" firstAttribute="top" secondItem="L9h-pJ-Q99" secondAttribute="top" id="XMq-JC-bjY"/>
                                                 <constraint firstItem="A6i-xX-nXx" firstAttribute="leading" secondItem="L9h-pJ-Q99" secondAttribute="leading" id="YhP-d2-Z9v"/>
                                                 <constraint firstAttribute="bottom" secondItem="A6i-xX-nXx" secondAttribute="bottom" id="a71-M1-HYg"/>
                                                 <constraint firstAttribute="trailing" secondItem="A6i-xX-nXx" secondAttribute="trailing" id="g3L-Ri-E1V"/>
+                                                <constraint firstItem="Dzm-X7-IqA" firstAttribute="top" secondItem="L9h-pJ-Q99" secondAttribute="top" constant="8" id="yqD-Y9-Cyy"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -790,6 +798,7 @@
     </scenes>
     <resources>
         <image name="btn_add" width="450" height="450"/>
+        <image name="checkbox_d" width="512" height="512"/>
         <image name="icon_alarm" width="36" height="36"/>
         <image name="icon_album" width="48" height="48"/>
         <image name="icon_home" width="48" height="48"/>
