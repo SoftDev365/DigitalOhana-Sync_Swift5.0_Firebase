@@ -23,6 +23,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     @IBOutlet weak var btnNavRight: UIBarButtonItem!
     @IBOutlet weak var btnAdd: UIButton!
 
+    var bEditMode: Bool = false
     var photoList: [[String:Any]]?
     var folderPath: String?
     let activityView = ActivityView()
@@ -32,6 +33,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.bEditMode = false
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         
@@ -265,17 +267,21 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func switchModeTo(editMode:Bool) {
-        self.navigationController?.setToolbarHidden(false, animated: false)
-        
+        self.bEditMode = editMode
+
         if editMode == true {
-            //self.hidesBottomBarWhenPushed = false
-            self.tabBarController?.tabBar.isHidden = true
-            //self.navigationController?.setToolbarHidden(false, animated: true)
+            btnNavLeft.image = nil
+            btnNavLeft.title = "Cancel"
+            btnAdd.isHidden = true
+            hideTabBar()
         } else {
-            //self.hidesBottomBarWhenPushed = true
-            self.tabBarController?.tabBar.isHidden = false
-            //self.navigationController?.setToolbarHidden(true, animated: true)
+            btnNavLeft.image = UIImage(named:"icon_alarm")
+            btnNavLeft.title = ""
+            btnAdd.isHidden = false
+            showTabBar()
         }
+
+        self.collectionView.reloadData()
     }
     
     @objc func handleLongPress(gesture : UILongPressGestureRecognizer!) {
@@ -332,16 +338,24 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func hideTabBar() {
         var fram = self.tabBarController!.tabBar.frame
         fram.origin.y = self.view.frame.size.height + (fram.size.height)
+        
         UIView.animate(withDuration: 0.5, animations: {
             self.tabBarController?.tabBar.frame = fram
-        })
+        }) { (success) in
+            self.tabBarController?.tabBar.isHidden = true
+            //self.navigationController?.setToolbarHidden(false, animated: false)
+        }
     }
 
     func showTabBar() {
         var fram = self.tabBarController!.tabBar.frame
         fram.origin.y = self.view.frame.size.height - (fram.size.height)
+        
+        self.tabBarController?.tabBar.isHidden = false
         UIView.animate(withDuration: 0.5, animations: {
             self.tabBarController?.tabBar.frame = fram
-        })
+        }) { (success) in
+            self.navigationController?.setToolbarHidden(false, animated: false)
+        }
     }
 }
