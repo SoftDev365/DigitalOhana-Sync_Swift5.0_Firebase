@@ -10,7 +10,6 @@
 		840A34C82397118500A14491 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A34C72397118500A14491 /* Global.swift */; };
 		840EEE002374215900361FB9 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEDFF2374215800361FB9 /* Alerts.swift */; };
 		840EEE022374957000361FB9 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEE012374957000361FB9 /* ActivityView.swift */; };
-		841963DE237B37D4009E11D6 /* folder.dat in Resources */ = {isa = PBXBuildFile; fileRef = 841963DD237B37D4009E11D6 /* folder.dat */; };
 		8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425689E237D475C00F4CD7A /* ImageZoomView.swift */; };
 		842568A1237D4C1100F4CD7A /* GSGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842568A0237D4C1100F4CD7A /* GSGalleryVC.swift */; };
 		843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */; };
@@ -39,7 +38,6 @@
 		84D7CE42238B3F2E00C15CF6 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D7CE41238B3F2E00C15CF6 /* MainVC.swift */; };
 		84D85D482384A1710042C4DF /* GDBModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85D472384A1710042C4DF /* GDBModule.swift */; };
 		84FAF7082387CF0500A0E76C /* GSAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */; };
-		84FAF70C2389277300A0E76C /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FAF70B2389277300A0E76C /* AlbumModel.swift */; };
 		982CA3432B9D7D26CDCAC42C /* Pods_SharePhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +47,6 @@
 		840A34C72397118500A14491 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		840EEDFF2374215800361FB9 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		840EEE012374957000361FB9 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
-		841963DD237B37D4009E11D6 /* folder.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = folder.dat; sourceTree = "<group>"; };
 		8425689E237D475C00F4CD7A /* ImageZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
 		842568A0237D4C1100F4CD7A /* GSGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSGalleryVC.swift; sourceTree = "<group>"; };
 		843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDExplorerController.swift; sourceTree = "<group>"; };
@@ -80,7 +77,6 @@
 		84D7CE41238B3F2E00C15CF6 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = /Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/MainVC.swift; sourceTree = "<absolute>"; };
 		84D85D472384A1710042C4DF /* GDBModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBModule.swift; sourceTree = "<group>"; };
 		84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAlbumVC.swift; sourceTree = "<group>"; };
-		84FAF70B2389277300A0E76C /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 		A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SharePhoto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -112,14 +108,6 @@
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
-		};
-		841963DC237B37D4009E11D6 /* resources */ = {
-			isa = PBXGroup;
-			children = (
-				841963DD237B37D4009E11D6 /* folder.dat */,
-			);
-			path = resources;
-			sourceTree = SOURCE_ROOT;
 		};
 		846589A92376291D0050AE40 /* Common */ = {
 			isa = PBXGroup;
@@ -176,24 +164,37 @@
 			children = (
 				846589A92376291D0050AE40 /* Common */,
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
+				84C7815023AB72A500D8F92B /* ViewControllers */,
+				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
+				84C7815123AB732200D8F92B /* SupportFiles */,
+			);
+			path = SharePhoto;
+			sourceTree = "<group>";
+		};
+		84C7815023AB72A500D8F92B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				84D004CB2379137E00929662 /* PhotoGallery */,
 				84D7CE3D238B3D7E00C15CF6 /* TableVC */,
 				84D7CE3E238B3DAA00C15CF6 /* AlbumVC */,
 				84AA678723AB29E2001FE9FC /* TabVC */,
-				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
-				84FAF70B2389277300A0E76C /* AlbumModel.swift */,
-				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
-				84BE2AAD2390B8A000F1BE53 /* SyncModule.swift */,
-				84D7CE41238B3F2E00C15CF6 /* MainVC.swift */,
 				849A974223822F8D003E985E /* NavigationRootVC.swift */,
+				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
+				84D7CE41238B3F2E00C15CF6 /* MainVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		84C7815123AB732200D8F92B /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
 				84BE63C723717A45002F2C66 /* Main.storyboard */,
 				84BE63CC23717A48002F2C66 /* LaunchScreen.storyboard */,
 				84BE63CA23717A48002F2C66 /* Assets.xcassets */,
 				846589A7237623510050AE40 /* GoogleService-Info.plist */,
 				84BE63CF23717A48002F2C66 /* Info.plist */,
-				841963DC237B37D4009E11D6 /* resources */,
 			);
-			path = SharePhoto;
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 		84D004CB2379137E00929662 /* PhotoGallery */ = {
@@ -232,6 +233,7 @@
 				84D85D472384A1710042C4DF /* GDBModule.swift */,
 				848E2DD22385F11300620877 /* GFSModule.swift */,
 				84D004CD237913CD00929662 /* GSModule.swift */,
+				84BE2AAD2390B8A000F1BE53 /* SyncModule.swift */,
 			);
 			path = GoogleFirebase;
 			sourceTree = "<group>";
@@ -301,7 +303,6 @@
 				846589A8237623520050AE40 /* GoogleService-Info.plist in Resources */,
 				84BE63CB23717A48002F2C66 /* Assets.xcassets in Resources */,
 				84BE63C923717A45002F2C66 /* Main.storyboard in Resources */,
-				841963DE237B37D4009E11D6 /* folder.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +387,6 @@
 				84BE2AAC23904B9400F1BE53 /* SqliteManager.swift in Sources */,
 				84BCF77C237268FE00367EAB /* GDModule.swift in Sources */,
 				849A974323822F8D003E985E /* NavigationRootVC.swift in Sources */,
-				84FAF70C2389277300A0E76C /* AlbumModel.swift in Sources */,
 				8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */,
 				84D85D482384A1710042C4DF /* GDBModule.swift in Sources */,
 				840EEE022374957000361FB9 /* ActivityView.swift in Sources */,

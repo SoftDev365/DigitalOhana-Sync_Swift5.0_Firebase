@@ -284,7 +284,7 @@
             </objects>
             <point key="canvasLocation" x="-4330" y="133"/>
         </scene>
-        <!--SettingVC-->
+        <!--Setting-->
         <scene sceneID="BWK-yX-fYu">
             <objects>
                 <viewController id="yCb-Lo-X4K" customClass="SettingVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
@@ -295,7 +295,8 @@
                         <viewLayoutGuide key="safeArea" id="VMA-vI-IQ0"/>
                     </view>
                     <tabBarItem key="tabBarItem" tag="3" title="" image="icon_setting" id="L1g-ef-COT"/>
-                    <navigationItem key="navigationItem" id="lD4-DI-tjQ"/>
+                    <navigationItem key="navigationItem" title="Setting" id="lD4-DI-tjQ"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ivR-FQ-f3d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -369,7 +370,7 @@
                         <barButtonItem key="leftBarButtonItem" image="icon_alarm" id="Dpi-G4-cA4">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="icon_refresh" id="1BZ-YW-l4O">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="icon_search" id="1BZ-YW-l4O">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
@@ -480,7 +481,7 @@
                         <barButtonItem key="leftBarButtonItem" image="icon_alarm" id="KPN-Qw-umc">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="Rtb-aH-bbO">
+                        <barButtonItem key="rightBarButtonItem" image="icon_search" id="Rtb-aH-bbO">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
@@ -771,6 +772,7 @@
         <image name="icon_album" width="48" height="48"/>
         <image name="icon_home" width="48" height="48"/>
         <image name="icon_refresh" width="36" height="36"/>
+        <image name="icon_search" width="36" height="36"/>
         <image name="icon_setting" width="48" height="48"/>
         <image name="loc_drive" width="512" height="512"/>
         <image name="noimage" width="240" height="240"/>
