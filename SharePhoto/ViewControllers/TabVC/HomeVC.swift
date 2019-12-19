@@ -164,7 +164,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC
+        if self.bEditMode == true {
+            let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
+            cell.reverseCheckStatus()
+        } else if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC
         {
             //self.tabBarController?.tabBar.isHidden = true//bIsFullscreen
             self.navigationController?.setToolbarHidden(true, animated: false)

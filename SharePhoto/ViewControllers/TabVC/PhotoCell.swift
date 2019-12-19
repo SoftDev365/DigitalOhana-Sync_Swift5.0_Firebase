@@ -26,6 +26,7 @@ class PhotoCell: UICollectionViewCell {
     
     var ivPhoto: UIImageView?
     var ivChkBox: UIImageView?
+    var checked: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -72,20 +73,41 @@ class PhotoCell: UICollectionViewCell {
         }
     }
     
+    open func isChecked() -> Bool {
+        return self.checked
+    }
+    
+    open func setSelectable(_ selectable: Bool) {
+        if selectable {
+            ivChkBox?.isHidden = false
+        } else {
+            ivChkBox?.isHidden = true
+        }
+    }
+    
+    open func reverseCheckStatus() {
+        setChecked(!self.checked)
+    }
+
+    open func setChecked(_ checked: Bool) {
+        self.checked = checked
+
+        if checked {
+            ivChkBox?.image = UIImage(named: "checkbox_d")
+            setPaddingToPhoto(10)
+        } else {
+            ivChkBox?.image = UIImage(named: "checkbox_n")
+            setPaddingToPhoto(0)
+        }
+    }
+
     open func setCheckboxStatus(_ bShow: Bool, checked: Bool) {
         if bShow == false {
             ivChkBox?.isHidden = true
             setPaddingToPhoto(0)
         } else {
             ivChkBox?.isHidden = false
-            if checked {
-                ivChkBox?.image = UIImage(named: "checkbox_d")
-                
-                setPaddingToPhoto(10)
-            } else {
-                ivChkBox?.image = UIImage(named: "checkbox_n")
-                setPaddingToPhoto(0)
-            }
+            setChecked(checked)
         }
     }
     

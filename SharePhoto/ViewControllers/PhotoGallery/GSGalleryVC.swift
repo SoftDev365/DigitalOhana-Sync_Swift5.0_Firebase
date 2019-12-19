@@ -94,7 +94,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         
         self.relayoutImageViews(false)
     }
-    
+
     func refreshDownloadButtonStatus() {
         guard let photoList = self.photoList else { return }
         let photoInfo = photoList[curPage]
