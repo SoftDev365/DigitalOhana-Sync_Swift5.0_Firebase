@@ -19,6 +19,9 @@ private let reuseIdentifier = "PhotoCell"
 class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var btnNavLeft: UIBarButtonItem!
+    @IBOutlet weak var btnNavRight: UIBarButtonItem!
+    @IBOutlet weak var btnAdd: UIButton!
 
     var photoList: [[String:Any]]?
     var folderPath: String?
@@ -259,5 +262,17 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             // delete ?
             // check if photo is uploaded by me (check email or user id)
         }
+    }
+    
+    @IBAction func onBtnNavLeft(_ sender: Any) {
+        
+    }
+    
+    @IBAction func onBtnNavRight(_ sender: Any) {
+        
+    }
+    
+    @IBAction func onBtAdd(_ sender: Any) {
+        
     }
 }
