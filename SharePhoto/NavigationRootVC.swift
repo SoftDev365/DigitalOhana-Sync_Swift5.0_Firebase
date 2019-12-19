@@ -20,6 +20,15 @@ class NavigationRootVC: UINavigationController {
         if visibleViewController is GSAlbumVC {
             return true
         }
+        if visibleViewController is LocalAlbumVC {
+            return true
+        }
+        if visibleViewController is HomeVC {
+            return true
+        }
+        if visibleViewController is LocationVC {
+            return true
+        }
         
         return false
     }
@@ -29,9 +38,6 @@ class NavigationRootVC: UINavigationController {
             return .all
         }
         if visibleViewController is LocalGalleryVC {
-            return .all
-        }
-        if visibleViewController is GSAlbumVC {
             return .all
         }
 

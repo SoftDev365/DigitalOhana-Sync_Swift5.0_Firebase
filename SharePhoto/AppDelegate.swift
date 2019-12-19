@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // for the simulator
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
+        UINavigationBar.appearance().tintColor = UIColor.white
+        
         // Override point for customization after application launch.
         FirebaseApp.configure()
         

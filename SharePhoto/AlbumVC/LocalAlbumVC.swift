@@ -26,7 +26,6 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         
         //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         //self.navigationController?.isNavigationBarHidden = false
-
         self.accessToPHLibrary();
     }
     

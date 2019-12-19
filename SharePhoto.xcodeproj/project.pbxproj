@@ -143,6 +143,16 @@
 			path = TableCells;
 			sourceTree = "<group>";
 		};
+		84AA678723AB29E2001FE9FC /* TabVC */ = {
+			isa = PBXGroup;
+			children = (
+				84688AD723A9869500D1D9E1 /* HomeVC.swift */,
+				84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */,
+				84B4144723A0E44100075A80 /* SettingVC.swift */,
+			);
+			path = TabVC;
+			sourceTree = "<group>";
+		};
 		84BE63B523717A45002F2C66 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +179,7 @@
 				84D004CB2379137E00929662 /* PhotoGallery */,
 				84D7CE3D238B3D7E00C15CF6 /* TableVC */,
 				84D7CE3E238B3DAA00C15CF6 /* AlbumVC */,
+				84AA678723AB29E2001FE9FC /* TabVC */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
 				84FAF70B2389277300A0E76C /* AlbumModel.swift */,
 				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
@@ -208,11 +219,8 @@
 		84D7CE3E238B3DAA00C15CF6 /* AlbumVC */ = {
 			isa = PBXGroup;
 			children = (
-				84688AD723A9869500D1D9E1 /* HomeVC.swift */,
-				84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */,
 				84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */,
 				84FAF7072387CF0500A0E76C /* GSAlbumVC.swift */,
-				84B4144723A0E44100075A80 /* SettingVC.swift */,
 			);
 			path = AlbumVC;
 			sourceTree = "<group>";

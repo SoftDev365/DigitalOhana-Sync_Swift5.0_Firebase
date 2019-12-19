@@ -24,6 +24,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     var folderPath: String?
     let activityView = ActivityView()
     
+    var refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,12 +51,26 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         //self.navigationItem.rightBarButtonItems = [barButton2, barButton1]
         self.navigationItem.rightBarButtonItems = [barButton2]
         */
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
+        self.collectionView.addSubview(refreshControl) // not required when using UITableViewController
     }
-    
+
+    @objc func refresh(_ sender: Any) {
+       // Code to refresh table view
+        loadFileList()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.collectionView.contentInset = UIEdgeInsets.zero
+        self.tabBarController?.tabBar.isHidden = false
+        
+        // manually roate to portrait  mode
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -75,16 +91,16 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func loadFileList() {
-        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
-        
         GFSModule.getAllPhotos { (success, result) in
+            self.refreshControl.endRefreshing()
+            self.activityView.hideActivitiIndicator()
+            
             if !success {
                 return
             }
             
             self.photoList = result
             self.collectionView.reloadData()
-            self.activityView.hideActivitiIndicator()
         }
         
         /*
@@ -205,6 +221,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     open func refreshFileList() {
         if Global.needRefreshStorage == true {
             Global.needRefreshStorage = false
+            activityView.showActivityIndicator(self.view, withTitle: "Loading...")
             self.loadFileList()
         }
     }

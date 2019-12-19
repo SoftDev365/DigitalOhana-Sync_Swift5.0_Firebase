@@ -26,6 +26,12 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
         imagePickerModule.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tabBarController?.tabBar.isHidden = false//bIsFullscreen
+    }
+    
     override open var shouldAutorotate: Bool {
         if selectedViewController is NavigationRootVC {
             return selectedViewController!.shouldAutorotate
