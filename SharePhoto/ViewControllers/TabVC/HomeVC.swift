@@ -88,7 +88,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         UIViewController.attemptRotationToDeviceOrientation()
         
         //self.navigationController?.setToolbarHidden(true, animated: true)
-        switchModeTo(editMode:false)
+        //switchModeTo(editMode:false)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -148,7 +148,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
 
         cell.setEmpty()
-        cell.setCheckboxStatus(self.bEditMode, checked: false)
+        cell.setSelectable(false)
+        //cell.setCheckboxStatus(self.bEditMode, checked: false)
 
         guard let photoList = self.photoList else { return cell }
         if indexPath.row >= photoList.count {
@@ -332,13 +333,13 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func hideTabBar() {
         var fram = self.tabBarController!.tabBar.frame
-        fram.origin.y = self.view.frame.size.height + (fram.size.height)
+        fram.origin.y = self.view.frame.size.height
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.tabBarController?.tabBar.frame = fram
         }) { (success) in
-            self.tabBarController?.tabBar.isHidden = true
-            //self.navigationController?.setToolbarHidden(false, animated: false)
+            //self.tabBarController?.tabBar.isHidden = true
+            self.navigationController?.setToolbarHidden(false, animated: false)
         }
     }
 
@@ -347,10 +348,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         fram.origin.y = self.view.frame.size.height - (fram.size.height)
         
         self.tabBarController?.tabBar.isHidden = false
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.tabBarController?.tabBar.frame = fram
         }) { (success) in
-            self.navigationController?.setToolbarHidden(false, animated: false)
+            self.navigationController?.setToolbarHidden(true, animated: false)
         }
     }
 }

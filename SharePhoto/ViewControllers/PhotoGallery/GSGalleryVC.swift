@@ -97,6 +97,9 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
 
     func refreshDownloadButtonStatus() {
         guard let photoList = self.photoList else { return }
+        if curPage >= photoList.count {
+            return
+        }
         let photoInfo = photoList[curPage]
         let fsID = photoInfo["id"] as! String
         
