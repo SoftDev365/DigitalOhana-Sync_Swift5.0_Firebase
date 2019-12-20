@@ -383,11 +383,23 @@
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="" image="icon_home" id="BL4-yO-LZk"/>
                     <toolbarItems>
-                        <barButtonItem title="Select All" id="yWH-lP-3Lz"/>
+                        <barButtonItem title="Select All" id="yWH-lP-3Lz">
+                            <connections>
+                                <action selector="onBtnSelectAll:" destination="02r-wp-CBO" id="jn4-af-P7N"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="09Z-dD-im9"/>
-                        <barButtonItem title="Delete" image="trash" catalog="system" id="hKH-yh-IBB"/>
+                        <barButtonItem title="Delete" image="trash" catalog="system" id="hKH-yh-IBB">
+                            <connections>
+                                <action selector="onBtnDelete:" destination="02r-wp-CBO" id="Utg-Ha-lDf"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="tyj-rI-iYj"/>
-                        <barButtonItem title="Download" image="square.and.arrow.down" catalog="system" id="9ni-iH-mjd"/>
+                        <barButtonItem title="Download" image="square.and.arrow.down" catalog="system" id="9ni-iH-mjd">
+                            <connections>
+                                <action selector="onBtnDownload:" destination="02r-wp-CBO" id="8NU-MH-xwL"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Home" id="bYQ-Xf-wQM">
                         <barButtonItem key="leftBarButtonItem" image="icon_alarm" id="Dpi-G4-cA4">
@@ -409,6 +421,9 @@
                         <outlet property="btnAdd" destination="WLD-jS-OAi" id="Yu0-iY-zi4"/>
                         <outlet property="btnNavLeft" destination="Dpi-G4-cA4" id="nrV-5n-oQ5"/>
                         <outlet property="btnNavRight" destination="1BZ-YW-l4O" id="jpy-6Y-azI"/>
+                        <outlet property="btnToolDelete" destination="hKH-yh-IBB" id="Da7-hW-TIL"/>
+                        <outlet property="btnToolDownload" destination="9ni-iH-mjd" id="d8P-f9-vh0"/>
+                        <outlet property="btnToolSelectAll" destination="yWH-lP-3Lz" id="BAf-l9-T0T"/>
                         <outlet property="collectionView" destination="0dx-9g-C5k" id="cYt-gj-O7O"/>
                     </connections>
                 </viewController>

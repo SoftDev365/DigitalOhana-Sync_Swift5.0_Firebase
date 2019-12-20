@@ -365,6 +365,23 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    func selectAll() {
+        guard let photoList = self.photoList else { return }
+        
+        for photoInfo in photoList {
+            if isSelectedPhoto(photoInfo) == false {
+                addPhotoToSelectedList(photoInfo)
+            }
+        }
+
+        self.collectionView.reloadData()
+    }
+    
+    func deselectAll() {
+        self.selectedPhotoList = []
+        self.collectionView.reloadData()
+    }
+    
     @objc func handleLongPress(gesture : UILongPressGestureRecognizer!) {
         if gesture.state != .began {
             return
@@ -394,7 +411,13 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     @IBAction func onBtnSelectAll(_ sender: Any) {
-        
+        if btnToolSelectAll.title == "Select All" {
+            btnToolSelectAll.title = "Deselect All"
+            selectAll()
+        } else {
+            btnToolSelectAll.title = "Select All"
+            deselectAll()
+        }
     }
     
     @IBAction func onBtnDelete(_ sender: Any) {
