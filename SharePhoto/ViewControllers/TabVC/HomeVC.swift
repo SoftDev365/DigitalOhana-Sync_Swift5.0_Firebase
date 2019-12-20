@@ -148,8 +148,11 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
 
         cell.setEmpty()
-        cell.setSelectable(false)
-        //cell.setCheckboxStatus(self.bEditMode, checked: false)
+        if self.bEditMode == false {
+            cell.setSelectable(false)
+        } else {
+            cell.setCheckboxStatus(self.bEditMode, checked: false)
+        }
 
         guard let photoList = self.photoList else { return cell }
         if indexPath.row >= photoList.count {
@@ -168,10 +171,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         if self.bEditMode == true {
             let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
             cell.reverseCheckStatus()
-        } else if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC
-        {
-            //self.tabBarController?.tabBar.isHidden = true//bIsFullscreen
-            self.navigationController?.setToolbarHidden(true, animated: false)
+        } else if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC {
             hideTabBar()
             
             vc.setFileList(self.photoList!, page:indexPath.row)
@@ -265,13 +265,15 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             btnNavLeft.image = nil
             btnNavLeft.title = "Cancel"
             btnAdd.isHidden = true
-            hideTabBar()
+            showToolBar()
         } else {
             btnNavLeft.image = UIImage(named:"icon_alarm")
             btnNavLeft.title = ""
             btnAdd.isHidden = false
-            showTabBar()
+            hideToolBar()
         }
+        
+        showTabBar()
 
         let indexs = self.collectionView.indexPathsForVisibleItems
         for indexPath in indexs {
@@ -331,6 +333,14 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         
     }
     
+    func hideToolBar() {
+        self.navigationController?.setToolbarHidden(true, animated: true)
+    }
+
+    func showToolBar() {
+        self.navigationController?.setToolbarHidden(false, animated: true)
+    }
+    
     func hideTabBar() {
         var fram = self.tabBarController!.tabBar.frame
         fram.origin.y = self.view.frame.size.height
@@ -338,8 +348,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         UIView.animate(withDuration: 0.2, animations: {
             self.tabBarController?.tabBar.frame = fram
         }) { (success) in
-            //self.tabBarController?.tabBar.isHidden = true
-            self.navigationController?.setToolbarHidden(false, animated: false)
+            self.tabBarController?.tabBar.isHidden = true
+            //self.navigationController?.setToolbarHidden(false, animated: false)
         }
     }
 
@@ -351,7 +361,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         UIView.animate(withDuration: 0.2, animations: {
             self.tabBarController?.tabBar.frame = fram
         }) { (success) in
-            self.navigationController?.setToolbarHidden(true, animated: false)
+            self.tabBarController?.tabBar.isHidden = false
         }
     }
 }
