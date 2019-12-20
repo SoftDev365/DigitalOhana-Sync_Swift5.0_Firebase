@@ -87,8 +87,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
         
-        //self.navigationController?.setToolbarHidden(true, animated: true)
-        //switchModeTo(editMode:false)
+        switchModeTo(editMode:false)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -355,13 +354,17 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 
     func showTabBar() {
         var fram = self.tabBarController!.tabBar.frame
-        fram.origin.y = self.view.frame.size.height - (fram.size.height)
+        
+        if self.view.frame.size.width > self.view.frame.size.height {
+            fram.origin.y = self.view.frame.size.width - (fram.size.height)
+        } else {
+            fram.origin.y = self.view.frame.size.height - (fram.size.height)
+        }
         
         self.tabBarController?.tabBar.isHidden = false
         UIView.animate(withDuration: 0.2, animations: {
             self.tabBarController?.tabBar.frame = fram
         }) { (success) in
-            self.tabBarController?.tabBar.isHidden = false
         }
     }
 }
