@@ -383,8 +383,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="" image="icon_home" id="BL4-yO-LZk"/>
                     <toolbarItems>
-                        <barButtonItem title="Item" image="square.and.arrow.down" catalog="system" id="9ni-iH-mjd"/>
-                        <barButtonItem title="Item" image="trash.fill" catalog="system" id="hKH-yh-IBB"/>
+                        <barButtonItem title="Select All" id="yWH-lP-3Lz"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="09Z-dD-im9"/>
+                        <barButtonItem title="Delete" image="trash" catalog="system" id="hKH-yh-IBB"/>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="tyj-rI-iYj"/>
+                        <barButtonItem title="Download" image="square.and.arrow.down" catalog="system" id="9ni-iH-mjd"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Home" id="bYQ-Xf-wQM">
                         <barButtonItem key="leftBarButtonItem" image="icon_alarm" id="Dpi-G4-cA4">
@@ -813,6 +816,6 @@
         <image name="plus.square" catalog="system" width="64" height="56"/>
         <image name="square.and.arrow.down" catalog="system" width="60" height="64"/>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
-        <image name="trash.fill" catalog="system" width="60" height="64"/>
+        <image name="trash" catalog="system" width="60" height="64"/>
     </resources>
 </document>

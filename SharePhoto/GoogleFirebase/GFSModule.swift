@@ -60,7 +60,7 @@ class GFSModule: NSObject {
                 var result = [[String:Any]]()
                 for document in querySnapshot!.documents {
                     print("\(document.documentID) => \(document.data())")
-                    
+
                     // check validation
                     let data = document.data()
                     let valid = data["valid"] as! Bool
