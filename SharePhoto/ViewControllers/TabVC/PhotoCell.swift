@@ -87,6 +87,15 @@ class PhotoCell: UICollectionViewCell {
     open func reverseCheckStatus() {
         setChecked(!self.checked)
     }
+    
+    open func setPreviousStatus(_ checked: Bool) {
+        if checked {
+            setPaddingToPhoto(10, animated: false)
+        } else {
+
+            setPaddingToPhoto(0, animated: false)
+        }
+    }
 
     open func setChecked(_ checked: Bool) {
         self.checked = checked

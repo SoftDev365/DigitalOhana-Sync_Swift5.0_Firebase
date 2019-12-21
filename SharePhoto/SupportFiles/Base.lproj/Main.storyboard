@@ -451,7 +451,7 @@
         <!--Location-->
         <scene sceneID="Jnf-pI-Akh">
             <objects>
-                <viewController id="w9X-5K-wgt" customClass="LocationVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationVC" id="w9X-5K-wgt" customClass="LocationVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BwW-pe-ulD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

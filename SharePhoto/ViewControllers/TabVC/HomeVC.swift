@@ -32,7 +32,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     var folderPath: String = "central"
     var photoList: [[String:Any]]?
     var selectedPhotoList: [[String:Any]]?
-    
+    var backupSelection: [Int] = []
+
     let activityView = ActivityView()
     var refreshControl = UIRefreshControl()
 
@@ -43,7 +44,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationController?.isNavigationBarHidden = false
         
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
@@ -123,19 +124,24 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let photoList = self.photoList else { return 0 }
 
-        //return photoList.count
-        return 50
+        return photoList.count
+    }
+    
+    func isSelectedBefore(_ indexPath: IndexPath) -> Bool {
+        for row in self.backupSelection {
+            if row == indexPath.row {
+                return true
+            }
+        }
+        
+        return false
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
 
         guard let photoList = self.photoList else { return cell }
-        //if indexPath.row >= photoList.count {
-        //    return cell
-        //}
-        let row = indexPath.row % photoList.count
+        let row = indexPath.row
 
         let photoInfo = photoList[row]
         let fileID = photoInfo["id"] as! String
@@ -146,6 +152,9 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         if self.bEditMode == false {
             cell.setSelectable(false)
         } else {
+            
+            cell.setPreviousStatus(isSelectedBefore(indexPath))
+            
             if isSelectedPhoto(photoInfo) {
                 cell.setCheckboxStatus(self.bEditMode, checked: true)
             } else {
@@ -159,8 +168,6 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.bEditMode == true {
             selectOrDeselectCell(indexPath, refreshCell: true)
-            //let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
-            //cell.reverseCheckStatus()
         } else if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SlideVC") as? GSGalleryVC {
             hideTabBar()
             
@@ -349,7 +356,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func selectOrDeselectCell(_ indexPath: IndexPath, refreshCell:Bool) {
         guard let photoList = self.photoList else { return }
         
-        let photoInfo = photoList[indexPath.row % photoList.count]
+        let photoInfo = photoList[indexPath.row]
         let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
         
         if isSelectedPhoto(photoInfo) == false {
@@ -361,6 +368,23 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             removePhotoFromSelectedList(photoInfo)
             if refreshCell {
                 cell.setCheckboxStatus(true, checked: false)
+                btnToolSelectAll.title = "Select All"
+            }
+        }
+    }
+    
+    func clearBackupSelection() {
+        self.backupSelection = []
+    }
+
+    func backupCurrentSelection() {
+        let items = self.collectionView.indexPathsForVisibleItems
+        
+        self.backupSelection = []
+        for indexPath in items {
+            let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
+            if cell.isChecked() {
+                self.backupSelection += [indexPath.row]
             }
         }
     }
@@ -374,12 +398,21 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             }
         }
 
+        backupCurrentSelection()
         self.collectionView.reloadData()
+        self.collectionView.performBatchUpdates(nil, completion: { (result) in
+            self.clearBackupSelection()
+        })
     }
     
     func deselectAll() {
         self.selectedPhotoList = []
+
+        backupCurrentSelection()
         self.collectionView.reloadData()
+        self.collectionView.performBatchUpdates(nil, completion: { (result) in
+            self.clearBackupSelection()
+        })
     }
     
     @objc func handleLongPress(gesture : UILongPressGestureRecognizer!) {
@@ -398,16 +431,23 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    // alarm button action
     @IBAction func onBtnNavLeft(_ sender: Any) {
         switchModeTo(editMode:false)
     }
     
+    // search (filter) button action
     @IBAction func onBtnNavRight(_ sender: Any) {
         
     }
     
     @IBAction func onBtAdd(_ sender: Any) {
-        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationVC") as? LocationVC {
+            hideTabBar()
+            
+            vc.setView(mode: .upload)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @IBAction func onBtnSelectAll(_ sender: Any) {
@@ -425,6 +465,14 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     @IBAction func onBtnDownload(_ sender: Any) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationVC") as? LocationVC {
+            hideTabBar()
+            
+            vc.setView(mode: .download)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        /*
         let button = sender as! UIButton
         let cell = button.superview!.superview! as! UICollectionViewCell
         let indexPath = self.collectionView.indexPath(for: cell)!
@@ -443,6 +491,6 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         } else {
             // delete ?
             // check if photo is uploaded by me (check email or user id)
-        }
+        }*/
     }
 }

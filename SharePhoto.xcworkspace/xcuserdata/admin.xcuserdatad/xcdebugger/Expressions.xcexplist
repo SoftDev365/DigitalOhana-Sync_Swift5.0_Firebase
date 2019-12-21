@@ -109,6 +109,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "HomeVC.selectAll():HomeVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in LocalAlbumVC.fetchFamilyAlbumPhotos():LocalAlbumVC.swift">
       </ContextState>
       <ContextState

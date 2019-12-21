@@ -18,9 +18,21 @@ private let reuseIdentifier = "FrameCell"
 
 class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    enum ViewMode: Int {
+       case local = 0
+       case upload = 1
+       case download = 2
+    }
+       
+    var viewMode: ViewMode = .local
 
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     let activityView = ActivityView()
+    
+    open func setView(mode: ViewMode) {
+        self.viewMode = mode
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +40,16 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.reloadData()
+        
+        if self.viewMode != .local {
+            self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem;
+        }
+        
+        if self.viewMode == .upload {
+            self.navigationItem.title = "Upload"
+        } else if self.viewMode == .download {
+            self.navigationItem.title = "Download"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
