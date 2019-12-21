@@ -216,7 +216,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
         
         for item in self.selectedPhotoList! {
-            
+            /*
             let file = self.fileList![rowIndex]
             
             GSModule.deleteFile(file: file.file) { (result) in
@@ -225,7 +225,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                     self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
                     self.activityView.hideActivitiIndicator()
                 }
-            }
+            }*/
         }
     }
     
