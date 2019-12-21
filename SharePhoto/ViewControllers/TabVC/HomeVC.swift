@@ -80,6 +80,9 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         UIViewController.attemptRotationToDeviceOrientation()
         
         showTabBar()
+        if self.bEditMode {
+            showToolBar(false)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -264,23 +267,23 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             btnNavLeft.image = nil
             btnNavLeft.title = "Cancel"
             btnAdd.isHidden = true
-            showToolBar()
+            showToolBar(true)
         } else {
             btnNavLeft.image = UIImage(named:"icon_alarm")
             btnNavLeft.title = ""
             btnAdd.isHidden = false
-            hideToolBar()
+            hideToolBar(true)
         }
 
         self.collectionView.reloadData()
     }
     
-    func hideToolBar() {
-        self.navigationController?.setToolbarHidden(true, animated: true)
+    func hideToolBar(_ animated: Bool) {
+        self.navigationController?.setToolbarHidden(true, animated: animated)
     }
 
-    func showToolBar() {
-        self.navigationController?.setToolbarHidden(false, animated: true)
+    func showToolBar(_ animated: Bool) {
+        self.navigationController?.setToolbarHidden(false, animated: animated)
     }
     
     func hideTabBar() {
@@ -468,6 +471,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     @IBAction func onBtnDownload(_ sender: Any) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationVC") as? LocationVC {
             hideTabBar()
+            hideToolBar(false)
             
             vc.setView(mode: .download)
             navigationController?.pushViewController(vc, animated: true)
