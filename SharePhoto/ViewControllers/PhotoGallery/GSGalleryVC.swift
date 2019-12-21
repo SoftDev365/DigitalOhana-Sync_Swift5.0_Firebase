@@ -38,7 +38,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         
         //self.tabBarController?.tabBar.isHidden = true//bIsFullscreen
-        
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
         self.view.addGestureRecognizer(tap)
         

@@ -208,31 +208,23 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func deleteFile(_ rowIndex: Int) {
-        /*
-        let file = self.fileList![rowIndex]
-        
+    func deleteSelectedPhotos() {
+        if self.selectedPhotoList == nil {
+            return
+        }
+
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
-        GSModule.deleteFile(file: file.file) { (result) in
-            if result == true {
-                self.fileList!.remove(at: rowIndex)
-                self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
-                self.activityView.hideActivitiIndicator()
-            }
-        }*/
-    }
-    
-    func deleteRow(_ rowIndex: Int) {
-        var actions: [(String, UIAlertAction.Style)] = []
-        actions.append(("Delete", UIAlertAction.Style.default))
-        actions.append(("Cancel", UIAlertAction.Style.cancel))
-
-        //self = ViewController
-        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this item?", actions: actions) { (index) in
-            print("call action \(index)")
-
-            if index == 0 {
-                self.deleteFile(rowIndex)
+        
+        for item in self.selectedPhotoList! {
+            
+            let file = self.fileList![rowIndex]
+            
+            GSModule.deleteFile(file: file.file) { (result) in
+                if result == true {
+                    self.fileList!.remove(at: rowIndex)
+                    self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
+                    self.activityView.hideActivitiIndicator()
+                }
             }
         }
     }
@@ -464,8 +456,33 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    func alertNoSelection() {
+        let alert = UIAlertController(title: "You should select photos first.", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func onBtnDelete(_ sender: Any) {
         
+        if self.selectedPhotoList?.count == 0 {
+            alertNoSelection()
+            return
+        }
+        
+        var actions: [(String, UIAlertAction.Style)] = []
+        actions.append(("Yes", UIAlertAction.Style.default))
+        actions.append(("Cancel", UIAlertAction.Style.cancel))
+
+        //self = ViewController
+        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete selected photos?", actions: actions) { (index) in
+            print("call action \(index)")
+            if index == 0 {
+                
+            }
+        }
     }
     
     @IBAction func onBtnDownload(_ sender: Any) {

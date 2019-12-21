@@ -12,7 +12,7 @@ import Photos
 class SyncModule: NSObject {
     static let sharedFolderName = "central"
 
-    static func regiserPhotoToFirestore(asset: PHAsset, onCompleted: @escaping (Bool, String?) -> ()) {
+    static func registerPhotoToFirestore(asset: PHAsset, onCompleted: @escaping (Bool, String?) -> ()) {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd hh:mm:ss"
         var dateCreate = ""
@@ -42,7 +42,7 @@ class SyncModule: NSObject {
     
     static func uploadPhoto(asset: PHAsset, onCompleted:@escaping (Bool) -> ()) {
         // register photo to firestore & get document id (primary key)
-        regiserPhotoToFirestore(asset: asset) { (success, documentID) in
+        registerPhotoToFirestore(asset: asset) { (success, documentID) in
             if !success {
                 debugPrint("-----register photo to firestore failed------")
                 onCompleted(false)
