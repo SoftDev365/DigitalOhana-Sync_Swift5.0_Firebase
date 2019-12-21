@@ -59,6 +59,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         lpgr.delegate = self
         lpgr.delaysTouchesBegan = true
         self.collectionView.addGestureRecognizer(lpgr)
+        
+        switchModeTo(editMode:false)
     }
 
     @objc func refresh(_ sender: Any) {
@@ -77,7 +79,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
         
-        switchModeTo(editMode:false)
+        showTabBar()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -269,8 +271,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             btnAdd.isHidden = false
             hideToolBar()
         }
-        
-        showTabBar()
+
         self.collectionView.reloadData()
     }
     
