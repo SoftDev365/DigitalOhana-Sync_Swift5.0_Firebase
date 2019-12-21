@@ -34,9 +34,12 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
     // google cloud photo source
     let sharedFolder = "central"
     var sourceCloudID: String? = nil
+    
+    var scaledSize: CGSize = CGSize(width: 0, height: 0)
 
     // now loading photo
     var bLoading = false
+    var bLoaded = false
     
     var imgView: UIImageView? = nil
 
@@ -76,9 +79,9 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         }
         
         let options = PHImageRequestOptions()
-        options.deliveryMode = .highQualityFormat
-        //options.deliveryMode = .opportunistic
-        options.resizeMode = .none
+        //options.deliveryMode = .highQualityFormat
+        options.deliveryMode = .opportunistic
+        options.resizeMode = .fast
         options.isSynchronous = false
         options.isNetworkAccessAllowed = true
 
@@ -86,15 +89,17 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
             print("progress: \(progress)")
         }
         
-        let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
-        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .default, options: options) { (image, info) in
+        //let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+        let size = UIScreen.main.bounds.size
+        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: options) { (image, info) in
             self.bLoading = false
+            self.bLoaded = true
             
             // skip twice calls
-            let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
-            if isDegraded {
-               return
-            }
+            //let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
+            //if isDegraded {
+            //   return
+            //}
             
             if image == nil {
                 return
@@ -115,6 +120,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
 
         GSModule.downloadImageFile(fileID: fileID, folderPath: self.sharedFolder) { (fileID, image) in
             self.bLoading = false
+            self.bLoaded = true
             self.imgView!.image = image
             self.imgView!.contentMode = .scaleAspectFit
             self.fitViewSizeToImage()
@@ -122,6 +128,14 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
     }
     
     func showImage() {
+        if self.bLoaded == true {
+            if let imgView = self.imgView {
+                if imgView.image != nil {
+                    return
+                }
+            }
+        }
+        
         if self.bLoading == true {
             return
         }
@@ -157,18 +171,46 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         self.showsVerticalScrollIndicator = false
     }
     
+    func getImageSize() -> CGSize {
+        
+        if self.sourceType == .asset {
+            if let asset = self.sourceAsset {
+                let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+                return size
+            }
+        }
+        
+        let defSize = self.frame.size
+        guard let imgView = self.imgView else {
+            return defSize
+        }
+        guard let image = imgView.image else {
+            return defSize
+        }
+
+        return image.size
+    }
+    
     func recalcZoomScale() {
-        
-        let orgScale = self.zoomScale
-        
-        self.zoomScale = 1.0
-        
+
         guard let imgView = self.imgView else { return }
         guard let image = imgView.image else { return }
 
         let size = self.bounds.size
-        let wr = UIScreen.main.scale*size.width/image.size.width
-        let hr = UIScreen.main.scale*size.height/image.size.height
+        let imageSize = getImageSize()
+        
+        /*
+        if self.scaledSize.equalTo(imageSize) {
+            moveCotentToCenter()
+            return
+        }
+        self.scaledSize = imageSize*/
+        
+        let wr = UIScreen.main.scale*size.width/imageSize.width
+        let hr = UIScreen.main.scale*size.height/imageSize.height
+        
+        let orgScale = self.zoomScale
+        self.zoomScale = 1.0
         
         if wr < hr {
             let w = size.width
@@ -192,11 +234,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
     }
     
     func fitViewSizeToImage() {
-        self.zoomScale = 1.0
         recalcZoomScale()
-        self.zoomScale = 1.0
-        
-        moveCotentToCenter()
     }
     
     func moveCotentToCenter() {
