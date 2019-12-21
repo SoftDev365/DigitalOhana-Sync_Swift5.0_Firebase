@@ -590,7 +590,7 @@
                                                 <constraint firstAttribute="width" secondItem="Y15-Af-foS" secondAttribute="height" multiplier="100:20" id="Sef-OK-jpj"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwe-rV-3Nl">
+                                        <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwe-rV-3Nl">
                                             <rect key="frame" x="256" y="256" width="44" height="44"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -624,7 +624,7 @@
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="Local" id="EJz-oU-XU7">
-                        <barButtonItem key="rightBarButtonItem" title="Add" image="plus.square" catalog="system" id="rpv-4o-d6F">
+                        <barButtonItem key="rightBarButtonItem" title="Search" image="icon_search" id="rpv-4o-d6F">
                             <connections>
                                 <action selector="onAddPhoto:" destination="sgj-ax-9uQ" id="kGx-hq-kvC"/>
                             </connections>
@@ -761,16 +761,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eW9-u3-KTt">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceHorizontal="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eW9-u3-KTt">
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEO-Ik-A2y" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="gEO-Ik-A2y" firstAttribute="top" secondItem="eW9-u3-KTt" secondAttribute="top" id="BGW-oJ-dMj"/>
                                     <constraint firstAttribute="trailing" secondItem="gEO-Ik-A2y" secondAttribute="trailing" id="Fe9-5s-R2s"/>
@@ -828,7 +828,6 @@
         <image name="person.icloud" catalog="system" width="64" height="44"/>
         <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
         <image name="plus" catalog="system" width="64" height="56"/>
-        <image name="plus.square" catalog="system" width="64" height="56"/>
         <image name="square.and.arrow.down" catalog="system" width="60" height="64"/>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
         <image name="trash" catalog="system" width="60" height="64"/>

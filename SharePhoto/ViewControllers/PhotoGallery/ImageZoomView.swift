@@ -17,9 +17,27 @@ import Photos
 
 class ImageZoomView: UIScrollView, UIScrollViewDelegate {
 
+    enum SourceType: Int {
+       case asset = 0
+       case drive = 1
+       case cloud = 2
+    }
+    
+    var sourceType: SourceType = .asset
+ 
+    // local photo album source
+    var sourceAsset: PHAsset? = nil
+    
+    // google drive photo source
+    var sourceDriveID: String? = nil
+    
+    // google cloud photo source
     let sharedFolder = "central"
-    var strGSFileID: String? = nil
-    var bDownloadStarted = false
+    var sourceCloudID: String? = nil
+
+    // now loading photo
+    var bLoading = false
+    
     var imgView: UIImageView? = nil
 
     required init?(coder: NSCoder) {
@@ -34,8 +52,10 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         super.init(frame: frame)
 
         initControls()
-        self.strGSFileID = fileID
-        self.bDownloadStarted = false
+        
+        self.sourceType = .cloud
+        self.sourceCloudID = fileID
+        self.bLoading = false
     }
     
     init(frame: CGRect, asset: PHAsset) {
@@ -43,8 +63,58 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
 
         initControls()
         
+        self.sourceType = .asset
+        self.sourceAsset = asset
+        self.bLoading = false
+    }
+    
+    func loadLocalPhoto() {
+        guard let asset = self.sourceAsset else {
+            self.bLoading = false
+            self.imgView?.image = nil
+            return
+        }
+        
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat
+        //options.deliveryMode = .opportunistic
+        options.resizeMode = .none
+        options.isSynchronous = false
+        options.isNetworkAccessAllowed = true
+
+        options.progressHandler = {  (progress, error, stop, info) in
+            print("progress: \(progress)")
+        }
+        
         let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
-        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .default, options: options) { (image, info) in
+            self.bLoading = false
+            
+            // skip twice calls
+            let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
+            if isDegraded {
+               return
+            }
+            
+            if image == nil {
+                return
+            }
+            
+            self.imgView!.image = image
+            self.imgView!.contentMode = .scaleAspectFit
+            self.fitViewSizeToImage()
+        }
+    }
+    
+    func loadCloudPhoto() {
+        guard let fileID = self.sourceCloudID else {
+            self.bLoading = false
+            self.imgView?.image = nil
+            return
+        }
+
+        GSModule.downloadImageFile(fileID: fileID, folderPath: self.sharedFolder) { (fileID, image) in
+            self.bLoading = false
             self.imgView!.image = image
             self.imgView!.contentMode = .scaleAspectFit
             self.fitViewSizeToImage()
@@ -52,16 +122,19 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
     }
     
     func showImage() {
-        guard let fileID = self.strGSFileID else { return }
-        if self.bDownloadStarted == true {
+        if self.bLoading == true {
             return
         }
         
-        self.bDownloadStarted = false
-        GSModule.downloadImageFile(fileID: fileID, folderPath: self.sharedFolder) { (fileID, image) in
-            self.imgView!.image = image
-            self.imgView!.contentMode = .scaleAspectFit
-            self.fitViewSizeToImage()
+        self.bLoading = true
+        
+        switch self.sourceType {
+        case .asset:
+            loadLocalPhoto()
+        case .drive: break
+            //loadDrivePhoto()
+        case .cloud:
+            loadCloudPhoto()
         }
     }
     

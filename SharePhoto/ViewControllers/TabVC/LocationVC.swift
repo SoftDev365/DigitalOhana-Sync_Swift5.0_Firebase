@@ -23,7 +23,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
        case upload = 1
        case download = 2
     }
-       
+    
+    let frameCount = 3
     var viewMode: ViewMode = .local
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -82,7 +83,11 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        if self.viewMode == .local {
+            return frameCount+1
+        } else {
+            return frameCount
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -98,7 +103,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else if indexPath.row == 1 {
             imgView.image = UIImage(named: "loc_drive")
             label.text = "Drive"
-        } else if indexPath.row == 4-1 {
+        } else if indexPath.row == frameCount {
             imgView.image = UIImage(named: "loc_add")
             label.text = "Add Frame"
         } else {
@@ -110,11 +115,12 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC
-        {
-            navigationController?.pushViewController(vc, animated: true)
-            //self.addChild(vc)
-            //self.view.addSubview(vc.view)
+        if indexPath.row == 0 {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
+                navigationController?.pushViewController(vc, animated: true)
+                //self.addChild(vc)
+                //self.view.addSubview(vc.view)
+            }
         }
     }
     

@@ -59,10 +59,16 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         return bIsFullscreen
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        initContentImageViews()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        initContentImageViews()
+        //initContentImageViews()
     }
     
     func initContentImageViews() {
@@ -72,6 +78,10 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
 
         for i in 0...(photoList.count-1) {
             let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), asset: photoList[i])
+            if abs(i - self.curPage) <= 1 {
+                item.showImage()
+            }
+
             self.imgViewList!.append(item)
             self.scrView.addSubview(item)
         }
@@ -135,6 +145,10 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
             
             if i != curPage {
                 item.fitViewSizeToImage()
+            }
+            
+            if abs(i - self.curPage) <= 1 {
+                item.showImage()
             }
         }
         

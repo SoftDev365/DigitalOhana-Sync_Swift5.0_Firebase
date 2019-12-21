@@ -84,6 +84,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
         //self.tabBarController?.tabBar.isHidden = false
+        
+        showTabBar()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -122,19 +124,26 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
         
         // hide upload button if already uploaded
+        /*
         if let btnUpload = cell.viewWithTag(3) as? UIButton {
             if SyncModule.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
                 btnUpload.isHidden = true
             } else {
                 btnUpload.isHidden = false
             }
-        }
+        }*/
 
         //let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
         let width = UIScreen.main.scale*(self.view.frame.size.width - 5)/3
         let size = CGSize(width:width, height:width)
 
-        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, _) in
+        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
+            // skip twice calls
+            let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
+            if isDegraded {
+               return
+            }
+            
             if let imgView = cell.viewWithTag(1) as? UIImageView {
                 imgView.image = image
             }
@@ -144,8 +153,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? LocalGalleryVC
-        {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? LocalGalleryVC {
+            hideTabBar()
             vc.setPhotoAlbum(self.albumPhotos!, page:indexPath.row)
             navigationController?.pushViewController(vc, animated: true)
         }
@@ -219,6 +228,42 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         if Global.needRefreshLocal == true {
             Global.needRefreshLocal = false
             self.fetchFamilyAlbumPhotos()
+        }
+    }
+    
+    func hideToolBar(_ animated: Bool) {
+        self.navigationController?.setToolbarHidden(true, animated: animated)
+    }
+
+    func showToolBar(_ animated: Bool) {
+        self.navigationController?.setToolbarHidden(false, animated: animated)
+    }
+    
+    func hideTabBar() {
+        var fram = self.tabBarController!.tabBar.frame
+        fram.origin.y = self.view.frame.size.height
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.tabBarController?.tabBar.frame = fram
+        }) { (success) in
+            self.tabBarController?.tabBar.isHidden = true
+            //self.navigationController?.setToolbarHidden(false, animated: false)
+        }
+    }
+
+    func showTabBar() {
+        var fram = self.tabBarController!.tabBar.frame
+        
+        if self.view.frame.size.width > self.view.frame.size.height {
+            fram.origin.y = self.view.frame.size.width - (fram.size.height)
+        } else {
+            fram.origin.y = self.view.frame.size.height - (fram.size.height)
+        }
+        
+        self.tabBarController?.tabBar.isHidden = false
+        UIView.animate(withDuration: 0.2, animations: {
+            self.tabBarController?.tabBar.frame = fram
+        }) { (success) in
         }
     }
     
