@@ -38,7 +38,7 @@ class GSModuleSync: NSObject {
 
         // block while download processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 10)
+            Thread.sleep(forTimeInterval: 0.01)
         }
         
         return imgResult
@@ -82,7 +82,7 @@ class GSModuleSync: NSObject {
         
         // block while upload processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 10)
+            Thread.sleep(forTimeInterval: 0.01)
         }
         
         return bResult
@@ -113,7 +113,7 @@ class GSModuleSync: NSObject {
         
         // block while delete processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 10)
+            Thread.sleep(forTimeInterval: 0.01)
         }
         
         return bResult

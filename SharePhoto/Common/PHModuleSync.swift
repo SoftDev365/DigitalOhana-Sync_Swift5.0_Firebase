@@ -18,6 +18,7 @@ class PHModuleSync: NSObject {
         var bResult = false
         var bProcessing = true
 
+        debugPrint("---- write start -----")
         var assetPlaceholder: PHObjectPlaceholder?
         PHPhotoLibrary.shared().performChanges({
             let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: imagePhoto)
@@ -26,6 +27,7 @@ class PHModuleSync: NSObject {
             let enumeration: NSArray = [assetPlaceholder!]
             albumChangeRequest!.addAssets(enumeration)
         }, completionHandler: { (success, error) in
+            debugPrint("---- write complete -----\n")
             bProcessing = false
             if success {
                 bResult = true
@@ -36,8 +38,10 @@ class PHModuleSync: NSObject {
         
         // block while save processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 1)
+            Thread.sleep(forTimeInterval: 0.005)
         }
+        
+        debugPrint("---- write exit -----\n")
 
         if bResult {
             return assetPlaceholder?.localIdentifier
@@ -85,7 +89,7 @@ class PHModuleSync: NSObject {
         
         // block while save processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 1)
+            Thread.sleep(forTimeInterval: 0.005)
         }
         
         return imgResult
