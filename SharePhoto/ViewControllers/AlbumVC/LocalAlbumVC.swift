@@ -20,13 +20,25 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
     var albumPhotos: PHFetchResult<PHAsset>? = nil
     let activityView = ActivityView()
+    let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         //self.navigationController?.isNavigationBarHidden = false
-        self.accessToPHLibrary();
+        self.accessToPHLibrary()
+        
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: attributes)
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
+        refreshControl.tintColor = .white
+        
+        self.collectionView.addSubview(refreshControl) // not required when using UITableViewController
+    }
+    
+    @objc func refresh(_ sender: Any) {
+        fetchFamilyAlbumPhotos()
     }
     
     func accessToPHLibrary() {
@@ -57,6 +69,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     @objc func fetchFamilyAlbumPhotos() {
         PHModule.getFamilyAlbumAssets { (result) in
+            self.refreshControl.endRefreshing()
+
             guard let photoList = result else { return }
             self.albumPhotos = photoList
             

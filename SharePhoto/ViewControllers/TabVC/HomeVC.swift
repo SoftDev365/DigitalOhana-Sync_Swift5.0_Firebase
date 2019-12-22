@@ -35,7 +35,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     var backupSelection: [Int] = []
 
     let activityView = ActivityView()
-    var refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +64,6 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
 
     @objc func refresh(_ sender: Any) {
-       // Code to refresh table view
         loadFileList()
     }
 
