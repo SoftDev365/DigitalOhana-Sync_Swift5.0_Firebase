@@ -127,12 +127,35 @@ class SyncModule: NSObject {
         }
     }
     
-    static func downloadPhotosToLocal(photoInfos: [[String:Any]], onCompleted: @escaping(Bool)->()) {
+    static func downloadSelectedPhotosToLocal(onCompleted: @escaping(Bool)->()) {
         
-        for photoInfo in photoInfos {
-            let fileID = photoInfo["id"] as! String
-            let image = GSModuleSync.downloadImageFile(fileID: fileID, folderPath: self.sharedFolderName)
+        guard let photoInfos = Global.selectedCloudPhotos else {
+            onCompleted(false)
+            return
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            for photoInfo in photoInfos {
+                let fsID = photoInfo["id"] as! String
+                let image = GSModuleSync.downloadImageFile(fileID: fsID, folderPath: self.sharedFolderName)
+                if image == nil {
+                    return
+                }
+                
+                if let localIdentifier = PHModuleSync.addPhotoToFamilyAssets(image!) {
+                    let data = photoInfo["data"] as! [String: Any]
+                    let email = data["email"] as! String
+                    if email == Global.email {
+                        _ = SqliteManager.insertFileInfo(isMine: true, fname: localIdentifier, fsID: fsID)
+                    } else {
+                        _ = SqliteManager.insertFileInfo(isMine: false, fname: localIdentifier, fsID: fsID)
+                    }
+                }
+            }
             
+            DispatchQueue.main.async {
+                onCompleted(true)
+            }
         }
     }
     

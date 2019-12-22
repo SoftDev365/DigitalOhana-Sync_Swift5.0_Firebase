@@ -116,11 +116,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
-                navigationController?.pushViewController(vc, animated: true)
-                //self.addChild(vc)
-                //self.view.addSubview(vc.view)
-            }
+            onChooseLocal()
+            
         }
     }
     
@@ -141,6 +138,31 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10.0
+    }
+    
+    func onChooseLocal() {
+        if self.viewMode == .local {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
+                navigationController?.pushViewController(vc, animated: true)
+                //self.addChild(vc)
+                //self.view.addSubview(vc.view)
+            }
+        } else if self.viewMode == .download {
+            let alert = UIAlertController(title: "Are you sure you download photos to local?", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                self.activityView.showActivityIndicator(self.view, withTitle: "Downloading...")
+                SyncModule.downloadSelectedPhotosToLocal { (success) in
+                    if success {
+                        Global.needRefreshLocal = true
+                        Global.needDoneSelectionAtHome = true
+                    }
+                    self.activityView.hideActivitiIndicator()
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }))
+            alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     @IBAction func onAddPhoto(_ sender: UIButton) {

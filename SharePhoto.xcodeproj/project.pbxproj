@@ -174,6 +174,7 @@
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
 				84C7815023AB72A500D8F92B /* ViewControllers */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
+				84D7CE41238B3F2E00C15CF6 /* MainVC.swift */,
 				84BE63CF23717A48002F2C66 /* Info.plist */,
 				84C7815123AB732200D8F92B /* SupportFiles */,
 			);
@@ -189,7 +190,6 @@
 				84AA678723AB29E2001FE9FC /* TabVC */,
 				849A974223822F8D003E985E /* NavigationRootVC.swift */,
 				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
-				84D7CE41238B3F2E00C15CF6 /* MainVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

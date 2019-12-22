@@ -26,7 +26,7 @@ class PHModuleSync: NSObject {
             let enumeration: NSArray = [assetPlaceholder!]
             albumChangeRequest!.addAssets(enumeration)
         }, completionHandler: { (success, error) in
-            bProcessing = true
+            bProcessing = false
             if success {
                 bResult = true
             } else {

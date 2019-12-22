@@ -78,6 +78,11 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
         
+        // when download completed
+        if Global.needDoneSelectionAtHome {
+            switchModeTo(editMode: false)
+        }
+        
         showTabBar()
         if self.bEditMode {
             showToolBar(false)
@@ -265,6 +270,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             btnNavLeft.title = ""
             btnAdd.isHidden = false
             hideToolBar(true)
+            
+            Global.needDoneSelectionAtHome = false
         }
 
         self.collectionView.reloadData()
@@ -486,10 +493,12 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     @IBAction func onBtnDownload(_ sender: Any) {
+
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationVC") as? LocationVC {
             hideTabBar()
             hideToolBar(false)
             
+            Global.selectedCloudPhotos = self.selectedPhotoList
             vc.setView(mode: .download)
             navigationController?.pushViewController(vc, animated: true)
         }
