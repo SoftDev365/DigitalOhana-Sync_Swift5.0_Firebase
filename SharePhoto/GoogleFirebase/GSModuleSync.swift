@@ -15,10 +15,9 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 
 class GSModuleSync: NSObject {
-    static let imageCache = NSCache<NSString, UIImage>()
     
     static func downloadImageFile(_ file: StorageReference ) -> UIImage? {
-        if let cachedImage = self.imageCache.object(forKey: file.fullPath as NSString)  {
+        if let cachedImage = GSModule.imageCache.object(forKey: file.fullPath as NSString)  {
             return cachedImage
         }
         
@@ -31,7 +30,7 @@ class GSModuleSync: NSObject {
             } else {
                 let image = UIImage(data: data!)
                 if image != nil {
-                    self.imageCache.setObject(image!, forKey: file.fullPath as NSString)
+                    GSModule.imageCache.setObject(image!, forKey: file.fullPath as NSString)
                 }
                 imgResult = image
             }
