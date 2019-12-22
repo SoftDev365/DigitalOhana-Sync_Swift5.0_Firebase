@@ -23,9 +23,9 @@ class GSModuleSync: NSObject {
         }
         
         var imgResult: UIImage? = nil
-        var bDownload = false
+        var bProcessing = true
         file.getData(maxSize: 50 * 1024 * 1024) { data, error in
-            bDownload = true
+            bProcessing = false
             if let error = error {
                 debugPrint(error)
             } else {
@@ -36,48 +36,30 @@ class GSModuleSync: NSObject {
                 imgResult = image
             }
         }
-        
-        while bDownload == false {
+
+        // block while download processing
+        while bProcessing {
             Thread.sleep(forTimeInterval: 10)
         }
         
-        return imgResult;
+        return imgResult
     }
 
-    static func downloadImageFile(fileID:String, folderPath: String, onCompleted: @escaping (String, UIImage?) -> ()) {
-        // check cached image
-        if let cachedImage = self.imageCache.object(forKey: fileID as NSString)  {
-            onCompleted(fileID, cachedImage)
-        }
-
+    static func downloadImageFile(fileID:String, folderPath: String) -> UIImage? {
         let filePath = folderPath + "/" + fileID + ".jpg"
+        // Get a reference to the storage service using the default Firebase App
         let storage = Storage.storage()
+        // Create a storage reference from our storage service
         let storageRef = storage.reference()
+        // Create a reference to the file you want to download
         let fileRef = storageRef.child(filePath)
-
-        // Download in memory with a maximum allowed size of 1MB (50 * 1024 * 1024 bytes)
-        fileRef.getData(maxSize: 50 * 1024 * 1024) { data, error in
-            if let error = error {
-                debugPrint(error)
-                onCompleted(fileID, nil)
-            } else {
-                let image = UIImage(data: data!)
-                if image != nil {
-                    self.imageCache.setObject(image!, forKey: fileID as NSString)
-                }
-                onCompleted(fileID, image)
-            }
-        }
+        
+        return downloadImageFile(fileRef)
     }
     
-    static func uploadFile(
-        name: String,
-        folderPath: String,
-        data: Data,
-        completion: @escaping (Bool) -> Void) {
+    static func uploadFile( name: String, folderPath: String, data: Data ) -> Bool {
 
         let filePath = folderPath + "/" + name
-
         // Get a reference to the storage service using the default Firebase App
         let storage = Storage.storage()
         // Create a storage reference from our storage service
@@ -85,113 +67,60 @@ class GSModuleSync: NSObject {
         // Create a reference to the file you want to upload
         let fileRef = storageRef.child(filePath)
 
+        var bResult = false
+        var bProcessing = true
+        
         // Upload the file to the path "images/rivers.jpg"
         let _ = fileRef.putData(data, metadata: nil) { (metadata, error) in
+            bProcessing = false
             if let error = error {
                 debugPrint(error)
-                completion(false)
+                bResult = false
             } else {
-                completion(true)
+                bResult = true
             }
-            /*
-            if metadata != nil {
-                //auth.email
-                let newMetadata = StorageMetadata()
-                var email = Global.user!.profile.email
-                var name = Global.user!.profile.name
-                
-                if email == nil {
-                    email = ""
-                }
-                if name == nil {
-                    name = ""
-                }
-                newMetadata.customMetadata = ["ownerEmail": email!, "ownerName": name!]
-                fileRef.updateMetadata(newMetadata) { metadata, error in
-                    if let error = error {
-                        // Uh-oh, an error occurred!
-                        debugPrint(error)
-                        completion(false)
-                    } else {
-                        // metadata.contentType should be nil
-                        completion(true)
-                    }
-                }
-            } else {
-                // Uh-oh, an error occurred!
-                completion(false)
-            }*/
         }
+        
+        // block while upload processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 10)
+        }
+        
+        return bResult
     }
     
-    static func uploadFile(
-        name: String,
-        folderPath: String,
-        fileURL: URL,
-        completion: @escaping (Bool) -> Void) {
-        
+    static func uploadFile(name: String, folderPath: String, fileURL: URL) -> Bool {
         do {
             let data = try Data(contentsOf: fileURL)
-            uploadFile(name: name, folderPath: folderPath, data: data, completion: completion)
+            return uploadFile(name: name, folderPath: folderPath, data: data)
         } catch {
-            completion(false)
+            return false
         }
     }
     
-    static func createFolder(
-        name: String,
-        parentFolder: String,
-        completion: @escaping (Bool) -> Void) {
-        
-        let data = Data()
-        let folderPath = parentFolder + "/" + name
-        let filePath = folderPath + "/empty_file_for_create_folder.dat"
-
-        // Get a reference to the storage service using the default Firebase App
-        let storage = Storage.storage()
-        // Create a storage reference from our storage service
-        let storageRef = storage.reference()
-        // Create a reference to the file you want to upload
-        let fileRef = storageRef.child(filePath)
-
-        // Upload the file to the path "images/rivers.jpg"
-        fileRef.putData(data, metadata: nil) { (metadata, error) in
-            if error != nil {
-                // Uh-oh, an error occurred!
-                completion(false)
-                return
-            }
-            
-            completion(true)
-            
-            /*
-            fileRef.delete { (error) in
-                if error != nil {
-                    debugPrint(error!)
-                }
-                completion(true)
-            }*/
-        }
-    }
-    
-    static func deleteFile(
-        file: StorageReference,
-        completion: @escaping (Bool) -> Void) {
+    static func deleteFile(file: StorageReference) -> Bool {
+        var bResult = false
+        var bProcessing = true
 
         file.delete { (error) in
+            bProcessing = false
             if error != nil {
                 debugPrint(error!)
-                completion(false)
+                bResult = false
             } else {
-                completion(true)
+                bResult = true
             }
         }
+        
+        // block while delete processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 10)
+        }
+        
+        return bResult
     }
     
-    static func deleteFile(
-        name: String,
-        parentFolder: String,
-        completion: @escaping (Bool) -> Void) {
+    static func deleteFile(name: String, parentFolder: String) -> Bool {
 
         let filePath = parentFolder + "/" + name
         // Get a reference to the storage service using the default Firebase App
@@ -201,13 +130,6 @@ class GSModuleSync: NSObject {
         // Create a reference to the file you want to upload
         let fileRef = storageRef.child(filePath)
 
-        fileRef.delete { (error) in
-            if error != nil {
-                debugPrint(error!)
-                completion(false)
-            } else {
-                completion(true)
-            }
-        }
+        return deleteFile(file: fileRef)
     }
 }
