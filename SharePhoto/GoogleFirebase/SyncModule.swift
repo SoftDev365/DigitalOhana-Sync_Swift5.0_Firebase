@@ -126,5 +126,13 @@ class SyncModule: NSObject {
             }
         }
     }
-
+    
+    static func downloadPhotosToLocal(photoInfos: [[String:Any]], onCompleted: @escaping(Bool)->()) {
+        for photoInfo in photoInfos {
+            
+        }
+    }
+    
+    //static func downloadImage(photoInfo: [String:Any], image: UIImage, onCompleted: @escaping(Bool)->()) {
+    //}
 }

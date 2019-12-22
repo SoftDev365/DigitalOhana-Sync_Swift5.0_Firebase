@@ -359,10 +359,10 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLD-jS-OAi">
-                                <rect key="frame" x="351" y="686" width="50" height="50"/>
+                                <rect key="frame" x="172" y="669" width="70" height="70"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="SdD-zH-kXd"/>
-                                    <constraint firstAttribute="width" constant="50" id="bUU-Tz-FcW"/>
+                                    <constraint firstAttribute="height" constant="70" id="SdD-zH-kXd"/>
+                                    <constraint firstAttribute="width" constant="70" id="bUU-Tz-FcW"/>
                                 </constraints>
                                 <state key="normal" image="btn_add"/>
                                 <connections>
@@ -374,10 +374,10 @@
                         <constraints>
                             <constraint firstItem="yIq-YR-aDy" firstAttribute="bottom" secondItem="0dx-9g-C5k" secondAttribute="bottom" id="Ewb-G7-VBO"/>
                             <constraint firstItem="yIq-YR-aDy" firstAttribute="trailing" secondItem="0dx-9g-C5k" secondAttribute="trailing" id="M8c-iJ-3Ch"/>
+                            <constraint firstItem="WLD-jS-OAi" firstAttribute="centerX" secondItem="yIq-YR-aDy" secondAttribute="centerX" id="QMq-yp-lSX"/>
                             <constraint firstItem="0dx-9g-C5k" firstAttribute="top" secondItem="yIq-YR-aDy" secondAttribute="top" id="SIS-1G-wzr"/>
                             <constraint firstItem="0dx-9g-C5k" firstAttribute="leading" secondItem="yIq-YR-aDy" secondAttribute="leading" id="byr-4j-Zt0"/>
-                            <constraint firstItem="yIq-YR-aDy" firstAttribute="bottom" secondItem="WLD-jS-OAi" secondAttribute="bottom" constant="28" id="etx-Rn-pna"/>
-                            <constraint firstItem="yIq-YR-aDy" firstAttribute="trailing" secondItem="WLD-jS-OAi" secondAttribute="trailing" constant="13" id="wQH-Mj-KYk"/>
+                            <constraint firstItem="yIq-YR-aDy" firstAttribute="bottom" secondItem="WLD-jS-OAi" secondAttribute="bottom" constant="25" id="etx-Rn-pna"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yIq-YR-aDy"/>
                     </view>

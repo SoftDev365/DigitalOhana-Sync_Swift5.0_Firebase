@@ -216,6 +216,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
         
         for item in self.selectedPhotoList! {
+            
             /*
             let file = self.fileList![rowIndex]
             
