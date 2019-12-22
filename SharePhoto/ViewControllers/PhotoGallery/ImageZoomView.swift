@@ -89,8 +89,8 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
             print("progress: \(progress)")
         }
         
-        //let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
-        let size = UIScreen.main.bounds.size
+        let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+        //let size = UIScreen.main.bounds.size
         PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: options) { (image, info) in
             self.bLoading = false
             self.bLoaded = true
@@ -109,6 +109,27 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
             self.imgView!.contentMode = .scaleAspectFit
             self.fitViewSizeToImage()
         }
+        
+        /*
+        PHImageManager.default().requestImageData(for: asset, options: PHImageRequestOptions(), resultHandler: { (data, string, orient, info) in
+            self.bLoading = false
+            
+            //if string?.range(of: ".heic") != nil || string?.range(of: ".heif") != nil {
+            if data != nil {
+                let image = UIImage(data: data!)
+                self.bLoaded = true
+                
+                if image == nil {
+                    return
+                }
+                
+                self.imgView!.image = image
+                self.imgView!.contentMode = .scaleAspectFit
+                self.fitViewSizeToImage()
+            //} else {
+            //}
+            }
+        })*/
     }
     
     func loadCloudPhoto() {
@@ -149,6 +170,13 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
             //loadDrivePhoto()
         case .cloud:
             loadCloudPhoto()
+        }
+    }
+    
+    func hideImage() {
+        if self.bLoaded == true {
+            self.bLoaded = false
+            self.imgView?.image = nil
         }
     }
     

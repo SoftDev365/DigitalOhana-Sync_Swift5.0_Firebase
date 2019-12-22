@@ -80,6 +80,8 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
             let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), asset: photoList[i])
             if abs(i - self.curPage) <= 1 {
                 item.showImage()
+            } else if abs(i - self.curPage) > 2 {
+                item.hideImage()
             }
 
             self.imgViewList!.append(item)
@@ -149,6 +151,8 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
             
             if abs(i - self.curPage) <= 1 {
                 item.showImage()
+            } else if abs(i - self.curPage) > 2 {
+                item.hideImage()
             }
         }
         

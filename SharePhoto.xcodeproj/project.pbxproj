@@ -20,6 +20,7 @@
 		848E2DD32385F11300620877 /* GFSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E2DD22385F11300620877 /* GFSModule.swift */; };
 		849A974323822F8D003E985E /* NavigationRootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849A974223822F8D003E985E /* NavigationRootVC.swift */; };
 		849E45EA23AED593000FCC76 /* GSModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45E923AED593000FCC76 /* GSModuleSync.swift */; };
+		849E45EC23AF192D000FCC76 /* PHModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45EB23AF192C000FCC76 /* PHModuleSync.swift */; };
 		84A0F89123AA0F5300DA7BF6 /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */; };
 		84A28E44238C85F20017DD06 /* PHModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E43238C85F20017DD06 /* PHModule.swift */; };
 		84A28E46238C904D0017DD06 /* ImagePickerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E45238C904D0017DD06 /* ImagePickerModule.swift */; };
@@ -59,6 +60,7 @@
 		848E2DD22385F11300620877 /* GFSModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GFSModule.swift; sourceTree = "<group>"; };
 		849A974223822F8D003E985E /* NavigationRootVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRootVC.swift; sourceTree = "<group>"; };
 		849E45E923AED593000FCC76 /* GSModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSModuleSync.swift; sourceTree = "<group>"; };
+		849E45EB23AF192C000FCC76 /* PHModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PHModuleSync.swift; sourceTree = "<group>"; };
 		84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationVC.swift; sourceTree = "<group>"; };
 		84A28E43238C85F20017DD06 /* PHModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHModule.swift; sourceTree = "<group>"; };
 		84A28E45238C904D0017DD06 /* ImagePickerModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerModule.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				840A34C72397118500A14491 /* Global.swift */,
+				849E45EB23AF192C000FCC76 /* PHModuleSync.swift */,
 				84A28E43238C85F20017DD06 /* PHModule.swift */,
 				84BE2AAB23904B9400F1BE53 /* SqliteManager.swift */,
 				840EEE012374957000361FB9 /* ActivityView.swift */,
@@ -398,6 +401,7 @@
 				8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */,
 				84D85D482384A1710042C4DF /* GDBModule.swift in Sources */,
 				840EEE022374957000361FB9 /* ActivityView.swift in Sources */,
+				849E45EC23AF192D000FCC76 /* PHModuleSync.swift in Sources */,
 				840A34C82397118500A14491 /* Global.swift in Sources */,
 				84D7CE42238B3F2E00C15CF6 /* MainVC.swift in Sources */,
 				84A0F89123AA0F5300DA7BF6 /* LocationVC.swift in Sources */,
@@ -555,7 +559,7 @@
 				CURRENT_PROJECT_VERSION = 4.0;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = SharePhoto/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -576,7 +580,7 @@
 				CURRENT_PROJECT_VERSION = 4.0;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = SharePhoto/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -128,7 +128,10 @@ class SyncModule: NSObject {
     }
     
     static func downloadPhotosToLocal(photoInfos: [[String:Any]], onCompleted: @escaping(Bool)->()) {
+        
         for photoInfo in photoInfos {
+            let fileID = photoInfo["id"] as! String
+            let image = GSModuleSync.downloadImageFile(fileID: fileID, folderPath: self.sharedFolderName)
             
         }
     }
