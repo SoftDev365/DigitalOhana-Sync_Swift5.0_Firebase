@@ -345,6 +345,18 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.selectedPhotoList = photoList.filter { $0["id"] as! String != photoID }
     }
     
+    func isAllSelected() -> Bool {
+        guard let photoList = self.photoList else { return false }
+        
+        for photoInfo in photoList {
+            if isSelectedPhoto(photoInfo) == false {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     func selectOrDeselectCell(_ indexPath: IndexPath, refreshCell:Bool) {
         guard let photoList = self.photoList else { return }
         
@@ -355,6 +367,9 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             addPhotoToSelectedList(photoInfo)
             if refreshCell {
                 cell.setCheckboxStatus(true, checked: true)
+                if isAllSelected() {
+                    btnToolSelectAll.title = "Deselect All"
+                }
             }
         } else {
             removePhotoFromSelectedList(photoInfo)
