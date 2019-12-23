@@ -498,12 +498,19 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     func uploadSelectedPhotos() {
         self.activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
-        SyncModule.downloadSelectedPhotosToLocal { (success) in
+        
+        SyncModule.uploadSelectedLocalPhotos(assets: self.selectedPhotoList!) { (nUpload, nSkip, nFail) in
             self.activityView.hideActivitiIndicator()
-            if success {
+            if nUpload > 0 {
                 Global.needRefreshStorage = true
             }
-            self.navigationController?.popViewController(animated: true)
+
+            let alert = UIAlertController(title: "\(nUpload) photos uploaded, \(nSkip) photos skipped, \(nFail) photos failed.", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

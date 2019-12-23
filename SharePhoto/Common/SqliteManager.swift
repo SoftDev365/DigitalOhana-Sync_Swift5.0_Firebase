@@ -74,13 +74,13 @@ class SqliteManager: NSObject {
         return true
     }
     
-    static func checkPhotoIsUploaded(fname: String) -> Bool {
+    static func checkPhotoIsUploaded(localIdentifier: String) -> Bool {
         do {
             let db = try Connection(dbFilePath)
 
             let photos = Table("photos")
             let fd_fname = Expression<String>("fname")
-            let alice = photos.filter(fd_fname == fname)
+            let alice = photos.filter(fd_fname == localIdentifier)
             //db.prepare(photos.select([*]).filter)
             
             let count = try db.scalar(alice.count)

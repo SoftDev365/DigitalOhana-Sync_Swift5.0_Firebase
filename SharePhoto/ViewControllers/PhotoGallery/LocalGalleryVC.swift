@@ -99,7 +99,7 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         let asset = photoList[curPage]
         
         // hide upload button if already uploaded
-        if SyncModule.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
+        if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == true {
             btnUpload.isEnabled = false
             btnUpload.tintColor = UIColor.clear
         } else {

@@ -36,7 +36,7 @@ class GFSModuleSync: NSObject {
 
         // block while processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 0.01)
+            Thread.sleep(forTimeInterval: 0.005)
         }
         
         return bResult
@@ -53,7 +53,7 @@ class GFSModuleSync: NSObject {
     
         // block while processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 0.01)
+            Thread.sleep(forTimeInterval: 0.005)
         }
         
         return photos
@@ -70,7 +70,7 @@ class GFSModuleSync: NSObject {
         
         // block while processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 0.01)
+            Thread.sleep(forTimeInterval: 0.005)
         }
 
         return result
@@ -87,7 +87,7 @@ class GFSModuleSync: NSObject {
         
         // block while processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 0.01)
+            Thread.sleep(forTimeInterval: 0.005)
         }
 
         return bResult
