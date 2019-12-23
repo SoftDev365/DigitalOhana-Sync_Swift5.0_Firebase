@@ -9,11 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--NavHome-->
         <scene sceneID="Ih8-97-cAl">
             <objects>
                 <navigationController storyboardIdentifier="NavHomeVC" toolbarHidden="NO" id="nCP-JG-5tK" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="daj-Ai-JMI"/>
+                    <tabBarItem key="tabBarItem" title="NavHome" id="daj-Ai-JMI"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="09z-a2-Ze7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -273,11 +273,11 @@
             </objects>
             <point key="canvasLocation" x="-2813" y="-1390"/>
         </scene>
-        <!--Item-->
+        <!--NavSetting-->
         <scene sceneID="jPj-r8-ABX">
             <objects>
                 <navigationController storyboardIdentifier="NavSettingVC" id="uiB-uN-qW6" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="OOj-hQ-8V3"/>
+                    <tabBarItem key="tabBarItem" title="NavSetting" id="OOj-hQ-8V3"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Hi4-Be-M9J">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -432,11 +432,11 @@
             </objects>
             <point key="canvasLocation" x="-3565.217391304348" y="-1390.1785714285713"/>
         </scene>
-        <!--Item-->
+        <!--NavLocation-->
         <scene sceneID="wP3-ik-9ZD">
             <objects>
                 <navigationController storyboardIdentifier="NavLocationVC" id="g2G-Ij-ytb" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="F2C-u9-Mrl"/>
+                    <tabBarItem key="tabBarItem" title="NavLocation" id="F2C-u9-Mrl"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="M8e-6s-pq1">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -643,6 +643,8 @@
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <toolbarItems>
+                        <barButtonItem title="Cancel" id="TO4-Ln-Vrr"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="zIR-ge-43A"/>
                         <barButtonItem title="Select All" id="cR4-Jp-4UX"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Local" id="EJz-oU-XU7">

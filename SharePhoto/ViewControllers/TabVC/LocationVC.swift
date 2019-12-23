@@ -63,6 +63,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
         //self.tabBarController?.tabBar.isHidden = false
+        
+        hideToolBar(false)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -167,6 +169,14 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func hideToolBar(_ animated: Bool) {
+        self.navigationController?.setToolbarHidden(true, animated: animated)
+    }
+
+    func showToolBar(_ animated: Bool) {
+        self.navigationController?.setToolbarHidden(false, animated: animated)
     }
     
     @IBAction func onAddPhoto(_ sender: UIButton) {
