@@ -442,8 +442,11 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fQL-GH-M4E">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
-                        <segue destination="w9X-5K-wgt" kind="relationship" relationship="rootViewController" id="p3f-Dw-tXv"/>
+                        <segue destination="w9X-5K-wgt" kind="relationship" relationship="rootViewController" id="vSc-ag-hYR"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4pc-f1-wYz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -639,6 +642,9 @@
                     <tabBarItem key="tabBarItem" tag="1" title="Family Album" image="photo.on.rectangle" catalog="system" id="b8P-hx-qJK">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
+                    <toolbarItems>
+                        <barButtonItem title="Select All" id="cR4-Jp-4UX"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Local" id="EJz-oU-XU7">
                         <barButtonItem key="rightBarButtonItem" title="Search" image="icon_search" id="rpv-4o-d6F">
                             <connections>
@@ -647,7 +653,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
+                    <connections>
+                        <outlet property="btnNavRight" destination="rpv-4o-d6F" id="qGO-1y-gam"/>
+                        <outlet property="btnToolSelectAll" destination="cR4-Jp-4UX" id="2iJ-jl-Zf7"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kkN-JJ-TYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -154,8 +154,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 
         let photoInfo = photoList[row]
         let fileID = photoInfo["id"] as! String
-        
-        cell.setEmpty()
+
         cell.setCloudFile(fileID)
         
         if self.bEditMode == false {
@@ -217,10 +216,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             return
         }
 
+        /*
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
         
         for item in self.selectedPhotoList! {
-            
             /*
             let file = self.fileList![rowIndex]
             
@@ -231,7 +230,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                     self.activityView.hideActivitiIndicator()
                 }
             }*/
-        }
+        }*/
     }
     
     open func uploadPhoto(_ image: UIImage ) {
@@ -344,16 +343,6 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         
         let photoID = photoInfo["id"] as! String
         self.selectedPhotoList = photoList.filter { $0["id"] as! String != photoID }
-
-        /*
-        for i in 0 ..< photoList.count {
-            let item = photoList[i]
-            let id = item["id"] as! String
-            if id == photoID {
-                self.selectedPhotoList!.remove(at: i)
-                break
-            }
-        }*/
     }
     
     func selectOrDeselectCell(_ indexPath: IndexPath, refreshCell:Bool) {

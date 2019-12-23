@@ -22,7 +22,7 @@ class PhotoCell: UICollectionViewCell {
     //let tagLABEL = 3
 
     var type: PhotoCellType!
-    var filePath: String? = nil
+    var fileID: String? = nil
     let cloudFolderPath = "central"
     
     var localAsset: PHAsset?
@@ -41,7 +41,7 @@ class PhotoCell: UICollectionViewCell {
     
     open func setEmpty() {
         self.ivPhoto?.image = UIImage(named: "nophoto")
-        self.filePath = ""
+        self.fileID = ""
         self.localAsset = nil
     }
     
@@ -123,13 +123,15 @@ class PhotoCell: UICollectionViewCell {
         }
     }
     
-    open func setCloudFile(_ path: String) {
+    open func setCloudFile(_ fileID: String) {
+        self.setEmpty()
+        
         self.type = .cloud
-        self.filePath = path
+        self.fileID = fileID
 
-        GSModule.downloadImageFile(fileID: self.filePath!, folderPath: self.cloudFolderPath, onCompleted: { (fileID, image) in
+        GSModule.downloadImageFile(fileID: self.fileID!, folderPath: self.cloudFolderPath, onCompleted: { (fileID, image) in
             // if cell point still the same photo (cell may be changed to the other while downloading)
-            if self.filePath == fileID {
+            if self.fileID == fileID {
                 self.ivPhoto?.image = image
             }
             //if SyncModule.checkPhotoIsDownloaded(fileID: self.filePath) == false {
@@ -138,8 +140,21 @@ class PhotoCell: UICollectionViewCell {
         })
     }
     
-    open func setLocalAsset(_ asset: PHAsset) {
+    open func setLocalAsset(_ asset: PHAsset, width:CGFloat) {
+        self.setEmpty()
         
+        let size = CGSize(width:width, height:width)
+        self.type = .local
+        self.localAsset = asset
+
+        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
+            // skip twice calls
+            //let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
+            //if isDegraded {
+            //   return
+            //}
+            self.ivPhoto?.image = image
+        }
     }
     
     func refreshView() {

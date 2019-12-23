@@ -18,9 +18,38 @@ private let reuseIdentifier = "PhotoCell"
 
 class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayout  {
 
+    enum ViewMode: Int {
+       case local = 0
+       case upload = 1
+       case download = 2
+    }
+    
+    @IBOutlet weak var btnNavLeft: UIBarButtonItem!
+    @IBOutlet weak var btnNavRight: UIBarButtonItem!
+    
+    var viewMode: ViewMode = .local    
+    var bEditMode: Bool = false
     var albumPhotos: PHFetchResult<PHAsset>? = nil
+    
+    var selectedPhotoList: [PHAsset]?
+    var backupSelection: [Int] = []
+    
+    @IBOutlet weak var btnToolSelectAll: UIBarButtonItem!
+    @IBOutlet weak var btnToolDelete: UIBarButtonItem!
+    @IBOutlet weak var btnToolDownload: UIBarButtonItem!
+    
     let activityView = ActivityView()
     let refreshControl = UIRefreshControl()
+    
+    open func setView(mode: ViewMode) {
+        self.viewMode = mode
+        
+        if self.viewMode == .upload {
+            prepareNewSelecting()
+            self.bEditMode = true
+            self.hidesBottomBarWhenPushed = true
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +128,11 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         UIViewController.attemptRotationToDeviceOrientation()
         //self.tabBarController?.tabBar.isHidden = false
         
-        showTabBar()
+        if self.bEditMode {
+            showToolBar(false)
+        } else {
+            showTabBar()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -125,42 +158,37 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         return photoList.count
     }
 
+    func isSelectedBefore(_ indexPath: IndexPath) -> Bool {
+        for row in self.backupSelection {
+            if row == indexPath.row {
+                return true
+            }
+        }
+        
+        return false
+    }
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
         guard let photoList = self.albumPhotos else { return cell }
     
         let asset = photoList.object(at: indexPath.row)
 
-        // Configure the cell
-        //if let label = cell.viewWithTag(2) as? UILabel {
-        //    label.text = "title"
-        //}
-
-        // hide upload button if already uploaded
-        /*
-        if let btnUpload = cell.viewWithTag(3) as? UIButton {
-            if SyncModule.checkPhotoIsUploaded(fname: asset.localIdentifier) == true {
-                btnUpload.isHidden = true
-            } else {
-                btnUpload.isHidden = false
-            }
-        }*/
-
-        //let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
-        let width = UIScreen.main.scale*(self.view.frame.size.width - 4)/3
-        //let width = UIScreen.main.scale*cell.frame.size.width
-        let size = CGSize(width:width, height:width)
-
-        PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
-            // skip twice calls
-            let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
-            if isDegraded {
-               return
-            }
+        //let width = UIScreen.main.scale*(self.view.frame.size.width - 4)/3
+        let width = UIScreen.main.scale*cell.frame.size.width
+        cell.setLocalAsset(asset, width: width)
+        
+        if self.bEditMode == false {
+            cell.setSelectable(false)
+        } else {
             
-            if let imgView = cell.viewWithTag(1) as? UIImageView {
-                imgView.image = image
+            cell.setPreviousStatus(isSelectedBefore(indexPath))
+            
+            if isSelectedPhoto(asset) {
+                cell.setCheckboxStatus(self.bEditMode, checked: true)
+            } else {
+                cell.setCheckboxStatus(self.bEditMode, checked: false)
             }
         }
  
@@ -168,7 +196,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? LocalGalleryVC {
+        if self.bEditMode == true {
+            selectOrDeselectCell(indexPath, refreshCell: true)
+        } else if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? LocalGalleryVC {
             hideTabBar()
             vc.setPhotoAlbum(self.albumPhotos!, page:indexPath.row)
             navigationController?.pushViewController(vc, animated: true)
@@ -279,6 +309,135 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         UIView.animate(withDuration: 0.2, animations: {
             self.tabBarController?.tabBar.frame = fram
         }) { (success) in
+        }
+    }
+    
+    func prepareNewSelecting() {
+        self.selectedPhotoList = [PHAsset]()
+    }
+    
+    func isSelectedPhoto(_ asset: PHAsset) -> Bool {
+        let assetID = asset.localIdentifier
+        guard let photoList = self.selectedPhotoList else { return false }
+        
+        for item in photoList {
+            if item.localIdentifier == assetID {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    func addPhotoToSelectedList(_ asset: PHAsset) {
+        if self.selectedPhotoList == nil {
+            return
+        }
+        
+        self.selectedPhotoList! += [asset]
+    }
+    
+    func removePhotoFromSelectedList(_ asset: PHAsset) {
+        guard let photoList = self.selectedPhotoList else { return }
+        
+        let assetID = asset.localIdentifier
+        self.selectedPhotoList = photoList.filter { $0.localIdentifier != assetID }
+    }
+    
+    func selectOrDeselectCell(_ indexPath: IndexPath, refreshCell: Bool) {
+        guard let photoList = self.albumPhotos else { return }
+        
+        let asset = photoList.object(at: indexPath.row)
+        let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
+        
+        if isSelectedPhoto(asset) == false {
+            addPhotoToSelectedList(asset)
+            if refreshCell {
+                cell.setCheckboxStatus(true, checked: true)
+            }
+        } else {
+            removePhotoFromSelectedList(asset)
+            if refreshCell {
+                cell.setCheckboxStatus(true, checked: false)
+                btnToolSelectAll.title = "Select All"
+            }
+        }
+    }
+    
+    func clearBackupSelection() {
+        self.backupSelection = []
+    }
+
+    func backupCurrentSelection() {
+        let items = self.collectionView.indexPathsForVisibleItems
+        
+        self.backupSelection = []
+        for indexPath in items {
+            let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
+            if cell.isChecked() {
+                self.backupSelection += [indexPath.row]
+            }
+        }
+    }
+    
+    func selectAll() {
+        guard let photoList = self.albumPhotos else { return }
+        
+        for i in 0 ..< photoList.count {
+            let asset = photoList.object(at: i)
+            if isSelectedPhoto(asset) == false {
+                addPhotoToSelectedList(asset)
+            }
+        }
+
+        backupCurrentSelection()
+        self.collectionView.reloadData()
+        self.collectionView.performBatchUpdates(nil, completion: { (result) in
+            self.clearBackupSelection()
+        })
+    }
+    
+    func deselectAll() {
+        self.selectedPhotoList = []
+
+        backupCurrentSelection()
+        self.collectionView.reloadData()
+        self.collectionView.performBatchUpdates(nil, completion: { (result) in
+            self.clearBackupSelection()
+        })
+    }
+    
+    func switchModeTo(editMode:Bool) {
+        self.bEditMode = editMode
+
+        if editMode == true {
+            btnNavLeft.image = nil
+            btnNavLeft.title = "Cancel"
+            showToolBar(true)
+        } else {
+            btnNavLeft.image = UIImage(named:"icon_alarm")
+            btnNavLeft.title = ""
+            hideToolBar(true)
+            
+            Global.needDoneSelectionAtHome = false
+        }
+
+        self.collectionView.reloadData()
+    }
+    
+    @objc func handleLongPress(gesture : UILongPressGestureRecognizer!) {
+        if gesture.state != .began {
+            return
+        }
+
+        let p = gesture.location(in: self.collectionView)
+
+        if let indexPath = self.collectionView.indexPathForItem(at: p) {
+            prepareNewSelecting()
+            selectOrDeselectCell(indexPath, refreshCell: false)
+            switchModeTo(editMode:true)
+        } else {
+            print("couldn't find index path")
         }
     }
     
