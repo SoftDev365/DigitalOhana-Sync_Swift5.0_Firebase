@@ -24,9 +24,6 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
        case download = 2
     }
     
-    @IBOutlet weak var btnNavLeft: UIBarButtonItem!
-    @IBOutlet weak var btnNavRight: UIBarButtonItem!
-    
     var viewMode: ViewMode = .local    
     var bEditMode: Bool = false
     var albumPhotos: PHFetchResult<PHAsset>? = nil
@@ -34,9 +31,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var selectedPhotoList: [PHAsset]?
     var backupSelection: [Int] = []
     
+    @IBOutlet weak var btnNavRight: UIBarButtonItem!
     @IBOutlet weak var btnToolSelectAll: UIBarButtonItem!
-    @IBOutlet weak var btnToolDelete: UIBarButtonItem!
-    @IBOutlet weak var btnToolDownload: UIBarButtonItem!
     
     let activityView = ActivityView()
     let refreshControl = UIRefreshControl()
@@ -260,7 +256,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    open func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {
+    func addPhotoToLocalAlbum(_ imagePhoto: UIImage) {
         PHModule.addPhotoToFamilyAssets(imagePhoto) { (bSuccess, _) in
             DispatchQueue.main.sync {
                 // update UI
@@ -269,7 +265,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    open func refreshAlbum() {
+    func refreshAlbum() {
         if Global.needRefreshLocal == true {
             Global.needRefreshLocal = false
             self.fetchFamilyAlbumPhotos()
@@ -344,6 +340,19 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         self.selectedPhotoList = photoList.filter { $0.localIdentifier != assetID }
     }
     
+    func isAllSelected() -> Bool {
+        guard let photoList = self.albumPhotos else { return false }
+       
+        for i in 0 ..< photoList.count {
+            let asset = photoList.object(at: i)
+            if isSelectedPhoto(asset) == false {
+                return false
+            }
+        }
+       
+        return true
+   }
+    
     func selectOrDeselectCell(_ indexPath: IndexPath, refreshCell: Bool) {
         guard let photoList = self.albumPhotos else { return }
         
@@ -354,6 +363,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             addPhotoToSelectedList(asset)
             if refreshCell {
                 cell.setCheckboxStatus(true, checked: true)
+                if isAllSelected() {
+                    btnToolSelectAll.title = "Deselect All"
+                }
             }
         } else {
             removePhotoFromSelectedList(asset)
@@ -411,12 +423,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         self.bEditMode = editMode
 
         if editMode == true {
-            btnNavLeft.image = nil
-            btnNavLeft.title = "Cancel"
+            //btnNavLeft.image = nil
+            //btnNavLeft.title = "Cancel"
             showToolBar(true)
         } else {
-            btnNavLeft.image = UIImage(named:"icon_alarm")
-            btnNavLeft.title = ""
+            //btnNavLeft.image = UIImage(named:"icon_alarm")
+            //btnNavLeft.title = ""
             hideToolBar(true)
             
             Global.needDoneSelectionAtHome = false
@@ -441,6 +453,17 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
+    // alarm button action
+    @IBAction func onBtnNavLeft(_ sender: Any) {
+        switchModeTo(editMode:false)
+    }
+    
+    // search (filter) button action
+    @IBAction func onBtnNavRight(_ sender: Any) {
+        
+    }
+    
+    // selected from each photo cell
     @IBAction func onBtnUploadPhoto(_ sender: Any) {
         guard let listPhoto = self.albumPhotos else { return }
         
@@ -454,7 +477,58 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         uploadPhoto(asset: asset)
     }
     
-    @IBAction func onAddPhoto(_ sender: UIButton) {
+    @IBAction func onBtnSelectAll(_ sender: Any) {
+        if btnToolSelectAll.title == "Select All" {
+            btnToolSelectAll.title = "Deselect All"
+            selectAll()
+        } else {
+            btnToolSelectAll.title = "Select All"
+            deselectAll()
+        }
+    }
+    
+    func alertNoSelection() {
+        let alert = UIAlertController(title: "You should select photos first.", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func uploadPhoto1(asset: PHAsset) {
+        activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
+        SyncModule.uploadPhoto(asset: asset) { (success) in
+            self.activityView.hideActivitiIndicator()
+            
+            Global.setNeedRefresh()
+            // update UI
+            self.refreshAlbum()
+        }
+    }
+    
+    func uploadSelectedPhotos() {
+        self.activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
+        SyncModule.downloadSelectedPhotosToLocal { (success) in
+            self.activityView.hideActivitiIndicator()
+            if success {
+                Global.needRefreshStorage = true
+            }
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @IBAction func onBtnDone(_ sender: Any) {
+        if self.selectedPhotoList?.count == 0 {
+            alertNoSelection()
+            return
+        }
         
+        let alert = UIAlertController(title: "Are you sure you upload selected photos?", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            self.uploadSelectedPhotos()
+        }))
+        alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

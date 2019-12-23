@@ -25,4 +25,8 @@ class Global: NSObject {
         needRefreshLocal = true
         needRefreshStorage = true
     }
+    
+    static func doneDownload() {
+        self.needDoneSelectionAtHome = true
+    }
 }

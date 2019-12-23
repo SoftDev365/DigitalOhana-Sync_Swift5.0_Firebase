@@ -211,51 +211,6 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func deleteSelectedPhotos() {
-        if self.selectedPhotoList == nil {
-            return
-        }
-
-        /*
-        activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
-        
-        for item in self.selectedPhotoList! {
-            /*
-            let file = self.fileList![rowIndex]
-            
-            GSModule.deleteFile(file: file.file) { (result) in
-                if result == true {
-                    self.fileList!.remove(at: rowIndex)
-                    self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
-                    self.activityView.hideActivitiIndicator()
-                }
-            }*/
-        }*/
-    }
-    
-    open func uploadPhoto(_ image: UIImage ) {
-        activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
-        SyncModule.uploadPhoto(image: image) { (success) in
-            self.activityView.hideActivitiIndicator()
-            Global.setNeedRefresh()
-            // update UI
-            self.refreshFileList()
-        }
-    }
-
-    func downloadImage(image: UIImage, photoInfo: [String: Any]) {
-        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
-        SyncModule.downloadImage(photoInfo: photoInfo, image: image) { (success) in
-            DispatchQueue.main.sync {
-                self.activityView.hideActivitiIndicator()
-                
-                Global.setNeedRefresh()
-                // update UI
-                self.refreshFileList()
-            }
-        }
-    }
-    
     func switchModeTo(editMode:Bool) {
         self.bEditMode = editMode
 
@@ -476,13 +431,34 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func onBtnDelete(_ sender: Any) {
+    func deleteSelectedPhotos() {
+        if self.selectedPhotoList == nil {
+            return
+        }
+
+        /*
+        activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
         
+        for item in self.selectedPhotoList! {
+            /*
+            let file = self.fileList![rowIndex]
+            
+            GSModule.deleteFile(file: file.file) { (result) in
+                if result == true {
+                    self.fileList!.remove(at: rowIndex)
+                    self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
+                    self.activityView.hideActivitiIndicator()
+                }
+            }*/
+        }*/
+    }
+    
+    @IBAction func onBtnDelete(_ sender: Any) {
         if self.selectedPhotoList?.count == 0 {
             alertNoSelection()
             return
         }
-        
+
         var actions: [(String, UIAlertAction.Style)] = []
         actions.append(("Yes", UIAlertAction.Style.default))
         actions.append(("Cancel", UIAlertAction.Style.cancel))
@@ -497,6 +473,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     @IBAction func onBtnDownload(_ sender: Any) {
+        if self.selectedPhotoList?.count == 0 {
+            alertNoSelection()
+            return
+        }
 
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationVC") as? LocationVC {
             hideTabBar()

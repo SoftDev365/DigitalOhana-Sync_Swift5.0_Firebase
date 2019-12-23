@@ -643,14 +643,22 @@
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <toolbarItems>
-                        <barButtonItem title="Cancel" id="TO4-Ln-Vrr"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="zIR-ge-43A"/>
-                        <barButtonItem title="Select All" id="cR4-Jp-4UX"/>
+                        <barButtonItem title="Select All" id="cR4-Jp-4UX">
+                            <connections>
+                                <action selector="onBtnSelectAll:" destination="sgj-ax-9uQ" id="Y6m-1U-V9O"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="kbI-Bw-R8M"/>
+                        <barButtonItem title="Done" id="f1B-5d-tHa">
+                            <connections>
+                                <action selector="onBtnDone:" destination="sgj-ax-9uQ" id="p3f-rN-rUy"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Local" id="EJz-oU-XU7">
                         <barButtonItem key="rightBarButtonItem" title="Search" image="icon_search" id="rpv-4o-d6F">
                             <connections>
-                                <action selector="onAddPhoto:" destination="sgj-ax-9uQ" id="kGx-hq-kvC"/>
+                                <action selector="onBtnNavRight:" destination="sgj-ax-9uQ" id="Ro1-8P-ejI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
