@@ -496,17 +496,6 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         self.present(alert, animated: true, completion: nil)
     }
     
-    func uploadPhoto1(asset: PHAsset) {
-        activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
-        SyncModule.uploadPhoto(asset: asset) { (success) in
-            self.activityView.hideActivitiIndicator()
-            
-            Global.setNeedRefresh()
-            // update UI
-            self.refreshAlbum()
-        }
-    }
-    
     func uploadSelectedPhotos() {
         self.activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
         SyncModule.downloadSelectedPhotosToLocal { (success) in

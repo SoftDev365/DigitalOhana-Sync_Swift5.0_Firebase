@@ -27,6 +27,21 @@ class SyncModule: NSObject {
         }
     }
     
+    static func registerPhotoToFirestoreSync(asset: PHAsset) -> String? {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        var dateCreate = ""
+        if asset.creationDate != nil {
+            dateCreate = df.string(from: asset.creationDate!)
+        } else {
+            dateCreate = df.string(from: Date())
+        }
+            
+        GFSModule.registerPhoto(createDate: dateCreate) { (success, id) in
+            onCompleted(success, id)
+        }
+    }
+    
     static func uploadPhoto(image: UIImage, onCompleted:@escaping (Bool) -> ()) {
         PHModule.addPhotoToFamilyAssets(image) { (bSuccess, localIdentifier) in
             if bSuccess == false {
@@ -136,6 +151,90 @@ class SyncModule: NSObject {
 
         DispatchQueue.global(qos: .background).async {
             for photoInfo in photoInfos {
+                let fsID = photoInfo["id"] as! String
+                let image = GSModuleSync.downloadImageFile(fileID: fsID, folderPath: self.sharedFolderName)
+                if image == nil {
+                    return
+                }
+                
+                if let localIdentifier = PHModuleSync.addPhotoToFamilyAssets(image!) {
+                    let data = photoInfo["data"] as! [String: Any]
+                    let email = data["email"] as! String
+                    if email == Global.email {
+                        _ = SqliteManager.insertFileInfo(isMine: true, fname: localIdentifier, fsID: fsID)
+                    } else {
+                        _ = SqliteManager.insertFileInfo(isMine: false, fname: localIdentifier, fsID: fsID)
+                    }
+                }
+            }
+            
+            DispatchQueue.main.async {
+                onCompleted(true)
+            }
+        }
+    }
+    
+    func uploadPhoto1(asset: PHAsset) {
+        SyncModule.uploadPhoto(asset: asset) { (success) in
+        }
+    }
+    
+    static func uploadPhotoSync(asset: PHAsset) -> Bool {
+        // register photo to firestore & get document id (primary key)
+        registerPhotoToFirestore(asset: asset) { (success, documentID) in
+            if !success {
+                debugPrint("-----register photo to firestore failed------")
+                onCompleted(false)
+                return
+            }
+
+            let filename = documentID! + ".jpg"
+            let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+            
+            // extract image data
+            PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
+                // skip twice calls
+                let isDegraded = (info?[PHImageResultIsDegradedKey] as? Bool) ?? false
+                if isDegraded {
+                   return
+                }
+                
+                // check image is not null
+                guard let image = image else {
+                    debugPrint("-----extract image from asset failed ------")
+                    onCompleted(false)
+                    return
+                }
+                let imageData = image.jpegData(compressionQuality: 1.0)
+
+                // upload image data to cloud storage
+                GSModule.uploadFile(name: filename, folderPath: self.sharedFolderName, data: imageData!) { (success) in
+                    if success {
+                        // register to local sqlite db (local filename & firestore id)
+                        if SqliteManager.insertFileInfo(isMine: true, fname: asset.localIdentifier, fsID: documentID!) == true {
+                            // update firestore valid flag to true
+                            GFSModule.updatePhotoToValid(photoID: documentID!) { (success) in
+                                // success update valid to true
+                                onCompleted(success)
+                            }
+                        } else {
+                            debugPrint("-----register photo to local db failed------")
+                            onCompleted(success)
+                        }
+                    } else {
+                        debugPrint("----- uploading image data to cloud storage failed ------")
+                        onCompleted(success)
+                    }
+                }
+            }
+        }
+        
+        return true
+    }
+    
+    static func uploadSelectedLocalPhotos(assets: [PHAsset], onCompleted: @escaping(Bool)->()) {
+        DispatchQueue.global(qos: .background).async {
+            for asset in assets {
                 let fsID = photoInfo["id"] as! String
                 let image = GSModuleSync.downloadImageFile(fileID: fsID, folderPath: self.sharedFolderName)
                 if image == nil {

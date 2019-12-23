@@ -10,7 +10,6 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 
 class GFSModule: NSObject {
-    static var userID: String?
     
     static func fetchUsers() {
         let db = Firestore.firestore()
