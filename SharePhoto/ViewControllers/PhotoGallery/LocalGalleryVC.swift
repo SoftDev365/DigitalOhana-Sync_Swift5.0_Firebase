@@ -15,7 +15,7 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var btnUpload: UIBarButtonItem!
 
-    var albumPhotos: PHFetchResult<PHAsset>? = nil
+    var albumPhotos: [PHAsset]? = nil
     var imgViewList: [ImageZoomView]?
     var curPage: Int = 0
     var bIsFullscreen = false
@@ -30,7 +30,7 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         return .all
     }
 
-    func setPhotoAlbum(_ photos: PHFetchResult<PHAsset>, page:Int) {
+    func setPhotoAlbum(_ photos: [PHAsset], page:Int) {
         self.albumPhotos = photos
         self.curPage = page
     }

@@ -26,7 +26,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     var viewMode: ViewMode = .local    
     var bEditMode: Bool = false
-    var albumPhotos: PHFetchResult<PHAsset>? = nil
+    var albumPhotos: [PHAsset]?
     
     var selectedPhotoList: [PHAsset]?
     var backupSelection: [Int] = []
@@ -97,11 +97,21 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             self.refreshControl.endRefreshing()
 
             guard let photoList = result else { return }
-            self.albumPhotos = photoList
+            
+            self.albumPhotos = []
             
             var fileNames: [String] = []
-            for index in 0..<photoList.count {
+            for index in 0 ..< photoList.count {
                 let asset = photoList[index]
+                
+                if self.viewMode == .local {
+                    self.albumPhotos! += [asset]
+                } else if self.viewMode == .upload {
+                    if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == false {
+                        self.albumPhotos! += [asset]
+                    }
+                }
+
                 fileNames += [asset.localIdentifier]
             }
             
@@ -169,7 +179,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
         guard let photoList = self.albumPhotos else { return cell }
     
-        let asset = photoList.object(at: indexPath.row)
+        let asset = photoList[indexPath.row]
 
         //let width = UIScreen.main.scale*(self.view.frame.size.width - 4)/3
         let width = UIScreen.main.scale*cell.frame.size.width
@@ -222,7 +232,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     func deleteFile(_ rowIndex: Int) {
         guard let photoList = self.albumPhotos else { return }
-        let asset = photoList.object(at: rowIndex)
+        let asset = photoList[rowIndex]
         let arrayToDelete = NSArray(object: asset)
         
         PHModule.deleteAssets(arrayToDelete) { (bSuccess) in
@@ -344,7 +354,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         guard let photoList = self.albumPhotos else { return false }
        
         for i in 0 ..< photoList.count {
-            let asset = photoList.object(at: i)
+            let asset = photoList[i]
             if isSelectedPhoto(asset) == false {
                 return false
             }
@@ -356,7 +366,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     func selectOrDeselectCell(_ indexPath: IndexPath, refreshCell: Bool) {
         guard let photoList = self.albumPhotos else { return }
         
-        let asset = photoList.object(at: indexPath.row)
+        let asset = photoList[indexPath.row]
         let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
         
         if isSelectedPhoto(asset) == false {
@@ -396,7 +406,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         guard let photoList = self.albumPhotos else { return }
         
         for i in 0 ..< photoList.count {
-            let asset = photoList.object(at: i)
+            let asset = photoList[i]
             if isSelectedPhoto(asset) == false {
                 addPhotoToSelectedList(asset)
             }
@@ -507,7 +517,11 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
             let alert = UIAlertController(title: "\(nUpload) photos uploaded, \(nSkip) photos skipped, \(nFail) photos failed.", message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
-                self.navigationController?.popViewController(animated: true)
+                //if nUpload > 0 {
+                //    //self.navigationController?.popViewController(animated: true)
+                //    self.hideToolBar(false)
+                //    self.navigationController?.popToRootViewController(animated: true)
+                //}
             }))
 
             self.present(alert, animated: true, completion: nil)
