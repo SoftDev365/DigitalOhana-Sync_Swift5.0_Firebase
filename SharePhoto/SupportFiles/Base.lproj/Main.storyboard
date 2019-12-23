@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -205,7 +206,7 @@
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="9In-AY-8bv">
                                 <rect key="frame" x="57" y="0.0" width="300" height="300"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MUS-um-6OH">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -436,7 +437,8 @@
             <objects>
                 <navigationController storyboardIdentifier="NavLocationVC" id="g2G-Ij-ytb" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="F2C-u9-Mrl"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="M8e-6s-pq1">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="M8e-6s-pq1">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -551,28 +553,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gYo-iA-Dev">
-                            <size key="itemSize" width="299" height="295"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gYo-iA-Dev">
+                            <size key="itemSize" width="300" height="300"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="r3h-RS-6E8">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="r3h-RS-6E8" customClass="PhotoCell" customModule="Ohana_Memory_Sync" customModuleProvider="target">
                                 <rect key="frame" x="57" y="0.0" width="300" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" id="FhX-3S-dp3">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ol1-la-1bR">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ol1-la-1bR">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox_d" translatesAutoresizingMaskIntoConstraints="NO" id="3dc-bg-uDd">
+                                            <rect key="frame" x="235" y="5" width="60" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="3dc-bg-uDd" secondAttribute="height" multiplier="1:1" id="EeN-jy-ryd"/>
+                                            </constraints>
                                         </imageView>
                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y15-Af-foS" userLabel="TitleBG">
                                             <rect key="frame" x="0.0" y="240" width="300" height="60"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZG-WB-lyp" userLabel="TItle">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZG-WB-lyp" userLabel="TItle">
                                                     <rect key="frame" x="128" y="19.666666666666686" width="44" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -590,7 +597,7 @@
                                                 <constraint firstAttribute="width" secondItem="Y15-Af-foS" secondAttribute="height" multiplier="100:20" id="Sef-OK-jpj"/>
                                             </constraints>
                                         </view>
-                                        <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwe-rV-3Nl">
+                                        <button hidden="YES" opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iwe-rV-3Nl">
                                             <rect key="frame" x="256" y="256" width="44" height="44"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -605,11 +612,20 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="3dc-bg-uDd" firstAttribute="width" secondItem="3dc-bg-uDd" secondAttribute="height" multiplier="1:1" id="2nn-fh-Zrs"/>
+                                        <constraint firstItem="ol1-la-1bR" firstAttribute="top" secondItem="FhX-3S-dp3" secondAttribute="top" identifier="top_padding" id="3fx-Dq-h23"/>
                                         <constraint firstItem="Y15-Af-foS" firstAttribute="width" secondItem="FhX-3S-dp3" secondAttribute="width" id="57H-8H-IY5"/>
+                                        <constraint firstItem="ol1-la-1bR" firstAttribute="leading" secondItem="FhX-3S-dp3" secondAttribute="leading" identifier="left_padding" id="5xQ-7z-TEm"/>
                                         <constraint firstAttribute="trailing" secondItem="iwe-rV-3Nl" secondAttribute="trailing" id="AHe-cy-2yI"/>
                                         <constraint firstAttribute="bottom" secondItem="Y15-Af-foS" secondAttribute="bottom" id="Wpl-f7-sp2"/>
                                         <constraint firstItem="iwe-rV-3Nl" firstAttribute="bottom" secondItem="FhX-3S-dp3" secondAttribute="bottom" id="Zmd-at-PdB"/>
+                                        <constraint firstAttribute="bottom" secondItem="ol1-la-1bR" secondAttribute="bottom" identifier="bottom_padding" id="fM4-Kn-BHF"/>
                                         <constraint firstItem="Y15-Af-foS" firstAttribute="centerX" secondItem="FhX-3S-dp3" secondAttribute="centerX" id="h5Z-pM-fV5"/>
+                                        <constraint firstItem="3dc-bg-uDd" firstAttribute="width" secondItem="FhX-3S-dp3" secondAttribute="width" multiplier="0.2" id="hlg-cC-3ai"/>
+                                        <constraint firstItem="3dc-bg-uDd" firstAttribute="top" secondItem="FhX-3S-dp3" secondAttribute="top" constant="5" id="jrk-cy-qeW"/>
+                                        <constraint firstItem="3dc-bg-uDd" firstAttribute="width" secondItem="3dc-bg-uDd" secondAttribute="height" multiplier="1:1" id="npc-Oj-OhL"/>
+                                        <constraint firstAttribute="trailing" secondItem="ol1-la-1bR" secondAttribute="trailing" identifier="right_padding" id="rqS-Z0-7Ga"/>
+                                        <constraint firstAttribute="trailing" secondItem="3dc-bg-uDd" secondAttribute="trailing" constant="5" id="vxN-X7-LtC"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="300" height="300"/>

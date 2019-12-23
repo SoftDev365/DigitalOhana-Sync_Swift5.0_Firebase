@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class PhotoCell: UICollectionViewCell {
     enum PhotoCellType: Int {
@@ -21,8 +22,10 @@ class PhotoCell: UICollectionViewCell {
     //let tagLABEL = 3
 
     var type: PhotoCellType!
-    var filePath: String!
+    var filePath: String? = nil
     let cloudFolderPath = "central"
+    
+    var localAsset: PHAsset?
     
     var ivPhoto: UIImageView?
     var ivChkBox: UIImageView?
@@ -39,6 +42,7 @@ class PhotoCell: UICollectionViewCell {
     open func setEmpty() {
         self.ivPhoto?.image = UIImage(named: "nophoto")
         self.filePath = ""
+        self.localAsset = nil
     }
     
     open func setPaddingToPhoto(_ size: CGFloat) {
@@ -123,7 +127,7 @@ class PhotoCell: UICollectionViewCell {
         self.type = .cloud
         self.filePath = path
 
-        GSModule.downloadImageFile(fileID: self.filePath, folderPath: self.cloudFolderPath, onCompleted: { (fileID, image) in
+        GSModule.downloadImageFile(fileID: self.filePath!, folderPath: self.cloudFolderPath, onCompleted: { (fileID, image) in
             // if cell point still the same photo (cell may be changed to the other while downloading)
             if self.filePath == fileID {
                 self.ivPhoto?.image = image
@@ -132,6 +136,10 @@ class PhotoCell: UICollectionViewCell {
                 //btnDownload.isHidden = false
             //}
         })
+    }
+    
+    open func setLocalAsset(_ asset: PHAsset) {
+        
     }
     
     func refreshView() {

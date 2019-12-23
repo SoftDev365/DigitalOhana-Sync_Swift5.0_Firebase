@@ -502,26 +502,5 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             vc.setView(mode: .download)
             navigationController?.pushViewController(vc, animated: true)
         }
-        
-        /*
-        let button = sender as! UIButton
-        let cell = button.superview!.superview! as! UICollectionViewCell
-        let indexPath = self.collectionView.indexPath(for: cell)!
-        guard let imgView = cell.viewWithTag(1) as? UIImageView else { return }
-
-        guard let photoList = self.photoList else { return }
-        let photoInfo = photoList[indexPath.row]
-        let fileID = photoInfo["id"] as! String
-        
-        // not downloaded yet
-        if SyncModule.checkPhotoIsDownloaded(fileID: fileID) == false {
-            print("----- Download Photo \(indexPath.row)-----")
-            if imgView.image != nil {
-                downloadImage(image: imgView.image!, photoInfo: photoInfo)
-            }
-        } else {
-            // delete ?
-            // check if photo is uploaded by me (check email or user id)
-        }*/
     }
 }

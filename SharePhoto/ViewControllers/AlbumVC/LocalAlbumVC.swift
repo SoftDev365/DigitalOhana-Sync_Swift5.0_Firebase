@@ -133,10 +133,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         let asset = photoList.object(at: indexPath.row)
 
         // Configure the cell
-        if let label = cell.viewWithTag(2) as? UILabel {
-            label.text = "title"
-        }
-        
+        //if let label = cell.viewWithTag(2) as? UILabel {
+        //    label.text = "title"
+        //}
+
         // hide upload button if already uploaded
         /*
         if let btnUpload = cell.viewWithTag(3) as? UIButton {
@@ -148,7 +148,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }*/
 
         //let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
-        let width = UIScreen.main.scale*(self.view.frame.size.width - 5)/3
+        let width = UIScreen.main.scale*(self.view.frame.size.width - 4)/3
+        //let width = UIScreen.main.scale*cell.frame.size.width
         let size = CGSize(width:width, height:width)
 
         PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
@@ -177,7 +178,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (self.view.frame.size.width - 5)/3
+        let width = (self.view.frame.size.width - 4)/3
         return CGSize(width:width, height:width)
     }
 
