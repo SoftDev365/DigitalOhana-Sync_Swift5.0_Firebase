@@ -248,17 +248,20 @@ class SyncModule: NSObject {
             var nFail: Int = 0
             
             for photoInfo in photoInfos {
-                /*
                 let fsID = photoInfo["id"] as! String
-                if GSModuleSync.deleteFile(name: fsID, parentFolder: self.sharedFolderName)
                 
-                if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == true {
-                    nSkip += 1
-                } else if SyncModule.uploadPhotoSync(asset: asset) == true {
+                // delete photo from list (firestore database)
+                if GFSModuleSync.deletePhoto(photoID: fsID) == true {
+                    // delete photo file from storage
+                    _ = GSModuleSync.deleteFile(cloudFileID: fsID, parentFolder: self.sharedFolderName)
+                    
+                    // delete from local database
+                    SqliteManager.deletePhotoBy(cloudFileID: fsID)
+                    
                     nUpload += 1
                 } else {
                     nFail += 1
-                }*/
+                }
             }
 
             DispatchQueue.main.async {

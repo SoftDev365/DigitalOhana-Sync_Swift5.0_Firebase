@@ -118,4 +118,17 @@ class GFSModule: NSObject {
             }
         }
     }
+    
+    static func deletePhoto(photoID: String, onCompleted: @escaping (Bool) -> ()) {
+        let db = Firestore.firestore()
+
+        db.collection("photos").document(photoID).delete { (err) in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false)
+            } else {
+                onCompleted(true)
+            }
+        }
+    }
 }

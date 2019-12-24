@@ -92,4 +92,21 @@ class GFSModuleSync: NSObject {
 
         return bResult
     }
+    
+    static func deletePhoto(photoID: String) -> Bool {
+        var bResult: Bool = false
+        var bProcessing = true
+        
+        GFSModule.deletePhoto(photoID: photoID) { (success) in
+            bResult = success
+            bProcessing = false
+        }
+
+        // block while processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 0.005)
+        }
+
+        return bResult
+    }
 }

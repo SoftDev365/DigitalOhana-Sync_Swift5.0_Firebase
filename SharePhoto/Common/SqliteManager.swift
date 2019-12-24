@@ -191,6 +191,21 @@ class SqliteManager: NSObject {
         }
     }
     
+    static func deletePhotoBy(cloudFileID: String) {
+        do {
+            let db = try Connection(dbFilePath)
+
+            let photos = Table("photos")
+            let fd_fsid = Expression<String>("fs_id")
+
+            let alice = photos.filter(fd_fsid == cloudFileID)
+
+            try db.run(alice.delete())
+        } catch let error {
+            print(error)
+        }
+    }
+    
     /*
     static func all() -> Bool {
         do {
