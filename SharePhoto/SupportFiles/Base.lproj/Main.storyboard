@@ -278,7 +278,8 @@
             <objects>
                 <navigationController storyboardIdentifier="NavSettingVC" id="uiB-uN-qW6" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="NavSetting" id="OOj-hQ-8V3"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Hi4-Be-M9J">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Hi4-Be-M9J">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
