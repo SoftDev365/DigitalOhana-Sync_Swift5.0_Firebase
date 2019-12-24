@@ -143,13 +143,21 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func downloadSelectedPhotos() {
         self.activityView.showActivityIndicator(self.view, withTitle: "Downloading...")
-        SyncModule.downloadSelectedPhotosToLocal { (success) in
-            if success {
-                Global.needRefreshLocal = true
-                Global.needDoneSelectionAtHome = true
-            }
+        
+        SyncModule.downloadSelectedPhotosToLocal { (nDownloaded, nSkipped, nFailed) in
             self.activityView.hideActivitiIndicator()
-            self.navigationController?.popViewController(animated: true)
+            
+            if nDownloaded > 0 {
+                Global.needRefreshLocal = true
+            }
+            Global.needDoneSelectionAtHome = true
+            
+            let alert = UIAlertController(title: "Downloaded: \(nDownloaded),\nSkipped: \(nSkipped),\nFailed: \(nFailed)", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

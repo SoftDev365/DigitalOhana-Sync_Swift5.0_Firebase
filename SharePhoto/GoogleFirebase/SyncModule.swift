@@ -140,8 +140,8 @@ class SyncModule: NSObject {
         return SqliteManager.checkPhotoIsUploaded(localIdentifier: localIdentifier)
     }
     
-    static func checkPhotoIsDownloaded(fileID: String) -> Bool {
-        return SqliteManager.checkPhotoIsDownloaded(fileID: fileID)
+    static func checkPhotoIsDownloaded(cloudFileID: String) -> Bool {
+        return SqliteManager.checkPhotoIsDownloaded(cloudFileID: cloudFileID)
     }
     
     static func downloadImage(photoInfo: [String:Any], image: UIImage, onCompleted: @escaping(Bool)->()) {
@@ -172,19 +172,30 @@ class SyncModule: NSObject {
         }
     }
     
-    static func downloadSelectedPhotosToLocal(onCompleted: @escaping(Bool)->()) {
+    // download selectec photos from cloud to local (result: download, skip, fail)
+    static func downloadSelectedPhotosToLocal(onCompleted: @escaping(Int, Int, Int)->()) {
+        
+        var nDownloaded = 0
+        var nSkipped = 0
+        var nFailed = 0
         
         guard let photoInfos = Global.selectedCloudPhotos else {
-            onCompleted(false)
+            onCompleted(0, 0, 0)
             return
         }
 
         DispatchQueue.global(qos: .background).async {
             for photoInfo in photoInfos {
                 let fsID = photoInfo["id"] as! String
+                if checkPhotoIsDownloaded(cloudFileID: fsID) {
+                    nSkipped += 1
+                    continue
+                }
+                
                 let image = GSModuleSync.downloadImageFile(fileID: fsID, folderPath: self.sharedFolderName)
                 if image == nil {
-                    return
+                    nFailed += 1
+                    continue
                 }
                 
                 if let localIdentifier = PHModuleSync.addPhotoToFamilyAssets(image!) {
@@ -195,11 +206,14 @@ class SyncModule: NSObject {
                     } else {
                         _ = SqliteManager.insertFileInfo(isMine: false, fname: localIdentifier, fsID: fsID)
                     }
+                    nDownloaded += 1
+                } else {
+                    nFailed += 1
                 }
             }
             
             DispatchQueue.main.async {
-                onCompleted(true)
+                onCompleted(nDownloaded, nSkipped, nFailed)
             }
         }
     }

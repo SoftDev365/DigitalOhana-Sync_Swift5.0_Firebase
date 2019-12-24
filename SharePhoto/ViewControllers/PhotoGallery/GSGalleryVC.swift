@@ -108,7 +108,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         let fsID = photoInfo["id"] as! String
         
         // hide download button if already downloaded
-        if SyncModule.checkPhotoIsDownloaded(fileID: fsID) == true {
+        if SyncModule.checkPhotoIsDownloaded(cloudFileID: fsID) == true {
             btnDownload.isEnabled = false
             btnDownload.tintColor = UIColor.clear
         } else {

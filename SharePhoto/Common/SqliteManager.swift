@@ -103,13 +103,13 @@ class SqliteManager: NSObject {
         }
     }
     
-    static func checkPhotoIsDownloaded(fileID: String) -> Bool {
+    static func checkPhotoIsDownloaded(cloudFileID: String) -> Bool {
         do {
             let db = try Connection(dbFilePath)
 
             let photos = Table("photos")
             let fd_fsid = Expression<String>("fs_id")
-            let alice = photos.filter(fd_fsid == fileID)
+            let alice = photos.filter(fd_fsid == cloudFileID)
             
             let count = try db.scalar(alice.count)
             if count > 0 {
