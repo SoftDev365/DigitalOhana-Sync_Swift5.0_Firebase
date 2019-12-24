@@ -247,8 +247,6 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
         //self = ViewController
         Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this item?", actions: actions) { (index) in
-            print("call action \(index)")
-
             if index == 0 {
                 self.deleteFile(rowIndex)
             }
@@ -481,8 +479,6 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         let cell = button.superview!.superview! as! UICollectionViewCell
         let indexPath = self.collectionView.indexPath(for: cell)!
         
-        print("----- UploadPhoto \(indexPath.row)-----")
-        
         let asset = listPhoto[indexPath.row]
         uploadPhoto(asset: asset)
     }
@@ -505,10 +501,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
         self.present(alert, animated: true, completion: nil)
     }
-    
+
     func uploadSelectedPhotos() {
         self.activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
-        
+
         SyncModule.uploadSelectedLocalPhotos(assets: self.selectedPhotoList!) { (nUpload, nSkip, nFail) in
             self.activityView.hideActivitiIndicator()
             if nUpload > 0 {

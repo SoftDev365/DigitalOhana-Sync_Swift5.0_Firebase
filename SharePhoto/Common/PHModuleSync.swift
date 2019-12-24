@@ -28,12 +28,12 @@ class PHModuleSync: NSObject {
             albumChangeRequest!.addAssets(enumeration)
         }, completionHandler: { (success, error) in
             debugPrint("---- write complete -----\n")
-            bProcessing = false
             if success {
                 bResult = true
             } else {
                 bResult = false
             }
+            bProcessing = false
         })
         
         // block while save processing
@@ -83,8 +83,8 @@ class PHModuleSync: NSObject {
                return
             }
 
-            bProcessing = false
             imgResult = image
+            bProcessing = false
         }
         
         // block while save processing

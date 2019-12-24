@@ -139,7 +139,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
             return
         }
 
-        GSModule.downloadImageFile(fileID: fileID, folderPath: self.sharedFolder) { (fileID, image) in
+        GSModule.downloadImageFile(cloudFileID: fileID, folderPath: self.sharedFolder) { (fileID, image) in
             self.bLoading = false
             self.bLoaded = true
             self.imgView!.image = image

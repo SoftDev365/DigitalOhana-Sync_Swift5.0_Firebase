@@ -24,7 +24,6 @@ class GFSModuleSync: NSObject {
             "email": user.profile.email!,
             "name": user.profile.name!,
         ]) { err in
-            bProcessing = false
             if let err = err {
                 debugPrint(err)
                 bResult = false
@@ -32,6 +31,7 @@ class GFSModuleSync: NSObject {
                 //self.userID = ref!.documentID
                 bResult = true
             }
+            bProcessing = false
         }
 
         // block while processing
@@ -47,8 +47,8 @@ class GFSModuleSync: NSObject {
         var bProcessing = true
         
         GFSModule.getAllPhotos { (success, result) in
-            bProcessing = false
             photos = result
+            bProcessing = false
         }
     
         // block while processing
@@ -64,8 +64,8 @@ class GFSModuleSync: NSObject {
         var bProcessing = true
         
         GFSModule.registerPhoto(createDate: createDate) { (success, documentID) in
-            bProcessing = false
             result = documentID
+            bProcessing = false
         }
         
         // block while processing
@@ -81,8 +81,8 @@ class GFSModuleSync: NSObject {
         var bProcessing = true
         
         GFSModule.updatePhotoToValid(photoID: photoID) { (success) in
-            bProcessing = false
             bResult = success
+            bProcessing = false
         }
         
         // block while processing

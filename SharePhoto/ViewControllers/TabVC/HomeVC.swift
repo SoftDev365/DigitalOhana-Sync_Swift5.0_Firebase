@@ -436,21 +436,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             return
         }
 
-        /*
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
         
-        for item in self.selectedPhotoList! {
-            /*
-            let file = self.fileList![rowIndex]
-            
-            GSModule.deleteFile(file: file.file) { (result) in
-                if result == true {
-                    self.fileList!.remove(at: rowIndex)
-                    self.collectionView.deleteItems(at: [IndexPath.init(row: rowIndex, section: 0)])
-                    self.activityView.hideActivitiIndicator()
-                }
-            }*/
-        }*/
+        //for item in self.selectedPhotoList! {
+        //}
     }
     
     @IBAction func onBtnDelete(_ sender: Any) {
@@ -464,7 +453,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         actions.append(("Cancel", UIAlertAction.Style.cancel))
 
         //self = ViewController
-        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete selected photos?", actions: actions) { (index) in
+        Alerts.showActionsheet(viewController: self, title: "Are you sure you delete selected photos?", message: "", actions: actions) { (index) in
             print("call action \(index)")
             if index == 0 {
                 

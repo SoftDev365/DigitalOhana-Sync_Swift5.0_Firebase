@@ -32,8 +32,8 @@ class SyncModule: NSObject {
         var bProcessing = true
         
         SyncModule.registerPhotoToFirestore(asset: asset) { (success, documentID) in
-            bProcessing = false
             result = documentID
+            bProcessing = false
         }
         
         // block while processing
@@ -66,7 +66,6 @@ class SyncModule: NSObject {
                 return
             }
 
-            let filename = documentID! + ".jpg"
             let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
             
             let options = PHImageRequestOptions()
@@ -97,7 +96,7 @@ class SyncModule: NSObject {
                 let imageData = image.jpegData(compressionQuality: 1.0)
 
                 // upload image data to cloud storage
-                GSModule.uploadFile(name: filename, folderPath: self.sharedFolderName, data: imageData!) { (success) in
+                GSModule.uploadFile(cloudFileID: documentID!, folderPath: self.sharedFolderName, data: imageData!) { (success) in
                     if success {
                         // register to local sqlite db (local filename & firestore id)
                         if SqliteManager.insertFileInfo(isMine: true, fname: asset.localIdentifier, fsID: documentID!) == true {
@@ -124,8 +123,8 @@ class SyncModule: NSObject {
         var bProcessing = true
         
         SyncModule.uploadPhoto(asset: asset) { (success) in
-            bProcessing = false
             bResult = success
+            bProcessing = false
         }
         
         // block while processing
@@ -144,6 +143,7 @@ class SyncModule: NSObject {
         return SqliteManager.checkPhotoIsDownloaded(cloudFileID: cloudFileID)
     }
     
+    // download one file by async
     static func downloadImage(photoInfo: [String:Any], image: UIImage, onCompleted: @escaping(Bool)->()) {
 
         PHModule.addPhotoToFamilyAssets(image) { (bSuccess, localIdentifier) in
@@ -172,9 +172,9 @@ class SyncModule: NSObject {
         }
     }
     
-    // download selectec photos from cloud to local (result: download, skip, fail)
+    // download batch selected photos from cloud to local (result: download, skip, fail)
     static func downloadSelectedPhotosToLocal(onCompleted: @escaping(Int, Int, Int)->()) {
-        
+
         var nDownloaded = 0
         var nSkipped = 0
         var nFailed = 0
@@ -192,7 +192,7 @@ class SyncModule: NSObject {
                     continue
                 }
                 
-                let image = GSModuleSync.downloadImageFile(fileID: fsID, folderPath: self.sharedFolderName)
+                let image = GSModuleSync.downloadImageFile(cloudFileID: fsID, folderPath: self.sharedFolderName)
                 if image == nil {
                     nFailed += 1
                     continue
@@ -241,6 +241,29 @@ class SyncModule: NSObject {
         }
     }
     
-    //static func downloadImage(photoInfo: [String:Any], image: UIImage, onCompleted: @escaping(Bool)->()) {
-    //}
+    // delete photos (result: deleted, failed)
+    static func deleteSelectedPhotosFromCloud(photoInfos: [[String:Any]], onCompleted: @escaping(Int, Int)->()) {
+        DispatchQueue.global(qos: .background).async {
+            var nUpload: Int = 0
+            var nFail: Int = 0
+            
+            for photoInfo in photoInfos {
+                /*
+                let fsID = photoInfo["id"] as! String
+                if GSModuleSync.deleteFile(name: fsID, parentFolder: self.sharedFolderName)
+                
+                if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == true {
+                    nSkip += 1
+                } else if SyncModule.uploadPhotoSync(asset: asset) == true {
+                    nUpload += 1
+                } else {
+                    nFail += 1
+                }*/
+            }
+
+            DispatchQueue.main.async {
+                onCompleted(nUpload, nFail)
+            }
+        }
+    }
 }

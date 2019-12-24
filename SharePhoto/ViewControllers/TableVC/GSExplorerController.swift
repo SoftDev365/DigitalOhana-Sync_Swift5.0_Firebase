@@ -276,14 +276,13 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
         self.present(imagePicker, animated: true, completion: nil)
     }
     
-    func uploadPhoto(_ imageData: Data, fileName: String?) {
-        if fileName == nil || fileName == "" {
+    func uploadPhoto(_ imageData: Data, fileID: String?) {
+        if fileID == nil || fileID == "" {
             return
         }
 
         activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
-        let imageFileName = fileName! + ".jpg"
-        GSModule.uploadFile(name: imageFileName, folderPath: self.folderPath!, data: imageData) { (success) in
+        GSModule.uploadFile(cloudFileID: fileID!, folderPath: self.folderPath!, data: imageData) { (success) in
             self.activityView.hideActivitiIndicator()
             self.loadFileList()
         }
@@ -302,7 +301,7 @@ class GSExplorerController: UITableViewController, UIImagePickerControllerDelega
                 }
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
                     let textField = alert!.textFields![0]
-                    self.uploadPhoto(imageData!, fileName: textField.text)
+                    self.uploadPhoto(imageData!, fileID: textField.text)
                 }))
                 
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

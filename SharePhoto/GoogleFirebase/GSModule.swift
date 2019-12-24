@@ -118,40 +118,40 @@ class GSModule: NSObject {
         }
     }
 
-    static func downloadImageFile(fileID: String, folderPath: String, onCompleted: @escaping (String, UIImage?) -> ()) {
+    static func downloadImageFile(cloudFileID: String, folderPath: String, onCompleted: @escaping (String, UIImage?) -> ()) {
 
-        let filePath = folderPath + "/" + fileID + ".jpg"
+        let filePath = folderPath + "/" + cloudFileID + ".jpg"
         let storage = Storage.storage()
         let storageRef = storage.reference()
         let fileRef = storageRef.child(filePath)
         
         // check cached image
         if let cachedImage = self.imageCache.object(forKey: fileRef.fullPath as NSString)  {
-            onCompleted(fileID, cachedImage)
+            onCompleted(cloudFileID, cachedImage)
         }
 
         // Download in memory with a maximum allowed size of 1MB (50 * 1024 * 1024 bytes)
         fileRef.getData(maxSize: 50 * 1024 * 1024) { data, error in
             if let error = error {
                 debugPrint(error)
-                onCompleted(fileID, nil)
+                onCompleted(cloudFileID, nil)
             } else {
                 let image = UIImage(data: data!)
                 if image != nil {
                     self.imageCache.setObject(image!, forKey: fileRef.fullPath as NSString)
                 }
-                onCompleted(fileID, image)
+                onCompleted(cloudFileID, image)
             }
         }
     }
     
     static func uploadFile(
-        name: String,
+        cloudFileID: String,
         folderPath: String,
         data: Data,
         completion: @escaping (Bool) -> Void) {
 
-        let filePath = folderPath + "/" + name
+        let filePath = folderPath + "/" + cloudFileID + ".jpg"
 
         // Get a reference to the storage service using the default Firebase App
         let storage = Storage.storage()
@@ -200,14 +200,14 @@ class GSModule: NSObject {
     }
     
     static func uploadFile(
-        name: String,
+        cloudFileID: String,
         folderPath: String,
         fileURL: URL,
         completion: @escaping (Bool) -> Void) {
         
         do {
             let data = try Data(contentsOf: fileURL)
-            uploadFile(name: name, folderPath: folderPath, data: data, completion: completion)
+            uploadFile(cloudFileID: cloudFileID, folderPath: folderPath, data: data, completion: completion)
         } catch {
             completion(false)
         }
@@ -238,14 +238,6 @@ class GSModule: NSObject {
             }
             
             completion(true)
-            
-            /*
-            fileRef.delete { (error) in
-                if error != nil {
-                    debugPrint(error!)
-                }
-                completion(true)
-            }*/
         }
     }
     
@@ -264,11 +256,11 @@ class GSModule: NSObject {
     }
     
     static func deleteFile(
-        name: String,
+        cloudFileID: String,
         parentFolder: String,
         completion: @escaping (Bool) -> Void) {
 
-        let filePath = parentFolder + "/" + name
+        let filePath = parentFolder + "/" + cloudFileID + ".jpg"
         // Get a reference to the storage service using the default Firebase App
         let storage = Storage.storage()
         // Create a storage reference from our storage service
