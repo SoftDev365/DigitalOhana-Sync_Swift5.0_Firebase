@@ -438,8 +438,22 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
         
-        //for item in self.selectedPhotoList! {
-        //}
+        SyncModule.deleteSelectedPhotosFromCloud(photoInfos: self.selectedPhotoList!) { (nDeleted, nFailed) in
+            self.activityView.hideActivitiIndicator()
+            if nDeleted > 0 {
+                Global.setNeedRefresh()
+            }
+
+            let strMsg = Global.getProcessResultMsg(titles: ["Deleted", "Failed"], counts: [nDeleted, nFailed])
+            let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                self.switchModeTo(editMode: false)
+                //self.prepareNewSelecting()
+                self.refreshFileList()
+            }))
+
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     @IBAction func onBtnDelete(_ sender: Any) {
@@ -452,11 +466,9 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         actions.append(("Yes", UIAlertAction.Style.default))
         actions.append(("Cancel", UIAlertAction.Style.cancel))
 
-        //self = ViewController
         Alerts.showActionsheet(viewController: self, title: "Are you sure you delete selected photos?", message: "", actions: actions) { (index) in
-            print("call action \(index)")
             if index == 0 {
-                
+                self.deleteSelectedPhotos();
             }
         }
     }

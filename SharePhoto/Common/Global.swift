@@ -29,4 +29,22 @@ class Global: NSObject {
     static func doneDownload() {
         self.needDoneSelectionAtHome = true
     }
+    
+    static func getProcessResultMsg(titles: [String], counts:[Int]) -> String {
+        var strMsg: String = ""
+
+        for i in 0 ..< titles.count {
+            if counts[i] <= 0 {
+                continue
+            }
+            
+            if strMsg == "" {
+                strMsg = titles[i] + ": " + "\(counts[i])"
+            } else {
+                strMsg += ",\n" + titles[i] + ": " + "\(counts[i])"
+            }
+        }
+
+        return strMsg
+    }
 }

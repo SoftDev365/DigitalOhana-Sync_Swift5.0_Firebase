@@ -19,12 +19,19 @@ private let reuseIdentifier = "PhotoCell"
 class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayout  {
 
     enum ViewMode: Int {
-       case local = 0
+       case show = 0
        case upload = 1
        case download = 2
     }
     
-    var viewMode: ViewMode = .local    
+    enum SourceType: Int {
+        case local = 0
+        case drive = 1
+        case raspberrypi = 2
+    }
+
+    var viewMode: ViewMode = .show
+    var sourceType: SourceType = .local
     var bEditMode: Bool = false
     var albumPhotos: [PHAsset]?
     
@@ -511,7 +518,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 Global.setNeedRefresh()
             }
 
-            let alert = UIAlertController(title: "Uploaded:\(nUpload),\n Skipped:\(nSkip),\nFaield:\(nFail)", message: nil, preferredStyle: .alert)
+            let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
+            let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
                 if nUpload > 0 {
                     //self.navigationController?.popViewController(animated: true)

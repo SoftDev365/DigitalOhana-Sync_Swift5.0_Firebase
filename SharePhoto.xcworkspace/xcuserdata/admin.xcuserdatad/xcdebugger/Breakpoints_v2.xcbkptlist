@@ -52,5 +52,213 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "131AD051-5C4E-4739-A6E1-960E9E5E2BB9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SharePhoto/GoogleFirebase/GFSModuleSync.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "deletePhoto(photoID:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BDB8B3F3-0B85-43B8-BF13-482EA87D7D00"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SharePhoto/GoogleFirebase/GFSModuleSync.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "deletePhoto(photoID:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A129BDC1-8618-4998-A79D-CCC7A80902EA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SharePhoto/GoogleFirebase/GFSModuleSync.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "deletePhoto(photoID:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A129BDC1-8618-4998-A79D-CCC7A80902EA - 7525622c0c67e43a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Ohana_Memory_Sync.GFSModuleSync.deletePhoto(photoID: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "Ohana Memory Sync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GFSModuleSync.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "232">
+               </Location>
+               <Location
+                  uuid = "A129BDC1-8618-4998-A79D-CCC7A80902EA - 1571f6e16c965803"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool) -&gt; () in static Ohana_Memory_Sync.GFSModuleSync.deletePhoto(photoID: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "Ohana Memory Sync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GFSModuleSync.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A958AC5B-9E60-4885-A915-83D744DF5C29"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SharePhoto/GoogleFirebase/GFSModule.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "deletePhoto(photoID:onCompleted:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A958AC5B-9E60-4885-A915-83D744DF5C29 - 27f867f44759103b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Ohana_Memory_Sync.GFSModule.deletePhoto(photoID: Swift.String, onCompleted: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Memory Sync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GFSModule.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "125"
+                  endingLineNumber = "125"
+                  offsetFromSymbolStart = "216">
+               </Location>
+               <Location
+                  uuid = "A958AC5B-9E60-4885-A915-83D744DF5C29 - 1144f77b09c54e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static Ohana_Memory_Sync.GFSModule.deletePhoto(photoID: Swift.String, onCompleted: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Memory Sync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GFSModule.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "140">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5EC2961B-0D77-4BA7-BD3F-DF96C832CFD3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SharePhoto/GoogleFirebase/GFSModule.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "deletePhoto(photoID:onCompleted:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "87B1DF61-F807-4256-9A2A-88CA5C6C9C81"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SharePhoto/GoogleFirebase/GSModule.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "deleteFile(cloudFileID:parentFolder:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "87B1DF61-F807-4256-9A2A-88CA5C6C9C81 - c716cd589071e1ed"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Ohana_Memory_Sync.GSModule.deleteFile(cloudFileID: Swift.String, parentFolder: Swift.String, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Memory Sync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GSModule.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "271"
+                  endingLineNumber = "271"
+                  offsetFromSymbolStart = "752">
+               </Location>
+               <Location
+                  uuid = "87B1DF61-F807-4256-9A2A-88CA5C6C9C81 - dbcd5fc0ca2b9d9e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static Ohana_Memory_Sync.GSModule.deleteFile(cloudFileID: Swift.String, parentFolder: Swift.String, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Memory Sync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GSModule.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "272"
+                  endingLineNumber = "272"
+                  offsetFromSymbolStart = "112">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "71BC1631-A31D-4D8C-B3F8-8C5122DB26A6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SharePhoto/GoogleFirebase/GSModule.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "deleteFile(cloudFileID:parentFolder:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -19,13 +19,13 @@ private let reuseIdentifier = "FrameCell"
 class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
     enum ViewMode: Int {
-       case local = 0
+       case location = 0
        case upload = 1
        case download = 2
     }
     
     let frameCount = 3
-    var viewMode: ViewMode = .local
+    var viewMode: ViewMode = .location
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -42,8 +42,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         self.collectionView.dataSource = self
         self.collectionView.reloadData()
         
-        if self.viewMode != .local {
-            self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem;
+        if self.viewMode != .location {
+            self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
         }
         
         if self.viewMode == .upload {
@@ -85,7 +85,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.viewMode == .local {
+        if self.viewMode == .location {
             return frameCount+1
         } else {
             return frameCount
@@ -119,6 +119,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             onChooseLocal()
+        } else if indexPath.row == 1 {
+            onChooseDrive()
         }
     }
     
@@ -152,17 +154,18 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             }
             Global.needDoneSelectionAtHome = true
             
-            let alert = UIAlertController(title: "Downloaded: \(nDownloaded),\nSkipped: \(nSkipped),\nFailed: \(nFailed)", message: nil, preferredStyle: .alert)
+            let strMsg = Global.getProcessResultMsg(titles: ["Downloaded", "Skipped", "Failed"], counts: [nDownloaded, nSkipped, nFailed])
+            let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
                 self.navigationController?.popViewController(animated: true)
             }))
-            
+
             self.present(alert, animated: true, completion: nil)
         }
     }
     
     func onChooseLocal() {
-        if self.viewMode == .local {
+        if self.viewMode == .location {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
                 vc.setView(mode: .local)
                 navigationController?.pushViewController(vc, animated: true)
@@ -173,7 +176,28 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .download {
-            let alert = UIAlertController(title: "Are you sure you download photos to local?", message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Are you sure you download photos to Local?", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                self.downloadSelectedPhotos()
+            }))
+            alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func onChooseDrive() {
+        if self.viewMode == .location {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
+                vc.setView(mode: .local)
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        } else if self.viewMode == .upload {
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
+                vc.setView(mode: .upload)
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        } else if self.viewMode == .download {
+            let alert = UIAlertController(title: "Are you sure you download photos to Local?", message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                 self.downloadSelectedPhotos()
             }))

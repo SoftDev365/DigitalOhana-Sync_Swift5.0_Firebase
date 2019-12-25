@@ -253,11 +253,12 @@ class SyncModule: NSObject {
                 // delete photo from list (firestore database)
                 if GFSModuleSync.deletePhoto(photoID: fsID) == true {
                     // delete photo file from storage
-                    _ = GSModuleSync.deleteFile(cloudFileID: fsID, parentFolder: self.sharedFolderName)
-                    
+                    // block it, remain photo file for RPi frame (shared file)
+                    // _ = GSModuleSync.deleteFile(cloudFileID: fsID, parentFolder: self.sharedFolderName)
+
                     // delete from local database
                     SqliteManager.deletePhotoBy(cloudFileID: fsID)
-                    
+
                     nUpload += 1
                 } else {
                     nFail += 1
