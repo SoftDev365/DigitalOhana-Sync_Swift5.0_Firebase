@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import GoogleAPIClientForREST
 
 class PhotoCell: UICollectionViewCell {
     enum PhotoCellType: Int {
@@ -26,7 +27,8 @@ class PhotoCell: UICollectionViewCell {
     let cloudFolderPath = "central"
     
     var localAsset: PHAsset?
-    
+    var driveFile: GTLRDrive_File?
+
     var ivPhoto: UIImageView?
     var ivChkBox: UIImageView?
     var checked: Bool = false
@@ -154,6 +156,19 @@ class PhotoCell: UICollectionViewCell {
             //   return
             //}
             self.ivPhoto?.image = image
+        }
+    }
+    
+    open func setDriveFile(_ file: GTLRDrive_File) {
+        self.setEmpty()
+        
+        self.type = .drive
+        self.driveFile = file
+
+        GDModule.downloadImage(fileID: file.identifier!) { (fileID, image) in
+            if self.driveFile!.identifier == fileID {
+                self.ivPhoto?.image = image
+            }
         }
     }
     

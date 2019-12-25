@@ -157,10 +157,10 @@ class GDModule: NSObject {
         }
     }
     
-    static func downloadImage(fileID: String, onCompleted: @escaping (UIImage?) -> ()) {
+    static func downloadImage(fileID: String, onCompleted: @escaping (String?, UIImage?) -> ()) {
         // check cached image
         if let cachedImage = self.imageCache.object(forKey: fileID as NSString)  {
-            onCompleted(cachedImage)
+            onCompleted(fileID, cachedImage)
         }
 
         let imageUrl = "https://www.googleapis.com/drive/v3/files/\(fileID)?alt=media"
@@ -168,13 +168,13 @@ class GDModule: NSObject {
         let fetcher = service.fetcherService.fetcher(withURLString: imageUrl)
         fetcher.beginFetch { (data, error) in
             if error != nil {
-                onCompleted(nil)
+                onCompleted(fileID, nil)
             } else {
                 let image = UIImage.init(data: data!)
                 if image != nil {
                     self.imageCache.setObject(image!, forKey: fileID as NSString)
                 }
-                onCompleted(image)
+                onCompleted(fileID, image)
             }
         }
     }

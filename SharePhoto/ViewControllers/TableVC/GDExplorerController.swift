@@ -163,8 +163,10 @@ class GDExplorerController: UITableViewController {
             cell.imgThumb.image = UIImage.init(named: "folder_icon")
         } else {
             
-            GDModule.downloadImage(fileID: file.identifier!) { (image) in
-                cell.imgThumb.image = image
+            GDModule.downloadImage(fileID: file.identifier!) { (fileID, image) in
+                if file.identifier == fileID {
+                    cell.imgThumb.image = image
+                }
             }
         }
         

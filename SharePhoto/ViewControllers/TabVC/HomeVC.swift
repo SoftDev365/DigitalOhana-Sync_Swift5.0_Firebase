@@ -266,7 +266,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }) { (success) in
         }
     }
-    
+
     func prepareNewSelecting() {
         self.selectedPhotoList = [[String:Any]]()
     }
@@ -302,7 +302,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func isAllSelected() -> Bool {
         guard let photoList = self.photoList else { return false }
-        
+
         for photoInfo in photoList {
             if isSelectedPhoto(photoInfo) == false {
                 return false

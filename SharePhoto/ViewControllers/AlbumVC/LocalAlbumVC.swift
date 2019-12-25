@@ -33,9 +33,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var viewMode: ViewMode = .show
     var sourceType: SourceType = .local
     var bEditMode: Bool = false
-    var albumPhotos: [PHAsset]?
     
-    var selectedPhotoList: [PHAsset]?
+    var albumPhotos: [PHAsset]?
+    var drivePhotos: [GTLRDrive_File]?
+    
+    var selectedAlbumPhotos: [PHAsset]?
+    var selectedDrivePhotos: [GTLRDrive_File]?
     var backupSelection: [Int] = []
     
     @IBOutlet weak var navItem: UINavigationItem!
@@ -62,17 +65,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if self.sourceType == .local {
-            self.navItem.title = "Local"
-        } else if self.sourceType == .drive {
-            self.navItem.title = "Drive"
-        } else if self.sourceType == .raspberrypi {
-            
-        }
-        
         //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         //self.navigationController?.isNavigationBarHidden = false
-        self.accessToPHLibrary()
         
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: attributes)
@@ -80,6 +74,16 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         refreshControl.tintColor = .white
         
         self.collectionView.addSubview(refreshControl) // not required when using UITableViewController
+        
+        if self.sourceType == .local {
+            self.navItem.title = "Local"
+            self.accessToPHLibrary()
+        } else if self.sourceType == .drive {
+            self.navItem.title = "Drive"
+            self.loadDriveFileList()
+        } else if self.sourceType == .raspberrypi {
+            
+        }
     }
     
     @objc func refresh(_ sender: Any) {
@@ -143,6 +147,23 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
+    func loadDriveFileList() {
+        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
+
+        GDModule.listFiles() { (fileList) in
+            self.activityView.hideActivitiIndicator()
+
+            if fileList != nil {
+                self.drivePhotos = fileList!.files
+
+                //DispatchQueue.main.async() {
+                //    self.collectionView.reloadData()
+                //}
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -179,9 +200,13 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let photoList = self.albumPhotos else { return 0 }
-        
-        return photoList.count
+        if self.sourceType == .local {
+            return self.albumPhotos?.count ?? 0
+        } else if self.sourceType == .drive {
+            return self.drivePhotos?.count ?? 0
+        } else {
+            return 0
+        }
     }
 
     func isSelectedBefore(_ indexPath: IndexPath) -> Bool {
@@ -193,32 +218,64 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         
         return false
     }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
-        guard let photoList = self.albumPhotos else { return cell }
     
+    func getLocalCell(_ cell: PhotoCell, indexPath: IndexPath) -> UICollectionViewCell {
+        guard let photoList = self.albumPhotos else { return cell }
+
         let asset = photoList[indexPath.row]
 
         //let width = UIScreen.main.scale*(self.view.frame.size.width - 4)/3
         let width = UIScreen.main.scale*cell.frame.size.width
         cell.setLocalAsset(asset, width: width)
-        
+
         if self.bEditMode == false {
-            cell.setSelectable(false)
+           cell.setSelectable(false)
         } else {
-            
-            cell.setPreviousStatus(isSelectedBefore(indexPath))
-            
-            if isSelectedPhoto(asset) {
-                cell.setCheckboxStatus(self.bEditMode, checked: true)
-            } else {
-                cell.setCheckboxStatus(self.bEditMode, checked: false)
-            }
+           
+           cell.setPreviousStatus(isSelectedBefore(indexPath))
+           
+           if isSelectedPhoto(asset) {
+               cell.setCheckboxStatus(self.bEditMode, checked: true)
+           } else {
+               cell.setCheckboxStatus(self.bEditMode, checked: false)
+           }
         }
- 
+
         return cell
+    }
+    
+    func getDriveCell(_ cell: PhotoCell, indexPath: IndexPath) -> UICollectionViewCell {
+        guard let photoList = self.drivePhotos else { return cell }
+
+        let file = photoList[indexPath.row]
+        cell.setDriveFile(file)
+
+        if self.bEditMode == false {
+           cell.setSelectable(false)
+        } else {
+           
+           cell.setPreviousStatus(isSelectedBefore(indexPath))
+
+           if isSelectedPhoto(file) {
+               cell.setCheckboxStatus(self.bEditMode, checked: true)
+           } else {
+               cell.setCheckboxStatus(self.bEditMode, checked: false)
+           }
+        }
+
+        return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
+        
+        if self.sourceType == .local {
+            return getLocalCell(cell, indexPath: indexPath)
+        } else if self.sourceType == .drive {
+            return getDriveCell(cell, indexPath: indexPath)
+        } else {
+            return cell
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -337,12 +394,13 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     func prepareNewSelecting() {
-        self.selectedPhotoList = [PHAsset]()
+        self.selectedAlbumPhotos = [PHAsset]()
+        self.selectedDrivePhotos = [GTLRDrive_File]()
     }
     
     func isSelectedPhoto(_ asset: PHAsset) -> Bool {
         let assetID = asset.localIdentifier
-        guard let photoList = self.selectedPhotoList else { return false }
+        guard let photoList = self.selectedAlbumPhotos else { return false }
         
         for item in photoList {
             if item.localIdentifier == assetID {
@@ -353,42 +411,111 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         return false
     }
     
-    func addPhotoToSelectedList(_ asset: PHAsset) {
-        if self.selectedPhotoList == nil {
-            return
-        }
+    func isSelectedPhoto(_ file: GTLRDrive_File) -> Bool {
+        let fileID = file.identifier
+        guard let photoList = self.selectedDrivePhotos else { return false }
         
-        self.selectedPhotoList! += [asset]
+        for file in photoList {
+            if file.identifier == fileID {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    func isSelectedPhoto(_ row: Int) -> Bool {
+        if self.sourceType == .local {
+            guard let photoList = self.albumPhotos else { return false }
+            return isSelectedPhoto(photoList[row])
+        } else if self.sourceType == .drive {
+            guard let photoList = self.drivePhotos else { return false }
+            return isSelectedPhoto(photoList[row])
+        } else {
+            return false
+        }
+    }
+    
+    func addPhotoToSelectedList(_ row: Int) {
+        if self.sourceType == .local {
+            guard let photoList = self.albumPhotos else { return }
+            self.selectedAlbumPhotos! += [photoList[row]]
+        } else if self.sourceType == .drive {
+            guard let photoList = self.drivePhotos else { return }
+            self.selectedDrivePhotos! += [photoList[row]]
+        } else {
+
+        }
     }
     
     func removePhotoFromSelectedList(_ asset: PHAsset) {
-        guard let photoList = self.selectedPhotoList else { return }
-        
+        guard let photoList = self.selectedAlbumPhotos else { return }
+
         let assetID = asset.localIdentifier
-        self.selectedPhotoList = photoList.filter { $0.localIdentifier != assetID }
+        self.selectedAlbumPhotos = photoList.filter { $0.localIdentifier != assetID }
     }
     
-    func isAllSelected() -> Bool {
+    func removePhotoFromSelectedList(_ file: GTLRDrive_File) {
+        guard let photoList = self.selectedDrivePhotos else { return }
+
+        let fileID = file.identifier
+        self.selectedDrivePhotos = photoList.filter { $0.identifier != fileID }
+    }
+    
+    func removePhotoFromSelectedList(_ row: Int) {
+        if self.sourceType == .local {
+            guard let photoList = self.albumPhotos else { return }
+            removePhotoFromSelectedList(photoList[row])
+        } else if self.sourceType == .drive {
+            guard let photoList = self.drivePhotos else { return }
+            removePhotoFromSelectedList(photoList[row])
+        } else {
+
+        }
+    }
+    
+    func isAllLocalFilesSelected() -> Bool {
         guard let photoList = self.albumPhotos else { return false }
-       
+        
         for i in 0 ..< photoList.count {
             let asset = photoList[i]
             if isSelectedPhoto(asset) == false {
                 return false
             }
         }
-       
+    
         return true
+    }
+    
+    func isAllDriveFilesSelected() -> Bool {
+        guard let photoList = self.drivePhotos else { return false }
+        
+        for i in 0 ..< photoList.count {
+            let asset = photoList[i]
+            if isSelectedPhoto(asset) == false {
+                return false
+            }
+        }
+    
+        return true
+    }
+
+    func isAllSelected() -> Bool {
+        if self.sourceType == .local {
+            return isAllLocalFilesSelected()
+        } else if self.sourceType == .drive {
+            return isAllDriveFilesSelected()
+        } else {
+            return false
+        }
    }
     
     func selectOrDeselectCell(_ indexPath: IndexPath, refreshCell: Bool) {
-        guard let photoList = self.albumPhotos else { return }
-        
-        let asset = photoList[indexPath.row]
+
         let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
         
-        if isSelectedPhoto(asset) == false {
-            addPhotoToSelectedList(asset)
+        if isSelectedPhoto(indexPath.row) == false {
+            addPhotoToSelectedList(indexPath.row)
             if refreshCell {
                 cell.setCheckboxStatus(true, checked: true)
                 if isAllSelected() {
@@ -396,7 +523,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 }
             }
         } else {
-            removePhotoFromSelectedList(asset)
+            removePhotoFromSelectedList(indexPath.row)
             if refreshCell {
                 cell.setCheckboxStatus(true, checked: false)
                 btnToolSelectAll.title = "Select All"
@@ -421,12 +548,11 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     func selectAll() {
-        guard let photoList = self.albumPhotos else { return }
+        let nCount = self.collectionView(self.collectionView, numberOfItemsInSection: 0)
         
-        for i in 0 ..< photoList.count {
-            let asset = photoList[i]
-            if isSelectedPhoto(asset) == false {
-                addPhotoToSelectedList(asset)
+        for i in 0 ..< nCount {
+            if isSelectedPhoto(i) == false {
+                addPhotoToSelectedList(i)
             }
         }
 
@@ -438,7 +564,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     func deselectAll() {
-        self.selectedPhotoList = []
+        self.selectedAlbumPhotos = []
+        self.selectedDrivePhotos = []
 
         backupCurrentSelection()
         self.collectionView.reloadData()
@@ -525,7 +652,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     func uploadSelectedPhotos() {
         self.activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
 
-        SyncModule.uploadSelectedLocalPhotos(assets: self.selectedPhotoList!) { (nUpload, nSkip, nFail) in
+        SyncModule.uploadSelectedLocalPhotos(assets: self.selectedAlbumPhotos!) { (nUpload, nSkip, nFail) in
             self.activityView.hideActivitiIndicator()
             if nUpload > 0 {
                 Global.setNeedRefresh()
@@ -548,7 +675,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     @IBAction func onBtnDone(_ sender: Any) {
-        if self.selectedPhotoList?.count == 0 {
+        if self.selectedAlbumPhotos?.count == 0 {
             alertNoSelection()
             return
         }
