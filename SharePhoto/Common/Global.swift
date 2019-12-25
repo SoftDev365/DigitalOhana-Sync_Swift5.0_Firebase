@@ -14,7 +14,7 @@ import GTMSessionFetcher
 class Global: NSObject {
     static var user: GIDGoogleUser?
     static var email: String?
-    
+
     static var needRefreshLocal = true
     static var needRefreshStorage = true
     static var needDoneSelectionAtHome = false    // exit from photo selection at Home Tab (download complete)

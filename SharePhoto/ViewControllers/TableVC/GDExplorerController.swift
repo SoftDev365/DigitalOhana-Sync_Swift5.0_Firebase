@@ -120,15 +120,13 @@ class GDExplorerController: UITableViewController {
         if self.folderID != nil {
             folderID = self.folderID!
         }
-        
+
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
-        
-        GDModule.listFiles(folderID) { (fileList, error) in
+
+        GDModule.listFiles(folderID: folderID) { (fileList) in
             self.activityView.hideActivitiIndicator()
 
-            if error != nil {
-                
-            } else {
+            if fileList != nil {
                 self.dataContents = fileList!.files
                 self.tableView.reloadData()
             }
@@ -159,14 +157,13 @@ class GDExplorerController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for:indexPath) as! FileTableViewCell
-        
         let file = self.dataContents![indexPath.row]
-        
+
         if file.mimeType! == "application/vnd.google-apps.folder" {
             cell.imgThumb.image = UIImage.init(named: "folder_icon")
         } else {
             
-            GDModule.downloadImageFile(file.identifier!) { (image) in
+            GDModule.downloadImage(fileID: file.identifier!) { (image) in
                 cell.imgThumb.image = image
             }
         }
