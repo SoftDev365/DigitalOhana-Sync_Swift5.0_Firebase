@@ -100,12 +100,12 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A129BDC1-8618-4998-A79D-CCC7A80902EA - 7525622c0c67e43a"
+                  uuid = "A129BDC1-8618-4998-A79D-CCC7A80902EA - b46b24f325cdd43b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "static Ohana_Memory_Sync.GFSModuleSync.deletePhoto(photoID: Swift.String) -&gt; Swift.Bool"
-                  moduleName = "Ohana Memory Sync"
+                  symbolName = "static Ohana_Sync.GFSModuleSync.deletePhoto(photoID: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "Ohana Sync"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GFSModuleSync.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -115,12 +115,12 @@
                   offsetFromSymbolStart = "232">
                </Location>
                <Location
-                  uuid = "A129BDC1-8618-4998-A79D-CCC7A80902EA - 1571f6e16c965803"
+                  uuid = "A129BDC1-8618-4998-A79D-CCC7A80902EA - 421752d3552c8eb3"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Bool) -&gt; () in static Ohana_Memory_Sync.GFSModuleSync.deletePhoto(photoID: Swift.String) -&gt; Swift.Bool"
-                  moduleName = "Ohana Memory Sync"
+                  symbolName = "closure #1 (Swift.Bool) -&gt; () in static Ohana_Sync.GFSModuleSync.deletePhoto(photoID: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "Ohana Sync"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GFSModuleSync.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -148,12 +148,12 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A958AC5B-9E60-4885-A915-83D744DF5C29 - 27f867f44759103b"
+                  uuid = "A958AC5B-9E60-4885-A915-83D744DF5C29 - e08fe6c8f980c8a7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "static Ohana_Memory_Sync.GFSModule.deletePhoto(photoID: Swift.String, onCompleted: (Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Ohana Memory Sync"
+                  symbolName = "static Ohana_Sync.GFSModule.deletePhoto(photoID: Swift.String, onCompleted: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Sync"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GFSModule.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -163,12 +163,12 @@
                   offsetFromSymbolStart = "216">
                </Location>
                <Location
-                  uuid = "A958AC5B-9E60-4885-A915-83D744DF5C29 - 1144f77b09c54e"
+                  uuid = "A958AC5B-9E60-4885-A915-83D744DF5C29 - 795c0fa9ae4267d7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static Ohana_Memory_Sync.GFSModule.deletePhoto(photoID: Swift.String, onCompleted: (Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Ohana Memory Sync"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static Ohana_Sync.GFSModule.deletePhoto(photoID: Swift.String, onCompleted: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Sync"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GFSModule.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -212,12 +212,12 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "87B1DF61-F807-4256-9A2A-88CA5C6C9C81 - c716cd589071e1ed"
+                  uuid = "87B1DF61-F807-4256-9A2A-88CA5C6C9C81 - 667c3b7f384849b9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "static Ohana_Memory_Sync.GSModule.deleteFile(cloudFileID: Swift.String, parentFolder: Swift.String, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Ohana Memory Sync"
+                  symbolName = "static Ohana_Sync.GSModule.deleteFile(cloudFileID: Swift.String, parentFolder: Swift.String, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Sync"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GSModule.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -227,12 +227,12 @@
                   offsetFromSymbolStart = "752">
                </Location>
                <Location
-                  uuid = "87B1DF61-F807-4256-9A2A-88CA5C6C9C81 - dbcd5fc0ca2b9d9e"
+                  uuid = "87B1DF61-F807-4256-9A2A-88CA5C6C9C81 - 87c891b23e495780"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static Ohana_Memory_Sync.GSModule.deleteFile(cloudFileID: Swift.String, parentFolder: Swift.String, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Ohana Memory Sync"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in static Ohana_Sync.GSModule.deleteFile(cloudFileID: Swift.String, parentFolder: Swift.String, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Sync"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/GSModule.swift"
                   startingColumnNumber = "9223372036854775807"

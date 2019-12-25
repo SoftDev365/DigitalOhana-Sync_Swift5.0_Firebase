@@ -668,6 +668,7 @@
                     <connections>
                         <outlet property="btnNavRight" destination="rpv-4o-d6F" id="qGO-1y-gam"/>
                         <outlet property="btnToolSelectAll" destination="cR4-Jp-4UX" id="2iJ-jl-Zf7"/>
+                        <outlet property="navItem" destination="EJz-oU-XU7" id="bOS-HR-6pk"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kkN-JJ-TYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

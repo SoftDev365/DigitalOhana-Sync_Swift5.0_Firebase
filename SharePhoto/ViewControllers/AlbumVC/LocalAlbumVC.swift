@@ -38,14 +38,15 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var selectedPhotoList: [PHAsset]?
     var backupSelection: [Int] = []
     
+    @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var btnNavRight: UIBarButtonItem!
     @IBOutlet weak var btnToolSelectAll: UIBarButtonItem!
     
     let activityView = ActivityView()
     let refreshControl = UIRefreshControl()
     
-    open func setView(mode: ViewMode) {
-        self.viewMode = mode
+    open func set(viewmode: ViewMode) {
+        self.viewMode = viewmode
         
         if self.viewMode == .upload {
             prepareNewSelecting()
@@ -54,8 +55,20 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
+    open func set(sourceType: SourceType) {
+        self.sourceType = sourceType
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if self.sourceType == .local {
+            self.navItem.title = "Local"
+        } else if self.sourceType == .drive {
+            self.navItem.title = "Drive"
+        } else if self.sourceType == .raspberrypi {
+            
+        }
         
         //self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         //self.navigationController?.isNavigationBarHidden = false
@@ -111,7 +124,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             for index in 0 ..< photoList.count {
                 let asset = photoList[index]
                 
-                if self.viewMode == .local {
+                if self.viewMode == .show {
                     self.albumPhotos! += [asset]
                 } else if self.viewMode == .upload {
                     if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == false {

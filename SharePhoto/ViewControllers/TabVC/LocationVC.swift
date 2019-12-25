@@ -167,12 +167,14 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     func onChooseLocal() {
         if self.viewMode == .location {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
-                vc.setView(mode: .local)
+                vc.set(viewmode: .show)
+                vc.set(sourceType: .local)
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .upload {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
-                vc.setView(mode: .upload)
+                vc.set(viewmode: .upload)
+                vc.set(sourceType: .local)
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .download {
@@ -188,16 +190,18 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     func onChooseDrive() {
         if self.viewMode == .location {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
-                vc.setView(mode: .local)
+                vc.set(viewmode: .show)
+                vc.set(sourceType: .drive)
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .upload {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
-                vc.setView(mode: .upload)
+                vc.set(viewmode: .upload)
+                vc.set(sourceType: .drive)
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .download {
-            let alert = UIAlertController(title: "Are you sure you download photos to Local?", message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Are you sure you download photos to Drive?", message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                 self.downloadSelectedPhotos()
             }))
