@@ -12,7 +12,7 @@
         <!--NavHome-->
         <scene sceneID="Ih8-97-cAl">
             <objects>
-                <navigationController storyboardIdentifier="NavHomeVC" toolbarHidden="NO" id="nCP-JG-5tK" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavHomeVC" toolbarHidden="NO" id="nCP-JG-5tK" customClass="NavigationRootVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="NavHome" id="daj-Ai-JMI"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="09z-a2-Ze7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -40,7 +40,7 @@
         <!--Home-->
         <scene sceneID="sSw-wc-f9U">
             <objects>
-                <tabBarController storyboardIdentifier="MainVC" id="j6d-kl-oFC" customClass="MainVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainVC" id="j6d-kl-oFC" customClass="MainVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Home" id="Ouq-xb-hbf">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="icon_alarm" id="FdF-ai-2ov">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -88,7 +88,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SignInViewController" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SignInViewController" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,13 +129,13 @@
         <!--Explorer Controller-->
         <scene sceneID="jhT-8g-T0d">
             <objects>
-                <tableViewController storyboardIdentifier="GDExpVC" id="Xis-27-3jI" customClass="GDExplorerController" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GDExpVC" id="Xis-27-3jI" customClass="GDExplorerController" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="WEJ-2W-Ujr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="LRd-hh-GBe" customClass="FileTableViewCell" customModule="Ohana_Memory_Sync" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="LRd-hh-GBe" customClass="FileTableViewCell" customModule="Ohana_Sync" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LRd-hh-GBe" id="khy-vL-DEP">
@@ -192,7 +192,7 @@
         <!--Shared Storage-->
         <scene sceneID="cbI-2j-9iQ">
             <objects>
-                <collectionViewController storyboardIdentifier="SharedVC" id="ldQ-qu-ERc" customClass="GSAlbumVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="SharedVC" id="ldQ-qu-ERc" customClass="GSAlbumVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="TVs-Hk-3BI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -276,7 +276,7 @@
         <!--NavSetting-->
         <scene sceneID="jPj-r8-ABX">
             <objects>
-                <navigationController storyboardIdentifier="NavSettingVC" id="uiB-uN-qW6" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavSettingVC" id="uiB-uN-qW6" customClass="NavigationRootVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="NavSetting" id="OOj-hQ-8V3"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="Hi4-Be-M9J">
@@ -294,7 +294,7 @@
         <!--Setting-->
         <scene sceneID="BWK-yX-fYu">
             <objects>
-                <viewController id="yCb-Lo-X4K" customClass="SettingVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yCb-Lo-X4K" customClass="SettingVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bjL-KP-yRd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -312,7 +312,7 @@
         <!--Home-->
         <scene sceneID="ftK-mV-gf8">
             <objects>
-                <viewController id="02r-wp-CBO" customClass="HomeVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="02r-wp-CBO" customClass="HomeVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C1a-6i-90k">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -327,7 +327,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="OBv-hM-JCW" customClass="PhotoCell" customModule="Ohana_Memory_Sync" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="OBv-hM-JCW" customClass="PhotoCell" customModule="Ohana_Sync" customModuleProvider="target">
                                         <rect key="frame" x="57" y="0.0" width="300" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="L9h-pJ-Q99">
@@ -436,7 +436,7 @@
         <!--NavLocation-->
         <scene sceneID="wP3-ik-9ZD">
             <objects>
-                <navigationController storyboardIdentifier="NavLocationVC" id="g2G-Ij-ytb" customClass="NavigationRootVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavLocationVC" id="g2G-Ij-ytb" customClass="NavigationRootVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="NavLocation" id="F2C-u9-Mrl"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="M8e-6s-pq1">
@@ -457,7 +457,7 @@
         <!--Location-->
         <scene sceneID="Jnf-pI-Akh">
             <objects>
-                <viewController storyboardIdentifier="LocationVC" id="w9X-5K-wgt" customClass="LocationVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationVC" id="w9X-5K-wgt" customClass="LocationVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BwW-pe-ulD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -551,8 +551,8 @@
         <!--Local-->
         <scene sceneID="Rvl-nP-8yl">
             <objects>
-                <collectionViewController storyboardIdentifier="LocalAlbum" id="sgj-ax-9uQ" customClass="LocalAlbumVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" dataMode="prototypes" id="pq9-GZ-RfO">
+                <collectionViewController storyboardIdentifier="LocalAlbum" id="sgj-ax-9uQ" customClass="LocalAlbumVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" alwaysBounceVertical="YES" dataMode="prototypes" id="pq9-GZ-RfO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -564,7 +564,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="r3h-RS-6E8" customClass="PhotoCell" customModule="Ohana_Memory_Sync" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="r3h-RS-6E8" customClass="PhotoCell" customModule="Ohana_Sync" customModuleProvider="target">
                                 <rect key="frame" x="57" y="0.0" width="300" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" id="FhX-3S-dp3">
@@ -678,13 +678,13 @@
         <!--Explorer Controller-->
         <scene sceneID="j8E-qI-oQH">
             <objects>
-                <tableViewController storyboardIdentifier="GSExpVC" id="TPG-bh-X1x" customClass="GSExplorerController" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GSExpVC" id="TPG-bh-X1x" customClass="GSExplorerController" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dJg-uc-DCg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="vIm-5I-zyr" customClass="FileTableViewCell" customModule="Ohana_Memory_Sync" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" rowHeight="80" id="vIm-5I-zyr" customClass="FileTableViewCell" customModule="Ohana_Sync" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vIm-5I-zyr" id="nHX-tx-3j2">
@@ -737,7 +737,7 @@
         <!--GalleryVC-->
         <scene sceneID="VF5-e8-hl2">
             <objects>
-                <viewController storyboardIdentifier="SlideVC" id="yaW-V9-67A" customClass="GSGalleryVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SlideVC" id="yaW-V9-67A" customClass="GSGalleryVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9bl-rs-Hl4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -794,7 +794,7 @@
         <!--Local GalleryVC-->
         <scene sceneID="Bnw-MG-mDe">
             <objects>
-                <viewController storyboardIdentifier="GalleryVC" id="MqG-H5-2aI" customClass="LocalGalleryVC" customModule="Ohana_Memory_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GalleryVC" id="MqG-H5-2aI" customClass="LocalGalleryVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AQO-Ov-UOs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
