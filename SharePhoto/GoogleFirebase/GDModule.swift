@@ -75,6 +75,12 @@ class GDModule: NSObject {
     }
     
     static func getDefaultFolderID( completion: @escaping (String?) -> Void) {
+        
+        if self.defaultFolderID != nil {
+            completion(self.defaultFolderID)
+            return
+        }
+        
         getFolderID( name: self.driveFolderName) { folderID in
             if folderID == nil {
                 self.createFolder(name: self.driveFolderName, parentFolderID: "root") { (createdFolderID) in

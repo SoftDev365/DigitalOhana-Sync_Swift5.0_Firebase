@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		840A34C82397118500A14491 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A34C72397118500A14491 /* Global.swift */; };
+		840C380123B5509100EDF7A5 /* GDModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840C380023B5509000EDF7A5 /* GDModuleSync.swift */; };
 		840EEE002374215900361FB9 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEDFF2374215800361FB9 /* Alerts.swift */; };
 		840EEE022374957000361FB9 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEE012374957000361FB9 /* ActivityView.swift */; };
 		8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425689E237D475C00F4CD7A /* ImageZoomView.swift */; };
@@ -49,6 +50,7 @@
 		23F3561F6651AAA6AEF9012F /* Pods-SharePhoto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SharePhoto.release.xcconfig"; path = "Target Support Files/Pods-SharePhoto/Pods-SharePhoto.release.xcconfig"; sourceTree = "<group>"; };
 		71F0A8DF713105CA5760F56E /* Pods-SharePhoto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SharePhoto.debug.xcconfig"; path = "Target Support Files/Pods-SharePhoto/Pods-SharePhoto.debug.xcconfig"; sourceTree = "<group>"; };
 		840A34C72397118500A14491 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		840C380023B5509000EDF7A5 /* GDModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDModuleSync.swift; sourceTree = "<group>"; };
 		840EEDFF2374215800361FB9 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		840EEE012374957000361FB9 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		8425689E237D475C00F4CD7A /* ImageZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
@@ -239,8 +241,9 @@
 		84FAF70623877F4400A0E76C /* GoogleFirebase */ = {
 			isa = PBXGroup;
 			children = (
-				84BCF77B237268FE00367EAB /* GDModule.swift */,
 				84D85D472384A1710042C4DF /* GDBModule.swift */,
+				84BCF77B237268FE00367EAB /* GDModule.swift */,
+				840C380023B5509000EDF7A5 /* GDModuleSync.swift */,
 				848E2DD22385F11300620877 /* GFSModule.swift */,
 				84F90E8B23B16A8B00A5202A /* GFSModuleSync.swift */,
 				84D004CD237913CD00929662 /* GSModule.swift */,
@@ -411,6 +414,7 @@
 				843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */,
 				84D004CE237913CD00929662 /* GSExplorerController.swift in Sources */,
 				84D004CF237913CD00929662 /* GSModule.swift in Sources */,
+				840C380123B5509100EDF7A5 /* GDModuleSync.swift in Sources */,
 				84D7CE3C238AD47400C15CF6 /* LocalGalleryVC.swift in Sources */,
 				843DF2E02373D00E00F856ED /* ImageView+Download.swift in Sources */,
 				84B4144823A0E44100075A80 /* SettingVC.swift in Sources */,
