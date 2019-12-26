@@ -94,12 +94,23 @@ class GDModule: NSObject {
             }
         }
     }
-
+    
     // search file or folder
     static func search(_ fileName: String, onCompleted: @escaping (String?, Error?) -> ()) {
         let query = GTLRDriveQuery_FilesList.query()
         query.pageSize = 1
         query.q = "name contains '\(fileName)'"
+            
+        service.executeQuery(query) { (ticket, results, error) in
+            onCompleted((results as? GTLRDrive_FileList)?.files?.first?.identifier, error)
+        }
+    }
+
+    // search file or folder
+    static func checkExists(fileTitle: String, onCompleted: @escaping (String?, Error?) -> ()) {
+        let query = GTLRDriveQuery_FilesList.query()
+        query.pageSize = 1
+        query.q = "name = '\(fileTitle)+.jpg'"
             
         service.executeQuery(query) { (ticket, results, error) in
             onCompleted((results as? GTLRDrive_FileList)?.files?.first?.identifier, error)
@@ -185,7 +196,7 @@ class GDModule: NSObject {
         }
     }
     
-    static func uploadImage(_ image: UIImage, fileID: String, folderID: String, onCompleted: @escaping (Bool) -> ()) {
+    static func uploadImage(_ image: UIImage, fileTitle: String, folderID: String, onCompleted: @escaping (Bool) -> ()) {
 
         guard let imageData = image.jpegData(compressionQuality: 1.0) else {
             onCompleted(false)
@@ -194,7 +205,7 @@ class GDModule: NSObject {
 
         let mimeType = "image/jpeg"
         let file = GTLRDrive_File()
-        file.name = fileID + ".jpg"
+        file.name = fileTitle + ".jpg"
         file.parents = [folderID]
         
         // Optionally, GTLRUploadParameters can also be created with a Data object.

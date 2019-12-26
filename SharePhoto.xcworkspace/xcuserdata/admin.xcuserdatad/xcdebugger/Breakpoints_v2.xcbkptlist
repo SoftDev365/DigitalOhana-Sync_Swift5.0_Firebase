@@ -52,5 +52,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BACEC88F-C76E-467C-9FE1-B610C8427D40"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SharePhoto/GoogleFirebase/SyncModule.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
+            landmarkName = "downloadSelectedPhotosToDrive(onCompleted:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BACEC88F-C76E-467C-9FE1-B610C8427D40 - 10dc27b4c6d05013"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in static Ohana_Sync.SyncModule.downloadSelectedPhotosToDrive(onCompleted: (Swift.Int, Swift.Int, Swift.Int) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Sync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/SyncModule.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "317"
+                  endingLineNumber = "317"
+                  offsetFromSymbolStart = "892">
+               </Location>
+               <Location
+                  uuid = "BACEC88F-C76E-467C-9FE1-B610C8427D40 - 68076ad23749b0b2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in closure #1 () -&gt; () in static Ohana_Sync.SyncModule.downloadSelectedPhotosToDrive(onCompleted: (Swift.Int, Swift.Int, Swift.Int) -&gt; ()) -&gt; ()"
+                  moduleName = "Ohana Sync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Work/2.SharePhoto/FamilyMediaSync/SharePhoto/GoogleFirebase/SyncModule.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "278"
+                  endingLineNumber = "278"
+                  offsetFromSymbolStart = "172">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

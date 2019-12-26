@@ -143,7 +143,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         return 10.0
     }
     
-    func downloadSelectedPhotos() {
+    func downloadSelectedPhotosToLocal() {
         self.activityView.showActivityIndicator(self.view, withTitle: "Downloading...")
         
         SyncModule.downloadSelectedPhotosToLocal { (nDownloaded, nSkipped, nFailed) in
@@ -180,9 +180,30 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else if self.viewMode == .download {
             let alert = UIAlertController(title: "Are you sure you download photos to Local?", message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-                self.downloadSelectedPhotos()
+                self.downloadSelectedPhotosToLocal()
             }))
             alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func downloadSelectedPhotosToDrive() {
+        self.activityView.showActivityIndicator(self.view, withTitle: "Downloading...")
+        
+        SyncModule.downloadSelectedPhotosToDrive { (nDownloaded, nSkipped, nFailed) in
+            self.activityView.hideActivitiIndicator()
+            
+            if nDownloaded > 0 {
+                Global.needRefreshLocal = true
+            }
+            Global.needDoneSelectionAtHome = true
+            
+            let strMsg = Global.getProcessResultMsg(titles: ["Downloaded", "Skipped", "Failed"], counts: [nDownloaded, nSkipped, nFailed])
+            let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -203,7 +224,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else if self.viewMode == .download {
             let alert = UIAlertController(title: "Are you sure you download photos to Drive?", message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-                self.downloadSelectedPhotos()
+                self.downloadSelectedPhotosToDrive()
             }))
             alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)

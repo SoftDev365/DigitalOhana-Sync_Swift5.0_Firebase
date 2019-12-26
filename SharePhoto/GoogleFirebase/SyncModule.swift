@@ -187,6 +187,7 @@ class SyncModule: NSObject {
         DispatchQueue.global(qos: .background).async {
             for photoInfo in photoInfos {
                 let fsID = photoInfo["id"] as! String
+                
                 if checkPhotoIsDownloaded(cloudFileID: fsID) {
                     nSkipped += 1
                     continue
@@ -284,9 +285,18 @@ class SyncModule: NSObject {
         }
 
         DispatchQueue.global(qos: .background).async {
+            
+            guard let defFolderID = GDModuleSync.getDefaultFolderID() else {
+                DispatchQueue.main.async {
+                    onCompleted(0, 0, photoInfos.count)
+                }
+                return
+            }
+            
             for photoInfo in photoInfos {
                 let fsID = photoInfo["id"] as! String
-                if checkPhotoIsDownloaded(cloudFileID: fsID) {
+                
+                if GDModuleSync.checkExists(fileTitle: fsID) {
                     nSkipped += 1
                     continue
                 }
@@ -297,14 +307,7 @@ class SyncModule: NSObject {
                     continue
                 }
                 
-                if let localIdentifier = PHModuleSync.addPhotoToFamilyAssets(image!) {
-                    let data = photoInfo["data"] as! [String: Any]
-                    let email = data["email"] as! String
-                    if email == Global.email {
-                        _ = SqliteManager.insertFileInfo(isMine: true, fname: localIdentifier, fsID: fsID)
-                    } else {
-                        _ = SqliteManager.insertFileInfo(isMine: false, fname: localIdentifier, fsID: fsID)
-                    }
+                if GDModuleSync.uploadImage(image!, fileTitle: fsID, folderID: defFolderID) == true {
                     nDownloaded += 1
                 } else {
                     nFailed += 1
