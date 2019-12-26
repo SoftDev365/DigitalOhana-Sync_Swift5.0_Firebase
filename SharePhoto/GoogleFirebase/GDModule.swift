@@ -179,6 +179,38 @@ class GDModule: NSObject {
         }
     }
     
+    static func uploadImage(_ image: UIImage, fileID: String, folderID: String, onCompleted: @escaping (Bool) -> ()) {
+
+        guard let imageData = image.jpegData(compressionQuality: 1.0) else {
+            onCompleted(false)
+            return
+        }
+
+        let mimeType = "image/jpeg"
+        let file = GTLRDrive_File()
+        file.name = fileID + ".jpg"
+        file.parents = [folderID]
+        
+        // Optionally, GTLRUploadParameters can also be created with a Data object.
+        let uploadParameters = GTLRUploadParameters(data: imageData, mimeType: mimeType)
+        let query = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: uploadParameters)
+        
+        service.uploadProgressBlock = { _, totalBytesUploaded, totalBytesExpectedToUpload in
+            // This block is called multiple times during upload and can
+            // be used to update a progress indicator visible to the user.
+        }
+        
+        service.executeQuery(query) { (_, result, error) in
+            if error != nil {
+                debugPrint(error!)
+                onCompleted(false)
+            } else {
+                // Successful upload if no error is returned.
+                onCompleted(true)
+            }
+        }
+    }
+    
     static func uploadFile( name: String,
                             folderID: String,
                             fileURL: URL,
