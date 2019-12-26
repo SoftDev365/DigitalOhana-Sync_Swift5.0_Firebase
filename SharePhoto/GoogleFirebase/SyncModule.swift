@@ -270,4 +270,73 @@ class SyncModule: NSObject {
             }
         }
     }
+
+    // download batch selected photos from cloud to drive (result: download, skip, fail)
+    static func downloadSelectedPhotosToDrive(onCompleted: @escaping(Int, Int, Int)->()) {
+
+        var nDownloaded = 0
+        var nSkipped = 0
+        var nFailed = 0
+        
+        guard let photoInfos = Global.selectedCloudPhotos else {
+            onCompleted(0, 0, 0)
+            return
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            for photoInfo in photoInfos {
+                let fsID = photoInfo["id"] as! String
+                if checkPhotoIsDownloaded(cloudFileID: fsID) {
+                    nSkipped += 1
+                    continue
+                }
+                
+                let image = GSModuleSync.downloadImageFile(cloudFileID: fsID, folderPath: self.sharedFolderName)
+                if image == nil {
+                    nFailed += 1
+                    continue
+                }
+                
+                if let localIdentifier = PHModuleSync.addPhotoToFamilyAssets(image!) {
+                    let data = photoInfo["data"] as! [String: Any]
+                    let email = data["email"] as! String
+                    if email == Global.email {
+                        _ = SqliteManager.insertFileInfo(isMine: true, fname: localIdentifier, fsID: fsID)
+                    } else {
+                        _ = SqliteManager.insertFileInfo(isMine: false, fname: localIdentifier, fsID: fsID)
+                    }
+                    nDownloaded += 1
+                } else {
+                    nFailed += 1
+                }
+            }
+            
+            DispatchQueue.main.async {
+                onCompleted(nDownloaded, nSkipped, nFailed)
+            }
+        }
+    }
+    
+    // result (upload, skip, fail count)
+    static func uploadSelectedDrivePhotos(assets: [PHAsset], onCompleted: @escaping(Int, Int, Int)->()) {
+        DispatchQueue.global(qos: .background).async {
+            var nUpload: Int = 0
+            var nSkip: Int = 0
+            var nFail: Int = 0
+            
+            for asset in assets {
+                if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == true {
+                    nSkip += 1
+                } else if SyncModule.uploadPhotoSync(asset: asset) == true {
+                    nUpload += 1
+                } else {
+                    nFail += 1
+                }
+            }
+
+            DispatchQueue.main.async {
+                onCompleted(nUpload, nSkip, nFail)
+            }
+        }
+    }
 }
