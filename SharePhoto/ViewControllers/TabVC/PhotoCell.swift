@@ -164,10 +164,14 @@ class PhotoCell: UICollectionViewCell {
         
         self.type = .drive
         self.driveFile = file
-
-        GDModule.downloadImage(fileID: file.identifier!) { (fileID, image) in
-            if self.driveFile!.identifier == fileID {
-                self.ivPhoto?.image = image
+        
+        if let thumnailLink = file.thumbnailLink {
+            self.ivPhoto?.loadImageUsingCache(withUrl: thumnailLink)
+        } else {
+            GDModule.downloadImage(fileID: file.identifier!) { (fileID, image) in
+                if self.driveFile!.identifier == fileID {
+                    self.ivPhoto?.image = image
+                }
             }
         }
     }

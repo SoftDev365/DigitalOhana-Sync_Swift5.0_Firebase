@@ -137,12 +137,13 @@ class GDModule: NSObject {
         //query.q = "'\(folderID)' in parents"
         //query.q = "\(foldersOnly) and \(ownedByUser)"
         query.q = "\(fileFilter) and '\(folderID)' in parents"
+        query.fields = "files(id, name, thumbnailLink)"
             
         service.executeQuery(query) { (ticket, result, error) in
             if let error = error {
                 debugPrint(error)
                 onCompleted(nil)
-            } else {
+            } else {                
                 onCompleted(result as? GTLRDrive_FileList)
             }
             
