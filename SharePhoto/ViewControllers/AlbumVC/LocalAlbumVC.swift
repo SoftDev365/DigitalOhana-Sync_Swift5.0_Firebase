@@ -689,12 +689,22 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
+    func getSelectedCount() -> Int {
+        if self.sourceType == .local {
+            return self.selectedAlbumPhotos?.count ?? 0
+        } else if self.sourceType == .drive {
+            return self.selectedDrivePhotos?.count ?? 0
+        }
+        
+        return 0
+    }
+    
     @IBAction func onBtnDone(_ sender: Any) {
-        if self.selectedAlbumPhotos?.count == 0 {
+        if self.getSelectedCount() == 0 {
             alertNoSelection()
             return
         }
-        
+
         let alert = UIAlertController(title: "Are you sure you upload selected photos?", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             self.uploadSelectedPhotos()

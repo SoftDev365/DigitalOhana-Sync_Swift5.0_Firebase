@@ -71,32 +71,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DC2C132D-D122-40BF-9EA7-4D55C109023B"
+            uuid = "19A1CDE8-259A-4B82-95E8-A8CF9081E568"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SharePhoto/GoogleFirebase/GFSModule.swift"
+            filePath = "SharePhoto/GoogleFirebase/SyncModule.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "searchPhoto(cloudDocumentID:onCompleted:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "672DE3A6-A7F6-4372-B928-7E8A3D02A9BB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SharePhoto/GoogleFirebase/GFSModule.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "searchPhoto(cloudDocumentID:onCompleted:)"
+            startingLineNumber = "422"
+            endingLineNumber = "422"
+            landmarkName = "uploadSelectedDrivePhotos(files:onCompleted:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

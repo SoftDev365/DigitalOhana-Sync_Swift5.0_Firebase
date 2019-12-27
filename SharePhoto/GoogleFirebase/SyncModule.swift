@@ -14,11 +14,11 @@ class SyncModule: NSObject {
     static let sharedFolderName = "central"
 
     static func registerPhotoToFirestore(asset: PHAsset, onCompleted: @escaping (Bool, String?) -> ()) {
-        guard let dtCreated = asset.creationDate else { Date() }
+        let dtCreated = asset.creationDate ?? Date()
         let taken = dtCreated.timeIntervalSince1970
         let info = [PhotoField.taken: taken,
                     PhotoField.sourceType: SourceType.asset,
-                    PhotoField.sourceID: asset.localIdentifier]
+                    PhotoField.sourceID: asset.localIdentifier] as [String : Any]
 
         GFSModule.registerPhoto(info: info) { (success, id) in
             onCompleted(success, id)
@@ -43,11 +43,11 @@ class SyncModule: NSObject {
     }
     
     static func registerPhotoToFirestore(driveFile: GTLRDrive_File, onCompleted: @escaping (Bool, String?) -> ()) {
-        guard let dtCreated = driveFile.createdTime?.date else { Date() }
+        let dtCreated = driveFile.createdTime?.date ?? Date()
         let taken = dtCreated.timeIntervalSince1970
         let info = [PhotoField.taken: taken,
                     PhotoField.sourceType: SourceType.drive,
-                    PhotoField.sourceID: driveFile.identifier!]
+                    PhotoField.sourceID: driveFile.identifier!] as [String : Any]
 
         GFSModule.registerPhoto(info: info) { (success, id) in
             onCompleted(success, id)
@@ -164,23 +164,6 @@ class SyncModule: NSObject {
     
     static func checkPhotoIsUploaded(localIdentifier: String) -> Bool {
         return SqliteManager.checkPhotoIsUploaded(localIdentifier: localIdentifier)
-    }
-    
-    static func checkPhotoIsUploaded(driveFile: GTLRDrive_File) -> Bool {
-        // check if uploaded from my drive to cloud
-        if GFSModuleSync.searchPhoto(driveFileID: driveFile.identifier!) == true {
-            return true
-        }
-        
-        let fname1 = driveFile.originalFilename
-        guard let name = driveFile.name else { return false }
-
-        // check if this drive photo downloaded from cloud
-        if GFSModuleSync.searchPhoto(cloudDocumentID: name) == true {
-            return true
-        }
-        
-        return false
     }
     
     static func checkPhotoIsDownloaded(cloudFileID: String) -> Bool {
@@ -378,17 +361,7 @@ class SyncModule: NSObject {
                 // upload image data to cloud storage
                 GSModule.uploadFile(cloudFileID: documentID!, folderPath: self.sharedFolderName, data: imageData!) { (success) in
                     if success {
-                        // register to local sqlite db (local filename & firestore id)
-                        if SqliteManager.insertFileInfo(isMine: true, fname: asset.localIdentifier, fsID: documentID!) == true {
-                            // update firestore valid flag to true
-                            GFSModule.updatePhotoToValid(photoID: documentID!) { (success) in
-                                // success update valid to true
-                                onCompleted(success)
-                            }
-                        } else {
-                            debugPrint("-----register photo to local db failed------")
-                            onCompleted(success)
-                        }
+                        onCompleted(success)
                     } else {
                         debugPrint("----- uploading image data to cloud storage failed ------")
                         onCompleted(success)
@@ -416,6 +389,19 @@ class SyncModule: NSObject {
     }
     
     static func checkPhotoIsUploaded(driveFile: GTLRDrive_File) -> Bool {
+        // check if uploaded from my drive to cloud
+        if GFSModuleSync.searchPhoto(driveFileID: driveFile.identifier!) == true {
+            return true
+        }
+        
+        guard let fileName = driveFile.name else { return false }
+        guard let name = fileName.split(separator: ".").map(String.init).first else { return false }
+
+        // check if this drive photo downloaded from cloud
+        if GFSModuleSync.searchPhoto(cloudDocumentID: name) == true {
+            return true
+        }
+        
         return false
     }
     
