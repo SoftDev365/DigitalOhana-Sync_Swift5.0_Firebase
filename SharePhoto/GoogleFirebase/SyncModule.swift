@@ -8,30 +8,57 @@
 
 import UIKit
 import Photos
+import GoogleAPIClientForREST
 
 class SyncModule: NSObject {
     static let sharedFolderName = "central"
 
     static func registerPhotoToFirestore(asset: PHAsset, onCompleted: @escaping (Bool, String?) -> ()) {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        var dateCreate = ""
-        if asset.creationDate != nil {
-            dateCreate = df.string(from: asset.creationDate!)
-        } else {
-            dateCreate = df.string(from: Date())
-        }
-            
-        GFSModule.registerPhoto(createDate: dateCreate) { (success, id) in
+        guard let dtCreated = asset.creationDate else { Date() }
+        let taken = dtCreated.timeIntervalSince1970
+        let info = [PhotoField.taken: taken,
+                    PhotoField.sourceType: SourceType.asset,
+                    PhotoField.sourceID: asset.localIdentifier]
+
+        GFSModule.registerPhoto(info: info) { (success, id) in
             onCompleted(success, id)
         }
     }
-    
+
     static func registerPhotoToFirestoreSync(asset: PHAsset) -> String? {
         var result: String? = nil
         var bProcessing = true
         
         SyncModule.registerPhotoToFirestore(asset: asset) { (success, documentID) in
+            result = documentID
+            bProcessing = false
+        }
+        
+        // block while processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 0.005)
+        }
+
+        return result
+    }
+    
+    static func registerPhotoToFirestore(driveFile: GTLRDrive_File, onCompleted: @escaping (Bool, String?) -> ()) {
+        guard let dtCreated = driveFile.createdTime?.date else { Date() }
+        let taken = dtCreated.timeIntervalSince1970
+        let info = [PhotoField.taken: taken,
+                    PhotoField.sourceType: SourceType.drive,
+                    PhotoField.sourceID: driveFile.identifier!]
+
+        GFSModule.registerPhoto(info: info) { (success, id) in
+            onCompleted(success, id)
+        }
+    }
+    
+    static func registerPhotoToFirestoreSync(driveFile: GTLRDrive_File) -> String? {
+        var result: String? = nil
+        var bProcessing = true
+
+        SyncModule.registerPhotoToFirestore(driveFile: driveFile) { (success, documentID) in
             result = documentID
             bProcessing = false
         }
@@ -74,7 +101,7 @@ class SyncModule: NSObject {
             options.isSynchronous = false
             options.isNetworkAccessAllowed = true
 
-            options.progressHandler = {  (progress, error, stop, info) in
+            options.progressHandler = { (progress, error, stop, info) in
                 print("progress: \(progress)")
             }
 
@@ -139,6 +166,23 @@ class SyncModule: NSObject {
         return SqliteManager.checkPhotoIsUploaded(localIdentifier: localIdentifier)
     }
     
+    static func checkPhotoIsUploaded(driveFile: GTLRDrive_File) -> Bool {
+        // check if uploaded from my drive to cloud
+        if GFSModuleSync.searchPhoto(driveFileID: driveFile.identifier!) == true {
+            return true
+        }
+        
+        let fname1 = driveFile.originalFilename
+        guard let name = driveFile.name else { return false }
+
+        // check if this drive photo downloaded from cloud
+        if GFSModuleSync.searchPhoto(cloudDocumentID: name) == true {
+            return true
+        }
+        
+        return false
+    }
+    
     static func checkPhotoIsDownloaded(cloudFileID: String) -> Bool {
         return SqliteManager.checkPhotoIsDownloaded(cloudFileID: cloudFileID)
     }
@@ -150,13 +194,6 @@ class SyncModule: NSObject {
             if bSuccess == false {
                 onCompleted(false)
             } else {
-                
-                //"create",
-                //"upload",
-                //"userid",
-                //"email,
-                //"name",
-                //"valid": false
                 let fsID = photoInfo["id"] as! String
                 let data = photoInfo["data"] as! [String: Any]
                 let email = data["email"] as! String
@@ -320,17 +357,83 @@ class SyncModule: NSObject {
         }
     }
     
+    static func uploadPhoto(driveFile: GTLRDrive_File, onCompleted:@escaping (Bool) -> ()) {
+        // register photo to firestore & get document id (primary key)
+        registerPhotoToFirestore(driveFile: driveFile) { (success, documentID) in
+            if !success {
+                debugPrint("-----register photo to firestore failed------")
+                onCompleted(false)
+                return
+            }
+            
+            GDModule.downloadImage(fileID: driveFile.identifier!) { (fileID, image) in
+                // check image is not null
+                guard let image = image else {
+                    debugPrint("-----extract image from asset failed ------")
+                    onCompleted(false)
+                    return
+                }
+                let imageData = image.jpegData(compressionQuality: 1.0)
+
+                // upload image data to cloud storage
+                GSModule.uploadFile(cloudFileID: documentID!, folderPath: self.sharedFolderName, data: imageData!) { (success) in
+                    if success {
+                        // register to local sqlite db (local filename & firestore id)
+                        if SqliteManager.insertFileInfo(isMine: true, fname: asset.localIdentifier, fsID: documentID!) == true {
+                            // update firestore valid flag to true
+                            GFSModule.updatePhotoToValid(photoID: documentID!) { (success) in
+                                // success update valid to true
+                                onCompleted(success)
+                            }
+                        } else {
+                            debugPrint("-----register photo to local db failed------")
+                            onCompleted(success)
+                        }
+                    } else {
+                        debugPrint("----- uploading image data to cloud storage failed ------")
+                        onCompleted(success)
+                    }
+                }
+            }
+        }
+    }
+    
+    static func uploadPhotoSync(driveFile: GTLRDrive_File) -> Bool {
+        var bResult: Bool = false
+        var bProcessing = true
+        
+        SyncModule.uploadPhoto(driveFile: driveFile) { (success) in
+            bResult = success
+            bProcessing = false
+        }
+
+        // block while processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 0.005)
+        }
+
+        return bResult
+    }
+    
+    static func checkPhotoIsUploaded(driveFile: GTLRDrive_File) -> Bool {
+        return false
+    }
+    
+    static func checkPhotoIsDownloadedToDrive(cloudFileID: String) -> Bool {
+        return false
+    }
+    
     // result (upload, skip, fail count)
-    static func uploadSelectedDrivePhotos(assets: [PHAsset], onCompleted: @escaping(Int, Int, Int)->()) {
+    static func uploadSelectedDrivePhotos(files: [GTLRDrive_File], onCompleted: @escaping(Int, Int, Int)->()) {
         DispatchQueue.global(qos: .background).async {
             var nUpload: Int = 0
             var nSkip: Int = 0
             var nFail: Int = 0
             
-            for asset in assets {
-                if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == true {
+            for file in files {
+                if SyncModule.checkPhotoIsUploaded(driveFile: file) == true {
                     nSkip += 1
-                } else if SyncModule.uploadPhotoSync(asset: asset) == true {
+                } else if SyncModule.uploadPhotoSync(driveFile: file) == true {
                     nUpload += 1
                 } else {
                     nFail += 1

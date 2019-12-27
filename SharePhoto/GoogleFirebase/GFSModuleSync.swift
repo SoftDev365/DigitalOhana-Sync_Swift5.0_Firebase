@@ -59,11 +59,45 @@ class GFSModuleSync: NSObject {
         return photos
     }
     
-    static func registerPhoto(createDate: String) -> String? {
+    static func searchPhoto(cloudDocumentID: String) -> Bool {
+        var bResult: Bool = false
+        var bProcessing = true
+        
+        GFSModule.searchPhoto(cloudDocumentID: cloudDocumentID) { (success, _) in
+            bResult = success
+            bProcessing = false
+        }
+
+        // block while processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 0.001)
+        }
+
+        return bResult
+    }
+    
+    static func searchPhoto(driveFileID: String) -> Bool {
+        var bResult: Bool = false
+        var bProcessing = true
+        
+        GFSModule.searchPhoto(driveFileID: driveFileID) { (success, _) in
+            bResult = success
+            bProcessing = false
+        }
+        
+        // block while processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 0.001)
+        }
+
+        return bResult
+    }
+    
+    static func registerPhoto(info: [PhotoField: Any]) -> String? {
         var result: String? = nil
         var bProcessing = true
         
-        GFSModule.registerPhoto(createDate: createDate) { (success, documentID) in
+        GFSModule.registerPhoto(info: info) { (success, documentID) in
             result = documentID
             bProcessing = false
         }

@@ -8,6 +8,9 @@
 
 import UIKit
 import Photos
+import CoreLocation
+
+//LocationGetter.locationForAsset(ass)
 
 class PHModule: NSObject {
     

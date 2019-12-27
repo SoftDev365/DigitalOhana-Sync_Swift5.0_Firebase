@@ -653,29 +653,39 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func onUploadDone(nUpload:Int, nSkip: Int, nFail: Int) {
+        self.activityView.hideActivitiIndicator()
+        if nUpload > 0 {
+            Global.setNeedRefresh()
+        }
+
+        let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
+        let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            if nUpload > 0 {
+                //self.navigationController?.popViewController(animated: true)
+                //self.hideToolBar(false)
+                //self.navigationController?.popToRootViewController(animated: true)
+                self.prepareNewSelecting()
+                self.refreshAlbum()
+            }
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
 
     func uploadSelectedPhotos() {
         self.activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
 
-        SyncModule.uploadSelectedLocalPhotos(assets: self.selectedAlbumPhotos!) { (nUpload, nSkip, nFail) in
-            self.activityView.hideActivitiIndicator()
-            if nUpload > 0 {
-                Global.setNeedRefresh()
+        if self.sourceType == .local {
+            SyncModule.uploadSelectedLocalPhotos(assets: self.selectedAlbumPhotos!) { (nUpload, nSkip, nFail) in
+                self.onUploadDone(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
             }
-
-            let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
-            let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
-                if nUpload > 0 {
-                    //self.navigationController?.popViewController(animated: true)
-                    //self.hideToolBar(false)
-                    //self.navigationController?.popToRootViewController(animated: true)
-                    self.prepareNewSelecting()
-                    self.refreshAlbum()
-                }
-            }))
-
-            self.present(alert, animated: true, completion: nil)
+        } else {
+            SyncModule.uploadSelectedDrivePhotos(files: self.selectedDrivePhotos!) { (nUpload, nSkip, nFail) in
+                self.onUploadDone(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
+            }
         }
     }
     

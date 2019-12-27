@@ -9,8 +9,27 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 
+enum PhotoField: String {
+    case taken = "taken"
+    case uploaded = "uploaded"
+    case location = "location"
+    case userid = "userid"
+    case email = "eamil"
+    case username = "username"
+    case size = "size"
+    case tag = "tag"
+    case sourceType = "sourceType"
+    case sourceID = "sourceID"
+    case valid = "valid"
+}
+
+enum SourceType: Int {
+    case asset = 0
+    case drive = 1
+}
+
 class GFSModule: NSObject {
-    
+
     static func fetchUsers() {
         let db = Firestore.firestore()
         let refUsers = db.collection("users")
@@ -58,7 +77,7 @@ class GFSModule: NSObject {
             } else {
                 var result = [[String:Any]]()
                 for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
+                    //print("\(document.documentID) => \(document.data())")
 
                     // check validation
                     let data = document.data()
@@ -74,31 +93,71 @@ class GFSModule: NSObject {
         }
     }
     
-    static func registerPhoto(createDate: String, onCompleted: @escaping (Bool, String?) -> ()) {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        let dateNow = df.string(from: Date())
+    static func searchPhoto(cloudDocumentID: String, onCompleted: @escaping (Bool, String?) -> ()) {
+        let email = Global.email!
+        let db = Firestore.firestore()
+
+        db.collection("photos").document(cloudDocumentID).getDocument() { (document, error) in
+            if let error = error {
+                print("Error getting photos docuemts:\(error)")
+                onCompleted(false, nil)
+            } else {
+                if let document = document {
+                    if document.exists {
+                        onCompleted(true, snapshot.documentID)
+                    } else {
+                        onCompleted(false, nil)
+                    }
+                } else {
+                    onCompleted(false, nil)
+                }
+            }
+        }
+    }
+    
+    static func searchPhoto(driveFileID: String, onCompleted: @escaping (Bool, String?) -> ()) {
+        let email = Global.email!
+        let db = Firestore.firestore()
+        var ref: DocumentReference? = nil
+
+        db.collection("photos")
+            .whereField(PhotoField.email, isEqualTo: email)
+            .whereField(PhotoField.sourceType, isEqualTo: "drive")
+            .whereField(PhotoField.sourceID, isEqualTo: driveFileID)
+            .getDocuments() { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting photos docuemts:\(error)")
+                    onCompleted(false, nil)
+                } else {
+                    for document in querySnapshot!.documents {
+                        onCompleted(true, document.documentID)
+                        return
+                    }
+                }
+        }
+    }
+    
+    static func registerPhoto(info: [PhotoField: Any], onCompleted: @escaping (Bool, String?) -> ()) {
         
+        let uploaded = Date().timeIntervalSince1970
         let userID = Global.user!.userID!
         let email = Global.email!
         let username = Global.user!.profile.name!
         
+        let data = info + [PhotoField.uploaded: uploaded,
+                           PhotoField.userid: userID,
+                           PhotoField.email: email,
+                           PhotoField.username: username,
+                           PhotoField.valid: false]
+
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
-
-        ref = db.collection("photos").addDocument(data: [
-            "create": createDate,
-            "upload": dateNow,
-            "userid": userID,
-            "email": email,
-            "name": username,
-            "valid": false
-        ]) { err in
+        
+        ref = db.collection("photos").addDocument(data: data) { err in
             if let err = err {
                 debugPrint(err)
                 onCompleted(false, nil)
             } else {
-                debugPrint("---------register photo document id:\(ref!.documentID)----------")
                 onCompleted(true, ref!.documentID)
             }
         }
