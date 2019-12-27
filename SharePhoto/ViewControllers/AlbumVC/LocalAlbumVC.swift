@@ -283,7 +283,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             selectOrDeselectCell(indexPath, refreshCell: true)
         } else if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? LocalGalleryVC {
             hideTabBar()
-            vc.setPhotoAlbum(self.albumPhotos!, page:indexPath.row)
+            if self.sourceType == .local {
+                vc.setAlbumPhotos(self.albumPhotos!, page: indexPath.row)
+            } else if self.sourceType == .drive {
+                vc.setDrivePhotos(self.drivePhotos!, page: indexPath.row)
+            }
+
             navigationController?.pushViewController(vc, animated: true)
         }
     }

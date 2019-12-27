@@ -8,17 +8,27 @@
 
 import UIKit
 import Photos
+import GoogleAPIClientForREST
 
 class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
 
-    @IBOutlet weak var scrView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var btnUpload: UIBarButtonItem!
+    enum SourceType: Int {
+        case local = 0
+        case drive = 1
+        case raspberrypi = 2
+    }
 
+    var sourceType: SourceType = .local
     var albumPhotos: [PHAsset]? = nil
+    var drivePhotos: [GTLRDrive_File]?
+    
     var imgViewList: [ImageZoomView]?
     var curPage: Int = 0
     var bIsFullscreen = false
+    
+    @IBOutlet weak var scrView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var btnUpload: UIBarButtonItem!
     
     let activityView = ActivityView()
     
@@ -30,11 +40,18 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         return .all
     }
 
-    func setPhotoAlbum(_ photos: [PHAsset], page:Int) {
+    func setAlbumPhotos(_ photos: [PHAsset], page:Int) {
         self.albumPhotos = photos
         self.curPage = page
+        self.sourceType = .local
     }
     
+    func setDrivePhotos(_ photos: [GTLRDrive_File], page:Int) {
+        self.drivePhotos = photos
+        self.curPage = page
+        self.sourceType = .drive
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,13 +88,29 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         //initContentImageViews()
     }
     
+    func getPhotoCount() -> Int {
+        if self.sourceType == .local {
+            return self.albumPhotos?.count ?? 0
+        } else {
+            return self.drivePhotos?.count ?? 0
+        }
+    }
+    
+    func createPhotoView(index: Int) -> ImageZoomView {
+        if self.sourceType == .local {
+            return ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), asset: self.albumPhotos![index])
+        } else {
+            return ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), driveFile: self.drivePhotos![index])
+        }
+    }
+    
     func initContentImageViews() {
-        guard let photoList = self.albumPhotos else { return }
         
+        let nCount = getPhotoCount()
         self.imgViewList = [ImageZoomView]()
 
-        for i in 0...(photoList.count-1) {
-            let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), asset: photoList[i])
+        for i in 0..<nCount {
+            let item = createPhotoView(index: i)
             if abs(i - self.curPage) <= 1 {
                 item.showImage()
             } else if abs(i - self.curPage) > 2 {

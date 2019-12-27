@@ -179,6 +179,7 @@ class GDModule: NSObject {
         // check cached image
         if let cachedImage = self.imageCache.object(forKey: fileID as NSString)  {
             onCompleted(fileID, cachedImage)
+            return
         }
 
         let imageUrl = "https://www.googleapis.com/drive/v3/files/\(fileID)?alt=media"
@@ -265,4 +266,36 @@ class GDModule: NSObject {
             fileURL: fileURL!,
             mimeType: "image/png")
     }
+    
+    static func downloadThumnail(urlString: String, onCompleted: @escaping (String?, UIImage?) -> ()) {
+        // check cached image
+        if let cachedImage = self.imageCache.object(forKey: urlString as NSString)  {
+            onCompleted(urlString, cachedImage)
+            return
+        }
+        
+        guard let url = URL(string: urlString) else {
+            onCompleted(urlString, nil)
+            return
+        }
+
+        // if not, download image from url
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+            if error != nil {
+                debugPrint(error!)
+                onCompleted(urlString, nil)
+                return
+            }
+
+            DispatchQueue.main.async {
+                if let image = UIImage(data: data!) {
+                    self.imageCache.setObject(image, forKey: urlString as NSString)
+                    onCompleted(urlString, image)
+                } else {
+                    onCompleted(urlString, nil)
+                }
+            }
+        }).resume()
+    }
+
 }

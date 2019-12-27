@@ -100,6 +100,7 @@ class GSModule: NSObject {
         // check cached image
         if let cachedImage = self.imageCache.object(forKey: file.fullPath as NSString)  {
             onCompleted(cachedImage)
+            return
         }
 
         // Download in memory with a maximum allowed size of 1MB (50 * 1024 * 1024 bytes)
@@ -128,6 +129,7 @@ class GSModule: NSObject {
         // check cached image
         if let cachedImage = self.imageCache.object(forKey: fileRef.fullPath as NSString)  {
             onCompleted(cloudFileID, cachedImage)
+            return
         }
 
         // Download in memory with a maximum allowed size of 1MB (50 * 1024 * 1024 bytes)

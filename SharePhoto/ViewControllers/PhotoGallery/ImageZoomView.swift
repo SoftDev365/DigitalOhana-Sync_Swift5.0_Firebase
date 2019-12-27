@@ -29,8 +29,8 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
     var sourceAsset: PHAsset? = nil
     
     // google drive photo source
-    var sourceDriveID: String? = nil
-    
+    var sourceDriveFile: GTLRDrive_File? = nil
+
     // google cloud photo source
     let sharedFolder = "central"
     var sourceCloudID: String? = nil
@@ -68,6 +68,16 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         
         self.sourceType = .asset
         self.sourceAsset = asset
+        self.bLoading = false
+    }
+    
+    init(frame: CGRect, driveFile: GTLRDrive_File) {
+        super.init(frame: frame)
+
+        initControls()
+        
+        self.sourceType = .drive
+        self.sourceDriveFile = driveFile
         self.bLoading = false
     }
     
@@ -148,6 +158,35 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         }
     }
     
+    func loadDrivePhoto() {
+        guard let file = self.sourceDriveFile else {
+            self.bLoading = false
+            self.imgView?.image = nil
+            return
+        }
+        
+        // download thumbnail first
+        if let thumnailLink = file.thumbnailLink {
+            GDModule.downloadThumnail(urlString: thumnailLink) { (url, image) in
+                // already loaded full image
+                if self.bLoaded == true {
+                    return
+                }
+                self.imgView!.image = image
+                self.imgView!.contentMode = .scaleAspectFit
+                self.fitViewSizeToImage()
+            }
+        }
+        
+        GDModule.downloadImage(fileID: file.identifier!) { (fileID, image) in
+            self.bLoading = false
+            self.bLoaded = true
+            self.imgView!.image = image
+            self.imgView!.contentMode = .scaleAspectFit
+            self.fitViewSizeToImage()
+        }
+    }
+    
     func showImage() {
         if self.bLoaded == true {
             if let imgView = self.imgView {
@@ -166,8 +205,8 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         switch self.sourceType {
         case .asset:
             loadLocalPhoto()
-        case .drive: break
-            //loadDrivePhoto()
+        case .drive:
+            loadDrivePhoto()
         case .cloud:
             loadCloudPhoto()
         }
@@ -199,26 +238,48 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         self.showsVerticalScrollIndicator = false
     }
     
-    func getImageSize() -> CGSize {
+    func recalcZoomScale() {
+
+        guard let imgView = self.imgView else { return }
+        guard let image = imgView.image else { return }
+
+        let imageSize = image.size
+        let size = self.bounds.size
+        let wr = size.width/imageSize.width
+        let hr = size.height/imageSize.height
         
+        self.minimumZoomScale = 1.0
+        self.maximumZoomScale = 1.0
+        self.zoomScale = 1.0
+        imgView.frame = CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height)
+        self.minimumZoomScale = min(wr, hr)
+        self.maximumZoomScale = max(self.minimumZoomScale, 1.0)
+        self.zoomScale = self.minimumZoomScale
+        
+        moveCotentToCenter()
+    }
+
+    /*
+    func getImageSize() -> CGSize {
         if self.sourceType == .asset {
             if let asset = self.sourceAsset {
                 let size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
                 return size
             }
         }
-        
+
         let defSize = self.frame.size
         guard let imgView = self.imgView else {
             return defSize
         }
+
         guard let image = imgView.image else {
             return defSize
         }
 
         return image.size
     }
-    
+     
     func recalcZoomScale() {
 
         guard let imgView = self.imgView else { return }
@@ -237,7 +298,7 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         let wr = UIScreen.main.scale*size.width/imageSize.width
         let hr = UIScreen.main.scale*size.height/imageSize.height
         
-        let orgScale = self.zoomScale
+        //let orgScale = self.zoomScale
         self.zoomScale = 1.0
         
         if wr < hr {
@@ -256,10 +317,11 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
             self.maximumZoomScale = 1/hr
         }
 
-        self.zoomScale = orgScale
+        //self.zoomScale = orgScale
+        self.zoomScale = 1.0
         
         moveCotentToCenter()
-    }
+    }*/
     
     func fitViewSizeToImage() {
         recalcZoomScale()

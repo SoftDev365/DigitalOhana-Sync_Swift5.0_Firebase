@@ -55,7 +55,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "PhotoCell.setDriveFile(_:):PhotoCell.swift">
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
+      </ContextState>
+      <ContextState
+         contextName = "LocalAlbumVC.getDriveCell(_:indexPath:):LocalAlbumVC.swift">
       </ContextState>
       <ContextState
          contextName = "static GFSModule.registerUser():GFSModule.swift">
@@ -135,6 +141,9 @@
             </PersistentString>
             <PersistentString
                value = "image.size.height">
+            </PersistentString>
+            <PersistentString
+               value = "">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
