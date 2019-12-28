@@ -127,26 +127,24 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         self.relayoutImageViews(false)
     }
     
-    func canUploadPhoto(at: Int) -> Bool {
+    func isUploadedPhoto(at: Int) -> Bool {
         if self.sourceType == .local {
             guard let photoList = self.albumPhotos else { return false }
             let asset = photoList[curPage]
             
             // hide upload button if already uploaded
-            if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == true {
-                return true
-            } else {
-                return false
-            }
+            return SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier)
         } else {
+            //guard let photoList = self.drivePhotos else { return false }
+            //let file = photoList[curPage]
+            //return SyncModule.checkPhotoIsUploaded(driveFile: file)
+            return true
         }
-
-        return false
     }
     
     func refreshUploadButtonStatus() {
         // hide upload button if already uploaded
-        if canUploadPhoto(at:curPage) == true {
+        if isUploadedPhoto(at:curPage) == true {
             btnUpload.isEnabled = false
             btnUpload.tintColor = UIColor.clear
         } else {
