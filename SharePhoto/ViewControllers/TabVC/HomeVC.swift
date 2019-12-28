@@ -452,13 +452,13 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 
         activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
         
-        SyncModule.deleteSelectedPhotosFromCloud(photoInfos: self.selectedPhotoList!) { (nDeleted, nFailed) in
+        SyncModule.deleteSelectedPhotosFromCloud(photoInfos: self.selectedPhotoList!) { (nDeleted, nSkipped, nFailed) in
             self.activityView.hideActivitiIndicator()
             if nDeleted > 0 {
                 Global.setNeedRefresh()
             }
 
-            let strMsg = Global.getProcessResultMsg(titles: ["Deleted", "Failed"], counts: [nDeleted, nFailed])
+            let strMsg = Global.getProcessResultMsg(titles: ["Deleted", "Not allowed", "Failed"], counts: [nDeleted, nSkipped, nFailed])
             let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
                 self.switchModeTo(editMode: false)

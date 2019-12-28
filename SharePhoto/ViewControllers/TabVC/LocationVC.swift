@@ -24,7 +24,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
        case download = 2
     }
     
-    let frameCount = 3
+    let frameCount = 2
     var viewMode: ViewMode = .location
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -85,11 +85,11 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.viewMode == .location {
+        //if self.viewMode == .location {
             return frameCount+1
-        } else {
-            return frameCount
-        }
+        //} else {
+        //    return frameCount
+        //}
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -121,6 +121,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             onChooseLocal()
         } else if indexPath.row == 1 {
             onChooseDrive()
+        } else {
+            onChooseAddFrame()
         }
     }
     
@@ -231,6 +233,12 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
     }
     
+    func onChooseAddFrame() {
+        let alert = UIAlertController(title: "Will be implemented soon.", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
     func hideToolBar(_ animated: Bool) {
         self.navigationController?.setToolbarHidden(true, animated: animated)
     }

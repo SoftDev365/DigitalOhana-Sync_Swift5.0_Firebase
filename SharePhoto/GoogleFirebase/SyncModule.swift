@@ -263,16 +263,23 @@ class SyncModule: NSObject {
     }
     
     // delete photos (result: deleted, failed)
-    static func deleteSelectedPhotosFromCloud(photoInfos: [[String:Any]], onCompleted: @escaping(Int, Int)->()) {
+    static func deleteSelectedPhotosFromCloud(photoInfos: [[String:Any]], onCompleted: @escaping(Int, Int, Int)->()) {
         DispatchQueue.global(qos: .background).async {
             var nUpload: Int = 0
+            var nSkip: Int = 0
             var nFail: Int = 0
             
             for photoInfo in photoInfos {
                 let fsID = photoInfo["id"] as! String
+                let data = photoInfo["date"] as! [String:Any]
+                let email = data[PhotoField.email] as! String
                 
-                // delete photo from list (firestore database)
-                if GFSModuleSync.deletePhoto(photoID: fsID) == true {
+                // photo was uploaded by other person
+                if Global.email != email {
+                    nSkip += 1
+                } else if GFSModuleSync.deletePhoto(photoID: fsID) == true {
+                    // delete photo from list (firestore database)
+                    
                     // delete photo file from storage
                     // block it, remain photo file for RPi frame (shared file)
                     // _ = GSModuleSync.deleteFile(cloudFileID: fsID, parentFolder: self.sharedFolderName)
@@ -287,7 +294,7 @@ class SyncModule: NSObject {
             }
 
             DispatchQueue.main.async {
-                onCompleted(nUpload, nFail)
+                onCompleted(nUpload, nSkip, nFail)
             }
         }
     }
