@@ -84,10 +84,10 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
     }
     
     func doLogout() {
-        let alert = UIAlertController(title: "Are you sure you sign out?", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Are you sure you sign out?", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             GIDSignIn.sharedInstance()?.signOut()
-            self.navigationController!.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }))
 
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
