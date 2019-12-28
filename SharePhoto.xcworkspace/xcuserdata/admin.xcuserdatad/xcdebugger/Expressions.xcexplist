@@ -3,12 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "specialized static SqliteManager.open():SqliteManager.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "itExists">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
       </ContextState>
       <ContextState
          contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
@@ -106,10 +101,10 @@
                value = "image.size.width">
             </PersistentString>
             <PersistentString
-               value = "size.width">
+               value = "image.width">
             </PersistentString>
             <PersistentString
-               value = "image.width">
+               value = "size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -316,6 +311,14 @@
          contextName = "closure #1 in LocalAlbumVC.fetchFamilyAlbumPhotos():LocalAlbumVC.swift">
       </ContextState>
       <ContextState
+         contextName = "HomeVC.setAddButtonLayout(_:):HomeVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.btnAdd.constraints">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "PhotoCell.setPaddingToPhoto(_:):PhotoCell.swift">
          <PersistentStrings>
             <PersistentString
@@ -335,7 +338,12 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
+         contextName = "specialized static SqliteManager.open():SqliteManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "itExists">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

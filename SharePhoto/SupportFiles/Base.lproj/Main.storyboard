@@ -318,7 +318,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0dx-9g-C5k">
-                                <rect key="frame" x="0.0" y="88" width="414" height="676"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="625"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LIK-b2-y7Q">
                                     <size key="itemSize" width="300" height="300"/>
@@ -361,12 +361,17 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLD-jS-OAi">
-                                <rect key="frame" x="172" y="669" width="70" height="70"/>
+                                <rect key="frame" x="-1" y="713" width="416" height="52"/>
+                                <color key="backgroundColor" white="0.0958101455479453" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="SdD-zH-kXd"/>
-                                    <constraint firstAttribute="width" constant="70" id="bUU-Tz-FcW"/>
+                                    <constraint firstAttribute="height" constant="52" id="SdD-zH-kXd"/>
                                 </constraints>
-                                <state key="normal" image="btn_add"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="48"/>
+                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="6"/>
+                                <state key="normal" title="+"/>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="onBtAdd:" destination="02r-wp-CBO" eventType="touchUpInside" id="Pq8-yp-QQ8"/>
                                 </connections>
@@ -374,12 +379,13 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="yIq-YR-aDy" firstAttribute="bottom" secondItem="0dx-9g-C5k" secondAttribute="bottom" id="Ewb-G7-VBO"/>
+                            <constraint firstItem="WLD-jS-OAi" firstAttribute="top" secondItem="0dx-9g-C5k" secondAttribute="bottom" identifier="add_tool_gap" id="8aj-n0-mSM"/>
+                            <constraint firstItem="WLD-jS-OAi" firstAttribute="width" secondItem="yIq-YR-aDy" secondAttribute="width" constant="2" id="JDi-7t-Aj8"/>
                             <constraint firstItem="yIq-YR-aDy" firstAttribute="trailing" secondItem="0dx-9g-C5k" secondAttribute="trailing" id="M8c-iJ-3Ch"/>
                             <constraint firstItem="WLD-jS-OAi" firstAttribute="centerX" secondItem="yIq-YR-aDy" secondAttribute="centerX" id="QMq-yp-lSX"/>
                             <constraint firstItem="0dx-9g-C5k" firstAttribute="top" secondItem="yIq-YR-aDy" secondAttribute="top" id="SIS-1G-wzr"/>
                             <constraint firstItem="0dx-9g-C5k" firstAttribute="leading" secondItem="yIq-YR-aDy" secondAttribute="leading" id="byr-4j-Zt0"/>
-                            <constraint firstItem="yIq-YR-aDy" firstAttribute="bottom" secondItem="WLD-jS-OAi" secondAttribute="bottom" constant="25" id="etx-Rn-pna"/>
+                            <constraint firstItem="yIq-YR-aDy" firstAttribute="bottom" secondItem="WLD-jS-OAi" secondAttribute="bottom" constant="-1" id="etx-Rn-pna"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yIq-YR-aDy"/>
                     </view>
@@ -853,7 +859,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="btn_add" width="450" height="450"/>
         <image name="checkbox_d" width="512" height="512"/>
         <image name="icon_alarm" width="36" height="36"/>
         <image name="icon_album" width="48" height="48"/>

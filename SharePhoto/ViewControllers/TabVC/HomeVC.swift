@@ -60,6 +60,9 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         lpgr.delaysTouchesBegan = true
         self.collectionView.addGestureRecognizer(lpgr)
         
+        self.btnAdd.layer.borderWidth = 0.5
+        self.btnAdd.layer.borderColor = UIColor(white: 0.3, alpha: 1.0).cgColor
+        
         switchModeTo(editMode:false)
     }
 
@@ -211,6 +214,16 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    open func setAddButtonLayout(_ size: CGFloat) {
+        for constraint in self.view.constraints {
+            if constraint.identifier == "add_tool_gap" {
+               constraint.constant = size
+            }
+        }
+
+        self.view.layoutIfNeeded()
+    }
+    
     func switchModeTo(editMode:Bool) {
         self.bEditMode = editMode
 
@@ -219,12 +232,13 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             btnNavLeft.title = "Cancel"
             btnAdd.isHidden = true
             showToolBar(true)
+            self.setAddButtonLayout(-50)
         } else {
             btnNavLeft.image = UIImage(named:"icon_alarm")
             btnNavLeft.title = ""
             btnAdd.isHidden = false
             hideToolBar(true)
-            
+            self.setAddButtonLayout(0)
             Global.needDoneSelectionAtHome = false
         }
 
