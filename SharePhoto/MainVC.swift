@@ -15,6 +15,8 @@ import Photos
 class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleDelegate {
     @IBOutlet weak var btnUpload: UIBarButtonItem!
     
+    static var sharedMainVC: MainVC? = nil
+    
     let activityView = ActivityView()
     var imagePicker = UIImagePickerController()
     var imagePickerModule: ImagePickerModule!
@@ -24,6 +26,8 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
         
         imagePickerModule = ImagePickerModule(self)
         imagePickerModule.delegate = self
+        
+        MainVC.sharedMainVC = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,7 +84,7 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
     }
     
     func doLogout() {
-        let alert = UIAlertController(title: "Are you sure you log out?", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Are you sure you sign out?", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             GIDSignIn.sharedInstance()?.signOut()
             self.navigationController!.dismiss(animated: true, completion: nil)
@@ -119,5 +123,12 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
     
     @IBAction func onBtnUpload(_ sender: Any) {
         imagePickerModule.startImagePicking()
+    }
+    
+    open func processLogout() {
+        GIDSignIn.sharedInstance()?.signOut()
+        
+        self.dismiss(animated: true) {
+        }
     }
 }
