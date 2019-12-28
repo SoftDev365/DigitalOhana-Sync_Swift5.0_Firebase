@@ -77,7 +77,7 @@ class GFSModule: NSObject {
     static func getAllPhotos(onCompleted: @escaping (Bool, [[String:Any]]) -> ()) {
         let db = Firestore.firestore()
         let refPhotos = db.collection("photos")
-        
+
         refPhotos.getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting photos docuemts:\(err)")

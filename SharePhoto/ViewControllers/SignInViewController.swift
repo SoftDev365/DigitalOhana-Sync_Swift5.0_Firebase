@@ -63,6 +63,7 @@ class SignInViewController: UIViewController {
         
         activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
         
+        Global.setNeedRefresh()
         // Start Google's OAuth authentication flow
         GIDSignIn.sharedInstance()?.signIn()
         //GIDSignIn.sharedInstance()?.signOut()
