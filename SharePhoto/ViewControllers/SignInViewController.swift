@@ -63,6 +63,8 @@ class SignInViewController: UIViewController {
         
         activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
         
+        // init Global parameters
+        GDModule.defaultFolderID = nil
         Global.setNeedRefresh()
         // Start Google's OAuth authentication flow
         GIDSignIn.sharedInstance()?.signIn()
@@ -70,6 +72,7 @@ class SignInViewController: UIViewController {
     }
     
     func initRootList() {
+        
         // Safe Present
         //if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavRootVC") as? NavigationRootVC {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainVC {
