@@ -70,7 +70,7 @@ class GFSModuleSync: NSObject {
 
         // block while processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 0.001)
+            Thread.sleep(forTimeInterval: 0.005)
         }
 
         return bResult
@@ -87,7 +87,7 @@ class GFSModuleSync: NSObject {
         
         // block while processing
         while bProcessing {
-            Thread.sleep(forTimeInterval: 0.001)
+            Thread.sleep(forTimeInterval: 0.005)
         }
 
         return bResult

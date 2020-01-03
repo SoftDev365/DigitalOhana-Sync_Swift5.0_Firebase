@@ -147,20 +147,36 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
+    func filterUploadedDriveFiles(files: [GTLRDrive_File]?) {
+        self.drivePhotos = []
+        
+        if let files = files {
+            for file in files {
+                if SyncModule.checkPhotoIsUploaded(driveFile: file) == false {
+                    self.drivePhotos! += [file]
+                }
+            }
+        }
+    }
+    
     func loadDriveFileList() {
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
 
         GDModule.listFiles() { (fileList) in
-            self.activityView.hideActivitiIndicator()
-
+            self.drivePhotos = []
+            
             if fileList != nil {
-                self.drivePhotos = fileList!.files
-
-                //DispatchQueue.main.async() {
-                //    self.collectionView.reloadData()
-                //}
-                self.collectionView.reloadData()
+                if self.viewMode == .show {
+                    self.drivePhotos = fileList!.files
+                } else if self.viewMode == .download {
+                    self.drivePhotos = fileList!.files
+                } else if self.viewMode == .upload {
+                    self.filterUploadedDriveFiles(files: fileList!.files)
+                }
             }
+            
+            self.collectionView.reloadData()
+            self.activityView.hideActivitiIndicator()
         }
     }
     
