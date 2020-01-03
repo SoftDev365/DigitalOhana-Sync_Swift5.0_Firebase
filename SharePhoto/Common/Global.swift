@@ -12,6 +12,8 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 
 class Global: NSObject {
+    static let sharedFolderName = "Ohana Sync"
+    
     static var user: GIDGoogleUser?
     static var email: String?
 

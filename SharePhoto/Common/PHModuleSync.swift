@@ -9,10 +9,7 @@
 import UIKit
 import Photos
 
-class PHModuleSync: NSObject {
-    
-    static let albumTitle = "Ohana Memory Sync"
-    
+class PHModuleSync: NSObject {    
     static func addPhotoToAlbumCollection(album: PHAssetCollection, imagePhoto: UIImage) -> String? {
         
         var bResult = false

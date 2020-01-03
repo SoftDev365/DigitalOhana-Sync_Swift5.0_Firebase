@@ -271,7 +271,7 @@ class SyncModule: NSObject {
             
             for photoInfo in photoInfos {
                 let fsID = photoInfo["id"] as! String
-                let data = photoInfo["date"] as! [String:Any]
+                let data = photoInfo["data"] as! [String:Any]
                 let email = data[PhotoField.email] as! String
                 
                 // photo was uploaded by other person
@@ -368,7 +368,10 @@ class SyncModule: NSObject {
                 // upload image data to cloud storage
                 GSModule.uploadFile(cloudFileID: documentID!, folderPath: self.sharedFolderName, data: imageData!) { (success) in
                     if success {
-                        onCompleted(success)
+                        GFSModule.updatePhotoToValid(photoID: documentID!) { (success) in
+                            // success update valid to true
+                            onCompleted(success)
+                        }
                     } else {
                         debugPrint("----- uploading image data to cloud storage failed ------")
                         onCompleted(success)

@@ -13,9 +13,6 @@ import CoreLocation
 //LocationGetter.locationForAsset(ass)
 
 class PHModule: NSObject {
-    
-    static let albumTitle = "Ohana Memory Sync"
-    
     static func createAlbum(withTitle title: String, completionHandler: @escaping (PHAssetCollection?) -> ()) {
         DispatchQueue.global(qos: .background).async {
             var placeholder: PHObjectPlaceholder?
@@ -38,7 +35,7 @@ class PHModule: NSObject {
     static func fetchFamilyAlbumCollection() -> PHAssetCollection? {        
         let fetchOptions = PHFetchOptions()
 
-        fetchOptions.predicate = NSPredicate(format: "title = %@", albumTitle)
+        fetchOptions.predicate = NSPredicate(format: "title = %@", Global.sharedFolderName)
         // get the albums list
         //let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: nil)
         let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
@@ -70,7 +67,7 @@ class PHModule: NSObject {
             let assets = getAssets(fromCollection: album)
             onCompletion(assets)
         } else {
-            createAlbum(withTitle: self.albumTitle) { (album) in
+            createAlbum(withTitle: Global.sharedFolderName) { (album) in
                 if let album = album {
                     let assets = getAssets(fromCollection: album)
                     onCompletion(assets)
@@ -121,7 +118,7 @@ class PHModule: NSObject {
         if let album = familyAlbum {
             addPhotoToAlbumCollection(album: album, imagePhoto: imagePhoto, completion: completion)
         } else {
-            createAlbum(withTitle: self.albumTitle) { (album) in
+            createAlbum(withTitle: Global.sharedFolderName) { (album) in
                 if let album = album {
                     addPhotoToAlbumCollection(album: album, imagePhoto: imagePhoto, completion: completion)
                 } else {

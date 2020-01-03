@@ -12,7 +12,6 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 
 class GDModule: NSObject {
-    static let driveFolderName = "Ohana Sync"
     static var defaultFolderID: String?
     
     static let service = GTLRDriveService()
@@ -81,9 +80,9 @@ class GDModule: NSObject {
             return
         }
         
-        getFolderID( name: self.driveFolderName) { folderID in
+        getFolderID( name: Global.sharedFolderName) { folderID in
             if folderID == nil {
-                self.createFolder(name: self.driveFolderName, parentFolderID: "root") { (createdFolderID) in
+                self.createFolder(name: Global.sharedFolderName, parentFolderID: "root") { (createdFolderID) in
                     self.defaultFolderID = folderID
                     completion(folderID)
                 }
