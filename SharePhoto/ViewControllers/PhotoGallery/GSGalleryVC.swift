@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseStorage
 
 class GSGalleryVC: UIViewController, UIScrollViewDelegate {
 
@@ -14,7 +16,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var btnDownload: UIBarButtonItem!
     
-    var photoList: [[String:Any]]?
+    var photoList: [FSPhotoInfo]?
     var imgViewList: [ImageZoomView]?
     var curPage: Int = 0
     var bIsFullscreen = false
@@ -29,7 +31,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         return .all
     }
 
-    func setFileList(_ list: [[String:Any]], page:Int) {
+    func setFileList(_ list: [FSPhotoInfo], page:Int) {
         self.photoList = list
         self.curPage = page
     }
@@ -82,7 +84,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         for i in 0..<photoList.count {
             
             let photoInfo = photoList[i]
-            let fileID = photoInfo["id"] as! String
+            let fileID = photoInfo.id!
             
             let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), fileID: fileID)
             if abs(i - self.curPage) <= 1 {
@@ -105,7 +107,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
             return
         }
         let photoInfo = photoList[curPage]
-        let fsID = photoInfo["id"] as! String
+        let fsID = photoInfo.id!
         
         // hide download button if already downloaded
         if SyncModule.checkPhotoIsDownloaded(cloudFileID: fsID) == true {
@@ -178,7 +180,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         recalcZoomScaleOfPhotos()
     }
     
-    func downloadImage(image: UIImage, photoInfo: [String: Any]) {
+    func downloadImage(image: UIImage, photoInfo: FSPhotoInfo) {
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
         SyncModule.downloadImage(photoInfo: photoInfo, image: image) { (success) in
             DispatchQueue.main.sync {

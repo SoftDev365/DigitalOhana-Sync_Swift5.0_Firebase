@@ -30,8 +30,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 
     var bEditMode: Bool = false
     var folderPath: String = "central"
-    var photoList: [[String:Any]]?
-    var selectedPhotoList: [[String:Any]]?
+    var photoList: [FSPhotoInfo]?
+    var selectedPhotoList: [FSPhotoInfo]?
     var backupSelection: [Int] = []
 
     let activityView = ActivityView()
@@ -156,7 +156,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         let row = indexPath.row
 
         let photoInfo = photoList[row]
-        let fileID = photoInfo["id"] as! String
+        let fileID = photoInfo.id!
 
         cell.setCloudFile(fileID)
         
@@ -282,15 +282,15 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
 
     func prepareNewSelecting() {
-        self.selectedPhotoList = [[String:Any]]()
+        self.selectedPhotoList = [FSPhotoInfo]()
     }
     
-    func isSelectedPhoto(_ photoInfo:[String:Any]) -> Bool {
-        let photoID = photoInfo["id"] as! String
+    func isSelectedPhoto(_ photoInfo:FSPhotoInfo) -> Bool {
+        let photoID = photoInfo.id!
         guard let photoList = self.selectedPhotoList else { return false }
         
         for item in photoList {
-            let id = item["id"] as! String
+            let id = item.id!
             if id == photoID {
                 return true
             }
@@ -299,7 +299,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         return false
     }
     
-    func addPhotoToSelectedList(_ photoInfo:[String:Any]) {
+    func addPhotoToSelectedList(_ photoInfo:FSPhotoInfo) {
         if self.selectedPhotoList == nil {
             return
         }
@@ -307,11 +307,11 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.selectedPhotoList! += [photoInfo]
     }
     
-    func removePhotoFromSelectedList(_ photoInfo:[String:Any]) {
+    func removePhotoFromSelectedList(_ photoInfo:FSPhotoInfo) {
         guard let photoList = self.selectedPhotoList else { return }
         
-        let photoID = photoInfo["id"] as! String
-        self.selectedPhotoList = photoList.filter { $0["id"] as! String != photoID }
+        let photoID = photoInfo.id!
+        self.selectedPhotoList = photoList.filter { $0.id != photoID }
     }
     
     func isAllSelected() -> Bool {

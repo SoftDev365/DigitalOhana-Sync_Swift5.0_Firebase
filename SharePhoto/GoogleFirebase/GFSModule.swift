@@ -23,9 +23,29 @@ class PhotoField {
     static let valid: String = "valid"
 }
 
-class SourceType {
-    static let asset: Int = 0
-    static let drive: Int = 1
+enum SourceType : Int {
+    case asset = 0
+    case drive = 1
+}
+
+class FSPhotoInfo {
+    var id: String!
+    
+    var userid: String!                 // owner id, users collection on firestore db
+    var email: String!                  // owner email address
+    var username: String!               // owner name
+
+    var sourceType: SourceType = .asset // from asset (0) or drive (1)
+    var sourceID: String!               // asset id or drive file id
+
+    var taken: TimeInterval = 0         // photo taken time
+    var uploaded: TimeInterval = 0      // photo uploaded time
+    var location: String?               // photo taken location
+    
+    var size: CGSize = CGSize(width: 0, height: 0) // photo dimensions
+    var tag: String?                    // tag
+
+    var valid: Bool = false             // validation (false, true)
 }
 
 extension Dictionary {
@@ -74,7 +94,60 @@ class GFSModule: NSObject {
         }
     }
     
-    static func getAllPhotos(onCompleted: @escaping (Bool, [[String:Any]]) -> ()) {
+    static func convertToPhotoInfo(document: QueryDocumentSnapshot) -> FSPhotoInfo {
+        let photoInfo = FSPhotoInfo()
+        
+        let data = document.data()
+        
+        photoInfo.id = document.documentID
+        
+        photoInfo.userid = (data[PhotoField.userid] as! String)
+        photoInfo.email = (data[PhotoField.email] as! String)
+        photoInfo.username = (data[PhotoField.username] as! String)
+        
+        //let srcType = (data[PhotoField.sourceType] as! Int)
+        //if srcType == 0 {
+        //    photoInfo.sourceType = .asset
+        //} else if srcType == 1 {
+        //    photoInfo.sourceType = .drive
+        //}
+
+        let sourceType = data[PhotoField.sourceType]
+        if sourceType == nil {
+            photoInfo.sourceType = .asset
+        } else if sourceType is SourceType {
+            photoInfo.sourceType = (sourceType as! SourceType)
+        } else if sourceType is Int {
+            photoInfo.sourceType = SourceType(rawValue: sourceType as! Int) ?? .asset
+        }
+        
+        photoInfo.sourceID = (data[PhotoField.sourceID] as! String)
+        
+        photoInfo.valid = (data[PhotoField.valid] as! Bool)
+        
+        photoInfo.taken = (data[PhotoField.taken] as! TimeInterval)
+        photoInfo.uploaded = (data[PhotoField.uploaded] as! TimeInterval)
+        
+        let location = data[PhotoField.location]
+        if location == nil {
+            photoInfo.location = ""
+        } else if location is String {
+            photoInfo.location = (location as! String)
+        } else {
+            photoInfo.location = ""
+        }
+
+        let size = data[PhotoField.size]
+        if size is CGSize {
+            photoInfo.size = (size as! CGSize)
+        } else {
+            photoInfo.size = CGSize(width: 0, height: 0)
+        }
+        
+        return photoInfo
+    }
+    
+    static func getAllPhotos(onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
         let db = Firestore.firestore()
         let refPhotos = db.collection("photos")
 
@@ -83,19 +156,21 @@ class GFSModule: NSObject {
                 print("Error getting photos docuemts:\(err)")
                 onCompleted(false, [])
             } else {
-                var result = [[String:Any]]()
+                var result = [FSPhotoInfo]()
+
                 for document in querySnapshot!.documents {
                     //print("\(document.documentID) => \(document.data())")
-
+                    
                     // check validation
                     let data = document.data()
                     let valid = data["valid"] as! Bool
                     
                     if valid == true {
-                        let item = ["id": document.documentID, "data": data] as [String:Any]
-                        result += [item]
+                        let info = self.convertToPhotoInfo(document: document)
+                        result += [info]
                     }
                 }
+
                 onCompleted(true, result)
             }
         }

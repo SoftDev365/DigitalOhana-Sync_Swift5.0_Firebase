@@ -18,7 +18,7 @@ private let reuseIdentifier = "PhotoCell"
 
 class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
 
-    var photoList: [[String:Any]]?
+    var photoList: [FSPhotoInfo]?
     var folderPath: String?
     let activityView = ActivityView()
     
@@ -119,7 +119,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
         btnDownload.isHidden = true
         imgView.image = UIImage(named: "noimage")
 
-        let fsID = photoInfo["id"] as! String
+        let fsID = photoInfo.id!
         GSModule.downloadImageFile(cloudFileID: fsID, folderPath: self.folderPath!, onCompleted: { (fileID, image) in
             imgView.image = image
             if SyncModule.checkPhotoIsDownloaded(cloudFileID: fsID) == false {
@@ -203,7 +203,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
         }
     }
     
-    func downloadImage(image: UIImage, photoInfo: [String: Any]) {
+    func downloadImage(image: UIImage, photoInfo: FSPhotoInfo) {
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
         SyncModule.downloadImage(photoInfo: photoInfo, image: image) { (success) in
             DispatchQueue.main.sync {
@@ -224,7 +224,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
 
         guard let photoList = self.photoList else { return }
         let photoInfo = photoList[indexPath.row]
-        let fsID = photoInfo["id"] as! String
+        let fsID = photoInfo.id!
         
         // not downloaded yet
         if SyncModule.checkPhotoIsDownloaded(cloudFileID: fsID) == false {

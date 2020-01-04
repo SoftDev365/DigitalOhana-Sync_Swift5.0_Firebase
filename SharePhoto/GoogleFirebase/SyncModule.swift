@@ -171,15 +171,14 @@ class SyncModule: NSObject {
     }
     
     // download one file by async
-    static func downloadImage(photoInfo: [String:Any], image: UIImage, onCompleted: @escaping(Bool)->()) {
+    static func downloadImage(photoInfo: FSPhotoInfo, image: UIImage, onCompleted: @escaping(Bool)->()) {
 
         PHModule.addPhotoToFamilyAssets(image) { (bSuccess, localIdentifier) in
             if bSuccess == false {
                 onCompleted(false)
             } else {
-                let fsID = photoInfo["id"] as! String
-                let data = photoInfo["data"] as! [String: Any]
-                let email = data["email"] as! String
+                let fsID = photoInfo.id!
+                let email = photoInfo.email
                 
                 if email == Global.email {
                     _ = SqliteManager.insertFileInfo(isMine: true, fname: localIdentifier!, fsID: fsID)
@@ -206,7 +205,7 @@ class SyncModule: NSObject {
 
         DispatchQueue.global(qos: .background).async {
             for photoInfo in photoInfos {
-                let fsID = photoInfo["id"] as! String
+                let fsID = photoInfo.id!
                 
                 if checkPhotoIsDownloaded(cloudFileID: fsID) {
                     nSkipped += 1
@@ -220,8 +219,7 @@ class SyncModule: NSObject {
                 }
                 
                 if let localIdentifier = PHModuleSync.addPhotoToFamilyAssets(image!) {
-                    let data = photoInfo["data"] as! [String: Any]
-                    let email = data["email"] as! String
+                    let email = photoInfo.email
                     if email == Global.email {
                         _ = SqliteManager.insertFileInfo(isMine: true, fname: localIdentifier, fsID: fsID)
                     } else {
@@ -263,16 +261,15 @@ class SyncModule: NSObject {
     }
     
     // delete photos (result: deleted, failed)
-    static func deleteSelectedPhotosFromCloud(photoInfos: [[String:Any]], onCompleted: @escaping(Int, Int, Int)->()) {
+    static func deleteSelectedPhotosFromCloud(photoInfos: [FSPhotoInfo], onCompleted: @escaping(Int, Int, Int)->()) {
         DispatchQueue.global(qos: .background).async {
             var nUpload: Int = 0
             var nSkip: Int = 0
             var nFail: Int = 0
             
             for photoInfo in photoInfos {
-                let fsID = photoInfo["id"] as! String
-                let data = photoInfo["data"] as! [String:Any]
-                let email = data[PhotoField.email] as! String
+                let fsID = photoInfo.id!
+                let email = photoInfo.email
                 
                 // photo was uploaded by other person
                 if Global.email != email {
@@ -321,7 +318,7 @@ class SyncModule: NSObject {
             }
             
             for photoInfo in photoInfos {
-                let fsID = photoInfo["id"] as! String
+                let fsID = photoInfo.id!
                 
                 if GDModuleSync.checkExists(fileTitle: fsID) {
                     nSkipped += 1

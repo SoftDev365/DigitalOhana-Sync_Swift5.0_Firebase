@@ -42,8 +42,8 @@ class GFSModuleSync: NSObject {
         return bResult
     }
     
-    static func getAllPhotos() -> [[String:Any]] {
-        var photos: [[String:Any]] = []
+    static func getAllPhotos() -> [FSPhotoInfo] {
+        var photos: [FSPhotoInfo] = []
         var bProcessing = true
         
         GFSModule.getAllPhotos { (success, result) in
@@ -55,7 +55,7 @@ class GFSModuleSync: NSObject {
         while bProcessing {
             Thread.sleep(forTimeInterval: 0.005)
         }
-        
+
         return photos
     }
     
