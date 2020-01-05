@@ -84,7 +84,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         for i in 0..<photoList.count {
             
             let photoInfo = photoList[i]
-            let fileID = photoInfo.id!
+            let fileID = photoInfo.id
             
             let item = ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), fileID: fileID)
             if abs(i - self.curPage) <= 1 {
@@ -107,7 +107,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
             return
         }
         let photoInfo = photoList[curPage]
-        let fsID = photoInfo.id!
+        let fsID = photoInfo.id
         
         // hide download button if already downloaded
         if SyncModule.checkPhotoIsDownloaded(cloudFileID: fsID) == true {

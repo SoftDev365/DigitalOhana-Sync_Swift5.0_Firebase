@@ -93,7 +93,7 @@ class GFSModuleSync: NSObject {
         return bResult
     }
     
-    static func registerPhoto(info: [String: Any]) -> String? {
+    static func registerPhoto(info: FSPhotoInfo) -> String? {
         var result: String? = nil
         var bProcessing = true
         

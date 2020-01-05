@@ -29,23 +29,40 @@ enum SourceType : Int {
 }
 
 class FSPhotoInfo {
-    var id: String!
+    var id: String
     
-    var userid: String!                 // owner id, users collection on firestore db
-    var email: String!                  // owner email address
-    var username: String!               // owner name
+    var userid: String                  // owner id, users collection on firestore db
+    var email: String                   // owner email address
+    var username: String                // owner name
 
     var sourceType: SourceType = .asset // from asset (0) or drive (1)
-    var sourceID: String!               // asset id or drive file id
+    var sourceID: String                // asset id or drive file id
 
     var taken: TimeInterval = 0         // photo taken time
     var uploaded: TimeInterval = 0      // photo uploaded time
-    var location: String?               // photo taken location
+    var location: String                // photo taken location
     
     var size: CGSize = CGSize(width: 0, height: 0) // photo dimensions
-    var tag: String?                    // tag
+    var tag: String                     // tag
 
     var valid: Bool = false             // validation (false, true)
+    
+    init() {
+        self.id = ""
+        self.userid = Global.user!.userID!
+        self.email = Global.email!
+        self.username = Global.user!.profile.name!
+        
+        self.sourceID = ""
+        self.sourceType = .asset
+        
+        self.size = CGSize(width: 0, height: 0)
+        self.location = ""
+        self.tag = ""
+        
+        self.uploaded = Date().timeIntervalSince1970
+        self.valid = false
+    }
 }
 
 extension Dictionary {
@@ -205,7 +222,8 @@ class GFSModule: NSObject {
             .whereField(PhotoField.email, isEqualTo: email)
             .whereField(PhotoField.sourceType, isEqualTo: "drive")
             .whereField(PhotoField.sourceID, isEqualTo: driveFileID)
-            .getDocuments() { (querySnapshot, error) in
+            //.getDocuments() { (querySnapshot, error) in
+            .addSnapshotListener({ (querySnapshot, error) in
                 if let error = error {
                     print("Error getting photos docuemts:\(error)")
                     onCompleted(false, nil)
@@ -217,27 +235,24 @@ class GFSModule: NSObject {
                     
                     onCompleted(false, nil)
                 }
-        }
+        })
     }
     
-    static func registerPhoto(info: [String: Any], onCompleted: @escaping (Bool, String?) -> ()) {
-        
-        let uploaded = Date().timeIntervalSince1970
-        let userID = Global.user!.userID!
-        let email = Global.email!
-        let username = Global.user!.profile.name!
-        
-        var  data = [PhotoField.uploaded: uploaded,
-                    PhotoField.userid: userID,
-                    PhotoField.email: email,
-                    PhotoField.username: username,
-                    PhotoField.valid: false] as [String : Any]
-        
-        data.merge(dict: info)
+    static func registerPhoto(info: FSPhotoInfo, onCompleted: @escaping (Bool, String?) -> ()) {
+        let data = [PhotoField.userid: info.userid,
+            PhotoField.email: info.email,
+            PhotoField.username: info.userid,
+            PhotoField.uploaded: info.uploaded,
+            PhotoField.sourceType: info.sourceType,
+            PhotoField.sourceID: info.sourceID,
+            PhotoField.size: info.size,
+            PhotoField.location: info.location,
+            PhotoField.tag: info.tag,
+            PhotoField.valid: false] as [String : Any]
 
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
-        
+
         ref = db.collection("photos").addDocument(data: data) { err in
             if let err = err {
                 debugPrint(err)

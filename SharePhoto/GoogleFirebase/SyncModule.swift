@@ -16,9 +16,14 @@ class SyncModule: NSObject {
     static func registerPhotoToFirestore(asset: PHAsset, onCompleted: @escaping (Bool, String?) -> ()) {
         let dtCreated = asset.creationDate ?? Date()
         let taken = dtCreated.timeIntervalSince1970
-        let info = [PhotoField.taken: taken,
-                    PhotoField.sourceType: SourceType.asset,
-                    PhotoField.sourceID: asset.localIdentifier] as [String : Any]
+        
+        let info = FSPhotoInfo()
+        
+        info.taken = taken
+        info.sourceType = SourceType.asset
+        info.sourceID = asset.localIdentifier
+        info.size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+        //info.tag = asset.location
 
         GFSModule.registerPhoto(info: info) { (success, id) in
             onCompleted(success, id)
@@ -45,10 +50,17 @@ class SyncModule: NSObject {
     static func registerPhotoToFirestore(driveFile: GTLRDrive_File, onCompleted: @escaping (Bool, String?) -> ()) {
         let dtCreated = driveFile.createdTime?.date ?? Date()
         let taken = dtCreated.timeIntervalSince1970
-        let info = [PhotoField.taken: taken,
-                    PhotoField.sourceType: SourceType.drive,
-                    PhotoField.sourceID: driveFile.identifier!] as [String : Any]
 
+        let info = FSPhotoInfo()
+
+        info.taken = taken
+        info.sourceType = SourceType.drive
+        info.sourceID = driveFile.identifier ?? ""
+        
+        //driveFile.imageMediaMetadata!.width!.int32Value
+        //info.size = CGSize(width: asset.pixelWidth, height: asset.pixelHeight)
+        //info.tag = asset.location
+        
         GFSModule.registerPhoto(info: info) { (success, id) in
             onCompleted(success, id)
         }
@@ -177,7 +189,7 @@ class SyncModule: NSObject {
             if bSuccess == false {
                 onCompleted(false)
             } else {
-                let fsID = photoInfo.id!
+                let fsID = photoInfo.id
                 let email = photoInfo.email
                 
                 if email == Global.email {
@@ -205,7 +217,7 @@ class SyncModule: NSObject {
 
         DispatchQueue.global(qos: .background).async {
             for photoInfo in photoInfos {
-                let fsID = photoInfo.id!
+                let fsID = photoInfo.id
                 
                 if checkPhotoIsDownloaded(cloudFileID: fsID) {
                     nSkipped += 1
@@ -268,7 +280,7 @@ class SyncModule: NSObject {
             var nFail: Int = 0
             
             for photoInfo in photoInfos {
-                let fsID = photoInfo.id!
+                let fsID = photoInfo.id
                 let email = photoInfo.email
                 
                 // photo was uploaded by other person
@@ -318,7 +330,7 @@ class SyncModule: NSObject {
             }
             
             for photoInfo in photoInfos {
-                let fsID = photoInfo.id!
+                let fsID = photoInfo.id
                 
                 if GDModuleSync.checkExists(fileTitle: fsID) {
                     nSkipped += 1

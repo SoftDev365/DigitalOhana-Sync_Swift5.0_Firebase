@@ -156,7 +156,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         let row = indexPath.row
 
         let photoInfo = photoList[row]
-        let fileID = photoInfo.id!
+        let fileID = photoInfo.id
 
         cell.setCloudFile(fileID)
         
@@ -286,12 +286,11 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func isSelectedPhoto(_ photoInfo:FSPhotoInfo) -> Bool {
-        let photoID = photoInfo.id!
+        let photoID = photoInfo.id
         guard let photoList = self.selectedPhotoList else { return false }
         
         for item in photoList {
-            let id = item.id!
-            if id == photoID {
+            if item.id == photoID {
                 return true
             }
         }
@@ -310,7 +309,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func removePhotoFromSelectedList(_ photoInfo:FSPhotoInfo) {
         guard let photoList = self.selectedPhotoList else { return }
         
-        let photoID = photoInfo.id!
+        let photoID = photoInfo.id
         self.selectedPhotoList = photoList.filter { $0.id != photoID }
     }
     

@@ -119,7 +119,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
         btnDownload.isHidden = true
         imgView.image = UIImage(named: "noimage")
 
-        let fsID = photoInfo.id!
+        let fsID = photoInfo.id
         GSModule.downloadImageFile(cloudFileID: fsID, folderPath: self.folderPath!, onCompleted: { (fileID, image) in
             imgView.image = image
             if SyncModule.checkPhotoIsDownloaded(cloudFileID: fsID) == false {
@@ -224,7 +224,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
 
         guard let photoList = self.photoList else { return }
         let photoInfo = photoList[indexPath.row]
-        let fsID = photoInfo.id!
+        let fsID = photoInfo.id
         
         // not downloaded yet
         if SyncModule.checkPhotoIsDownloaded(cloudFileID: fsID) == false {
