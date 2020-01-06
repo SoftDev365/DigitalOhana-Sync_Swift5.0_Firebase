@@ -176,8 +176,6 @@ class GFSModule: NSObject {
                 var result = [FSPhotoInfo]()
 
                 for document in querySnapshot!.documents {
-                    //print("\(document.documentID) => \(document.data())")
-                    
                     // check validation
                     let data = document.data()
                     let valid = data["valid"] as! Bool
@@ -187,7 +185,8 @@ class GFSModule: NSObject {
                         result += [info]
                     }
                 }
-
+                
+                Global.sharedCloudPhotos = result
                 onCompleted(true, result)
             }
         }
@@ -213,7 +212,7 @@ class GFSModule: NSObject {
             }
         }
     }
-    
+
     static func searchPhoto(driveFileID: String, onCompleted: @escaping (Bool, String?) -> ()) {
         let email = Global.email!
         let db = Firestore.firestore()
@@ -222,8 +221,7 @@ class GFSModule: NSObject {
             .whereField(PhotoField.email, isEqualTo: email)
             .whereField(PhotoField.sourceType, isEqualTo: "drive")
             .whereField(PhotoField.sourceID, isEqualTo: driveFileID)
-            //.getDocuments() { (querySnapshot, error) in
-            .addSnapshotListener({ (querySnapshot, error) in
+            .getDocuments() { (querySnapshot, error) in
                 if let error = error {
                     print("Error getting photos docuemts:\(error)")
                     onCompleted(false, nil)
@@ -235,7 +233,7 @@ class GFSModule: NSObject {
                     
                     onCompleted(false, nil)
                 }
-        })
+        }
     }
     
     static func registerPhoto(info: FSPhotoInfo, onCompleted: @escaping (Bool, String?) -> ()) {

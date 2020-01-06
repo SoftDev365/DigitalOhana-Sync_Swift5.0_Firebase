@@ -21,6 +21,7 @@ class Global: NSObject {
     static var needRefreshStorage = true
     static var needDoneSelectionAtHome = false    // exit from photo selection at Home Tab (download complete)
 
+    static var sharedCloudPhotos: [FSPhotoInfo]?
     static var selectedCloudPhotos: [FSPhotoInfo]?
     
     static func setNeedRefresh() {

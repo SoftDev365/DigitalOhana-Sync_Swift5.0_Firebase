@@ -149,7 +149,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     func filterUploadedDriveFiles(files: [GTLRDrive_File]?) {
         self.drivePhotos = []
-        
+
         if let files = files {
             for file in files {
                 if SyncModule.checkPhotoIsUploaded(driveFile: file) == false {

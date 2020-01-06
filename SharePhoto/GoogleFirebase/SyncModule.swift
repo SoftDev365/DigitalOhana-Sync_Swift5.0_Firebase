@@ -408,17 +408,23 @@ class SyncModule: NSObject {
     }
     
     static func checkPhotoIsUploaded(driveFile: GTLRDrive_File) -> Bool {
-        // check if uploaded from my drive to cloud
-        if GFSModuleSync.searchPhoto(driveFileID: driveFile.identifier!) == true {
-            return true
-        }
+        guard let sharedPhotos = Global.sharedCloudPhotos else { return false }
         
         guard let fileName = driveFile.name else { return false }
         guard let name = fileName.split(separator: ".").map(String.init).first else { return false }
-
-        // check if this drive photo downloaded from cloud
-        if GFSModuleSync.searchPhoto(cloudDocumentID: name) == true {
-            return true
+        
+        for photoInfo in sharedPhotos {
+            // check if this drive photo downloaded from cloud
+            if photoInfo.id == name {
+                return true
+            }
+        
+            // check if uploaded from my drive to cloud
+            if photoInfo.email == Global.email! {
+                if photoInfo.sourceType == .drive && photoInfo.sourceID == driveFile.identifier {
+                    return true
+                }
+            }
         }
         
         return false
