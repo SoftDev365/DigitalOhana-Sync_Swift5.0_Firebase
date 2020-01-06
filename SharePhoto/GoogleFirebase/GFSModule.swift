@@ -180,7 +180,8 @@ class GFSModule: NSObject {
         let db = Firestore.firestore()
         let refPhotos = db.collection("photos")
 
-        refPhotos.getDocuments { (querySnapshot, err) in
+        // order by uploaded date DESC
+        refPhotos.order(by: PhotoField.uploaded, descending: true).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting photos docuemts:\(err)")
                 onCompleted(false, [])
