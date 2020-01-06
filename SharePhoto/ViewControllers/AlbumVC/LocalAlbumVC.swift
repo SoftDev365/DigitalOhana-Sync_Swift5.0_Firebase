@@ -125,7 +125,6 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     @objc func fetchFamilyAlbumPhotos() {
         PHModule.getFamilyAlbumAssets { (result) in
             self.refreshControl.endRefreshing()
-
             guard let photoList = result else { return }
             
             self.albumPhotos = []
@@ -166,6 +165,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     func loadDriveFileList() {
+        self.refreshControl.endRefreshing()
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
 
         GDModule.listFiles() { (fileList) in
