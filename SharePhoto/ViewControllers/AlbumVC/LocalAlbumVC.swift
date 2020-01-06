@@ -124,8 +124,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     @objc func fetchFamilyAlbumPhotos() {
         PHModule.getFamilyAlbumAssets { (result) in
-            self.refreshControl.endRefreshing()
-            guard let photoList = result else { return }
+            guard let photoList = result else {
+                DispatchQueue.main.async() {
+                    self.refreshControl.endRefreshing()
+                }
+                return
+            }
             
             self.albumPhotos = []
             
@@ -147,6 +151,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             SqliteManager.syncFileInfos(arrFiles: fileNames)
 
             DispatchQueue.main.async() {
+                self.refreshControl.endRefreshing()
                 self.collectionView.reloadData()
             }
         }
