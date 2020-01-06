@@ -131,9 +131,11 @@ class PhotoCell: UICollectionViewCell {
         self.type = .cloud
         self.fileID = fileID
 
-        GSModule.downloadImageFile(cloudFileID: self.fileID!, folderPath: self.cloudFolderPath, onCompleted: { (fileID, image) in
+        let thumbFileID = GSModule.getThumbnailFileID(cloudFileID: fileID)
+        
+        GSModule.downloadImageFile(cloudFileID: thumbFileID, folderPath: self.cloudFolderPath, onCompleted: { (fileID, image) in
             // if cell point still the same photo (cell may be changed to the other while downloading)
-            if self.fileID == fileID {
+            if thumbFileID == fileID {
                 self.ivPhoto?.image = image
             }
             //if SyncModule.checkPhotoIsDownloaded(fileID: self.filePath) == false {

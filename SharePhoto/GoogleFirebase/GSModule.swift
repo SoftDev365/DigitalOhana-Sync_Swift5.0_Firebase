@@ -33,6 +33,10 @@ struct StorageItem {
 class GSModule: NSObject {
     static let imageCache = NSCache<NSString, UIImage>()
     
+    static func getThumbnailFileID(cloudFileID: String) -> String {
+        return cloudFileID + "_thumb"
+    }
+    
     static func getImageFileList(_ folderName: String, onCompleted: @escaping ([StorageItem])->()) {
         // Get a reference to the storage service using the default Firebase App
         let storage = Storage.storage()

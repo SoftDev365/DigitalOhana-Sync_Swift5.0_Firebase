@@ -30,7 +30,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationController?.isNavigationBarHidden = false
         //self.collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        
+
         let buttonSize: CGFloat = 36
         let button2 = UIButton(type: .custom)
         button2.setImage(UIImage(named: "uploadphoto"), for: .normal)
