@@ -87,7 +87,13 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     @objc func refresh(_ sender: Any) {
-        fetchFamilyAlbumPhotos()
+        if self.sourceType == .local {
+            self.fetchFamilyAlbumPhotos()
+        } else if self.sourceType == .drive {
+            self.loadDriveFileList()
+        } else if self.sourceType == .raspberrypi {
+            
+        }
     }
     
     func accessToPHLibrary() {
@@ -374,7 +380,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     func refreshAlbum() {
         if Global.needRefreshLocal == true {
             Global.needRefreshLocal = false
-            self.fetchFamilyAlbumPhotos()
+            self.refresh(self)
         }
     }
     
@@ -670,12 +676,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         self.present(alert, animated: true, completion: nil)
     }
     
-    func onUploadDone(nUpload:Int, nSkip: Int, nFail: Int) {
-        self.activityView.hideActivitiIndicator()
-        if nUpload > 0 {
-            Global.setNeedRefresh()
-        }
-
+    func alertUploadResult(nUpload:Int, nSkip: Int, nFail: Int) {
         let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
         let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
@@ -689,6 +690,22 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }))
 
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func onUploadDone(nUpload:Int, nSkip: Int, nFail: Int) {
+        if nUpload > 0 {
+            Global.setNeedRefresh()
+            
+            GFSModule.getAllPhotos { (success, photoList) in
+                DispatchQueue.main.async() {
+                    self.activityView.hideActivitiIndicator()
+                    self.alertUploadResult(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
+                }                
+            }
+        } else {
+            self.activityView.hideActivitiIndicator()
+            alertUploadResult(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
+        }
     }
 
     func uploadSelectedPhotos() {

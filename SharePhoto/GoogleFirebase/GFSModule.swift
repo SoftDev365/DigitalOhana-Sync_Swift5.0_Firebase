@@ -16,7 +16,8 @@ class PhotoField {
     static let userid: String = "userid"
     static let email: String = "email"
     static let username: String = "username"
-    static let size: String = "size"
+    static let sizeWidth: String = "sizeWidth"
+    static let sizeHeight: String = "sizeHeight"
     static let tag: String = "tag"
     static let sourceType: String = "sourceType"
     static let sourceID: String = "sourceID"
@@ -139,11 +140,21 @@ class GFSModule: NSObject {
         }
         
         photoInfo.sourceID = (data[PhotoField.sourceID] as! String)
-        
         photoInfo.valid = (data[PhotoField.valid] as! Bool)
         
-        photoInfo.taken = (data[PhotoField.taken] as! TimeInterval)
-        photoInfo.uploaded = (data[PhotoField.uploaded] as! TimeInterval)
+        let taken = data[PhotoField.taken]
+        if taken is TimeInterval {
+            photoInfo.taken = taken as! TimeInterval
+        } else {
+            photoInfo.taken = Date().timeIntervalSince1970
+        }
+
+        let uploaded = data[PhotoField.uploaded]
+        if uploaded is TimeInterval {
+            photoInfo.uploaded = uploaded as! TimeInterval
+        } else {
+            photoInfo.uploaded = Date().timeIntervalSince1970
+        }
         
         let location = data[PhotoField.location]
         if location == nil {
@@ -154,9 +165,10 @@ class GFSModule: NSObject {
             photoInfo.location = ""
         }
 
-        let size = data[PhotoField.size]
-        if size is CGSize {
-            photoInfo.size = (size as! CGSize)
+        let sizeWidth = data[PhotoField.sizeWidth]
+        let sizeHeight = data[PhotoField.sizeHeight]
+        if sizeWidth is CGFloat && sizeHeight is CGFloat  {
+            photoInfo.size = CGSize(width: sizeWidth as! CGFloat, height: sizeHeight as! CGFloat)
         } else {
             photoInfo.size = CGSize(width: 0, height: 0)
         }
@@ -240,10 +252,12 @@ class GFSModule: NSObject {
         let data = [PhotoField.userid: info.userid,
             PhotoField.email: info.email,
             PhotoField.username: info.userid,
+            PhotoField.taken: info.taken,
             PhotoField.uploaded: info.uploaded,
-            PhotoField.sourceType: info.sourceType,
+            PhotoField.sourceType: info.sourceType.rawValue,
             PhotoField.sourceID: info.sourceID,
-            PhotoField.size: info.size,
+            PhotoField.sizeWidth: info.size.width,
+            PhotoField.sizeHeight: info.size.height,
             PhotoField.location: info.location,
             PhotoField.tag: info.tag,
             PhotoField.valid: false] as [String : Any]

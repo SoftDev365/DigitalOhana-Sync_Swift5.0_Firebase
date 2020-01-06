@@ -96,6 +96,26 @@ class SyncModule: NSObject {
         }
     }
     
+    static func uploadImage(_ image: UIImage, withDocumentID cloudDocumentID: String, onCompleted:@escaping (Bool) -> ()) {
+        let thumbnail = Global.getThumbnail(image: image)
+        let thumbData = thumbnail.jpegData(compressionQuality: 1.0)
+        let thumbFileID = cloudDocumentID + "_thumb"
+
+        // first upload thumbnail image data to cloud storage
+        GSModule.uploadFile(cloudFileID: thumbFileID, folderPath: self.sharedFolderName, data: thumbData!) { (success) in
+            if success == true {
+                let imageData = image.jpegData(compressionQuality: 1.0)
+                
+                // upload image data to cloud storage
+                GSModule.uploadFile(cloudFileID: cloudDocumentID, folderPath: self.sharedFolderName, data: imageData!) { (success) in
+                    onCompleted(success)
+                }
+            } else {
+                onCompleted(false)
+            }
+        }
+    }
+    
     static func uploadPhoto(asset: PHAsset, onCompleted:@escaping (Bool) -> ()) {
         // register photo to firestore & get document id (primary key)
         registerPhotoToFirestore(asset: asset) { (success, documentID) in
@@ -132,11 +152,10 @@ class SyncModule: NSObject {
                     onCompleted(false)
                     return
                 }
-                let imageData = image.jpegData(compressionQuality: 1.0)
 
                 // upload image data to cloud storage
-                GSModule.uploadFile(cloudFileID: documentID!, folderPath: self.sharedFolderName, data: imageData!) { (success) in
-                    if success {
+                self.uploadImage(image, withDocumentID: documentID!) { (success) in
+                   if success {
                         // register to local sqlite db (local filename & firestore id)
                         if SqliteManager.insertFileInfo(isMine: true, fname: asset.localIdentifier, fsID: documentID!) == true {
                             // update firestore valid flag to true
@@ -368,14 +387,12 @@ class SyncModule: NSObject {
             GDModule.downloadImage(fileID: driveFile.identifier!) { (fileID, image) in
                 // check image is not null
                 guard let image = image else {
-                    debugPrint("-----extract image from asset failed ------")
+                    debugPrint("-----download image from drive failed ------")
                     onCompleted(false)
                     return
                 }
-                let imageData = image.jpegData(compressionQuality: 1.0)
-
-                // upload image data to cloud storage
-                GSModule.uploadFile(cloudFileID: documentID!, folderPath: self.sharedFolderName, data: imageData!) { (success) in
+                
+                self.uploadImage(image, withDocumentID: documentID!) { (success) in
                     if success {
                         GFSModule.updatePhotoToValid(photoID: documentID!) { (success) in
                             // success update valid to true
@@ -440,7 +457,7 @@ class SyncModule: NSObject {
             var nUpload: Int = 0
             var nSkip: Int = 0
             var nFail: Int = 0
-            
+
             for file in files {
                 if SyncModule.checkPhotoIsUploaded(driveFile: file) == true {
                     nSkip += 1
