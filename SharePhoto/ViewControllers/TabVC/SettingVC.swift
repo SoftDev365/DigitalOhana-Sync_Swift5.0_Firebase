@@ -52,10 +52,10 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
             cell.accessoryType = .disclosureIndicator
         } else if indexPath.section == 1 {
             cell.imageView?.image = UIImage(named: "icon_home")
-            cell.textLabel?.text = "Contact"
+            cell.textLabel?.text = "Help"
             cell.accessoryType = .disclosureIndicator
         } else {
-            cell.textLabel?.text = "Sign out"
+            cell.textLabel?.text = "Sign Out"
             if #available(iOS 13.0, *) {
                 cell.imageView?.image = UIImage(systemName: "person.fill")
             }

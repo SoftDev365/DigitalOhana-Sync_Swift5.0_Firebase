@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5tp-qj-J4i">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -85,10 +85,47 @@
             </objects>
             <point key="canvasLocation" x="-5257" y="-646"/>
         </scene>
+        <!--SplashVC-->
+        <scene sceneID="gZT-bd-3D8">
+            <objects>
+                <viewController id="5tp-qj-J4i" customClass="SplashVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="meD-P5-rgc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mark" translatesAutoresizingMaskIntoConstraints="NO" id="7tP-FP-GEY">
+                                <rect key="frame" x="82.666666666666671" y="339" width="248.66666666666663" height="228"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JcL-8z-wah">
+                                <rect key="frame" x="162" y="399" width="90" height="108"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="90"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7tP-FP-GEY" firstAttribute="centerY" secondItem="JKA-3O-u2D" secondAttribute="centerY" id="VoF-fT-EUV"/>
+                            <constraint firstItem="7tP-FP-GEY" firstAttribute="width" secondItem="JKA-3O-u2D" secondAttribute="width" multiplier="0.6" id="Yf1-QS-y71"/>
+                            <constraint firstItem="JcL-8z-wah" firstAttribute="centerY" secondItem="JKA-3O-u2D" secondAttribute="centerY" id="bRZ-O6-STB"/>
+                            <constraint firstItem="7tP-FP-GEY" firstAttribute="centerX" secondItem="JKA-3O-u2D" secondAttribute="centerX" id="hTv-tB-1bD"/>
+                            <constraint firstItem="JcL-8z-wah" firstAttribute="centerX" secondItem="JKA-3O-u2D" secondAttribute="centerX" id="rtf-DG-VoM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="JKA-3O-u2D"/>
+                    </view>
+                    <connections>
+                        <outlet property="imgViewMark" destination="7tP-FP-GEY" id="ikP-uI-Dph"/>
+                        <outlet property="lblMark" destination="JcL-8z-wah" id="7cC-Kh-TMR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xai-et-Mok" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6996" y="-630"/>
+        </scene>
         <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SignInViewController" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignInVC" id="BYZ-38-t0r" customClass="SignInViewController" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -882,6 +919,7 @@
         <image name="icon_search" width="36" height="36"/>
         <image name="icon_setting" width="48" height="48"/>
         <image name="loc_drive" width="512" height="512"/>
+        <image name="mark" width="228" height="228"/>
         <image name="noimage" width="240" height="240"/>
         <image name="person.icloud" catalog="system" width="64" height="44"/>
         <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
