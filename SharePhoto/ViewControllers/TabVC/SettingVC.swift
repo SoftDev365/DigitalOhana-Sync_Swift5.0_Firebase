@@ -26,32 +26,55 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 2
-        } else {
-            return 1
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == 3 {
+            let view = UIView()
+            view.backgroundColor = .clear
+        
+            return view
         }
+        
+        return nil
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 3 {
+            return tableView.frame.height - 270
+        }
+        
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
 
         if indexPath.section == 0 {
-            if indexPath.row == 0 {
                 cell.imageView?.image = UIImage(named: "icon_setting")
                 cell.textLabel?.text = "General"
+                cell.accessoryType = .disclosureIndicator
+        } else if indexPath.section == 1 {
+            if #available(iOS 13.0, *) {
+                cell.imageView?.image = UIImage(systemName: "bell.fill")
             } else {
                 cell.imageView?.image = UIImage(named: "icon_alarm")
-                cell.textLabel?.text = "Notifications"
             }
             
+            cell.textLabel?.text = "Notifications"
             cell.accessoryType = .disclosureIndicator
-        } else if indexPath.section == 1 {
-            cell.imageView?.image = UIImage(named: "icon_home")
+        } else if indexPath.section == 2 {
+            
+            if #available(iOS 13.0, *) {
+                cell.imageView?.image = UIImage(systemName: "questionmark.circle")
+            } else {
+                cell.imageView?.image = UIImage(named: "icon_home")
+            }
             cell.textLabel?.text = "Help"
             cell.accessoryType = .disclosureIndicator
         } else {
@@ -61,11 +84,14 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
             }
         }
         
+        cell.backgroundColor = .black
+        cell.textLabel?.textColor = .white
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 2 {
+        if indexPath.section == 3 {
             self.logout()
         }
     }
