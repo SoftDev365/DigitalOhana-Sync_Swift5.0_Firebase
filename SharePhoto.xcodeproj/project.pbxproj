@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E3D6B73EC6F91C96EF0FBC2 /* Pods_Ohana_Sync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04DAABF438DDC1E4E24BAA0 /* Pods_Ohana_Sync.framework */; };
 		840A34C82397118500A14491 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A34C72397118500A14491 /* Global.swift */; };
 		840C380123B5509100EDF7A5 /* GDModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840C380023B5509000EDF7A5 /* GDModuleSync.swift */; };
 		840EEE002374215900361FB9 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEDFF2374215800361FB9 /* Alerts.swift */; };
@@ -16,6 +17,10 @@
 		843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */; };
 		843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */; };
 		843DF2E02373D00E00F856ED /* ImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DF2373D00E00F856ED /* ImageView+Download.swift */; };
+		8455A47423C8896B005B8742 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455A47323C8896B005B8742 /* ShareViewController.swift */; };
+		8455A47723C8896B005B8742 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8455A47523C8896B005B8742 /* MainInterface.storyboard */; };
+		8455A47B23C8896B005B8742 /* Ohana Sync.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8455A47123C8896B005B8742 /* Ohana Sync.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8455A48123C88E0C005B8742 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8455A48023C88E0C005B8742 /* GoogleService-Info.plist */; };
 		846589A8237623520050AE40 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846589A7237623510050AE40 /* GoogleService-Info.plist */; };
 		84688AD823A9869500D1D9E1 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84688AD723A9869500D1D9E1 /* HomeVC.swift */; };
 		848E2DD32385F11300620877 /* GFSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E2DD22385F11300620877 /* GFSModule.swift */; };
@@ -48,6 +53,30 @@
 		982CA3432B9D7D26CDCAC42C /* Pods_SharePhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8455A47923C8896B005B8742 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84BE63B623717A45002F2C66 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8455A47023C8896B005B8742;
+			remoteInfo = "Ohana Sync";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8455A47C23C8896B005B8742 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8455A47B23C8896B005B8742 /* Ohana Sync.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		23F3561F6651AAA6AEF9012F /* Pods-SharePhoto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SharePhoto.release.xcconfig"; path = "Target Support Files/Pods-SharePhoto/Pods-SharePhoto.release.xcconfig"; sourceTree = "<group>"; };
 		71F0A8DF713105CA5760F56E /* Pods-SharePhoto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SharePhoto.debug.xcconfig"; path = "Target Support Files/Pods-SharePhoto/Pods-SharePhoto.debug.xcconfig"; sourceTree = "<group>"; };
@@ -60,6 +89,13 @@
 		843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDExplorerController.swift; sourceTree = "<group>"; };
 		843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
 		843DF2DF2373D00E00F856ED /* ImageView+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+Download.swift"; sourceTree = "<group>"; };
+		8455A47123C8896B005B8742 /* Ohana Sync.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Ohana Sync.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8455A47323C8896B005B8742 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		8455A47623C8896B005B8742 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		8455A47823C8896B005B8742 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8455A48023C88E0C005B8742 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8455A48223C88F18005B8742 /* Ohana Sync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Ohana Sync.entitlements"; sourceTree = "<group>"; };
+		8455A48323C88F73005B8742 /* Ohana Sync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Ohana Sync.entitlements"; sourceTree = "<group>"; };
 		846589A7237623510050AE40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84688AD723A9869500D1D9E1 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		848E2DD22385F11300620877 /* GFSModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GFSModule.swift; sourceTree = "<group>"; };
@@ -91,10 +127,21 @@
 		84D7CE3B238AD47400C15CF6 /* LocalGalleryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalGalleryVC.swift; sourceTree = "<group>"; };
 		84D85D472384A1710042C4DF /* GDBModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBModule.swift; sourceTree = "<group>"; };
 		84F90E8B23B16A8B00A5202A /* GFSModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GFSModuleSync.swift; sourceTree = "<group>"; };
+		A04DAABF438DDC1E4E24BAA0 /* Pods_Ohana_Sync.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ohana_Sync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SharePhoto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0CF714DA850A4111CE21596 /* Pods-Ohana Sync.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ohana Sync.release.xcconfig"; path = "Target Support Files/Pods-Ohana Sync/Pods-Ohana Sync.release.xcconfig"; sourceTree = "<group>"; };
+		F42887ECE70F9335ECF15268 /* Pods-Ohana Sync.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ohana Sync.debug.xcconfig"; path = "Target Support Files/Pods-Ohana Sync/Pods-Ohana Sync.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8455A46E23C8896B005B8742 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E3D6B73EC6F91C96EF0FBC2 /* Pods_Ohana_Sync.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84BE63BB23717A45002F2C66 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -111,6 +158,8 @@
 			children = (
 				71F0A8DF713105CA5760F56E /* Pods-SharePhoto.debug.xcconfig */,
 				23F3561F6651AAA6AEF9012F /* Pods-SharePhoto.release.xcconfig */,
+				F42887ECE70F9335ECF15268 /* Pods-Ohana Sync.debug.xcconfig */,
+				D0CF714DA850A4111CE21596 /* Pods-Ohana Sync.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -119,8 +168,21 @@
 			isa = PBXGroup;
 			children = (
 				A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */,
+				A04DAABF438DDC1E4E24BAA0 /* Pods_Ohana_Sync.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8455A47223C8896B005B8742 /* Ohana Sync */ = {
+			isa = PBXGroup;
+			children = (
+				8455A48323C88F73005B8742 /* Ohana Sync.entitlements */,
+				8455A47323C8896B005B8742 /* ShareViewController.swift */,
+				8455A48023C88E0C005B8742 /* GoogleService-Info.plist */,
+				8455A47523C8896B005B8742 /* MainInterface.storyboard */,
+				8455A47823C8896B005B8742 /* Info.plist */,
+			);
+			path = "Ohana Sync";
 			sourceTree = "<group>";
 		};
 		846589A92376291D0050AE40 /* Common */ = {
@@ -161,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				84BE63C023717A45002F2C66 /* SharePhoto */,
+				8455A47223C8896B005B8742 /* Ohana Sync */,
 				84BE63BF23717A45002F2C66 /* Products */,
 				2E46D195DE4483A0A4FCC7AE /* Pods */,
 				75671C38A7073525865E291A /* Frameworks */,
@@ -171,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				84BE63BE23717A45002F2C66 /* Ohana Sync.app */,
+				8455A47123C8896B005B8742 /* Ohana Sync.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,6 +242,7 @@
 		84BE63C023717A45002F2C66 /* SharePhoto */ = {
 			isa = PBXGroup;
 			children = (
+				8455A48223C88F18005B8742 /* Ohana Sync.entitlements */,
 				846589A92376291D0050AE40 /* Common */,
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
 				84C7815023AB72A500D8F92B /* ViewControllers */,
@@ -262,6 +327,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8455A47023C8896B005B8742 /* Ohana Sync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8455A47F23C8896B005B8742 /* Build configuration list for PBXNativeTarget "Ohana Sync" */;
+			buildPhases = (
+				569A10AADC225FEC17AB9610 /* [CP] Check Pods Manifest.lock */,
+				8455A46D23C8896B005B8742 /* Sources */,
+				8455A46E23C8896B005B8742 /* Frameworks */,
+				8455A46F23C8896B005B8742 /* Resources */,
+				D9E9FE2C7F2AC66B63AF2A6E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Ohana Sync";
+			productName = "Ohana Sync";
+			productReference = 8455A47123C8896B005B8742 /* Ohana Sync.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		84BE63BD23717A45002F2C66 /* SharePhoto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84BE63D223717A48002F2C66 /* Build configuration list for PBXNativeTarget "SharePhoto" */;
@@ -272,10 +356,12 @@
 				84BE63BC23717A45002F2C66 /* Resources */,
 				2EE77920DCCD3A30F44963FD /* [CP] Embed Pods Frameworks */,
 				4788DF8677311D3B44425430 /* [CP] Copy Pods Resources */,
+				8455A47C23C8896B005B8742 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8455A47A23C8896B005B8742 /* PBXTargetDependency */,
 			);
 			name = SharePhoto;
 			productName = SharePhoto;
@@ -292,6 +378,9 @@
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = Admin;
 				TargetAttributes = {
+					8455A47023C8896B005B8742 = {
+						CreatedOnToolsVersion = 11.1;
+					};
 					84BE63BD23717A45002F2C66 = {
 						CreatedOnToolsVersion = 11.1;
 					};
@@ -311,11 +400,21 @@
 			projectRoot = "";
 			targets = (
 				84BE63BD23717A45002F2C66 /* SharePhoto */,
+				8455A47023C8896B005B8742 /* Ohana Sync */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8455A46F23C8896B005B8742 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8455A47723C8896B005B8742 /* MainInterface.storyboard in Resources */,
+				8455A48123C88E0C005B8742 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84BE63BC23717A45002F2C66 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,6 +464,28 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		569A10AADC225FEC17AB9610 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Ohana Sync-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		6DFD81F2C8B935438F19C6D2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -387,9 +508,34 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D9E9FE2C7F2AC66B63AF2A6E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ohana Sync/Pods-Ohana Sync-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ohana Sync/Pods-Ohana Sync-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ohana Sync/Pods-Ohana Sync-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8455A46D23C8896B005B8742 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8455A47423C8896B005B8742 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84BE63BA23717A45002F2C66 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -432,7 +578,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8455A47A23C8896B005B8742 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8455A47023C8896B005B8742 /* Ohana Sync */;
+			targetProxy = 8455A47923C8896B005B8742 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		8455A47523C8896B005B8742 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8455A47623C8896B005B8742 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		84BE63C723717A45002F2C66 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -452,6 +614,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8455A47D23C8896B005B8742 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F42887ECE70F9335ECF15268 /* Pods-Ohana Sync.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Ohana Sync/Ohana Sync.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P5WZ748D57;
+				INFOPLIST_FILE = "Ohana Sync/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync.Ohana-Sync";
+				PRODUCT_MODULE_NAME = OhanaSync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8455A47E23C8896B005B8742 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0CF714DA850A4111CE21596 /* Pods-Ohana Sync.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Ohana Sync/Ohana Sync.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P5WZ748D57;
+				INFOPLIST_FILE = "Ohana Sync/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync.Ohana-Sync";
+				PRODUCT_MODULE_NAME = OhanaSync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		84BE63D023717A48002F2C66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -570,7 +776,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 71F0A8DF713105CA5760F56E /* Pods-SharePhoto.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "SharePhoto/Ohana Sync.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7.0;
 				DEVELOPMENT_TEAM = P5WZ748D57;
@@ -591,7 +799,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 23F3561F6651AAA6AEF9012F /* Pods-SharePhoto.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "SharePhoto/Ohana Sync.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7.0;
 				DEVELOPMENT_TEAM = P5WZ748D57;
@@ -611,6 +821,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8455A47F23C8896B005B8742 /* Build configuration list for PBXNativeTarget "Ohana Sync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8455A47D23C8896B005B8742 /* Debug */,
+				8455A47E23C8896B005B8742 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84BE63B923717A45002F2C66 /* Build configuration list for PBXProject "SharePhoto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

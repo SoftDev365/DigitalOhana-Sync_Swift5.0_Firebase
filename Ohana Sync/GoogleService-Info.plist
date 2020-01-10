@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>489791675759-g1edlhstk24u1cohlbl7lf375b4rvj9r.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.489791675759-g1edlhstk24u1cohlbl7lf375b4rvj9r</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDyaxx11Ar0fxJqPIN4yvdBBDarWu6j1bU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>489791675759</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>io.leruths.family-media-sync.Ohana-Sync</string>
+	<key>PROJECT_ID</key>
+	<string>digital-media-frame-0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>digital-media-frame-0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:489791675759:ios:413945be0807e08aab1c9a</string>
+	<key>DATABASE_URL</key>
+	<string>https://digital-media-frame-0.firebaseio.com</string>
+</dict>
+</plist>
