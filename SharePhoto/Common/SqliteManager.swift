@@ -16,9 +16,15 @@ class SqliteManager: NSObject {
     
     static func open() -> Bool {
         do {
-            //let db = try Connection("path/to/db.sqlite3")
-            dbFilePath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-            dbFilePath += "/" + dbFileName
+
+            //dbFilePath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            //dbFilePath += "/" + dbFileName
+            
+            let fileManager = FileManager.default
+            let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.al.ohanasync")
+            dbFilePath = directory!.appendingPathComponent(dbFileName).absoluteString
+            debugPrint("======= shared Path: \(dbFilePath)")
+            
             let db = try Connection(dbFilePath)
 
             let tblPhotos = Table("photos")

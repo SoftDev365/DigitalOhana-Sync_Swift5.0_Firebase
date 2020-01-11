@@ -17,7 +17,24 @@
 		843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */; };
 		843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */; };
 		843DF2E02373D00E00F856ED /* ImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DF2373D00E00F856ED /* ImageView+Download.swift */; };
-		8455A47423C8896B005B8742 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455A47323C8896B005B8742 /* ShareViewController.swift */; };
+		843FAAD323C9D36F00A05196 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FAAD223C9D36F00A05196 /* ShareViewController.swift */; };
+		843FAAD423C9D38A00A05196 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEE012374957000361FB9 /* ActivityView.swift */; };
+		843FAAD523C9D38D00A05196 /* SqliteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE2AAB23904B9400F1BE53 /* SqliteManager.swift */; };
+		843FAAD623C9D39200A05196 /* PHModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E43238C85F20017DD06 /* PHModule.swift */; };
+		843FAAD723C9D39500A05196 /* PHModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45EB23AF192C000FCC76 /* PHModuleSync.swift */; };
+		843FAAD823C9D39700A05196 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A34C72397118500A14491 /* Global.swift */; };
+		843FAAD923C9D39C00A05196 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEDFF2374215800361FB9 /* Alerts.swift */; };
+		843FAADA23C9D39E00A05196 /* ImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DF2373D00E00F856ED /* ImageView+Download.swift */; };
+		843FAADC23C9D3AA00A05196 /* GDBModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85D472384A1710042C4DF /* GDBModule.swift */; };
+		843FAADD23C9D3AA00A05196 /* GDModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCF77B237268FE00367EAB /* GDModule.swift */; };
+		843FAADE23C9D3AA00A05196 /* GDModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840C380023B5509000EDF7A5 /* GDModuleSync.swift */; };
+		843FAADF23C9D3AA00A05196 /* GFSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E2DD22385F11300620877 /* GFSModule.swift */; };
+		843FAAE023C9D3AA00A05196 /* GFSModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F90E8B23B16A8B00A5202A /* GFSModuleSync.swift */; };
+		843FAAE123C9D3AA00A05196 /* GSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D004CD237913CD00929662 /* GSModule.swift */; };
+		843FAAE223C9D3AA00A05196 /* GSModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45E923AED593000FCC76 /* GSModuleSync.swift */; };
+		843FAAE323C9D3AA00A05196 /* SyncModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE2AAD2390B8A000F1BE53 /* SyncModule.swift */; };
+		843FAAE423C9D3E200A05196 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CBDD9423AC2A15008AE632 /* PhotoCell.swift */; };
+		8455A47423C8896B005B8742 /* OrgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455A47323C8896B005B8742 /* OrgViewController.swift */; };
 		8455A47723C8896B005B8742 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8455A47523C8896B005B8742 /* MainInterface.storyboard */; };
 		8455A47B23C8896B005B8742 /* Ohana Sync.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8455A47123C8896B005B8742 /* Ohana Sync.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8455A48123C88E0C005B8742 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8455A48023C88E0C005B8742 /* GoogleService-Info.plist */; };
@@ -89,8 +106,9 @@
 		843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDExplorerController.swift; sourceTree = "<group>"; };
 		843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
 		843DF2DF2373D00E00F856ED /* ImageView+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+Download.swift"; sourceTree = "<group>"; };
+		843FAAD223C9D36F00A05196 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		8455A47123C8896B005B8742 /* Ohana Sync.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Ohana Sync.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8455A47323C8896B005B8742 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		8455A47323C8896B005B8742 /* OrgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgViewController.swift; sourceTree = "<group>"; };
 		8455A47623C8896B005B8742 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		8455A47823C8896B005B8742 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8455A48023C88E0C005B8742 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -177,7 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				8455A48323C88F73005B8742 /* Ohana Sync.entitlements */,
-				8455A47323C8896B005B8742 /* ShareViewController.swift */,
+				843FAAD223C9D36F00A05196 /* ShareViewController.swift */,
+				8455A47323C8896B005B8742 /* OrgViewController.swift */,
 				8455A48023C88E0C005B8742 /* GoogleService-Info.plist */,
 				8455A47523C8896B005B8742 /* MainInterface.storyboard */,
 				8455A47823C8896B005B8742 /* Info.plist */,
@@ -532,7 +551,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8455A47423C8896B005B8742 /* ShareViewController.swift in Sources */,
+				843FAAD323C9D36F00A05196 /* ShareViewController.swift in Sources */,
+				8455A47423C8896B005B8742 /* OrgViewController.swift in Sources */,
+				843FAAD923C9D39C00A05196 /* Alerts.swift in Sources */,
+				843FAADD23C9D3AA00A05196 /* GDModule.swift in Sources */,
+				843FAADF23C9D3AA00A05196 /* GFSModule.swift in Sources */,
+				843FAAE023C9D3AA00A05196 /* GFSModuleSync.swift in Sources */,
+				843FAADC23C9D3AA00A05196 /* GDBModule.swift in Sources */,
+				843FAAD723C9D39500A05196 /* PHModuleSync.swift in Sources */,
+				843FAAD423C9D38A00A05196 /* ActivityView.swift in Sources */,
+				843FAAD523C9D38D00A05196 /* SqliteManager.swift in Sources */,
+				843FAAE423C9D3E200A05196 /* PhotoCell.swift in Sources */,
+				843FAAE223C9D3AA00A05196 /* GSModuleSync.swift in Sources */,
+				843FAAD623C9D39200A05196 /* PHModule.swift in Sources */,
+				843FAAE323C9D3AA00A05196 /* SyncModule.swift in Sources */,
+				843FAADA23C9D39E00A05196 /* ImageView+Download.swift in Sources */,
+				843FAAD823C9D39700A05196 /* Global.swift in Sources */,
+				843FAAE123C9D3AA00A05196 /* GSModule.swift in Sources */,
+				843FAADE23C9D3AA00A05196 /* GDModuleSync.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +658,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = "Ohana Sync/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -644,6 +681,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = "Ohana Sync/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -783,7 +821,7 @@
 				CURRENT_PROJECT_VERSION = 7.0;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = SharePhoto/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -806,7 +844,7 @@
 				CURRENT_PROJECT_VERSION = 7.0;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = SharePhoto/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
