@@ -144,6 +144,14 @@ class PhotoCell: UICollectionViewCell {
         })
     }
     
+    open func setLocalFile(_ imgPath: String) {
+        self.setEmpty()
+
+        if let image = UIImage(contentsOfFile: imgPath) {
+            self.ivPhoto?.image = image
+        }
+    }
+    
     open func setLocalAsset(_ asset: PHAsset, width:CGFloat) {
         self.setEmpty()
         

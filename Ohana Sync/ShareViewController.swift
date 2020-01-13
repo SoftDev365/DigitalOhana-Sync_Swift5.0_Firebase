@@ -19,8 +19,8 @@ private let reuseIdentifier = "PhotoCell"
 
 class ShareViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
     
-    var albumPhotos: [PHAsset]?
-    
+    var albumPhotos: [Any]?
+
     @IBOutlet weak var collectionView: UICollectionView!
     let activityView = ActivityView()
 
@@ -81,8 +81,10 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                         }
                     } else {
                         debugPrint("can't find photo named: \(fileName)")
-                        //image = UIImage(contentsOfFile: someURl.path)
+                        //let image = UIImage(contentsOfFile: someURl.path)
+                        self.albumPhotos! += [imageFilePath]
                     }
+                    
                     break
                 }
             }
@@ -150,11 +152,18 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
     func getLocalCell(_ cell: PhotoCell, indexPath: IndexPath) -> UICollectionViewCell {
         guard let photoList = self.albumPhotos else { return cell }
 
-        let asset = photoList[indexPath.row]
+        let photoItem = photoList[indexPath.row]
 
-        let width = UIScreen.main.scale*cell.frame.size.width
-        cell.setLocalAsset(asset, width: width)
-        cell.setSelectable(false)
+        if photoItem is PHAsset {
+            let asset = photoItem as! PHAsset
+            let width = UIScreen.main.scale*cell.frame.size.width
+            cell.setLocalAsset(asset, width: width)
+            cell.setSelectable(false)
+        } else if photoItem is String {
+            let filePath = photoItem as! String
+            cell.setLocalFile(filePath)
+            cell.setSelectable(false)
+        }
 
         return cell
     }
