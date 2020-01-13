@@ -17,42 +17,11 @@ import MobileCoreServices
 
 private let reuseIdentifier = "PhotoCell"
 
-extension PHAsset {
-
-    func getURL(completionHandler : @escaping ((_ responseURL : URL?) -> Void)){
-        if self.mediaType == .image {
-            let options: PHContentEditingInputRequestOptions = PHContentEditingInputRequestOptions()
-            options.canHandleAdjustmentData = {(adjustmeta: PHAdjustmentData) -> Bool in
-                return true
-            }
-            self.requestContentEditingInput(with: options, completionHandler: {(contentEditingInput: PHContentEditingInput?, info: [AnyHashable : Any]) -> Void in
-                if contentEditingInput != nil {
-                    completionHandler(contentEditingInput!.fullSizeImageURL as URL?)
-                }
-            })
-        } else if self.mediaType == .video {
-            let options: PHVideoRequestOptions = PHVideoRequestOptions()
-            options.version = .original
-            PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
-                if let urlAsset = asset as? AVURLAsset {
-                    let localVideoUrl: URL = urlAsset.url as URL
-                    completionHandler(localVideoUrl)
-                } else {
-                    completionHandler(nil)
-                }
-            })
-        }
-    }
-}
-
 class ShareViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
     
     var albumPhotos: [PHAsset]?
-    var drivePhotos: [GTLRDrive_File]?
     
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var btnToolSelectAll: UIBarButtonItem!
-    
     let activityView = ActivityView()
 
     override open var shouldAutorotate: Bool {
@@ -113,7 +82,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                     } else {
                         debugPrint("can't find photo named: \(fileName)")
                         //image = UIImage(contentsOfFile: someURl.path)
-                    }                    
+                    }
                     break
                 }
             }
@@ -141,19 +110,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
             }
         }
     }
-    
-    func filterUploadedDriveFiles(files: [GTLRDrive_File]?) {
-        self.drivePhotos = []
 
-        if let files = files {
-            for file in files {
-                if SyncModule.checkPhotoIsUploaded(driveFile: file) == false {
-                    self.drivePhotos! += [file]
-                }
-            }
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -202,16 +159,6 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         return cell
     }
     
-    func getDriveCell(_ cell: PhotoCell, indexPath: IndexPath) -> UICollectionViewCell {
-        guard let photoList = self.drivePhotos else { return cell }
-
-        let file = photoList[indexPath.row]
-        cell.setDriveFile(file)
-        cell.setSelectable(false)
-
-        return cell
-    }
-
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
         
