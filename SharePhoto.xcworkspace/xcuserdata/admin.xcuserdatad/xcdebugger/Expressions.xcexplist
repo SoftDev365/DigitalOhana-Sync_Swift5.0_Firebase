@@ -3,12 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "specialized static SqliteManager.open():SqliteManager.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "itExists">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
       </ContextState>
       <ContextState
          contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
@@ -31,6 +26,14 @@
          <PersistentStrings>
             <PersistentString
                value = "driveFile.imageMediaMetadata!">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShareViewController.reloadCollectionView():ShareViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.collectionView">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -97,15 +100,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GalleryVC.recalcZoomScaleOfPhotos():GalleryVC.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.scrView.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "self.view.bounds">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
       </ContextState>
       <ContextState
          contextName = "HomeVC.selectOrDeleselctPhoto(_:):HomeVC.swift">
@@ -122,15 +117,23 @@
                value = "image.size.width">
             </PersistentString>
             <PersistentString
-               value = "size.width">
+               value = "image.width">
             </PersistentString>
             <PersistentString
-               value = "image.width">
+               value = "size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
+         contextName = "GalleryVC.recalcZoomScaleOfPhotos():GalleryVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrView.bounds">
+            </PersistentString>
+            <PersistentString
+               value = "self.view.bounds">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "ImageZoomView.recalcZoomScale():ImageZoomView.swift">
@@ -375,7 +378,12 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
+         contextName = "specialized static SqliteManager.open():SqliteManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "itExists">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>
