@@ -8,7 +8,6 @@
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)io.leruths.family-media-sync.Ohana-Sync</string>
 		<string>$(AppIdentifierPrefix)io.leruths.family-media-sync</string>
 	</array>
 </dict>

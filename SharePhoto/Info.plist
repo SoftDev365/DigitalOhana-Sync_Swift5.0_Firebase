@@ -31,8 +31,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>CLIENT_ID</key>
-	<string>440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu.apps.googleusercontent.com</string>
 	<key>FirebaseScreenReportingEnabled</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -45,8 +43,6 @@
 	<string>This app want to see all photo album pictures</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.440858566498-bfqlv2jcuhkc5rbdeurdj1ccngeprmhu</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

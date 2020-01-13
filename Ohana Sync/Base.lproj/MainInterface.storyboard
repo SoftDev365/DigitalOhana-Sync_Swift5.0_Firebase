@@ -131,6 +131,9 @@
                                     <constraint firstAttribute="height" constant="32" id="cbh-EU-cbK"/>
                                 </constraints>
                                 <state key="normal" title="Upload"/>
+                                <connections>
+                                    <action selector="onBtnUpload:" destination="wn9-SC-RTK" eventType="touchUpInside" id="Rz4-Uf-3Ue"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -150,6 +153,7 @@
                     <toolbarItems/>
                     <connections>
                         <outlet property="collectionView" destination="3Yj-0b-iAt" id="DU6-bx-EG4"/>
+                        <outlet property="lblTitle" destination="WyU-c4-avl" id="Dij-ca-NPQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WaN-Tz-HK8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

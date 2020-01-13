@@ -12,6 +12,7 @@
 		840C380123B5509100EDF7A5 /* GDModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840C380023B5509000EDF7A5 /* GDModuleSync.swift */; };
 		840EEE002374215900361FB9 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEDFF2374215800361FB9 /* Alerts.swift */; };
 		840EEE022374957000361FB9 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840EEE012374957000361FB9 /* ActivityView.swift */; };
+		8421D58823CC859F00C62D8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63CA23717A48002F2C66 /* Assets.xcassets */; };
 		8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425689E237D475C00F4CD7A /* ImageZoomView.swift */; };
 		842568A1237D4C1100F4CD7A /* GSGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842568A0237D4C1100F4CD7A /* GSGalleryVC.swift */; };
 		843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */; };
@@ -430,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8455A47723C8896B005B8742 /* MainInterface.storyboard in Resources */,
+				8421D58823CC859F00C62D8D /* Assets.xcassets in Resources */,
 				8455A48123C88E0C005B8742 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

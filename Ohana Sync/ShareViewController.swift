@@ -1,9 +1,9 @@
 //
-//  LocalAlbumVC.swift
+//  ShareViewController.swift
 //  iPhone Family Album
 //
-//  Created by Admin on 11/22/19.
-//  Copyright © 2019 Admin. All rights reserved.
+//  Created by Admin on 12/9/2020.
+//  Copyright © 2020 Admin. All rights reserved.
 //
 
 import UIKit
@@ -22,8 +22,13 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
     var albumPhotos: [Any]?
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var lblTitle: UILabel!
+    
+    var autoLogin: Bool = true
     let activityView = ActivityView()
 
+    static var isAlreadyLaunchedOnce = false
+    
     override open var shouldAutorotate: Bool {
         return false
     }
@@ -36,6 +41,30 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         super.viewDidLoad()
 
         getSharedImages()
+        
+        if ShareViewController.isAlreadyLaunchedOnce == false {
+            // Override point for customization after application launch.
+            FirebaseApp.configure()
+            
+            ShareViewController.isAlreadyLaunchedOnce = true
+        }
+        
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+
+        // Configure Google Sign In
+        GIDSignIn.sharedInstance()?.delegate = self
+
+        // GIDSignIn.sharedInstance()?.signIn() will throw an exception if not set.
+        GIDSignIn.sharedInstance()?.uiDelegate = self
+        
+        GIDSignIn.sharedInstance()?.scopes = [kGTLRAuthScopeDrive, kGTLRAuthScopeDriveFile]
+
+        activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+        
+        // Attempt to renew a previously authenticated session without forcing the
+        // user to go through the OAuth authentication flow.
+        // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
+        GIDSignIn.sharedInstance()?.signInSilently()
     }
 
     // Key is the matched asset's original file name without suffix. E.g. IMG_193
@@ -96,8 +125,12 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         let extensionItems = extensionContext?.inputItems as! [NSExtensionItem]
 
+        lblTitle.text = ""
+        
         for extensionItem in extensionItems {
             if let itemProviders = extensionItem.attachments {
+                lblTitle.text = "\(itemProviders.count) photos are ready to upload"
+                
                 for itemProvider in itemProviders {
                     if itemProvider.hasItemConformingToTypeIdentifier(kUTTypeJPEG as String) {
                         itemProvider.loadItem(forTypeIdentifier: kUTTypeJPEG as String, options: nil, completionHandler: { data, error in
@@ -111,6 +144,8 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                 }
             }
         }
+        
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -193,7 +228,60 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         return 5.0
     }
 
-    @IBAction func onBtnDone(_ sender: Any) {
+    @IBAction func onBtnUpload(_ sender: Any) {
         
     }
 }
+
+extension ShareViewController: GIDSignInDelegate, GIDSignInUIDelegate {
+    // MARK: - GIDSignInDelegate
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        // A nil error indicates a successful login
+        if error == nil {
+            guard let authentication = user.authentication else { return }
+            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
+            
+            // Include authorization headers/values with each Drive API request.
+            GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
+            
+            let email = user!.profile.email
+            Global.user = user
+            Global.email = email
+     
+            GFSModule.registerUser()
+
+            Auth.auth().signIn(with: credential) { (authResult, error) in
+                self.activityView.hideActivitiIndicator()
+
+                if error != nil {
+                    return
+                }
+                
+                // User is signed in
+                debugPrint("----Firebase signin complete-----");
+                
+                //self.initRootList()
+            }
+            
+            //btnGoogleSignIn.isHidden = true
+        } else if self.autoLogin == true {
+            self.autoLogin = false
+            GIDSignIn.sharedInstance()?.signIn()
+        } else {
+            activityView.hideActivitiIndicator()
+            
+            GDModule.service.authorizer = nil
+            Global.user = nil
+            Global.email = nil
+            
+            debugPrint("----Firebase signin failed-----");
+        }
+    }
+
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
+    }
+}
+
