@@ -39,13 +39,36 @@ class SignInViewController: UIViewController {
 
         activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
         
+        do {
+            try Auth.auth().useUserAccessGroup("P5WZ748D57.family-media-sync.SharedItems")
+        } catch let error as NSError {
+            print("--- Error changing user access group: %@", error)
+        }
+        
         // Attempt to renew a previously authenticated session without forcing the
         // user to go through the OAuth authentication flow.
         // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
-        GIDSignIn.sharedInstance()?.signInSilently()
+        //GIDSignIn.sharedInstance()?.signInSilently()
+        
+        Auth.auth().signInAnonymously { (authResult, error) in
+            self.activityView.hideActivitiIndicator()
+            
+            if error != nil {
+                // User is signed in
+                debugPrint("---- signInAnonymously failed : \(error)-----");
+                return
+            }
+            
+            var user = Auth.auth().currentUser
+            debugPrint("User is \(user)")
+
+            // User is signed in
+            debugPrint("----signInAnonymously complete-----");
+
+            //self.initRootList()
+        }
         
         replaceBackButtonToSignout()
-        
         self.navigationController?.isNavigationBarHidden = true   
     }
     

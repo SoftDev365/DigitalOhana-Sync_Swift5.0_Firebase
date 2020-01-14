@@ -41,6 +41,9 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         super.viewDidLoad()
 
         getSharedImages()
+    }
+    
+    func trySignIn() {
         
         if ShareViewController.isAlreadyLaunchedOnce == false {
             // Override point for customization after application launch.
@@ -58,13 +61,40 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         GIDSignIn.sharedInstance()?.uiDelegate = self
         
         GIDSignIn.sharedInstance()?.scopes = [kGTLRAuthScopeDrive, kGTLRAuthScopeDriveFile]
-
+        
         activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+        
+        debugPrint("---- use user access group-----");
+        
+        do {
+            try Auth.auth().useUserAccessGroup("P5WZ748D57.family-media-sync.SharedItems")
+        } catch let error as NSError {
+            print("====Error changing user access group: %@", error)
+        }
         
         // Attempt to renew a previously authenticated session without forcing the
         // user to go through the OAuth authentication flow.
         // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
-        GIDSignIn.sharedInstance()?.signInSilently()
+        
+        //GIDSignIn.sharedInstance()?.signInSilently()
+        debugPrint("---- signInAnonymously-----");
+        Auth.auth().signInAnonymously { (authResult, error) in
+            self.activityView.hideActivitiIndicator()
+
+            var user = Auth.auth().currentUser
+            debugPrint("User is \(user)")
+            
+            if error != nil {
+                // User is signed in
+                debugPrint("---- signInAnonymously failed-----");
+                return
+            }
+
+            // User is signed in
+            debugPrint("----signInAnonymously complete-----");
+
+            //self.initRootList()
+        }
     }
 
     // Key is the matched asset's original file name without suffix. E.g. IMG_193
@@ -95,13 +125,13 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         } else if let url = imageItem as? NSURL {
              // Prefix check: image is shared from Photos app
             if let imageFilePath = url.path, imageFilePath.hasPrefix("/var/mobile/Media/") {
-                debugPrint("==== image file path: \(imageFilePath)")
+                //debugPrint("==== image file path: \(imageFilePath)")
                 
                 for component in imageFilePath.components(separatedBy:"/") where component.contains("IMG_") {
                     let fileName = component.components(separatedBy:".").first!
-                    debugPrint("==== share name: \(fileName)")
+                    //debugPrint("==== share name: \(fileName)")
                     if let asset = imageAssetDictionary[fileName] {
-                        debugPrint("added to list")
+                        //debugPrint("added to list")
                         //self.albumPhotos!.append(asset)
                         self.albumPhotos! += [asset]
                         
@@ -109,7 +139,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                             self.reloadCollectionView()
                         }
                     } else {
-                        debugPrint("can't find photo named: \(fileName)")
+                        //debugPrint("can't find photo named: \(fileName)")
                         //let image = UIImage(contentsOfFile: someURl.path)
                         self.albumPhotos! += [imageFilePath]
                     }
@@ -144,8 +174,6 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                 }
             }
         }
-        
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -164,6 +192,8 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
 
         self.collectionView.collectionViewLayout.invalidateLayout()
         //self.perform(#selector(reloadCollectionView), with: nil, afterDelay: 0.5)
+        
+        self.trySignIn()
     }
     
     @objc func reloadCollectionView() {
@@ -250,7 +280,9 @@ extension ShareViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             Global.email = email
      
             GFSModule.registerUser()
-
+            
+            //debugPrint("----Firebase auth sign in start-----");
+            
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 self.activityView.hideActivitiIndicator()
 
@@ -268,6 +300,9 @@ extension ShareViewController: GIDSignInDelegate, GIDSignInUIDelegate {
         } else if self.autoLogin == true {
             self.autoLogin = false
             GIDSignIn.sharedInstance()?.signIn()
+            
+            debugPrint("----Firebase auto login fail------");
+            debugPrint("----Firebase start manual login------");
         } else {
             activityView.hideActivitiIndicator()
             

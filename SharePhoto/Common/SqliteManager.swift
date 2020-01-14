@@ -21,7 +21,7 @@ class SqliteManager: NSObject {
             //dbFilePath += "/" + dbFileName
             
             let fileManager = FileManager.default
-            let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.al.ohanasync")
+            let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.io.leruths.ohanasync")
             dbFilePath = directory!.appendingPathComponent(dbFileName).absoluteString
             debugPrint("======= shared Path: \(dbFilePath)")
             

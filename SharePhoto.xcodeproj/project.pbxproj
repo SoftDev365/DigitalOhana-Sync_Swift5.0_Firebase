@@ -657,6 +657,7 @@
 			baseConfigurationReference = F42887ECE70F9335ECF15268 /* Pods-Ohana Sync.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Ohana Sync/Ohana Sync.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = "Ohana Sync/Info.plist";
@@ -669,9 +670,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync.Ohana-Sync";
 				PRODUCT_MODULE_NAME = OhanaSync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -680,6 +682,7 @@
 			baseConfigurationReference = D0CF714DA850A4111CE21596 /* Pods-Ohana Sync.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Ohana Sync/Ohana Sync.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = "Ohana Sync/Info.plist";
@@ -692,9 +695,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync.Ohana-Sync";
 				PRODUCT_MODULE_NAME = OhanaSync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -819,6 +823,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "SharePhoto/Ohana Sync.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7.0;
 				DEVELOPMENT_TEAM = P5WZ748D57;
@@ -830,6 +835,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync";
 				PRODUCT_NAME = "Ohana Sync";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -842,6 +848,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "SharePhoto/Ohana Sync.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7.0;
 				DEVELOPMENT_TEAM = P5WZ748D57;
@@ -853,6 +860,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "io.leruths.family-media-sync";
 				PRODUCT_NAME = "Ohana Sync";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

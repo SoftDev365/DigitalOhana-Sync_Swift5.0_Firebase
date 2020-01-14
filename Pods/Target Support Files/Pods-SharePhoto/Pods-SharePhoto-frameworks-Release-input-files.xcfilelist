@@ -1,12 +1,12 @@
 ${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-frameworks.sh
-${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC-iOS10.0/openssl_grpc.framework
-${BUILT_PRODUCTS_DIR}/GTMSessionFetcher-iOS10.0/GTMSessionFetcher.framework
-${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST-iOS10.0/GoogleAPIClientForREST.framework
-${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac-iOS10.0/GoogleToolboxForMac.framework
-${BUILT_PRODUCTS_DIR}/GoogleUtilities-iOS10.0/GoogleUtilities.framework
-${BUILT_PRODUCTS_DIR}/Protobuf-iOS10.0/protobuf.framework
-${BUILT_PRODUCTS_DIR}/SQLite.swift-iOS10.0/SQLite.framework
-${BUILT_PRODUCTS_DIR}/gRPC-C++-iOS10.0/grpcpp.framework
-${BUILT_PRODUCTS_DIR}/gRPC-Core-iOS10.0/grpc.framework
-${BUILT_PRODUCTS_DIR}/leveldb-library-iOS10.0/leveldb.framework
-${BUILT_PRODUCTS_DIR}/nanopb-iOS10.0/nanopb.framework
+${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework
+${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework
+${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework
+${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework
+${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework
+${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework
+${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework
+${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework
+${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework
+${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework
+${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework

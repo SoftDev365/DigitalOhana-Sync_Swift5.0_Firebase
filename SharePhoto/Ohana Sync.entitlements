@@ -4,10 +4,11 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.al.ohanasync</string>
+		<string>group.io.leruths.ohanasync</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
+		<string>$(AppIdentifierPrefix)family-media-sync.SharedItems</string>
 		<string>$(AppIdentifierPrefix)io.leruths.family-media-sync</string>
 	</array>
 </dict>
