@@ -28,6 +28,8 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //GIDSignIn.sharedInstance()?.setValue("P5WZ748D57.family-media-sync.SharedItems" forKey: "_keychainName")
 
         // Configure Google Sign In
         GIDSignIn.sharedInstance()?.delegate = self
@@ -39,17 +41,26 @@ class SignInViewController: UIViewController {
 
         activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
         
+        if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
+            debugPrint("---- has auth in keychain -----");
+        } else {
+            debugPrint("---- no auth in keychain -----");
+        }
+        
+        
+        /*
         do {
             try Auth.auth().useUserAccessGroup("P5WZ748D57.family-media-sync.SharedItems")
         } catch let error as NSError {
             print("--- Error changing user access group: %@", error)
-        }
+        }*/
         
         // Attempt to renew a previously authenticated session without forcing the
         // user to go through the OAuth authentication flow.
         // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
-        //GIDSignIn.sharedInstance()?.signInSilently()
+        GIDSignIn.sharedInstance()?.signInSilently()
         
+        /*
         Auth.auth().signInAnonymously { (authResult, error) in
             self.activityView.hideActivitiIndicator()
             
@@ -59,14 +70,18 @@ class SignInViewController: UIViewController {
                 return
             }
             
+            debugPrint("----signInAnonymously complete-----");
+            
             var user = Auth.auth().currentUser
             debugPrint("User is \(user)")
-
+            
+            let userid = user!.uid
             // User is signed in
-            debugPrint("----signInAnonymously complete-----");
+            
+            debugPrint("UserID is \(userid)")
 
             //self.initRootList()
-        }
+        }*/
         
         replaceBackButtonToSignout()
         self.navigationController?.isNavigationBarHidden = true   
@@ -124,10 +139,16 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
      
             GFSModule.registerUser()
 
+            /*
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 self.activityView.hideActivitiIndicator()
-
+                
+                var user = Auth.auth().currentUser
+                debugPrint("User is \(user)")
+                
                 if error != nil {
+                    // User is signed in
+                    debugPrint("---- signIn with credential failed-----");
                     return
                 }
                 
@@ -135,7 +156,9 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 debugPrint("----Firebase signin complete-----");
                 
                 self.initRootList()
-            }
+            }*/
+            
+            self.initRootList()
             
             //btnGoogleSignIn.isHidden = true
         } else {

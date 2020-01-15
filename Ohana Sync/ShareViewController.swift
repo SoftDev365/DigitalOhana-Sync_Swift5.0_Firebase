@@ -14,6 +14,7 @@ import Firebase
 import FirebaseStorage
 import Photos
 import MobileCoreServices
+import SafariServices
 
 private let reuseIdentifier = "PhotoCell"
 
@@ -42,7 +43,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
 
         getSharedImages()
     }
-    
+
     func trySignIn() {
         
         if ShareViewController.isAlreadyLaunchedOnce == false {
@@ -62,21 +63,31 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         
         GIDSignIn.sharedInstance()?.scopes = [kGTLRAuthScopeDrive, kGTLRAuthScopeDriveFile]
         
-        activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+        if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
+            debugPrint("---- has auth in keychain -----");
+            //GIDSignIn.sharedInstance()?.signInSilently()
+        } else {
+            debugPrint("---- no auth in keychain -----");
+        }
+        
+        //activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
         
         debugPrint("---- use user access group-----");
         
+        /*
         do {
             try Auth.auth().useUserAccessGroup("P5WZ748D57.family-media-sync.SharedItems")
         } catch let error as NSError {
             print("====Error changing user access group: %@", error)
-        }
+        }*/
         
         // Attempt to renew a previously authenticated session without forcing the
         // user to go through the OAuth authentication flow.
         // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
         
-        //GIDSignIn.sharedInstance()?.signInSilently()
+        
+        
+        /*
         debugPrint("---- signInAnonymously-----");
         Auth.auth().signInAnonymously { (authResult, error) in
             self.activityView.hideActivitiIndicator()
@@ -89,12 +100,16 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                 debugPrint("---- signInAnonymously failed-----");
                 return
             }
+            
+            let email = user!.email
+            let userid = user!.uid
+            let name = user!.displayName
 
             // User is signed in
             debugPrint("----signInAnonymously complete-----");
 
             //self.initRootList()
-        }
+        }*/
     }
 
     // Key is the matched asset's original file name without suffix. E.g. IMG_193
@@ -260,6 +275,10 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
 
     @IBAction func onBtnUpload(_ sender: Any) {
         
+        let name = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
+        
+        debugPrint("----app name: \(name)")
+        GIDSignIn.sharedInstance()?.signIn()
     }
 }
 

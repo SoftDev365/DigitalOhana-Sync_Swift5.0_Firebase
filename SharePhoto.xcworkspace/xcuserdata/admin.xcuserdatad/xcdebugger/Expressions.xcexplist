@@ -3,7 +3,12 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
+         contextName = "specialized static SqliteManager.open():SqliteManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "itExists">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "GSExplorerController.tableView(_:didSelectRowAt:):GSExplorerController.swift">
@@ -72,6 +77,17 @@
          contextName = "closure #1 in closure #1 in static GSModule.getImageFileList(_:onCompleted:):GSModule.swift">
       </ContextState>
       <ContextState
+         contextName = "closure #1 in SignInViewController.viewDidLoad():SignInViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user!.uid">
+            </PersistentString>
+            <PersistentString
+               value = "user!.email">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "LocalAlbumVC.getDriveCell(_:indexPath:):LocalAlbumVC.swift">
       </ContextState>
       <ContextState
@@ -100,7 +116,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
+         contextName = "GalleryVC.recalcZoomScaleOfPhotos():GalleryVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.scrView.bounds">
+            </PersistentString>
+            <PersistentString
+               value = "self.view.bounds">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "HomeVC.selectOrDeleselctPhoto(_:):HomeVC.swift">
@@ -117,23 +141,15 @@
                value = "image.size.width">
             </PersistentString>
             <PersistentString
-               value = "image.width">
+               value = "size.width">
             </PersistentString>
             <PersistentString
-               value = "size.width">
+               value = "image.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "GalleryVC.recalcZoomScaleOfPhotos():GalleryVC.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.scrView.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "self.view.bounds">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "GalleryVC.relayoutImageItemViews(_:):GalleryVC.swift">
       </ContextState>
       <ContextState
          contextName = "ImageZoomView.recalcZoomScale():ImageZoomView.swift">
@@ -348,6 +364,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "closure #1 in ShareViewController.trySignIn():ShareViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user.email">
+            </PersistentString>
+            <PersistentString
+               value = "user.uid">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in LocalAlbumVC.fetchFamilyAlbumPhotos():LocalAlbumVC.swift">
       </ContextState>
       <ContextState
@@ -386,12 +413,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "specialized static SqliteManager.open():SqliteManager.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "itExists">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "GSExplorerController.tableView(_:canEditRowAt:):GSExplorerController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -24,8 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        
+
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().shouldFetchBasicProfile = true
         
         if( SqliteManager.open() ) {
             let files = SqliteManager.getAllFileInfos()

@@ -14,6 +14,10 @@
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>io.leruths.family-media-sync</string>
+	<key>CFBundleName</key>
+	<string>Ohana Sync</string>
+	<key>CFBundleDisplayName</key>
+	<string>Ohana Sync</string>
 	<key>PROJECT_ID</key>
 	<string>digital-media-frame-0</string>
 	<key>STORAGE_BUCKET</key>
