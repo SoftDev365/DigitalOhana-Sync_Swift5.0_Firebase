@@ -41,7 +41,33 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        getSharedImages()
+        accessToPHLibrary()
+    }
+    
+    func accessToPHLibrary() {
+        let status = PHPhotoLibrary.authorizationStatus()
+
+        if (status == PHAuthorizationStatus.authorized) {
+            // Access has been granted.
+            self.getSharedImages()
+        }
+        else if (status == PHAuthorizationStatus.denied) {
+            // Access has been denied.
+        }
+        else if (status == PHAuthorizationStatus.notDetermined) {
+            // Access has not been determined.
+            PHPhotoLibrary.requestAuthorization({ (newStatus) in
+                if (newStatus == PHAuthorizationStatus.authorized) {
+                    self.performSelector(onMainThread: #selector(self.getSharedImages), with: nil, waitUntilDone: false)
+                }
+                else {
+
+                }
+            })
+        }
+        else if (status == PHAuthorizationStatus.restricted) {
+            // Restricted access - normally won't happen.
+        }
     }
 
     func trySignIn() {
@@ -71,22 +97,16 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         }
         
         //activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
-        
         debugPrint("---- use user access group-----");
-        
         /*
         do {
             try Auth.auth().useUserAccessGroup("P5WZ748D57.family-media-sync.SharedItems")
         } catch let error as NSError {
             print("====Error changing user access group: %@", error)
         }*/
-        
         // Attempt to renew a previously authenticated session without forcing the
         // user to go through the OAuth authentication flow.
         // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
-        
-        
-        
         /*
         debugPrint("---- signInAnonymously-----");
         Auth.auth().signInAnonymously { (authResult, error) in
@@ -138,7 +158,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         } else if let data = imageItem as? NSData {
             // handle NSData
         } else if let url = imageItem as? NSURL {
-             // Prefix check: image is shared from Photos app
+            // Prefix check: image is shared from Photos app
             if let imageFilePath = url.path, imageFilePath.hasPrefix("/var/mobile/Media/") {
                 //debugPrint("==== image file path: \(imageFilePath)")
                 
@@ -165,7 +185,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         }
     }
     
-    func getSharedImages() {
+    @objc func getSharedImages() {
         self.albumPhotos = []
         
         let extensionItems = extensionContext?.inputItems as! [NSExtensionItem]
