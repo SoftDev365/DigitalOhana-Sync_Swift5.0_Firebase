@@ -28,8 +28,6 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //GIDSignIn.sharedInstance()?.setValue("P5WZ748D57.family-media-sync.SharedItems" forKey: "_keychainName")
 
         // Configure Google Sign In
         GIDSignIn.sharedInstance()?.delegate = self
@@ -38,29 +36,27 @@ class SignInViewController: UIViewController {
         GIDSignIn.sharedInstance()?.uiDelegate = self
         
         GIDSignIn.sharedInstance()?.scopes = [kGTLRAuthScopeDrive, kGTLRAuthScopeDriveFile]
-
-        activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
         
+        //GIDSignIn.sharedInstance()?.setValue("P5WZ748D57.family-media-sync.SharedItems" forKey: "_keychainName")
         if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
             debugPrint("---- has auth in keychain -----");
+            
+            activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+            // Attempt to renew a previously authenticated session without forcing the
+            // user to go through the OAuth authentication flow.
+            // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
+            GIDSignIn.sharedInstance()?.signInSilently()
         } else {
             debugPrint("---- no auth in keychain -----");
         }
-        
-        
+
         /*
         do {
             try Auth.auth().useUserAccessGroup("P5WZ748D57.family-media-sync.SharedItems")
         } catch let error as NSError {
             print("--- Error changing user access group: %@", error)
-        }*/
-        
-        // Attempt to renew a previously authenticated session without forcing the
-        // user to go through the OAuth authentication flow.
-        // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
-        GIDSignIn.sharedInstance()?.signInSilently()
-        
-        /*
+        }
+
         Auth.auth().signInAnonymously { (authResult, error) in
             self.activityView.hideActivitiIndicator()
             
@@ -71,13 +67,11 @@ class SignInViewController: UIViewController {
             }
             
             debugPrint("----signInAnonymously complete-----");
-            
             var user = Auth.auth().currentUser
             debugPrint("User is \(user)")
             
             let userid = user!.uid
             // User is signed in
-            
             debugPrint("UserID is \(userid)")
 
             //self.initRootList()
@@ -109,6 +103,15 @@ class SignInViewController: UIViewController {
         //GIDSignIn.sharedInstance()?.signOut()
     }
     
+    func registerUserForShareExtension(userid: String, email: String) {
+        if let userDefaults = UserDefaults(suiteName: "group.io.leruths.ohanasync") {
+            userDefaults.set(userid as AnyObject, forKey: "userid")
+            userDefaults.set(email as AnyObject, forKey: "email")
+            userDefaults.set(true, forKey: "remember")
+            userDefaults.synchronize()
+        }
+    }
+    
     func initRootList() {
         
         // Safe Present
@@ -122,26 +125,27 @@ class SignInViewController: UIViewController {
 }
 
 extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
+
     // MARK: - GIDSignInDelegate
-    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         // A nil error indicates a successful login
         if error == nil {
-            guard let authentication = user.authentication else { return }
-            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
-            
             // Include authorization headers/values with each Drive API request.
             GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
             
             let email = user!.profile.email
             Global.user = user
             Global.email = email
-     
+
             GFSModule.registerUser()
 
+            self.registerUserForShareExtension(userid: user!.userID, email: email!)
+
             /*
+            guard let authentication = user.authentication else { return }
+            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
             Auth.auth().signIn(with: credential) { (authResult, error) in
-                self.activityView.hideActivitiIndicator()
+                //self.activityView.hideActivitiIndicator()
                 
                 var user = Auth.auth().currentUser
                 debugPrint("User is \(user)")
@@ -158,9 +162,8 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 self.initRootList()
             }*/
             
+            self.activityView.hideActivitiIndicator()
             self.initRootList()
-            
-            //btnGoogleSignIn.isHidden = true
         } else {
             activityView.hideActivitiIndicator()
             

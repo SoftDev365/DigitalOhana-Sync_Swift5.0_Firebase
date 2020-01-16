@@ -42,6 +42,19 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         super.viewDidLoad()
 
         accessToPHLibrary()
+        
+        self.getSignInUserInfo()
+    }
+    
+    func getSignInUserInfo() {
+        if let userDefaults = UserDefaults(suiteName: "group.io.leruths.ohanasync") {
+
+            let bRemember = userDefaults.bool(forKey: "remember")
+            let userid = userDefaults.string(forKey: "userid")
+            let email = userDefaults.string(forKey: "email")
+            
+            debugPrint("--- sign in remember : \(bRemember), \(userid), \(email)")
+        }
     }
     
     func accessToPHLibrary() {
