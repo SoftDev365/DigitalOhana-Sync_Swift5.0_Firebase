@@ -103,10 +103,11 @@ class SignInViewController: UIViewController {
         //GIDSignIn.sharedInstance()?.signOut()
     }
     
-    func registerUserForShareExtension(userid: String, email: String) {
+    func registerUserForShareExtension(userid: String, email: String, username: String) {
         if let userDefaults = UserDefaults(suiteName: "group.io.leruths.ohanasync") {
             userDefaults.set(userid as AnyObject, forKey: "userid")
             userDefaults.set(email as AnyObject, forKey: "email")
+            userDefaults.set(username as AnyObject, forKey: "username")
             userDefaults.set(true, forKey: "remember")
             userDefaults.synchronize()
         }
@@ -141,7 +142,7 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
 
             GFSModule.registerUser()
 
-            self.registerUserForShareExtension(userid: user!.userID, email: email!)
+            self.registerUserForShareExtension(userid: user!.userID, email: email!, username: user!.profile.name)
 
             /*
             guard let authentication = user.authentication else { return }

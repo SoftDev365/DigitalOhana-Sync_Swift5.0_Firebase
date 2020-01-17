@@ -43,6 +43,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
 
         accessToPHLibrary()
         
+        self.configFirebase()
         self.getSignInUserInfo()
     }
     
@@ -52,7 +53,11 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
             let bRemember = userDefaults.bool(forKey: "remember")
             let userid = userDefaults.string(forKey: "userid")
             let email = userDefaults.string(forKey: "email")
+            let username = userDefaults.string(forKey: "username")
             
+            Global.userid = userid
+            Global.email = email
+            Global.username = username
             debugPrint("--- sign in remember : \(bRemember), \(userid), \(email)")
         }
     }
@@ -82,9 +87,8 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
             // Restricted access - normally won't happen.
         }
     }
-
-    func trySignIn() {
-        
+    
+    func configFirebase() {
         if ShareViewController.isAlreadyLaunchedOnce == false {
             // Override point for customization after application launch.
             FirebaseApp.configure()
@@ -100,26 +104,31 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         GIDSignIn.sharedInstance()?.uiDelegate = self
         
         GIDSignIn.sharedInstance()?.scopes = [kGTLRAuthScopeDrive, kGTLRAuthScopeDriveFile]
+    }
+
+    func trySignIn() {
         
         if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
-            debugPrint("---- has auth in keychain -----");
-            //GIDSignIn.sharedInstance()?.signInSilently()
+            debugPrint("---- has auth in keychain -----")
+
+            activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+            GIDSignIn.sharedInstance()?.signInSilently()
         } else {
-            debugPrint("---- no auth in keychain -----");
+            debugPrint("---- no auth in keychain -----")
         }
-        
-        //activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
-        debugPrint("---- use user access group-----");
+
         /*
+        debugPrint("---- use user access group-----")
+        
         do {
             try Auth.auth().useUserAccessGroup("P5WZ748D57.family-media-sync.SharedItems")
         } catch let error as NSError {
             print("====Error changing user access group: %@", error)
-        }*/
+        }
+         
         // Attempt to renew a previously authenticated session without forcing the
         // user to go through the OAuth authentication flow.
         // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
-        /*
         debugPrint("---- signInAnonymously-----");
         Auth.auth().signInAnonymously { (authResult, error) in
             self.activityView.hideActivitiIndicator()
@@ -239,8 +248,6 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
 
         self.collectionView.collectionViewLayout.invalidateLayout()
         //self.perform(#selector(reloadCollectionView), with: nil, afterDelay: 0.5)
-        
-        self.trySignIn()
     }
     
     @objc func reloadCollectionView() {
