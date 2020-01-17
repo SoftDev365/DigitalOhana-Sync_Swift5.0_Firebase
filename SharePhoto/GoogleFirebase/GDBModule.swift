@@ -11,14 +11,15 @@ import GTMSessionFetcher
 
 class GDBModule: NSObject {
     static func registerUser() {
-        guard let user = Global.user else { return }
+        guard let userid = Global.userid else { return }
+        guard let email = Global.email else { return }
 
         let dbRef = Database.database().reference()
-        let keyPath = "users/\(user.userID!)"
+        let keyPath = "users/\(userid)"
         var userInfo = [String:String]()
         
-        userInfo["email"] = user.profile.email
-        userInfo["name"] = user.profile.name
+        userInfo["email"] = userid
+        userInfo["name"] = email
 
         dbRef.child(keyPath).setValue(userInfo)
     }

@@ -11,37 +11,6 @@ import GTMSessionFetcher
 
 class GFSModuleSync: NSObject {
     
-    static func registerUser() -> Bool {
-        
-        guard let user = Global.user else { return false }
-        
-        var bResult = false
-        var bProcessing = true
-
-        let db = Firestore.firestore()
-
-        db.collection("users").document(user.userID).setData([
-            "email": user.profile.email!,
-            "name": user.profile.name!,
-        ]) { err in
-            if let err = err {
-                debugPrint(err)
-                bResult = false
-            } else {
-                //self.userID = ref!.documentID
-                bResult = true
-            }
-            bProcessing = false
-        }
-
-        // block while processing
-        while bProcessing {
-            Thread.sleep(forTimeInterval: 0.005)
-        }
-        
-        return bResult
-    }
-    
     static func getAllPhotos() -> [FSPhotoInfo] {
         var photos: [FSPhotoInfo] = []
         var bProcessing = true
@@ -50,7 +19,7 @@ class GFSModuleSync: NSObject {
             photos = result
             bProcessing = false
         }
-    
+
         // block while processing
         while bProcessing {
             Thread.sleep(forTimeInterval: 0.005)

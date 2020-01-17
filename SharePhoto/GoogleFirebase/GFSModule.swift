@@ -50,10 +50,10 @@ class FSPhotoInfo {
     
     init() {
         self.id = ""
-        self.userid = Global.user!.userID!
+        self.userid = Global.userid!
         self.email = Global.email!
-        self.username = Global.user!.profile.name!
-        
+        self.username = Global.username!
+
         self.sourceID = ""
         self.sourceType = .asset
         
@@ -94,15 +94,15 @@ class GFSModule: NSObject {
     static func registerUser() {
         //fetchUsers()
         
-        guard let user = Global.user else { return }
+        guard let userid = Global.userid else { return }
+        guard let username = Global.username else { return }
+        guard let email = Global.email else { return }
 
         let db = Firestore.firestore()
-        //var ref: DocumentReference? = nil
 
-        db.collection("users").document(user.userID).setData([
-        /*ref = db.collection("users").addDocument(data: [*/
-            "email": user.profile.email!,
-            "name": user.profile.name!,
+        db.collection("users").document(userid).setData([
+            "email": email,
+            "name": username
         ]) { err in
             if let err = err {
                 debugPrint(err)

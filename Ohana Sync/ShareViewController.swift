@@ -88,10 +88,9 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         if ShareViewController.isAlreadyLaunchedOnce == false {
             // Override point for customization after application launch.
             FirebaseApp.configure()
-            
             ShareViewController.isAlreadyLaunchedOnce = true
         }
-        
+
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
 
         // Configure Google Sign In
@@ -328,7 +327,8 @@ extension ShareViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
             
             let email = user!.profile.email
-            Global.user = user
+            //Global.user = user
+            Global.userid = user!.userID
             Global.email = email
      
             GFSModule.registerUser()
@@ -359,7 +359,8 @@ extension ShareViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             activityView.hideActivitiIndicator()
             
             GDModule.service.authorizer = nil
-            Global.user = nil
+            //Global.user = nil
+            Global.userid = nil
             Global.email = nil
             
             debugPrint("----Firebase signin failed-----");
