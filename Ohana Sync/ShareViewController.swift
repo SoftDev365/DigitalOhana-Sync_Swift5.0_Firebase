@@ -350,6 +350,8 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         var totalFail = nFail
         
         SyncModule.uploadLocalPhotos(files: urlPhotos) { (nUpload, nSkip, nFail) in
+            self.activityView.hideActivitiIndicator()
+            
             totalUpload += nUpload
             totalSkip += nSkip
             totalFail += nFail
@@ -364,6 +366,22 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         }
     }
     
+    func moveAssetsToOhanaAlbum(assets: [PHAsset]) {
+        guard let album = PHModule.fetchFamilyAlbumCollection() else { return }
+        
+        PHPhotoLibrary.shared().performChanges({
+            let albumChangeRequest = PHAssetCollectionChangeRequest(for: album)
+            let enumeration = NSMutableArray()
+            for asset in assets {
+                enumeration.add(asset)
+            }
+            
+            albumChangeRequest?.addAssets(enumeration)
+        }, completionHandler: { (success, error) in
+
+        })
+    }
+    
     func uploadPhotos() {
         guard let photoList = self.albumPhotos else { return }
 
@@ -375,10 +393,11 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                 assetPhotos += [asset]
             }
         }
-        
+
         self.activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
         
         if assetPhotos.count > 0 {
+            moveAssetsToOhanaAlbum(assets: assetPhotos)
             uploadPHAssetPhotos(albumPhotos: assetPhotos)
         } else {
             uploadImagePhotos(nUpload: 0, nSkip: 0, nFail: 0)
@@ -389,14 +408,14 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         let alert = UIAlertController(title: "Can't login via gmail", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-    }
-    
+    }    
 
     @IBAction func onBtnUpload(_ sender: Any) {
         if self.bLoggedIn == true {
             self.uploadPhotos()
         } else {
-            GIDSignIn.sharedInstance()?.signIn()
+            //GIDSignIn.sharedInstance()?.signIn()
+            GIDSignIn.sharedInstance()?.signInSilently()
         }
     }
 }
@@ -440,13 +459,13 @@ extension ShareViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             
             self.uploadPhotos()
             
-        } /* else if self.autoLogin == true {
+        } else if self.autoLogin == true {
             self.autoLogin = false
             GIDSignIn.sharedInstance()?.signIn()
-            
+  
             debugPrint("----Firebase auto login fail------");
             debugPrint("----Firebase start manual login------");
-        }*/ else {
+        } else {
             activityView.hideActivitiIndicator()
             
             GDModule.service.authorizer = nil

@@ -474,7 +474,7 @@ class SyncModule: NSObject {
         }
     }
     
-    //================================================================================================================//
+    //======================================== upload from share extension ====================================================//
     
     static func uploadPhoto(localPath: String, onCompleted:@escaping (Bool) -> ()) {
         if let image = UIImage(contentsOfFile: localPath) {
