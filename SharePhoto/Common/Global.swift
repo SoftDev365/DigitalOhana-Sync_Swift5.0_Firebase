@@ -14,7 +14,7 @@ import GTMSessionFetcher
 class Global: NSObject {
     static let sharedFolderName = "Ohana Sync"
     
-    //static var user: GIDGoogleUser?
+    static var user: GIDGoogleUser?
     static var userid: String?
     static var username: String?
     static var email: String?

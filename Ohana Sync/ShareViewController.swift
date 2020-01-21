@@ -24,8 +24,9 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var lblTitle: UILabel!
-    
+
     var autoLogin: Bool = true
+    var bLoggedIn: Bool = false
     let activityView = ActivityView()
 
     static var isAlreadyLaunchedOnce = false
@@ -40,6 +41,12 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if( SqliteManager.open() ) {
+            debugPrint("----db open success------")
+        } else {
+            debugPrint("----db open fail------")
+        }
 
         accessToPHLibrary()
         
@@ -58,7 +65,12 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
             Global.userid = userid
             Global.email = email
             Global.username = username
-            debugPrint("--- sign in remember : \(bRemember), \(userid), \(email)")
+            
+            if bRemember == true {
+                self.bLoggedIn = true
+            }
+            
+            //debugPrint("--- sign in remember : \(bRemember), \(userid), \(email), \(username)")
         }
     }
     
@@ -311,37 +323,105 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5.0
     }
+    
+    func alertUploadResult(nUpload:Int, nSkip: Int, nFail: Int) {
+        let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
+        let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            exit(0)
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func uploadImagePhotos(nUpload: Int, nSkip: Int, nFail: Int) {
+        guard let photoList = self.albumPhotos else { return }
+        var urlPhotos: [String] = []
+        
+        for photo in photoList {
+            if photo is String {
+                let url = photo as! String
+                urlPhotos += [url]
+            }
+        }
+        
+        var totalUpload = nUpload
+        var totalSkip = nSkip
+        var totalFail = nFail
+        
+        SyncModule.uploadLocalPhotos(files: urlPhotos) { (nUpload, nSkip, nFail) in
+            totalUpload += nUpload
+            totalSkip += nSkip
+            totalFail += nFail
+            
+            self.alertUploadResult(nUpload: totalUpload, nSkip: totalSkip, nFail: totalFail)
+        }
+    }
+    
+    func uploadPHAssetPhotos(albumPhotos: [PHAsset]) {
+        SyncModule.uploadSelectedLocalPhotos(assets: albumPhotos) { (nUpload, nSkip, nFail) in
+            self.uploadImagePhotos(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
+        }
+    }
+    
+    func uploadPhotos() {
+        guard let photoList = self.albumPhotos else { return }
+
+        var assetPhotos: [PHAsset] = []
+        
+        for photo in photoList {
+            if photo is PHAsset {
+                let asset = photo as! PHAsset
+                assetPhotos += [asset]
+            }
+        }
+        
+        self.activityView.showActivityIndicator(self.view, withTitle: "Uploading...")
+        
+        if assetPhotos.count > 0 {
+            uploadPHAssetPhotos(albumPhotos: assetPhotos)
+        } else {
+            uploadImagePhotos(nUpload: 0, nSkip: 0, nFail: 0)
+        }
+    }
+    
+    func alertNotSignInMsg() {
+        let alert = UIAlertController(title: "Can't login via gmail", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 
     @IBAction func onBtnUpload(_ sender: Any) {
-        
-        let name = Bundle.main.infoDictionary![kCFBundleNameKey as String] as! String
-        
-        debugPrint("----app name: \(name)")
-        GIDSignIn.sharedInstance()?.signIn()
+        if self.bLoggedIn == true {
+            self.uploadPhotos()
+        } else {
+            GIDSignIn.sharedInstance()?.signIn()
+        }
     }
 }
 
 extension ShareViewController: GIDSignInDelegate, GIDSignInUIDelegate {
     // MARK: - GIDSignInDelegate
-    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         // A nil error indicates a successful login
         if error == nil {
             guard let authentication = user.authentication else { return }
-            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
             
             // Include authorization headers/values with each Drive API request.
-            GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
+            GDModule.service.authorizer = authentication.fetcherAuthorizer()
             
             let email = user!.profile.email
-            //Global.user = user
+            Global.user = user
             Global.userid = user!.userID
+            Global.username = user!.profile.name
             Global.email = email
      
             GFSModule.registerUser()
             
             //debugPrint("----Firebase auth sign in start-----");
-            
+            /*
+            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 self.activityView.hideActivitiIndicator()
 
@@ -353,24 +433,30 @@ extension ShareViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 debugPrint("----Firebase signin complete-----");
                 
                 //self.initRootList()
-            }
-            
+            }*/
             //btnGoogleSignIn.isHidden = true
-        } else if self.autoLogin == true {
+            
+            self.activityView.hideActivitiIndicator()
+            
+            self.uploadPhotos()
+            
+        } /* else if self.autoLogin == true {
             self.autoLogin = false
             GIDSignIn.sharedInstance()?.signIn()
             
             debugPrint("----Firebase auto login fail------");
             debugPrint("----Firebase start manual login------");
-        } else {
+        }*/ else {
             activityView.hideActivitiIndicator()
             
             GDModule.service.authorizer = nil
-            //Global.user = nil
+            Global.user = nil
             Global.userid = nil
             Global.email = nil
             
             debugPrint("----Firebase signin failed-----");
+            
+            self.alertNotSignInMsg()
         }
     }
 

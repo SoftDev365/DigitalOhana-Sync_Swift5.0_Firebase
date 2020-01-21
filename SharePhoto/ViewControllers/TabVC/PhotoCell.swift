@@ -46,7 +46,7 @@ class PhotoCell: UICollectionViewCell {
         self.fileID = ""
         self.localAsset = nil
     }
-    
+
     open func setPaddingToPhoto(_ size: CGFloat) {
         for constraint in self.contentView.constraints {
             if constraint.identifier == "left_padding" {

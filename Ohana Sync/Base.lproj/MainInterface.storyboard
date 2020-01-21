@@ -77,7 +77,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="ugB-Qf-cnK" customClass="PhotoCell" customModule="Ohana_Sync" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="ugB-Qf-cnK" customClass="PhotoCell" customModule="OhanaSync" customModuleProvider="target">
                                         <rect key="frame" x="57" y="0.0" width="300" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="t9f-QU-JFR">
@@ -130,7 +130,10 @@
                                     <constraint firstAttribute="width" constant="80" id="16Q-aA-Qe9"/>
                                     <constraint firstAttribute="height" constant="32" id="cbh-EU-cbK"/>
                                 </constraints>
-                                <state key="normal" title="Upload"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="Upload">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="onBtnUpload:" destination="wn9-SC-RTK" eventType="touchUpInside" id="Rz4-Uf-3Ue"/>
                                 </connections>

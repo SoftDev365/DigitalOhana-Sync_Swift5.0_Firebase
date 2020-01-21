@@ -473,4 +473,53 @@ class SyncModule: NSObject {
             }
         }
     }
+    
+    //================================================================================================================//
+    
+    static func uploadPhoto(localPath: String, onCompleted:@escaping (Bool) -> ()) {
+        if let image = UIImage(contentsOfFile: localPath) {
+            SyncModule.uploadPhoto(image: image, onCompleted: onCompleted)
+        } else {
+            onCompleted(false)
+        }
+    }
+    
+    static func uploadPhotoSync(localPath: String) -> Bool {
+        var bResult: Bool = false
+        var bProcessing = true
+        
+        SyncModule.uploadPhoto(localPath: localPath) { (success) in
+            bResult = success
+            bProcessing = false
+        }
+
+        // block while processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 0.005)
+        }
+
+        return bResult
+    }
+    
+    // result (upload, skip, fail count)
+    static func uploadLocalPhotos(files: [String], onCompleted: @escaping(Int, Int, Int)->()) {
+        DispatchQueue.global(qos: .background).async {
+            var nUpload: Int = 0
+            let nSkip: Int = 0
+            var nFail: Int = 0
+
+            for file in files {
+                if SyncModule.uploadPhotoSync(localPath: file) == true {
+                    nUpload += 1
+                } else {
+                    nFail += 1
+                }
+            }
+
+            DispatchQueue.main.async {
+                onCompleted(nUpload, nSkip, nFail)
+            }
+        }
+    }
+
 }
