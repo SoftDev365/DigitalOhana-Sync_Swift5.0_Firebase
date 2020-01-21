@@ -276,11 +276,16 @@ class SyncModule: NSObject {
             var nFail: Int = 0
             
             for asset in assets {
+                
+                debugPrint("------- start upload one asset photo --------")
                 if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == true {
+                    debugPrint("==== skip upload one asset photo --------")
                     nSkip += 1
                 } else if SyncModule.uploadPhotoSync(asset: asset) == true {
+                    debugPrint("==== done upload one asset photo --------")
                     nUpload += 1
                 } else {
+                    debugPrint("==== fail upload one asset photo --------")
                     nFail += 1
                 }
             }
@@ -514,6 +519,7 @@ class SyncModule: NSObject {
                 } else {
                     nFail += 1
                 }
+                debugPrint("------- uploaded one local photo --------")
             }
 
             DispatchQueue.main.async {

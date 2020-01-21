@@ -327,7 +327,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
     func alertUploadResult(nUpload:Int, nSkip: Int, nFail: Int) {
         let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
         let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
             exit(0)
         }))
 
@@ -344,10 +344,12 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
                 urlPhotos += [url]
             }
         }
-        
+
         var totalUpload = nUpload
         var totalSkip = nSkip
         var totalFail = nFail
+        
+        debugPrint("------- start upload local photos --------")
         
         SyncModule.uploadLocalPhotos(files: urlPhotos) { (nUpload, nSkip, nFail) in
             self.activityView.hideActivitiIndicator()
@@ -356,18 +358,24 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
             totalSkip += nSkip
             totalFail += nFail
             
+            debugPrint("------- done upload local photos --------")
+            
             self.alertUploadResult(nUpload: totalUpload, nSkip: totalSkip, nFail: totalFail)
         }
     }
     
     func uploadPHAssetPhotos(albumPhotos: [PHAsset]) {
+        debugPrint("---- start upload assets photos--------")
         SyncModule.uploadSelectedLocalPhotos(assets: albumPhotos) { (nUpload, nSkip, nFail) in
+            debugPrint("---- end upload assets photos--------")
             self.uploadImagePhotos(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
         }
     }
     
     func moveAssetsToOhanaAlbum(assets: [PHAsset]) {
         guard let album = PHModule.fetchFamilyAlbumCollection() else { return }
+        
+        debugPrint("---- move to ohana album--------")
         
         PHPhotoLibrary.shared().performChanges({
             let albumChangeRequest = PHAssetCollectionChangeRequest(for: album)
@@ -378,7 +386,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
             
             albumChangeRequest?.addAssets(enumeration)
         }, completionHandler: { (success, error) in
-
+            debugPrint("---- done move to ohana album--------")
         })
     }
     
