@@ -328,7 +328,8 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
         let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            exit(0)
+            //exit(0)
+            self.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
         }))
 
         self.present(alert, animated: true, completion: nil)
