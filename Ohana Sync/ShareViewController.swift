@@ -186,11 +186,13 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
     }()
     
     func getOneSharedImage(imageItem: NSSecureCoding?, error: Error?) {
+        /*
         if let image = imageItem as? UIImage {
             // handle UIImage
         } else if let data = imageItem as? NSData {
             // handle NSData
-        } else if let url = imageItem as? NSURL {
+        } else*/
+        if let url = imageItem as? NSURL {
             // Prefix check: image is shared from Photos app
             if let imageFilePath = url.path, imageFilePath.hasPrefix("/var/mobile/Media/") {
                 //debugPrint("==== image file path: \(imageFilePath)")

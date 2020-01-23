@@ -18,28 +18,12 @@ import HelpCrunchSDK
 class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  {
     
     @IBOutlet weak var tableView: UITableView!
-    var bHelpCrunchInited: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        
-        let configuration = HCSConfiguration(forOrganization: "leruthstech",
-                                                 applicationId: "3",
-                                                 applicationSecret: "ARfN5+9unBuWonwaXN9Cg+uLxEAg7BhD1lFYLLTL7yzirgdGIhsioQqgXnTHQGQh65dizk/JdzLozZ5SbxgaGA==")
-        
-        bHelpCrunchInited = false
-        HelpCrunch.initWith(configuration, user: nil) { (error) in
-            // Do something on SDK init completion
-            if error == nil {
-                debugPrint("HelpCruch init success")
-                self.bHelpCrunchInited = true
-            } else {
-                debugPrint("HelpCruch init fail \(error!)")
-            }
-        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -57,7 +41,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
         
             return view
         }
-        
+
         return nil
     }
 

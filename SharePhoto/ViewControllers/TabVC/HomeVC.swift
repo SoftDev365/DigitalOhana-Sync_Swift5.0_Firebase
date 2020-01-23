@@ -13,6 +13,7 @@ import GTMSessionFetcher
 import Firebase
 import FirebaseStorage
 import Photos
+import HelpCrunchSDK
 
 private let reuseIdentifier = "PhotoCell"
 
@@ -64,10 +65,22 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.btnAdd.layer.borderColor = UIColor(white: 0.3, alpha: 1.0).cgColor
         
         switchModeTo(editMode:false)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(numberOfUnreadMessagesChanged), name: NSNotification.Name.HCSUnreadMessages, object: nil)
     }
 
     @objc func refresh(_ sender: Any) {
         loadFileList()
+    }
+    
+    @objc func numberOfUnreadMessagesChanged() {
+        let messages = Int(HelpCrunch.numberOfUnreadMessages())
+        btnNavLeft.addBadge(number: messages)
+        if messages > 0 {
+            btnNavLeft.addBadge(number: messages)
+        } else {
+            btnNavLeft.removeBadge()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -97,6 +110,13 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 
         refreshFileList()
         self.collectionView.collectionViewLayout.invalidateLayout()
+        
+        let messages = Int(HelpCrunch.numberOfUnreadMessages())
+        if messages > 0 {
+            btnNavLeft.addBadge(number: messages)
+        } else {
+            btnNavLeft.removeBadge()
+        }
     }
     
     override func viewDidLayoutSubviews() {

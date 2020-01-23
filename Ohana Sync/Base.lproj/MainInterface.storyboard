@@ -8,57 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Org View Controller-->
-        <scene sceneID="ceB-am-kn3">
-            <objects>
-                <viewController id="j1y-V4-xli" customClass="OrgViewController" customModule="OhanaSync" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="wbc-yd-nQP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="69R-T0-6Vw">
-                                <rect key="frame" x="57" y="353" width="300" height="200"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Wm-62-Mlp">
-                                        <rect key="frame" x="20" y="159" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n4t-HK-q8Z">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="4vt-Qc-1po"/>
-                                            <constraint firstAttribute="height" constant="150" id="nKS-cO-EG3"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstItem="n4t-HK-q8Z" firstAttribute="leading" secondItem="69R-T0-6Vw" secondAttribute="leading" id="5Xb-6B-xev"/>
-                                    <constraint firstAttribute="width" constant="300" id="B0g-de-7ud"/>
-                                    <constraint firstItem="6Wm-62-Mlp" firstAttribute="leading" secondItem="69R-T0-6Vw" secondAttribute="leading" constant="20" id="V1H-48-a23"/>
-                                    <constraint firstItem="n4t-HK-q8Z" firstAttribute="top" secondItem="69R-T0-6Vw" secondAttribute="top" id="dwu-a1-lRB"/>
-                                    <constraint firstAttribute="height" constant="200" id="iqV-Uk-VhQ"/>
-                                    <constraint firstAttribute="bottom" secondItem="6Wm-62-Mlp" secondAttribute="bottom" constant="20" id="t8t-Nz-dYj"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="69R-T0-6Vw" firstAttribute="centerX" secondItem="1Xd-am-t49" secondAttribute="centerX" id="X0A-58-UPn"/>
-                            <constraint firstItem="69R-T0-6Vw" firstAttribute="centerY" secondItem="1Xd-am-t49" secondAttribute="centerY" id="t30-gc-L8m"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="1Xd-am-t49"/>
-                    </view>
-                    <connections>
-                        <outlet property="imgView" destination="n4t-HK-q8Z" id="jfO-w4-rSb"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CEy-Cv-SGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2267" y="-196"/>
-        </scene>
         <!--Share View Controller-->
         <scene sceneID="IQY-oz-Aub">
             <objects>

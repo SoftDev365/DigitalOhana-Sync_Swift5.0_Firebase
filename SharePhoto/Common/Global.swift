@@ -26,6 +26,8 @@ class Global: NSObject {
     static var sharedCloudPhotos: [FSPhotoInfo]?
     static var selectedCloudPhotos: [FSPhotoInfo]?
     
+    static var helpCrunchInited: Bool = false
+    
     static func setNeedRefresh() {
         needRefreshLocal = true
         needRefreshStorage = true
@@ -64,5 +66,13 @@ class Global: NSObject {
         let thumbnail = UIImage(cgImage: imageReference)
 
         return thumbnail
+    }
+    
+    static func doLogout() {
+        GIDSignIn.sharedInstance()?.signOut()
+        
+        Global.userid = nil
+        Global.username = nil
+        Global.email = nil
     }
 }

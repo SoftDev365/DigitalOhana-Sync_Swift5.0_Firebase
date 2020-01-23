@@ -12,6 +12,7 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 import Photos
+import HelpCrunchSDK
 
 class SignInViewController: UIViewController {
     
@@ -114,7 +115,6 @@ class SignInViewController: UIViewController {
     }
     
     func initRootList() {
-        
         // Safe Present
         //if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavRootVC") as? NavigationRootVC {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainVC {
@@ -140,6 +140,7 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             Global.username = user!.profile.name
             Global.email = email
 
+            HCModule.updateHelpCrunchUserInfo()
             GFSModule.registerUser()
 
             self.registerUserForShareExtension(userid: user!.userID, email: email!, username: user!.profile.name)

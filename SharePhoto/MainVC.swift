@@ -11,6 +11,7 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 import Photos
+import HelpCrunchSDK
 
 class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleDelegate {
     @IBOutlet weak var btnUpload: UIBarButtonItem!
@@ -86,7 +87,9 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
     func doLogout() {
         let alert = UIAlertController(title: "Are you sure you sign out?", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-            GIDSignIn.sharedInstance()?.signOut()
+            HelpCrunch.logout { (error) in
+            }
+            Global.doLogout()
             self.dismiss(animated: true, completion: nil)
         }))
 
