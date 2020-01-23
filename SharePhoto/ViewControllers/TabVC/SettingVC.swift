@@ -24,6 +24,15 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(numberOfUnreadMessagesChanged), name: NSNotification.Name.HCSUnreadMessages, object: nil)
+    }
+        
+    @objc func numberOfUnreadMessagesChanged() {
+        let messages = Int(HelpCrunch.numberOfUnreadMessages())
+        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! SettingCell
+        
+        cell.setBadgeNumber(number: messages)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,25 +63,24 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SettingCell
 
         if indexPath.section == 0 {
-            cell.imageView?.image = UIImage(systemName: "gear")
-            cell.textLabel?.text = "General"
+            cell.setIcon(image: UIImage(systemName: "gear"))
+            cell.setLabel(title: "General")
+            cell.setBadgeNumber(number: 0)
             cell.accessoryType = .disclosureIndicator
         } else if indexPath.section == 1 {
-            cell.imageView?.image = UIImage(systemName: "questionmark.circle")
-            cell.textLabel?.text = "Help"
-            cell.accessoryType = .disclosureIndicator
+            cell.setIcon(image: UIImage(systemName: "questionmark.circle"))
+            cell.setLabel(title: "Help")
+            
+            let messages = Int(HelpCrunch.numberOfUnreadMessages())
+            cell.setBadgeNumber(number: messages)
         } else {
-            cell.textLabel?.text = "Sign Out"
-            //cell.imageView?.image = UIImage(systemName: "arrow.uturn.left.square")
-            cell.imageView?.image = UIImage(systemName: "arrow.uturn.left")
+            cell.setIcon(image: UIImage(systemName: "arrow.uturn.left.square"))
+            cell.setLabel(title: "Sign Out")
+            cell.setBadgeNumber(number: 0)
         }
-        
-        cell.imageView?.tintColor = .white
-        cell.backgroundColor = .black
-        cell.textLabel?.textColor = .white
         
         return cell
     }
@@ -89,6 +97,8 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
         } else if indexPath.section == 2 {
             self.logout()
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func logout() {

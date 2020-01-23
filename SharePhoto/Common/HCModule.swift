@@ -23,6 +23,9 @@ class HCModule: NSObject {
         user.name = Global.username!
         user.email = Global.email!
         
+        //HelpCrunch.bindTheme(HelpCrunch.darkTheme())
+        HCModule.setCustomTheme()
+        
         debugPrint("---HelpCrunch update user start!")
         HelpCrunch.update(user) { (error) in
             if error == nil {
@@ -31,5 +34,14 @@ class HCModule: NSObject {
                 debugPrint("---HelpCrunch update user fail! \(error!)")
             }
         }
+    }
+    
+    static func setCustomTheme() {
+        let theme = HelpCrunch.darkTheme()
+        
+        //theme.mainColor = UIColor(red: 0.90, green: 0.51, blue: 0.15, alpha: 1.0)
+        theme.navigationBarBackgroundColor = UIColor(red: 0.1, green: 0.12, blue: 0.12, alpha: 1.0)
+
+        HelpCrunch.bindTheme(theme)
     }
 }

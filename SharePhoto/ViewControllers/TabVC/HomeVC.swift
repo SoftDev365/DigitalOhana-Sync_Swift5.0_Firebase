@@ -74,6 +74,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     @objc func numberOfUnreadMessagesChanged() {
+        if self.bEditMode == true {
+            return
+        }
+
         let messages = Int(HelpCrunch.numberOfUnreadMessages())
         btnNavLeft.addBadge(number: messages)
         if messages > 0 {
@@ -253,6 +257,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             btnAdd.isHidden = true
             showToolBar(true)
             self.setAddButtonLayout(-50)
+            
+            btnNavLeft.removeBadge()
         } else {
             btnNavLeft.image = UIImage(systemName: "questionmark.circle")
             btnNavLeft.title = ""
@@ -260,6 +266,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             hideToolBar(true)
             self.setAddButtonLayout(0)
             Global.needDoneSelectionAtHome = false
+            
+            self.numberOfUnreadMessagesChanged()
         }
 
         self.collectionView.reloadData()
@@ -428,7 +436,12 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     // alarm button action
     @IBAction func onBtnNavLeft(_ sender: Any) {
-        switchModeTo(editMode:false)
+        if self.bEditMode == true {
+            switchModeTo(editMode:false)
+        } else {
+            HelpCrunch.show(from: self) { (error) in
+            }
+        }
     }
     
     // search (filter) button action
