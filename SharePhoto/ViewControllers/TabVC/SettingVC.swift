@@ -26,7 +26,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        let configuration = HCSConfiguration(forOrganization: "leruthtech",
+        let configuration = HCSConfiguration(forOrganization: "leruthstech",
                                                  applicationId: "3",
                                                  applicationSecret: "ARfN5+9unBuWonwaXN9Cg+uLxEAg7BhD1lFYLLTL7yzirgdGIhsioQqgXnTHQGQh65dizk/JdzLozZ5SbxgaGA==")
         
