@@ -234,7 +234,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             showToolBar(true)
             self.setAddButtonLayout(-50)
         } else {
-            btnNavLeft.image = UIImage(named:"icon_alarm")
+            btnNavLeft.image = UIImage(systemName: "questionmark.circle")
             btnNavLeft.title = ""
             btnAdd.isHidden = false
             hideToolBar(true)

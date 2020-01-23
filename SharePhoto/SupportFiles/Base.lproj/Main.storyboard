@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5tp-qj-J4i">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -350,7 +349,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VMA-vI-IQ0"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="3" title="" image="icon_setting" id="L1g-ef-COT"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="Settings" image="gear" catalog="system" id="L1g-ef-COT"/>
                     <navigationItem key="navigationItem" title="Settings" id="lD4-DI-tjQ"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
@@ -441,7 +440,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yIq-YR-aDy"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="" image="icon_home" id="BL4-yO-LZk"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Home" image="house.fill" catalog="system" id="BL4-yO-LZk"/>
                     <toolbarItems>
                         <barButtonItem title="Select All" id="yWH-lP-3Lz">
                             <connections>
@@ -462,13 +461,13 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Home" id="bYQ-Xf-wQM">
-                        <barButtonItem key="leftBarButtonItem" image="icon_alarm" id="Dpi-G4-cA4">
+                        <barButtonItem key="leftBarButtonItem" image="questionmark.circle" catalog="system" id="Dpi-G4-cA4">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="onBtnNavLeft:" destination="02r-wp-CBO" id="Gzf-1f-uKB"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="icon_search" id="1BZ-YW-l4O">
+                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" id="1BZ-YW-l4O">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="onBtnNavRight:" destination="02r-wp-CBO" id="mAT-IH-Dtq"/>
@@ -588,12 +587,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oRM-ad-KRk"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="2" title="" image="icon_album" id="gPh-aT-lKm"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Location" image="photo.on.rectangle" catalog="system" id="gPh-aT-lKm"/>
                     <navigationItem key="navigationItem" title="Location" id="hK8-B0-XNs">
-                        <barButtonItem key="leftBarButtonItem" image="icon_alarm" id="KPN-Qw-umc">
+                        <barButtonItem key="leftBarButtonItem" image="questionmark.circle" catalog="system" id="KPN-Qw-umc">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_search" id="Rtb-aH-bbO">
+                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" id="Rtb-aH-bbO">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
@@ -715,7 +714,7 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Local" id="EJz-oU-XU7">
-                        <barButtonItem key="rightBarButtonItem" title="Search" image="icon_search" id="rpv-4o-d6F">
+                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" id="rpv-4o-d6F">
                             <connections>
                                 <action selector="onBtnNavRight:" destination="sgj-ax-9uQ" id="Ro1-8P-ejI"/>
                             </connections>
@@ -912,18 +911,18 @@
     </scenes>
     <resources>
         <image name="checkbox_d" width="512" height="512"/>
+        <image name="gear" catalog="system" width="64" height="58"/>
+        <image name="house.fill" catalog="system" width="64" height="52"/>
         <image name="icon_alarm" width="36" height="36"/>
-        <image name="icon_album" width="48" height="48"/>
-        <image name="icon_home" width="48" height="48"/>
         <image name="icon_refresh" width="36" height="36"/>
-        <image name="icon_search" width="36" height="36"/>
-        <image name="icon_setting" width="48" height="48"/>
         <image name="loc_drive" width="512" height="512"/>
+        <image name="magnifyingglass" catalog="system" width="64" height="56"/>
         <image name="mark" width="228" height="228"/>
         <image name="noimage" width="240" height="240"/>
         <image name="person.icloud" catalog="system" width="64" height="44"/>
         <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
         <image name="plus" catalog="system" width="64" height="56"/>
+        <image name="questionmark.circle" catalog="system" width="64" height="60"/>
         <image name="square.and.arrow.down" catalog="system" width="60" height="64"/>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
         <image name="trash" catalog="system" width="60" height="64"/>

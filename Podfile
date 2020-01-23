@@ -21,6 +21,9 @@ target 'SharePhoto' do
   pod 'FirebaseFirestoreSwift'
   
   pod 'SQLite.swift', '~> 0.12.0'
+  
+  pod 'HelpCrunchSDK', '~> 2.0.0'
+  
 end
 
 target 'Ohana Sync' do

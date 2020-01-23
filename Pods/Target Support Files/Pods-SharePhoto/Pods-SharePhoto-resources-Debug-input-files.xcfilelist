@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-SharePhoto/Pods-SharePhoto-resources.sh
 ${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle
+${PODS_ROOT}/HelpCrunchSDK/HelpCrunchSDK.framework/HelpCrunchSDK.bundle

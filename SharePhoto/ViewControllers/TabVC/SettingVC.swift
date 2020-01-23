@@ -13,20 +13,37 @@ import GTMSessionFetcher
 import Firebase
 import FirebaseStorage
 import Photos
+import HelpCrunchSDK
 
 class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  {
     
     @IBOutlet weak var tableView: UITableView!
+    var bHelpCrunchInited: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+        let configuration = HCSConfiguration(forOrganization: "leruthtech",
+                                                 applicationId: "3",
+                                                 applicationSecret: "ARfN5+9unBuWonwaXN9Cg+uLxEAg7BhD1lFYLLTL7yzirgdGIhsioQqgXnTHQGQh65dizk/JdzLozZ5SbxgaGA==")
+        
+        bHelpCrunchInited = false
+        HelpCrunch.initWith(configuration, user: nil) { (error) in
+            // Do something on SDK init completion
+            if error == nil {
+                debugPrint("HelpCruch init success")
+                self.bHelpCrunchInited = true
+            } else {
+                debugPrint("HelpCruch init fail \(error!)")
+            }
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,7 +51,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section == 3 {
+        if section == 2 {
             let view = UIView()
             view.backgroundColor = .clear
         
@@ -45,8 +62,8 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 3 {
-            return tableView.frame.height - 270
+        if section == 2 {
+            return tableView.frame.height - 230
         }
         
         return 0
@@ -56,42 +73,36 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
 
         if indexPath.section == 0 {
-                cell.imageView?.image = UIImage(named: "icon_setting")
-                cell.textLabel?.text = "General"
-                cell.accessoryType = .disclosureIndicator
-        } else if indexPath.section == 1 {
-            if #available(iOS 13.0, *) {
-                cell.imageView?.image = UIImage(systemName: "bell.fill")
-            } else {
-                cell.imageView?.image = UIImage(named: "icon_alarm")
-            }
-            
-            cell.textLabel?.text = "Notifications"
+            cell.imageView?.image = UIImage(systemName: "gear")
+            cell.textLabel?.text = "General"
             cell.accessoryType = .disclosureIndicator
-        } else if indexPath.section == 2 {
-            
-            if #available(iOS 13.0, *) {
-                cell.imageView?.image = UIImage(systemName: "questionmark.circle")
-            } else {
-                cell.imageView?.image = UIImage(named: "icon_home")
-            }
+        } else if indexPath.section == 1 {
+            cell.imageView?.image = UIImage(systemName: "questionmark.circle")
             cell.textLabel?.text = "Help"
             cell.accessoryType = .disclosureIndicator
         } else {
             cell.textLabel?.text = "Sign Out"
-            if #available(iOS 13.0, *) {
-                cell.imageView?.image = UIImage(systemName: "person.fill")
-            }
+            //cell.imageView?.image = UIImage(systemName: "arrow.uturn.left.square")
+            cell.imageView?.image = UIImage(systemName: "arrow.uturn.left")
         }
         
+        cell.imageView?.tintColor = .white
         cell.backgroundColor = .black
         cell.textLabel?.textColor = .white
         
         return cell
     }
     
+    func showHelpCrunch() {
+        HelpCrunch.show(from: self) { (error) in
+            // If you need to do something on completion of SDK view controller presenting
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 3 {
+        if indexPath.section == 1 {
+            self.showHelpCrunch()
+        } else if indexPath.section == 2 {
             self.logout()
         }
     }
