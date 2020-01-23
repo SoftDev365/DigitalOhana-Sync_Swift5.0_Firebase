@@ -13,6 +13,7 @@ import GTMSessionFetcher
 import Firebase
 import FirebaseStorage
 import Photos
+import HelpCrunchSDK
 
 private let reuseIdentifier = "FrameCell"
 
@@ -28,6 +29,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var viewMode: ViewMode = .location
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var btnNavLeft: UIBarButtonItem!
+    @IBOutlet weak var btnNavRight: UIBarButtonItem!
     
     let activityView = ActivityView()
     
@@ -51,6 +54,18 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else if self.viewMode == .download {
             self.navigationItem.title = "Download"
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(numberOfUnreadMessagesChanged), name: NSNotification.Name.HCSUnreadMessages, object: nil)
+    }
+
+    @objc func numberOfUnreadMessagesChanged() {
+        let messages = Int(HelpCrunch.numberOfUnreadMessages())
+        btnNavLeft.addBadge(number: messages)
+        if messages > 0 {
+            btnNavLeft.addBadge(number: messages)
+        } else {
+            btnNavLeft.removeBadge()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +86,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         super.viewDidAppear(animated)
 
         self.collectionView.collectionViewLayout.invalidateLayout()
-        //refreshAlbum()
+        self.numberOfUnreadMessagesChanged()
     }
     
     override func viewDidLayoutSubviews() {
@@ -248,6 +263,16 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     @IBAction func onAddPhoto(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func onBtnNavLeft(_ sender: Any) {
+        HelpCrunch.show(from: self) { (error) in
+        }
+    }
+    
+    // search (filter) button action
+    @IBAction func onBtnNavRight(_ sender: Any) {
         
     }
 }

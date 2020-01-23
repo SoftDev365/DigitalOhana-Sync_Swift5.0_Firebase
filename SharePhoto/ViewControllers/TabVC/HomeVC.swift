@@ -115,12 +115,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         refreshFileList()
         self.collectionView.collectionViewLayout.invalidateLayout()
         
-        let messages = Int(HelpCrunch.numberOfUnreadMessages())
-        if messages > 0 {
-            btnNavLeft.addBadge(number: messages)
-        } else {
-            btnNavLeft.removeBadge()
-        }
+        self.numberOfUnreadMessagesChanged()
     }
     
     override func viewDidLayoutSubviews() {
@@ -267,7 +262,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             self.setAddButtonLayout(0)
             Global.needDoneSelectionAtHome = false
             
-            self.numberOfUnreadMessagesChanged()
+            self.perform(#selector(numberOfUnreadMessagesChanged), with: nil, afterDelay: 0.01)
         }
 
         self.collectionView.reloadData()

@@ -653,13 +653,21 @@
                     <navigationItem key="navigationItem" title="Location" id="hK8-B0-XNs">
                         <barButtonItem key="leftBarButtonItem" image="questionmark.circle" catalog="system" id="KPN-Qw-umc">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="onBtnNavLeft:" destination="w9X-5K-wgt" id="QyT-yR-Nhc"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" id="Rtb-aH-bbO">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="onBtnNavRight:" destination="w9X-5K-wgt" id="8iR-3E-Jn4"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
+                        <outlet property="btnNavLeft" destination="KPN-Qw-umc" id="1zz-WI-WPj"/>
+                        <outlet property="btnNavRight" destination="Rtb-aH-bbO" id="AGY-3u-iaa"/>
                         <outlet property="collectionView" destination="ixI-9n-Nwp" id="UWY-sX-tnw"/>
                     </connections>
                 </viewController>
