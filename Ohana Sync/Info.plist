@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CLIENT_ID</key>
 	<string>489791675759-g1edlhstk24u1cohlbl7lf375b4rvj9r.apps.googleusercontent.com</string>
 	<key>FirebaseScreenReportingEnabled</key>
@@ -40,7 +40,14 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>NSExtensionActivationRule</key>
-			<string>TRUEPREDICATE</string>
+			<dict>
+                <key>NSExtensionActivationSupportsImageWithMaxCount</key>
+                <integer>10</integer>
+                <key>NSExtensionActivationSupportsMovieWithMaxCount</key>
+                <integer>0</integer>
+                <key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
+                <integer>0</integer>
+            </dict>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>
