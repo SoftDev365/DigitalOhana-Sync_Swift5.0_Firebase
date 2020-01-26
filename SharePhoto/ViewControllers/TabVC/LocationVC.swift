@@ -55,10 +55,16 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             self.navigationItem.title = "Download"
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(numberOfUnreadMessagesChanged), name: NSNotification.Name.HCSUnreadMessages, object: nil)
+        if self.viewMode != .location {
+            NotificationCenter.default.addObserver(self, selector: #selector(numberOfUnreadMessagesChanged), name: NSNotification.Name.HCSUnreadMessages, object: nil)
+        }
     }
 
     @objc func numberOfUnreadMessagesChanged() {
+        if self.viewMode != .location {
+            return
+        }
+        
         let messages = Int(HelpCrunch.numberOfUnreadMessages())
         btnNavLeft.addBadge(number: messages)
         if messages > 0 {
@@ -86,7 +92,10 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         super.viewDidAppear(animated)
 
         self.collectionView.collectionViewLayout.invalidateLayout()
-        self.numberOfUnreadMessagesChanged()
+        
+        if self.viewMode != .location {
+            self.numberOfUnreadMessagesChanged()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -195,7 +204,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .download {
-            let alert = UIAlertController(title: "Are you sure you download photos to Local?", message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Download to Local?", message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                 self.downloadSelectedPhotosToLocal()
             }))
@@ -239,7 +248,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .download {
-            let alert = UIAlertController(title: "Are you sure you download photos to Drive?", message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "Download to Drive?", message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                 self.downloadSelectedPhotosToDrive()
             }))
