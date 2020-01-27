@@ -423,10 +423,10 @@
             </objects>
             <point key="canvasLocation" x="-3565.217391304348" y="132.58928571428572"/>
         </scene>
-        <!--View Controller-->
+        <!--Search FieldVC-->
         <scene sceneID="3sc-jo-YoQ">
             <objects>
-                <viewController id="qUZ-Uo-8rY" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchFieldVC" id="qUZ-Uo-8rY" customClass="SearchFieldVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7e1-cm-N6a">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -442,6 +442,9 @@
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="udi-IS-iJB">
                                                         <rect key="frame" x="20" y="10" width="47" height="31"/>
+                                                        <connections>
+                                                            <action selector="onSwitchTaken:" destination="qUZ-Uo-8rY" eventType="valueChanged" id="i46-4v-rUg"/>
+                                                        </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by taken date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jqt-yF-6O4">
                                                         <rect key="frame" x="80.000000000000014" y="15.333333333333327" width="161.33333333333337" height="20.333333333333329"/>
@@ -471,6 +474,9 @@
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <state key="normal" title="2019/12/27"/>
+                                                                        <connections>
+                                                                            <action selector="onBtnTakenFrom:" destination="qUZ-Uo-8rY" eventType="touchUpInside" id="kPq-i4-6Fa"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -504,6 +510,9 @@
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <state key="normal" title="2020/01/27"/>
+                                                                        <connections>
+                                                                            <action selector="onBtnTakenTo:" destination="qUZ-Uo-8rY" eventType="touchUpInside" id="jal-2o-gNT"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -547,6 +556,9 @@
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xoK-sO-c8Y">
                                                         <rect key="frame" x="20" y="10" width="47" height="31"/>
+                                                        <connections>
+                                                            <action selector="onSwitchUpload:" destination="qUZ-Uo-8rY" eventType="valueChanged" id="8WR-f7-M8r"/>
+                                                        </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by upload date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PpD-bY-Gdc">
                                                         <rect key="frame" x="80.000000000000014" y="15.333333333333313" width="171.33333333333337" height="20.333333333333329"/>
@@ -576,6 +588,9 @@
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <state key="normal" title="2019/12/27"/>
+                                                                        <connections>
+                                                                            <action selector="onBtnUploadFrom:" destination="qUZ-Uo-8rY" eventType="touchUpInside" id="fy9-23-r0x"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -602,13 +617,16 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USk-gx-PHh">
-                                                                        <rect key="frame" x="110" y="5" width="107" height="40"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USk-gx-PHh">
+                                                                        <rect key="frame" x="110" y="4" width="107" height="40"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="eMj-ui-CMy"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <state key="normal" title="2020/01/27"/>
+                                                                        <connections>
+                                                                            <action selector="onBtnUploadTo:" destination="qUZ-Uo-8rY" eventType="touchUpInside" id="9X2-1O-a6Z"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -652,6 +670,9 @@
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwQ-Xm-o2e">
                                                         <rect key="frame" x="20" y="10" width="47" height="31"/>
+                                                        <connections>
+                                                            <action selector="switchUser:" destination="qUZ-Uo-8rY" eventType="valueChanged" id="5wY-DU-XQe"/>
+                                                        </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search by upload user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="guM-kp-gSG">
                                                         <rect key="frame" x="80" y="15.333333333333313" width="171" height="20.333333333333329"/>
@@ -681,6 +702,9 @@
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <state key="normal" title="David Chao"/>
+                                                                        <connections>
+                                                                            <action selector="onBtnUserName:" destination="qUZ-Uo-8rY" eventType="touchUpInside" id="tyv-Ay-33J"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -725,6 +749,9 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="Search"/>
+                                                <connections>
+                                                    <action selector="onBtnSearch:" destination="qUZ-Uo-8rY" eventType="touchUpInside" id="jBR-eI-Fpb"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" name="color_std_bg"/>
@@ -764,10 +791,20 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JAV-in-h2r"/>
                     </view>
+                    <connections>
+                        <outlet property="btnTakenFrom" destination="f0Q-HD-tia" id="PVU-9w-n9p"/>
+                        <outlet property="btnTakenTo" destination="HQa-iy-dI7" id="bWv-P5-wRP"/>
+                        <outlet property="btnUploadFrom" destination="dis-Jg-k8d" id="aKP-G4-F6g"/>
+                        <outlet property="btnUploadTo" destination="USk-gx-PHh" id="i4f-eo-V6l"/>
+                        <outlet property="btnUserName" destination="lBk-Mt-EX6" id="hkl-gx-mz6"/>
+                        <outlet property="swcTaken" destination="udi-IS-iJB" id="Ax2-G2-Ffu"/>
+                        <outlet property="swcUpload" destination="xoK-sO-c8Y" id="PwV-a8-kTY"/>
+                        <outlet property="swcUser" destination="zwQ-Xm-o2e" id="hrF-1d-s8I"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9h3-V1-jEn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2755.072463768116" y="132.58928571428572"/>
+            <point key="canvasLocation" x="-2652" y="106"/>
         </scene>
         <!--Home-->
         <scene sceneID="ftK-mV-gf8">

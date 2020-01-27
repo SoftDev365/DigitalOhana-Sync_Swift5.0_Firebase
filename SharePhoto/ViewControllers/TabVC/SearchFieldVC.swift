@@ -10,13 +10,50 @@ import UIKit
 
 class SearchFieldVC: UIViewController {
 
+    @IBOutlet weak var swcTaken: UISwitch!
+    @IBOutlet weak var swcUpload: UISwitch!
+    @IBOutlet weak var swcUser: UISwitch!
+    
+    @IBOutlet weak var btnTakenFrom: UIButton!
+    @IBOutlet weak var btnTakenTo: UIButton!
+    
+    @IBOutlet weak var btnUploadFrom: UIButton!
+    @IBOutlet weak var btnUploadTo: UIButton!
+    
+    @IBOutlet weak var btnUserName: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }    
+
+    @IBAction func onSwitchTaken(_ sender: Any) {
     }
     
-
+    @IBAction func onBtnTakenFrom(_ sender: Any) {
+    }
+    
+    @IBAction func onBtnTakenTo(_ sender: Any) {
+    }
+    
+    @IBAction func onSwitchUpload(_ sender: Any) {
+    }
+    
+    @IBAction func onBtnUploadFrom(_ sender: Any) {
+    }
+    
+    @IBAction func onBtnUploadTo(_ sender: Any) {
+    }
+    
+    @IBAction func switchUser(_ sender: Any) {
+    }
+    
+    @IBAction func onBtnUserName(_ sender: Any) {
+    }
+    
+    @IBAction func onBtnSearch(_ sender: Any) {
+    }
     /*
     // MARK: - Navigation
 

@@ -441,7 +441,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     // search (filter) button action
     @IBAction func onBtnNavRight(_ sender: Any) {
-        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchFieldVC") as? SearchFieldVC {
+            hideTabBar()
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @IBAction func onBtAdd(_ sender: Any) {
