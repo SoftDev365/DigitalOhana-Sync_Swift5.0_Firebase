@@ -15,7 +15,6 @@
 		841362FB23D992BC00D38F05 /* BadgeButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841362FA23D992BC00D38F05 /* BadgeButtonItem.swift */; };
 		841362FD23D99FE500D38F05 /* HCModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841362FC23D99FE500D38F05 /* HCModule.swift */; };
 		841362FF23D9AA9A00D38F05 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841362FE23D9AA9A00D38F05 /* SettingCell.swift */; };
-		8421D58823CC859F00C62D8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63CA23717A48002F2C66 /* Assets.xcassets */; };
 		8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425689E237D475C00F4CD7A /* ImageZoomView.swift */; };
 		842568A1237D4C1100F4CD7A /* GSGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842568A0237D4C1100F4CD7A /* GSGalleryVC.swift */; };
 		843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */; };
@@ -61,6 +60,7 @@
 		84BE63C923717A45002F2C66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63C723717A45002F2C66 /* Main.storyboard */; };
 		84BE63CB23717A48002F2C66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63CA23717A48002F2C66 /* Assets.xcassets */; };
 		84BE63CE23717A48002F2C66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BE63CC23717A48002F2C66 /* LaunchScreen.storyboard */; };
+		84C18A7823DFA31000C86D45 /* SearchFieldVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */; };
 		84C502DE23ADD15000EE073F /* GSAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C502DD23ADD14F00EE073F /* GSAlbumVC.swift */; };
 		84C5F64B23B76C090048929F /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C5F64A23B76C080048929F /* MainVC.swift */; };
 		84C90ED12389F1FC00EFFCCE /* LocalAlbumVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */; };
@@ -143,6 +143,7 @@
 		84BE63CA23717A48002F2C66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84BE63CD23717A48002F2C66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84BE63CF23717A48002F2C66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldVC.swift; sourceTree = "<group>"; };
 		84C502DD23ADD14F00EE073F /* GSAlbumVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSAlbumVC.swift; sourceTree = "<group>"; };
 		84C5F64A23B76C080048929F /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		84C90ED02389F1FB00EFFCCE /* LocalAlbumVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalAlbumVC.swift; sourceTree = "<group>"; };
@@ -247,6 +248,7 @@
 				84688AD723A9869500D1D9E1 /* HomeVC.swift */,
 				84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */,
 				84B4144723A0E44100075A80 /* SettingVC.swift */,
+				84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */,
 			);
 			path = TabVC;
 			sourceTree = "<group>";
@@ -443,7 +445,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8455A47723C8896B005B8742 /* MainInterface.storyboard in Resources */,
-				8421D58823CC859F00C62D8D /* Assets.xcassets in Resources */,
 				8455A48123C88E0C005B8742 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -609,6 +610,7 @@
 				84BE63C223717A45002F2C66 /* AppDelegate.swift in Sources */,
 				84BE2AAC23904B9400F1BE53 /* SqliteManager.swift in Sources */,
 				84BCF77C237268FE00367EAB /* GDModule.swift in Sources */,
+				84C18A7823DFA31000C86D45 /* SearchFieldVC.swift in Sources */,
 				849A974323822F8D003E985E /* NavigationRootVC.swift in Sources */,
 				8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */,
 				84D85D482384A1710042C4DF /* GDBModule.swift in Sources */,
