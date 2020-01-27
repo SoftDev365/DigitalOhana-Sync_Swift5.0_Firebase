@@ -99,15 +99,49 @@ class GFSModule: NSObject {
         guard let email = Global.email else { return }
 
         let db = Firestore.firestore()
-
-        db.collection("users").document(userid).setData([
+        
+        db.collection("users").document(userid).updateData([
             "email": email,
             "name": username
         ]) { err in
             if let err = err {
                 debugPrint(err)
+
+                db.collection("users").document(userid).setData([
+                    "email": email,
+                    "name": username,
+                    "allow": false
+                ]) { err in
+                    if let err = err {
+                        debugPrint(err)
+                    } else {
+                        //self.userID = ref!.documentID
+                    }
+                }
             } else {
-                //self.userID = ref!.documentID
+                
+            }
+        }
+    }
+    
+    static func checkAllowOfUser(ID: String, onCompleted: @escaping (Bool) -> ()) {
+        let db = Firestore.firestore()
+
+        db.collection("users").document(ID).getDocument { (snapshot, error) in
+            if let err = error {
+                debugPrint(err)
+            } else {
+                let data = snapshot?.data()
+                if data == nil {
+                    onCompleted(false)
+                } else {
+                    let allow = data!["allow"] as? Bool
+                    if allow == true {
+                        onCompleted(true)
+                    } else {
+                        onCompleted(false)
+                    }
+                }
             }
         }
     }
@@ -284,7 +318,7 @@ class GFSModule: NSObject {
         ]) { err in
             if let err = err {
                 debugPrint(err)
-                onCompleted(false)
+                
             } else {
                 onCompleted(true)
             }

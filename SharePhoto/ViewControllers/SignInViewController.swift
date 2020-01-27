@@ -92,8 +92,7 @@ class SignInViewController: UIViewController {
         replaceBackButtonToSignout()
     }
 
-    @IBAction func onBtnGoogleSiginIn(_ sender: Any) {
-        
+    @IBAction func onBtnGoogleSiginIn(_ sender: Any) {        
         activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
         
         // init Global parameters
@@ -123,6 +122,14 @@ class SignInViewController: UIViewController {
             //navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
+    func alertNotAllowedUserMessage() {
+        let alert = UIAlertController(title: "User not allowed to use this app.", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+        }))
+        //alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
@@ -139,12 +146,21 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             Global.userid = user!.userID
             Global.username = user!.profile.name
             Global.email = email
-
-            HCModule.updateHelpCrunchUserInfo()
             GFSModule.registerUser()
-
+            
             self.registerUserForShareExtension(userid: user!.userID, email: email!, username: user!.profile.name)
 
+            GFSModule.checkAllowOfUser(ID: user!.userID) { (allow) in
+                self.activityView.hideActivitiIndicator()
+                
+                if( allow ) {
+                    HCModule.updateHelpCrunchUserInfo()
+                    self.initRootList()
+                } else {
+                    self.alertNotAllowedUserMessage()
+                }
+            }
+            
             /*
             guard let authentication = user.authentication else { return }
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
@@ -166,9 +182,6 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
                 
                 self.initRootList()
             }*/
-            
-            self.activityView.hideActivitiIndicator()
-            self.initRootList()
         } else {
             activityView.hideActivitiIndicator()
             
