@@ -435,7 +435,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pCn-IM-CUn" userLabel="contentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="580"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="flU-P2-fce" userLabel="taken date">
                                                 <rect key="frame" x="20" y="20" width="374" height="160"/>
@@ -617,8 +617,8 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USk-gx-PHh">
-                                                                        <rect key="frame" x="110" y="4" width="107" height="40"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USk-gx-PHh">
+                                                                        <rect key="frame" x="110" y="5" width="107" height="40"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="eMj-ui-CMy"/>
                                                                         </constraints>
@@ -747,8 +747,10 @@
                                                     <constraint firstAttribute="height" constant="40" id="THA-JC-OId"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="x7w-5U-HnH"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <state key="normal" title="Search"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <state key="normal" title="Search">
+                                                    <color key="titleColor" name="color_std_text"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onBtnSearch:" destination="qUZ-Uo-8rY" eventType="touchUpInside" id="jBR-eI-Fpb"/>
                                                 </connections>
@@ -765,8 +767,8 @@
                                             <constraint firstAttribute="trailing" secondItem="flU-P2-fce" secondAttribute="trailing" constant="20" id="cK6-wR-N8a"/>
                                             <constraint firstItem="flU-P2-fce" firstAttribute="top" secondItem="pCn-IM-CUn" secondAttribute="top" constant="20" id="nxb-6q-523"/>
                                             <constraint firstItem="s1a-Fa-Yia" firstAttribute="top" secondItem="vjw-wf-8qa" secondAttribute="bottom" constant="30" id="ocH-GG-271"/>
-                                            <constraint firstAttribute="height" constant="818" id="orG-yx-nFZ"/>
                                             <constraint firstAttribute="trailing" secondItem="vjw-wf-8qa" secondAttribute="trailing" constant="20" id="roO-7F-4Ez"/>
+                                            <constraint firstAttribute="bottom" secondItem="s1a-Fa-Yia" secondAttribute="bottom" constant="20" id="xTe-DI-Krx"/>
                                             <constraint firstItem="vjw-wf-8qa" firstAttribute="leading" secondItem="pCn-IM-CUn" secondAttribute="leading" constant="20" id="yPG-og-fKp"/>
                                         </constraints>
                                     </view>
@@ -800,11 +802,91 @@
                         <outlet property="swcTaken" destination="udi-IS-iJB" id="Ax2-G2-Ffu"/>
                         <outlet property="swcUpload" destination="xoK-sO-c8Y" id="PwV-a8-kTY"/>
                         <outlet property="swcUser" destination="zwQ-Xm-o2e" id="hrF-1d-s8I"/>
+                        <outlet property="viewTaken" destination="flU-P2-fce" id="msk-Iv-Xvc"/>
+                        <outlet property="viewUpload" destination="zSZ-C3-icp" id="4sR-CN-ZP5"/>
+                        <outlet property="viewUser" destination="vjw-wf-8qa" id="qWK-1x-0u2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9h3-V1-jEn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2652" y="106"/>
+            <point key="canvasLocation" x="-2801" y="133"/>
+        </scene>
+        <!--Date PickerVC-->
+        <scene sceneID="wts-GJ-EZw">
+            <objects>
+                <viewController storyboardIdentifier="DatePickerVC" id="kxg-gQ-TON" customClass="DatePickerVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lEe-yL-xXb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFV-4o-y29" userLabel="contentView">
+                                <rect key="frame" x="0.0" y="320" width="414" height="266"/>
+                                <subviews>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="bQV-2I-MJK">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="216"/>
+                                    </datePicker>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oii-x0-ved">
+                                        <rect key="frame" x="207" y="216" width="207" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="3Zv-pX-SaR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" name="color_std_text"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onBtnCancel:" destination="kxg-gQ-TON" eventType="touchUpInside" id="UKb-5z-e7Z"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KO1-YX-Zvl">
+                                        <rect key="frame" x="0.0" y="216" width="207" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="xLo-1E-qNC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Confirm">
+                                            <color key="titleColor" name="color_std_text"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onBtnConfirm:" destination="kxg-gQ-TON" eventType="touchUpInside" id="Uq4-wa-nR8"/>
+                                            <action selector="onBtnConfrim:" destination="kxg-gQ-TON" eventType="touchUpInside" id="HOa-95-mEe"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bQV-2I-MJK" secondAttribute="trailing" id="4CF-Cb-hCF"/>
+                                    <constraint firstItem="KO1-YX-Zvl" firstAttribute="leading" secondItem="aFV-4o-y29" secondAttribute="leading" id="5wj-XP-s3g"/>
+                                    <constraint firstItem="Oii-x0-ved" firstAttribute="leading" secondItem="KO1-YX-Zvl" secondAttribute="trailing" id="9W4-78-9qu"/>
+                                    <constraint firstAttribute="bottom" secondItem="Oii-x0-ved" secondAttribute="bottom" id="HSY-NW-SVG"/>
+                                    <constraint firstItem="KO1-YX-Zvl" firstAttribute="width" secondItem="aFV-4o-y29" secondAttribute="width" multiplier="0.5" id="I62-2Z-9n5"/>
+                                    <constraint firstItem="KO1-YX-Zvl" firstAttribute="top" secondItem="bQV-2I-MJK" secondAttribute="bottom" id="VkN-HV-xw4"/>
+                                    <constraint firstAttribute="trailing" secondItem="Oii-x0-ved" secondAttribute="trailing" id="Y5z-qK-dFA"/>
+                                    <constraint firstItem="bQV-2I-MJK" firstAttribute="leading" secondItem="aFV-4o-y29" secondAttribute="leading" id="j7g-M0-Rui"/>
+                                    <constraint firstItem="Oii-x0-ved" firstAttribute="top" secondItem="bQV-2I-MJK" secondAttribute="bottom" id="jTN-dD-WVD"/>
+                                    <constraint firstAttribute="bottom" secondItem="KO1-YX-Zvl" secondAttribute="bottom" id="kyb-L1-EFd"/>
+                                    <constraint firstItem="bQV-2I-MJK" firstAttribute="top" secondItem="aFV-4o-y29" secondAttribute="top" id="tZD-IA-gN3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="aFV-4o-y29" firstAttribute="centerY" secondItem="YZt-RN-IXG" secondAttribute="centerY" id="La9-OQ-d2J"/>
+                            <constraint firstItem="aFV-4o-y29" firstAttribute="leading" secondItem="YZt-RN-IXG" secondAttribute="leading" id="N8D-sA-RAN"/>
+                            <constraint firstItem="YZt-RN-IXG" firstAttribute="trailing" secondItem="aFV-4o-y29" secondAttribute="trailing" id="jgd-dg-Bm5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="YZt-RN-IXG"/>
+                    </view>
+                    <connections>
+                        <outlet property="btnCancel" destination="Oii-x0-ved" id="FnQ-hk-O1H"/>
+                        <outlet property="btnConfirm" destination="KO1-YX-Zvl" id="aIT-34-Idz"/>
+                        <outlet property="datePicker" destination="bQV-2I-MJK" id="mzq-TH-gJx"/>
+                        <outlet property="viewContent" destination="aFV-4o-y29" id="IzK-aA-YDQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8ax-Se-5XE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2017.3913043478262" y="132.58928571428572"/>
         </scene>
         <!--Home-->
         <scene sceneID="ftK-mV-gf8">
@@ -1382,6 +1464,9 @@
         <image name="trash" catalog="system" width="60" height="64"/>
         <namedColor name="color_std_bg">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="color_std_text">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

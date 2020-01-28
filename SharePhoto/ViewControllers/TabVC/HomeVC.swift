@@ -446,11 +446,11 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
+
     @IBAction func onBtAdd(_ sender: Any) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationVC") as? LocationVC {
             hideTabBar()
-            
+
             vc.setView(mode: .upload)
             navigationController?.pushViewController(vc, animated: true)
         }
