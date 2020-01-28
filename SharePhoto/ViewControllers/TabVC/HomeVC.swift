@@ -125,7 +125,8 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func loadFileList() {
-        GFSModule.getAllPhotos { (success, result) in
+        //GFSModule.getAllPhotos { (success, result) in
+        GFSModule.searchPhotosByOptions { (success, result) in
             self.refreshControl.endRefreshing()
             self.activityView.hideActivitiIndicator()
             
@@ -535,6 +536,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func didClickOnSearchButton() {
-        
+        Global.needRefreshStorage = true
+        refreshFileList()
     }
 }

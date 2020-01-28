@@ -236,6 +236,45 @@ class GFSModule: NSObject {
         return photoInfo
     }
     
+    static func searchPhotosByOptions(onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
+        let options = Global.searchOption
+        let db = Firestore.firestore()
+        let refPhotos = db.collection("photos").order(by: PhotoField.uploaded, descending: true)
+        var query = refPhotos.whereField(PhotoField.valid, isEqualTo: true)
+        
+        if options.bUserName == true && options.userid != nil {
+            query = query.whereField(PhotoField.userid, isEqualTo: options.userid!)
+        }
+        
+        if options.bTakenDate == true && options.takenDateFrom != nil && options.takenDateTo != nil {
+            query = query.whereField(PhotoField.taken, isGreaterThanOrEqualTo: options.takenDateFrom!)
+            query = query.whereField(PhotoField.taken, isLessThanOrEqualTo: options.takenDateTo!)
+        }
+        
+        if options.bUploadDate == true && options.uploadDateFrom != nil && options.uploadDateTo != nil {
+            query = query.whereField(PhotoField.uploaded, isGreaterThanOrEqualTo: options.uploadDateFrom!)
+            query = query.whereField(PhotoField.uploaded, isLessThanOrEqualTo: options.uploadDateTo!)
+        }
+        
+        //query = query.order(by: PhotoField.uploaded, descending: true)
+        query.getDocuments() { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting photos documents:\(error)")
+                onCompleted(false, [])
+            } else {
+                var result = [FSPhotoInfo]()
+
+                for document in querySnapshot!.documents {
+                    let info = self.convertToPhotoInfo(document: document)
+                    result += [info]
+                }
+                
+                Global.sharedCloudPhotos = result
+                onCompleted(true, result)
+            }
+        }
+    }
+    
     static func getAllPhotos(onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
         let db = Firestore.firestore()
         let refPhotos = db.collection("photos")
@@ -243,7 +282,7 @@ class GFSModule: NSObject {
         // order by uploaded date DESC
         refPhotos.order(by: PhotoField.uploaded, descending: true).getDocuments { (querySnapshot, err) in
             if let err = err {
-                print("Error getting photos docuemts:\(err)")
+                print("Error getting photos documents:\(err)")
                 onCompleted(false, [])
             } else {
                 var result = [FSPhotoInfo]()
@@ -270,7 +309,7 @@ class GFSModule: NSObject {
 
         db.collection("photos").document(cloudDocumentID).getDocument() { (document, error) in
             if let error = error {
-                print("Error getting photos docuemts:\(error)")
+                print("Error getting photos documents:\(error)")
                 onCompleted(false, nil)
             } else {
                 if let document = document {
@@ -296,7 +335,7 @@ class GFSModule: NSObject {
             .whereField(PhotoField.sourceID, isEqualTo: driveFileID)
             .getDocuments() { (querySnapshot, error) in
                 if let error = error {
-                    print("Error getting photos docuemts:\(error)")
+                    print("Error getting photos documents:\(error)")
                     onCompleted(false, nil)
                 } else {
                     for document in querySnapshot!.documents {

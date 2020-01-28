@@ -24,6 +24,25 @@ class SearchOption: NSObject {
     var userid: String?
     var userName: String?
     var email: String?
+    
+    func copy() -> SearchOption {
+        let tempOptions = SearchOption()
+        
+        tempOptions.bTakenDate = self.bTakenDate
+        tempOptions.bUploadDate = self.bUploadDate
+        tempOptions.bUserName = self.bUserName
+        
+        tempOptions.takenDateFrom = self.takenDateFrom
+        tempOptions.takenDateTo = self.takenDateTo
+        tempOptions.uploadDateFrom = self.uploadDateFrom
+        tempOptions.uploadDateTo = self.uploadDateTo
+        
+        tempOptions.userid = self.userid
+        tempOptions.userName = self.userName
+        tempOptions.email = self.email
+
+        return tempOptions
+    }
 }
 
 class Global: NSObject {
@@ -91,5 +110,27 @@ class Global: NSObject {
         Global.userid = nil
         Global.username = nil
         Global.email = nil
+    }
+    
+    static func getDateStartInterval(interval: TimeInterval?) -> TimeInterval? {
+        if interval == nil {
+            return nil
+        }
+        
+        let date = Date(timeIntervalSince1970: interval!)
+        let bdate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: date)
+        
+        return bdate?.timeIntervalSince1970
+    }
+    
+    static func getDateEndInterval(interval: TimeInterval?) -> TimeInterval? {
+        if interval == nil {
+            return nil
+        }
+        
+        let date = Date(timeIntervalSince1970: interval!)
+        let bdate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: date)
+
+        return bdate?.timeIntervalSince1970
     }
 }

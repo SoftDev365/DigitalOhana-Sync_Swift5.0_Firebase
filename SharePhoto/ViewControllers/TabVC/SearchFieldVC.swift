@@ -33,6 +33,8 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
     var delegate: SearchFieldVCDelegate?
     var datePickerVC: DatePickerVC!
     
+    var tempOption: SearchOption = SearchOption()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,13 +47,14 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
         self.datePickerVC.delegate = self
         
         self.title = "Search Options"
+        self.tempOption = Global.searchOption.copy()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.initFileds()
-        self.refreshDateButtonStatus()
+        self.refreshButtonStatus()
     }
 
     func initViewBorder(view: UIView) {
@@ -62,7 +65,7 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
     }
     
     func initFileds() {
-        let options = Global.searchOption
+        let options = self.tempOption
         
         swcTaken.isOn = options.bTakenDate
         swcUpload.isOn = options.bUploadDate
@@ -93,7 +96,7 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
     }
     
     func refreshButtonValues() {
-        let options = Global.searchOption
+        let options = self.tempOption
         
         self.setLabel(button: btnTakenFrom, timeInterval: options.takenDateFrom)
         self.setLabel(button: btnTakenTo, timeInterval: options.takenDateTo)
@@ -115,14 +118,14 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
         }
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         let strDate = formatter.string(from: date)
 
         button.setTitle(strDate, for: .normal)
     }
     
-    func refreshDateButtonStatus() {
-        let options = Global.searchOption
+    func refreshButtonStatus() {
+        let options = self.tempOption
 
         btnTakenFrom.isEnabled = options.bTakenDate
         btnTakenTo.isEnabled = options.bTakenDate
@@ -142,38 +145,46 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
     }
 
     @IBAction func onSwitchTaken(_ sender: Any) {
-        Global.searchOption.bTakenDate = swcTaken.isOn
-        refreshDateButtonStatus()
+        self.tempOption.bTakenDate = swcTaken.isOn
+        refreshButtonStatus()
     }
     
     @IBAction func onBtnTakenFrom(_ sender: Any) {
-        let options = Global.searchOption
+        let options = self.tempOption
         showDatePickerView(date: options.takenDateFrom!, ofTag: 1)
     }
     
     @IBAction func onBtnTakenTo(_ sender: Any) {
-        let options = Global.searchOption
+        let options = self.tempOption
         showDatePickerView(date: options.takenDateTo!, ofTag: 2)
     }
     
     @IBAction func onSwitchUpload(_ sender: Any) {
-        Global.searchOption.bUploadDate = swcUpload.isOn
-        refreshDateButtonStatus()
+        self.tempOption.bUploadDate = swcUpload.isOn
+        refreshButtonStatus()
     }
     
     @IBAction func onBtnUploadFrom(_ sender: Any) {
-        let options = Global.searchOption
+        let options = self.tempOption
         showDatePickerView(date: options.uploadDateFrom!, ofTag: 3)
     }
     
     @IBAction func onBtnUploadTo(_ sender: Any) {
-        let options = Global.searchOption
+        let options = self.tempOption
         showDatePickerView(date: options.uploadDateTo!, ofTag: 4)
     }
     
     @IBAction func switchUser(_ sender: Any) {
-        Global.searchOption.bUserName = swcUser.isOn
-        refreshDateButtonStatus()
+        self.tempOption.bUserName = swcUser.isOn
+        
+        if swcUser.isOn == false {
+            self.tempOption.userid = nil
+            self.tempOption.userName = nil
+            self.tempOption.email = nil
+        }
+        
+        refreshButtonStatus()
+        refreshButtonValues()
     }
     
     @IBAction func onBtnUserName(_ sender: Any) {
@@ -184,29 +195,38 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
     }
     
     @IBAction func onBtnSearch(_ sender: Any) {
-        self.delegate?.didClickOnSearchButton()
+        Global.searchOption = self.tempOption
+        
+        let options = Global.searchOption
+        
+        options.takenDateFrom = Global.getDateStartInterval(interval: options.takenDateFrom)
+        options.takenDateTo = Global.getDateEndInterval(interval: options.takenDateTo)
+        options.uploadDateFrom = Global.getDateStartInterval(interval: options.uploadDateFrom)
+        options.uploadDateTo = Global.getDateEndInterval(interval: options.uploadDateTo)
 
         self.navigationController?.popViewController(animated: true)
+        
+        self.delegate?.didClickOnSearchButton()
     }
     
     func didChooseDate(date: Date, ofTag tag: Int) {
         if tag == 1 {
-            Global.searchOption.takenDateFrom = date.timeIntervalSince1970
+            self.tempOption.takenDateFrom = date.timeIntervalSince1970
         } else if tag == 2 {
-            Global.searchOption.takenDateTo = date.timeIntervalSince1970
+            self.tempOption.takenDateTo = date.timeIntervalSince1970
         } else if tag == 3 {
-            Global.searchOption.uploadDateFrom = date.timeIntervalSince1970
+            self.tempOption.uploadDateFrom = date.timeIntervalSince1970
         } else if tag == 4 {
-            Global.searchOption.uploadDateTo = date.timeIntervalSince1970
+            self.tempOption.uploadDateTo = date.timeIntervalSince1970
         }
 
         self.refreshButtonValues()
     }
     
     func didChooseUser(id: String, email: String, name: String) {
-        Global.searchOption.userid = id
-        Global.searchOption.userName = name
-        Global.searchOption.email = email
+        self.tempOption.userid = id
+        self.tempOption.userName = name
+        self.tempOption.email = email
         
         self.refreshButtonValues()
     }
