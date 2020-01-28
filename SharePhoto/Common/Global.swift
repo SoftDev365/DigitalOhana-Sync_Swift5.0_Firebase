@@ -11,6 +11,20 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 
+class SearchOption: NSObject {
+    var bTakenDate: Bool = false
+    var bUploadDate: Bool = false
+    var bUserName: Bool = false
+    
+    var takenDateFrom: TimeInterval?
+    var takenDateTo: TimeInterval?
+    var uploadDateFrom: TimeInterval?
+    var uploadDateTo: TimeInterval?
+    
+    var userid: String?
+    var userName: String?
+}
+
 class Global: NSObject {
     static let sharedFolderName = "Ohana Sync"
     
@@ -28,6 +42,8 @@ class Global: NSObject {
     
     static var helpCrunchInited: Bool = false
     
+    static var searchOption: SearchOption = SearchOption()
+
     static func setNeedRefresh() {
         needRefreshLocal = true
         needRefreshStorage = true

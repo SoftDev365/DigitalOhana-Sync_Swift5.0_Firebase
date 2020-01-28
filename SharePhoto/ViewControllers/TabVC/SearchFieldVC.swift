@@ -38,12 +38,66 @@ class SearchFieldVC: UIViewController {
         self.datePickerVC = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DatePickerVC") as! DatePickerVC)
         self.addChild(self.datePickerVC)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.initFileds()
+    }
 
     func initViewBorder(view: UIView) {
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
+    func initFileds() {
+        let options = Global.searchOption
+        
+        swcTaken.isOn = options.bTakenDate
+        swcUpload.isOn = options.bUploadDate
+        swcUser.isOn = options.bUserName
+        
+        let curDate = Date()
+        var dateComponents = DateComponents()
+        dateComponents.month = -1
+        dateComponents.day = 0
+        dateComponents.year = 0
+        let monthAgo = Calendar.current.date(byAdding:dateComponents, to: curDate)
+        
+        if options.takenDateFrom == nil {
+            options.takenDateFrom = monthAgo?.timeIntervalSince1970
+        }
+        if options.takenDateTo == nil {
+            options.takenDateTo = curDate.timeIntervalSince1970
+        }
+        
+        if options.uploadDateFrom == nil {
+            options.uploadDateFrom = monthAgo?.timeIntervalSince1970
+        }
+        if options.uploadDateTo == nil {
+            options.uploadDateTo = curDate.timeIntervalSince1970
+        }
+        
+        self.setLabel(button: btnTakenFrom, timeInterval: options.takenDateFrom)
+        self.setLabel(button: btnTakenTo, timeInterval: options.takenDateTo)
+        self.setLabel(button: btnUploadFrom, timeInterval: options.uploadDateFrom)
+        self.setLabel(button: btnUploadTo, timeInterval: options.uploadDateTo)
+    }
+    
+    func setLabel(button: UIButton, timeInterval: TimeInterval?) {
+        var date = Date()
+        
+        if timeInterval != nil {
+            date = Date(timeIntervalSince1970: timeInterval!)
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        let strDate = formatter.string(from: date)
+
+        button.setTitle(strDate, for: .normal)
     }
 
     @IBAction func onSwitchTaken(_ sender: Any) {
