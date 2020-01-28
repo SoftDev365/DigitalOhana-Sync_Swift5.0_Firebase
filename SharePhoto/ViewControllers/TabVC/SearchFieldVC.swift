@@ -44,7 +44,7 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
         self.addChild(self.datePickerVC)
         self.datePickerVC.delegate = self
         
-        self.navigationController?.title = "Search Options"
+        self.title = "Search Options"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +101,7 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
         self.setLabel(button: btnUploadTo, timeInterval: options.uploadDateTo)
         
         if options.userName == nil || options.userName == "" {
-            btnUserName.setTitle("All", for: .normal)
+            btnUserName.setTitle("Everyone", for: .normal)
         } else {
             btnUserName.setTitle(options.userName, for: .normal)
         }

@@ -29,7 +29,7 @@ class UserListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        self.navigationController?.title = "Choose User"
+        self.title = "Choose User"
         
         self.loadAllUsersList()
     }
