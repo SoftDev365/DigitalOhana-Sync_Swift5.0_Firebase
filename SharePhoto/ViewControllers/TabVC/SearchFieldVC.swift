@@ -38,6 +38,8 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate {
         self.datePickerVC = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DatePickerVC") as! DatePickerVC)
         self.addChild(self.datePickerVC)
         self.datePickerVC.delegate = self
+        
+        self.navigationController?.title = "Search Options"
     }
     
     override func viewWillAppear(_ animated: Bool) {

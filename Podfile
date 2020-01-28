@@ -24,6 +24,8 @@ target 'SharePhoto' do
   
   pod 'HelpCrunchSDK', '~> 2.0.0'
   
+  pod 'IQKeyboardManagerSwift'
+  
 end
 
 target 'Ohana Sync' do

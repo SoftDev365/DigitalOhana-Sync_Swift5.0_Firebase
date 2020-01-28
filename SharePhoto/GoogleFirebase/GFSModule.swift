@@ -91,6 +91,32 @@ class GFSModule: NSObject {
         }
     }
     
+    static func findUsers(name: String, onCompleted: @escaping (Bool, [QueryDocumentSnapshot]?) -> ()) {
+        let db = Firestore.firestore()
+        let refUsers = db.collection("users")
+
+        if name == "" {
+            refUsers.getDocuments() { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting photos docuemts:\(error)")
+                    onCompleted(false, nil)
+                } else {
+                    onCompleted(true, querySnapshot!.documents)
+                }
+            }
+        } else {
+            refUsers.whereField("name", arrayContains: name)
+                .getDocuments() { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting photos docuemts:\(error)")
+                    onCompleted(false, nil)
+                } else {
+                    onCompleted(true, querySnapshot!.documents)
+                }
+            }
+        }
+    }
+    
     static func registerUser() {
         //fetchUsers()
         

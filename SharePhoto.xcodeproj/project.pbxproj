@@ -236,12 +236,12 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		84A28E42238C85A30017DD06 /* TableCells */ = {
+		84A28E42238C85A30017DD06 /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
 				843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */,
 			);
-			path = TableCells;
+			path = TableCell;
 			sourceTree = "<group>";
 		};
 		84AA678723AB29E2001FE9FC /* TabVC */ = {
@@ -333,7 +333,7 @@
 		84D7CE3D238B3D7E00C15CF6 /* TableVC */ = {
 			isa = PBXGroup;
 			children = (
-				84A28E42238C85A30017DD06 /* TableCells */,
+				84A28E42238C85A30017DD06 /* TableCell */,
 				843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */,
 				84D004CC237913CD00929662 /* GSExplorerController.swift */,
 			);
