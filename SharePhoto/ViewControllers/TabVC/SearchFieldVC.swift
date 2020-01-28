@@ -164,7 +164,9 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate {
     }
     
     @IBAction func onBtnUserName(_ sender: Any) {
-        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserListVC") as? UserListVC {
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @IBAction func onBtnSearch(_ sender: Any) {
@@ -181,7 +183,7 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate {
         } else if tag == 4 {
             Global.searchOption.uploadDateTo = date.timeIntervalSince1970
         }
-        
+
         self.refreshButtonValues()
     }
 }

@@ -71,6 +71,7 @@
 		84D4BE6A23CE9FD700D5A557 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D4BE6823CE9FCE00D5A557 /* AuthenticationServices.framework */; };
 		84D7CE3C238AD47400C15CF6 /* LocalGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D7CE3B238AD47400C15CF6 /* LocalGalleryVC.swift */; };
 		84D85D482384A1710042C4DF /* GDBModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85D472384A1710042C4DF /* GDBModule.swift */; };
+		84E90E6323E03B810000FCC8 /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E90E6223E03B810000FCC8 /* UserListVC.swift */; };
 		84F6A4AF23DFDE64008CDF7B /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */; };
 		84F90E8C23B16A8B00A5202A /* GFSModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F90E8B23B16A8B00A5202A /* GFSModuleSync.swift */; };
 		982CA3432B9D7D26CDCAC42C /* Pods_SharePhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */; };
@@ -154,6 +155,7 @@
 		84D4BE6823CE9FCE00D5A557 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		84D7CE3B238AD47400C15CF6 /* LocalGalleryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalGalleryVC.swift; sourceTree = "<group>"; };
 		84D85D472384A1710042C4DF /* GDBModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GDBModule.swift; sourceTree = "<group>"; };
+		84E90E6223E03B810000FCC8 /* UserListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListVC.swift; sourceTree = "<group>"; };
 		84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
 		84F90E8B23B16A8B00A5202A /* GFSModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GFSModuleSync.swift; sourceTree = "<group>"; };
 		A04DAABF438DDC1E4E24BAA0 /* Pods_Ohana_Sync.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ohana_Sync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -252,6 +254,7 @@
 				84B4144723A0E44100075A80 /* SettingVC.swift */,
 				84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */,
 				84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */,
+				84E90E6223E03B810000FCC8 /* UserListVC.swift */,
 			);
 			path = TabVC;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				843DF2E02373D00E00F856ED /* ImageView+Download.swift in Sources */,
 				84B4144823A0E44100075A80 /* SettingVC.swift in Sources */,
 				84F90E8C23B16A8B00A5202A /* GFSModuleSync.swift in Sources */,
+				84E90E6323E03B810000FCC8 /* UserListVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
