@@ -23,6 +23,7 @@ class SearchOption: NSObject {
     
     var userid: String?
     var userName: String?
+    var email: String?
 }
 
 class Global: NSObject {

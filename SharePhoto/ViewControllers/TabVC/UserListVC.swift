@@ -9,13 +9,19 @@
 import UIKit
 import FirebaseFirestore
 
+protocol UserListVCDelegate: AnyObject {
+    func didChooseUser(id: String, email: String, name: String)
+}
+
 class UserListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var txtUserName: UITextField!
     @IBOutlet weak var tableView: UITableView!
-    
+
     var listUsers: [QueryDocumentSnapshot]? = nil
     var filteredUsers: [QueryDocumentSnapshot]? = nil
+    
+    var delegate: UserListVCDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +48,7 @@ class UserListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         guard let users = self.listUsers else {
             return
         }
-        
+
         let filter = txtUserName.text
         
         if filter == nil || filter == "" {
@@ -83,5 +89,16 @@ class UserListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.detailTextLabel?.text = email
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let user = self.filteredUsers![indexPath.row]
+        let data = user.data()
+        let userid = user.documentID
+        let name = data["name"] as! String
+        let email = data["email"] as! String
+        
+        self.delegate?.didChooseUser(id: userid, email: email, name: name)
+        self.navigationController?.popViewController(animated: true)
     }
 }

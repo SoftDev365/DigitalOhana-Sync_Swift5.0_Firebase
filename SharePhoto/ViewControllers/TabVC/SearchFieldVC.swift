@@ -8,7 +8,11 @@
 
 import UIKit
 
-class SearchFieldVC: UIViewController, DatePickerVCDelegate {
+protocol SearchFieldVCDelegate: AnyObject {
+    func didClickOnSearchButton()
+}
+
+class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate {
 
     @IBOutlet weak var swcTaken: UISwitch!
     @IBOutlet weak var swcUpload: UISwitch!
@@ -26,6 +30,7 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate {
     @IBOutlet weak var viewUpload: UIView!
     @IBOutlet weak var viewUser: UIView!
     
+    var delegate: SearchFieldVCDelegate?
     var datePickerVC: DatePickerVC!
     
     override func viewDidLoad() {
@@ -94,6 +99,12 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate {
         self.setLabel(button: btnTakenTo, timeInterval: options.takenDateTo)
         self.setLabel(button: btnUploadFrom, timeInterval: options.uploadDateFrom)
         self.setLabel(button: btnUploadTo, timeInterval: options.uploadDateTo)
+        
+        if options.userName == nil || options.userName == "" {
+            btnUserName.setTitle("All", for: .normal)
+        } else {
+            btnUserName.setTitle(options.userName, for: .normal)
+        }
     }
     
     func setLabel(button: UIButton, timeInterval: TimeInterval?) {
@@ -167,12 +178,15 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate {
     
     @IBAction func onBtnUserName(_ sender: Any) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserListVC") as? UserListVC {
+            vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     @IBAction func onBtnSearch(_ sender: Any) {
-        
+        self.delegate?.didClickOnSearchButton()
+
+        self.navigationController?.popViewController(animated: true)
     }
     
     func didChooseDate(date: Date, ofTag tag: Int) {
@@ -186,6 +200,14 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate {
             Global.searchOption.uploadDateTo = date.timeIntervalSince1970
         }
 
+        self.refreshButtonValues()
+    }
+    
+    func didChooseUser(id: String, email: String, name: String) {
+        Global.searchOption.userid = id
+        Global.searchOption.userName = name
+        Global.searchOption.email = email
+        
         self.refreshButtonValues()
     }
 }

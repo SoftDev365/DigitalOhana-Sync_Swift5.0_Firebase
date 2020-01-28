@@ -17,7 +17,7 @@ import HelpCrunchSDK
 
 private let reuseIdentifier = "PhotoCell"
 
-class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate  {
+class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, SearchFieldVCDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var btnNavLeft: UIBarButtonItem!
@@ -443,6 +443,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     @IBAction func onBtnNavRight(_ sender: Any) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchFieldVC") as? SearchFieldVC {
             hideTabBar()
+            vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -531,5 +532,9 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             vc.setView(mode: .download)
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    func didClickOnSearchButton() {
+        
     }
 }

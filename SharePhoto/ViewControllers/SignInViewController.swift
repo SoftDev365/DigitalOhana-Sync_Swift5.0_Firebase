@@ -13,6 +13,7 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 import Photos
 import HelpCrunchSDK
+import RappleProgressHUD
 
 class SignInViewController: UIViewController {
     
@@ -149,39 +150,33 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             GFSModule.registerUser()
             
             self.registerUserForShareExtension(userid: user!.userID, email: email!, username: user!.profile.name)
-
-            GFSModule.checkAllowOfUser(ID: user!.userID) { (allow) in
-                self.activityView.hideActivitiIndicator()
-                
-                if( allow ) {
-                    HCModule.updateHelpCrunchUserInfo()
-                    self.initRootList()
-                } else {
-                    self.alertNotAllowedUserMessage()
-                }
-            }
             
-            /*
             guard let authentication = user.authentication else { return }
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
             
             Auth.auth().signIn(with: credential) { (authResult, error) in
-                self.activityView.hideActivitiIndicator()
-                
-                var user = Auth.auth().currentUser
-                debugPrint("User is \(user)")
+                //var user = Auth.auth().currentUser
+                //debugPrint("User is \(user)")
                 
                 if error != nil {
-                    // User is signed in
+                    self.activityView.hideActivitiIndicator()
                     debugPrint("---- signIn with credential failed-----");
                     return
                 }
                 
-                // User is signed in
+                GFSModule.checkAllowOfUser(ID: user!.userID) { (allow) in
+                    self.activityView.hideActivitiIndicator()
+                    
+                    if( allow ) {
+                        HCModule.updateHelpCrunchUserInfo()
+                        self.initRootList()
+                    } else {
+                        self.alertNotAllowedUserMessage()
+                    }
+                }
+
                 debugPrint("----Firebase signin complete-----");
-                
-                self.initRootList()
-            }*/
+            }
         } else {
             activityView.hideActivitiIndicator()
             

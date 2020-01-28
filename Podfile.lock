@@ -319,6 +319,7 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - PromisesObjC (1.2.8)
+  - RappleProgressHUD (4.1)
   - Socket.IO-Client-Swift (15.2.0):
     - Starscream (~> 3.1)
   - SQLite.swift (0.12.2):
@@ -338,6 +339,7 @@ DEPENDENCIES:
   - GoogleSignIn (~> 4.4.0)
   - HelpCrunchSDK (~> 2.0.0)
   - IQKeyboardManagerSwift
+  - RappleProgressHUD
   - SQLite.swift (~> 0.12.0)
 
 SPEC REPOS:
@@ -372,6 +374,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - RappleProgressHUD
     - Socket.IO-Client-Swift
     - SQLite.swift
     - Starscream
@@ -407,10 +410,11 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  RappleProgressHUD: f29bc5dc5f9834c2caa9c2ae21ba11f3ff2b5a85
   Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
 
-PODFILE CHECKSUM: 527ee671238730aee8e4af0be312a7e02d44505a
+PODFILE CHECKSUM: 934e5b0c61444bda1ff1ec6c770c1e2179a539b0
 
 COCOAPODS: 1.8.4
