@@ -848,8 +848,7 @@
                                             <color key="titleColor" name="color_std_text"/>
                                         </state>
                                         <connections>
-                                            <action selector="onBtnConfirm:" destination="kxg-gQ-TON" eventType="touchUpInside" id="Uq4-wa-nR8"/>
-                                            <action selector="onBtnConfrim:" destination="kxg-gQ-TON" eventType="touchUpInside" id="HOa-95-mEe"/>
+                                            <action selector="onBtnConfirm:" destination="kxg-gQ-TON" eventType="touchUpInside" id="w2h-92-q0p"/>
                                         </connections>
                                     </button>
                                 </subviews>

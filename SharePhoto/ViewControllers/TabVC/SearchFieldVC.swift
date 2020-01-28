@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchFieldVC: UIViewController {
+class SearchFieldVC: UIViewController, DatePickerVCDelegate {
 
     @IBOutlet weak var swcTaken: UISwitch!
     @IBOutlet weak var swcUpload: UISwitch!
@@ -37,12 +37,14 @@ class SearchFieldVC: UIViewController {
         
         self.datePickerVC = (UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DatePickerVC") as! DatePickerVC)
         self.addChild(self.datePickerVC)
+        self.datePickerVC.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.initFileds()
+        self.refreshDateButtonStatus()
     }
 
     func initViewBorder(view: UIView) {
@@ -58,7 +60,7 @@ class SearchFieldVC: UIViewController {
         swcTaken.isOn = options.bTakenDate
         swcUpload.isOn = options.bUploadDate
         swcUser.isOn = options.bUserName
-        
+
         let curDate = Date()
         var dateComponents = DateComponents()
         dateComponents.month = -1
@@ -80,6 +82,12 @@ class SearchFieldVC: UIViewController {
             options.uploadDateTo = curDate.timeIntervalSince1970
         }
         
+        self.refreshButtonValues()
+    }
+    
+    func refreshButtonValues() {
+        let options = Global.searchOption
+        
         self.setLabel(button: btnTakenFrom, timeInterval: options.takenDateFrom)
         self.setLabel(button: btnTakenTo, timeInterval: options.takenDateTo)
         self.setLabel(button: btnUploadFrom, timeInterval: options.uploadDateFrom)
@@ -99,45 +107,81 @@ class SearchFieldVC: UIViewController {
 
         button.setTitle(strDate, for: .normal)
     }
+    
+    func refreshDateButtonStatus() {
+        let options = Global.searchOption
+
+        btnTakenFrom.isEnabled = options.bTakenDate
+        btnTakenTo.isEnabled = options.bTakenDate
+        
+        btnUploadFrom.isEnabled = options.bUploadDate
+        btnUploadTo.isEnabled = options.bUploadDate
+        
+        btnUserName.isEnabled = options.bUserName
+    }
+    
+    func showDatePickerView(date: TimeInterval, ofTag tag: Int) {
+        self.view.addSubview(self.datePickerVC.view)
+        self.datePickerVC.view.frame = self.view.bounds
+        
+        self.datePickerVC.setDate(timeInterval: date)
+        self.datePickerVC.tag = tag
+    }
 
     @IBAction func onSwitchTaken(_ sender: Any) {
+        Global.searchOption.bTakenDate = swcTaken.isOn
+        refreshDateButtonStatus()
     }
     
     @IBAction func onBtnTakenFrom(_ sender: Any) {
-        self.view.addSubview(self.datePickerVC.view)
-        self.datePickerVC.view.frame = self.view.bounds
+        let options = Global.searchOption
+        showDatePickerView(date: options.takenDateFrom!, ofTag: 1)
     }
     
     @IBAction func onBtnTakenTo(_ sender: Any) {
-        self.view.addSubview(self.datePickerVC.view)
-        self.datePickerVC.view.frame = self.view.bounds
+        let options = Global.searchOption
+        showDatePickerView(date: options.takenDateTo!, ofTag: 2)
     }
     
     @IBAction func onSwitchUpload(_ sender: Any) {
+        Global.searchOption.bUploadDate = swcUpload.isOn
+        refreshDateButtonStatus()
     }
     
     @IBAction func onBtnUploadFrom(_ sender: Any) {
+        let options = Global.searchOption
+        showDatePickerView(date: options.uploadDateFrom!, ofTag: 3)
     }
     
     @IBAction func onBtnUploadTo(_ sender: Any) {
+        let options = Global.searchOption
+        showDatePickerView(date: options.uploadDateTo!, ofTag: 4)
     }
     
     @IBAction func switchUser(_ sender: Any) {
+        Global.searchOption.bUserName = swcUser.isOn
+        refreshDateButtonStatus()
     }
     
     @IBAction func onBtnUserName(_ sender: Any) {
+        
     }
     
     @IBAction func onBtnSearch(_ sender: Any) {
+        
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func didChooseDate(date: Date, ofTag tag: Int) {
+        if tag == 1 {
+            Global.searchOption.takenDateFrom = date.timeIntervalSince1970
+        } else if tag == 2 {
+            Global.searchOption.takenDateTo = date.timeIntervalSince1970
+        } else if tag == 3 {
+            Global.searchOption.uploadDateFrom = date.timeIntervalSince1970
+        } else if tag == 4 {
+            Global.searchOption.uploadDateTo = date.timeIntervalSince1970
+        }
+        
+        self.refreshButtonValues()
     }
-    */
-
 }
