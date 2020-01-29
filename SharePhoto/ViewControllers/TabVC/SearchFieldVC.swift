@@ -118,7 +118,7 @@ class SearchFieldVC: UIViewController, DatePickerVCDelegate, UserListVCDelegate 
         }
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        formatter.dateFormat = "yyyy/MM/dd"
         let strDate = formatter.string(from: date)
 
         button.setTitle(strDate, for: .normal)

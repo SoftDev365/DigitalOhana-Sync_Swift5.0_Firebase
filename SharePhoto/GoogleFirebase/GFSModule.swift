@@ -239,16 +239,11 @@ class GFSModule: NSObject {
     static func searchPhotosByOptions(onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
         let options = Global.searchOption
         let db = Firestore.firestore()
-        let refPhotos = db.collection("photos").order(by: PhotoField.uploaded, descending: true)
+        let refPhotos = db.collection("photos")
         var query = refPhotos.whereField(PhotoField.valid, isEqualTo: true)
         
         if options.bUserName == true && options.userid != nil {
             query = query.whereField(PhotoField.userid, isEqualTo: options.userid!)
-        }
-        
-        if options.bTakenDate == true && options.takenDateFrom != nil && options.takenDateTo != nil {
-            query = query.whereField(PhotoField.taken, isGreaterThanOrEqualTo: options.takenDateFrom!)
-            query = query.whereField(PhotoField.taken, isLessThanOrEqualTo: options.takenDateTo!)
         }
         
         if options.bUploadDate == true && options.uploadDateFrom != nil && options.uploadDateTo != nil {
@@ -256,7 +251,8 @@ class GFSModule: NSObject {
             query = query.whereField(PhotoField.uploaded, isLessThanOrEqualTo: options.uploadDateTo!)
         }
         
-        //query = query.order(by: PhotoField.uploaded, descending: true)
+        query = query.order(by: PhotoField.uploaded, descending: true)
+        
         query.getDocuments() { (querySnapshot, error) in
             if let error = error {
                 print("Error getting photos documents:\(error)")
@@ -266,6 +262,13 @@ class GFSModule: NSObject {
 
                 for document in querySnapshot!.documents {
                     let info = self.convertToPhotoInfo(document: document)
+                    
+                    if options.bTakenDate == true && options.takenDateFrom != nil && options.takenDateTo != nil {
+                        if info.taken < options.takenDateFrom! || info.taken > options.takenDateTo! {
+                            continue
+                        }
+                    }
+                    
                     result += [info]
                 }
                 
