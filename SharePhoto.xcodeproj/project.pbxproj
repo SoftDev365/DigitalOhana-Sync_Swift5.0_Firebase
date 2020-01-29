@@ -44,6 +44,7 @@
 		84688AD823A9869500D1D9E1 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84688AD723A9869500D1D9E1 /* HomeVC.swift */; };
 		848E2DD32385F11300620877 /* GFSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E2DD22385F11300620877 /* GFSModule.swift */; };
 		849A974323822F8D003E985E /* NavigationRootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849A974223822F8D003E985E /* NavigationRootVC.swift */; };
+		849BCE4F23E13DC200180595 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849BCE4E23E13DC200180595 /* NotificationsVC.swift */; };
 		849E45EA23AED593000FCC76 /* GSModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45E923AED593000FCC76 /* GSModuleSync.swift */; };
 		849E45EC23AF192D000FCC76 /* PHModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45EB23AF192C000FCC76 /* PHModuleSync.swift */; };
 		84A0F89123AA0F5300DA7BF6 /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */; };
@@ -127,6 +128,7 @@
 		84688AD723A9869500D1D9E1 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		848E2DD22385F11300620877 /* GFSModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GFSModule.swift; sourceTree = "<group>"; };
 		849A974223822F8D003E985E /* NavigationRootVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRootVC.swift; sourceTree = "<group>"; };
+		849BCE4E23E13DC200180595 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		849E45E923AED593000FCC76 /* GSModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSModuleSync.swift; sourceTree = "<group>"; };
 		849E45EB23AF192C000FCC76 /* PHModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PHModuleSync.swift; sourceTree = "<group>"; };
 		84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationVC.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */,
 				84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */,
 				84E90E6223E03B810000FCC8 /* UserListVC.swift */,
+				849BCE4E23E13DC200180595 /* NotificationsVC.swift */,
 			);
 			path = TabVC;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */,
 				84BE2AAE2390B8A000F1BE53 /* SyncModule.swift in Sources */,
 				84A28E44238C85F20017DD06 /* PHModule.swift in Sources */,
+				849BCE4F23E13DC200180595 /* NotificationsVC.swift in Sources */,
 				842568A1237D4C1100F4CD7A /* GSGalleryVC.swift in Sources */,
 				841362FB23D992BC00D38F05 /* BadgeButtonItem.swift in Sources */,
 				840EEE002374215900361FB9 /* Alerts.swift in Sources */,

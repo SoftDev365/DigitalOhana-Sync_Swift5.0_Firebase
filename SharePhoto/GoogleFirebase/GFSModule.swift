@@ -24,6 +24,15 @@ class PhotoField {
     static let valid: String = "valid"
 }
 
+class NotificationField {
+    static let timestamp: String = "timestamp"
+    static let userid: String = "userid"
+    static let email: String = "email"
+    static let username: String = "username"
+    static let type: String = "type"
+    static let count: String = "count"
+}
+
 enum SourceType : Int {
     case asset = 0
     case drive = 1
@@ -66,6 +75,26 @@ class FSPhotoInfo {
     }
 }
 
+class FSNotificationInfo {
+    var id: String
+    
+    var userid: String                  // owner id, users collection on firestore db
+    var email: String                   // owner email address
+    var username: String                // owner name
+
+    var timestamp: TimeInterval = 0     // event timestamp
+    
+    var type: Int = 0                   // 0: Upload, 1: Delete
+    var count: Int = 0                  // photo count
+    
+    init() {
+        self.id = ""
+        self.userid = Global.userid!
+        self.email = Global.email!
+        self.username = Global.username!
+    }
+}
+
 extension Dictionary {
     mutating func merge(dict: [Key: Value]){
         for (k, v) in dict {
@@ -90,7 +119,7 @@ class GFSModule: NSObject {
             }
         }
     }
-    
+
     static func findUsers(name: String, onCompleted: @escaping (Bool, [QueryDocumentSnapshot]?) -> ()) {
         let db = Firestore.firestore()
         let refUsers = db.collection("users")
@@ -402,6 +431,78 @@ class GFSModule: NSObject {
                 onCompleted(false)
             } else {
                 onCompleted(true)
+            }
+        }
+    }
+    
+    static func convertToNotificationInfo(document: QueryDocumentSnapshot) -> FSNotificationInfo {
+        let info = FSNotificationInfo()
+        
+        let data = document.data()
+        
+        info.id = document.documentID
+        
+        info.userid = (data[NotificationField.userid] as! String)
+        info.email = (data[NotificationField.email] as! String)
+        info.username = (data[NotificationField.username] as! String)
+
+        let timestamp = data[NotificationField.timestamp]
+        if timestamp is TimeInterval {
+            info.timestamp = timestamp as! TimeInterval
+        } else {
+            info.timestamp = Date().timeIntervalSince1970
+        }
+
+        info.type = (data[NotificationField.type] as! Int)
+        info.count = (data[NotificationField.count] as! Int)
+        
+        return info
+    }
+    
+    static func getRecentNotifications(onCompleted: @escaping (Bool, [FSNotificationInfo]) -> ()) {
+        let db = Firestore.firestore()
+        let refPhotos = db.collection("notifications")
+        
+        let fromDate = Calendar.current.date(byAdding: .month, value: -1, to: Date())
+        let from = fromDate!.timeIntervalSince1970
+
+        // order by timestamp DESC
+        refPhotos.order(by: NotificationField.timestamp, descending: true)
+            .whereField(NotificationField.timestamp, isGreaterThanOrEqualTo: from)
+            .getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting notifications documents:\(err)")
+                onCompleted(false, [])
+            } else {
+                var result = [FSNotificationInfo]()
+
+                for document in querySnapshot!.documents {
+                    let info = self.convertToNotificationInfo(document: document)
+                    result += [info]
+                }
+
+                onCompleted(true, result)
+            }
+        }
+    }
+    
+    static func registerNotification(info: FSNotificationInfo, onCompleted: @escaping (Bool, String?) -> ()) {
+        let data = [NotificationField.userid: info.userid,
+            NotificationField.email: info.email,
+            NotificationField.username: info.userid,
+            NotificationField.timestamp: info.timestamp,
+            NotificationField.type: info.type,
+            NotificationField.count: info.count] as [String : Any]
+
+        let db = Firestore.firestore()
+        var ref: DocumentReference? = nil
+
+        ref = db.collection("notification").addDocument(data: data) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false, nil)
+            } else {
+                onCompleted(true, ref!.documentID)
             }
         }
     }
