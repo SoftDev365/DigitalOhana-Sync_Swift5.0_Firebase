@@ -92,6 +92,7 @@ class FSNotificationInfo {
         self.userid = Global.userid!
         self.email = Global.email!
         self.username = Global.username!
+        self.timestamp = Date().timeIntervalSince1970
     }
 }
 
