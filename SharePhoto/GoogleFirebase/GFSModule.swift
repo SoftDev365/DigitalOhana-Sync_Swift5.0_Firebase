@@ -75,6 +75,11 @@ class FSPhotoInfo {
     }
 }
 
+class NotificationType {
+    static let upload = 0
+    static let delete =  1
+}
+
 class FSNotificationInfo {
     var id: String
     
@@ -384,7 +389,7 @@ class GFSModule: NSObject {
     static func registerPhoto(info: FSPhotoInfo, onCompleted: @escaping (Bool, String?) -> ()) {
         let data = [PhotoField.userid: info.userid,
             PhotoField.email: info.email,
-            PhotoField.username: info.userid,
+            PhotoField.username: info.username,
             PhotoField.taken: info.taken,
             PhotoField.uploaded: info.uploaded,
             PhotoField.sourceType: info.sourceType.rawValue,
@@ -490,7 +495,7 @@ class GFSModule: NSObject {
     static func registerNotification(info: FSNotificationInfo, onCompleted: @escaping (Bool, String?) -> ()) {
         let data = [NotificationField.userid: info.userid,
             NotificationField.email: info.email,
-            NotificationField.username: info.userid,
+            NotificationField.username: info.username,
             NotificationField.timestamp: info.timestamp,
             NotificationField.type: info.type,
             NotificationField.count: info.count] as [String : Any]
@@ -498,7 +503,7 @@ class GFSModule: NSObject {
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
 
-        ref = db.collection("notification").addDocument(data: data) { err in
+        ref = db.collection("notifications").addDocument(data: data) { err in
             if let err = err {
                 debugPrint(err)
                 onCompleted(false, nil)

@@ -112,6 +112,16 @@ class Global: NSObject {
         Global.email = nil
     }
     
+    static func getDateTimeString(interval: TimeInterval) -> String {
+        let date = Date(timeIntervalSince1970: interval)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+        let dateString = formatter.string(from: date)
+        
+        return dateString
+    }
+    
     static func getDateStartInterval(interval: TimeInterval?) -> TimeInterval? {
         if interval == nil {
             return nil

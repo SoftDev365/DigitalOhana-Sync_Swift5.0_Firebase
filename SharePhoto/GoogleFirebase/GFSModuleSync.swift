@@ -112,4 +112,21 @@ class GFSModuleSync: NSObject {
 
         return bResult
     }
+    
+    static func registerNotification(info: FSNotificationInfo) -> Bool {
+        var bResult: Bool = false
+        var bProcessing = true
+        
+        GFSModule.registerNotification(info: info) { (success, _) in
+            bResult = success
+            bProcessing = false
+        }
+
+        // block while processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 0.005)
+        }
+
+        return bResult
+    }
 }

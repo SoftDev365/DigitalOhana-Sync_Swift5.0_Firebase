@@ -268,6 +268,14 @@ class SyncModule: NSObject {
         }
     }
     
+    static func registerNotification(count: Int, ofType type: Int) -> Bool {
+        let info: FSNotificationInfo = FSNotificationInfo()
+        info.count = count
+        info.type = type
+        
+        return GFSModuleSync.registerNotification(info: info)
+    }
+    
     // result (upload, skip, fail count)
     static func uploadSelectedLocalPhotos(assets: [PHAsset], onCompleted: @escaping(Int, Int, Int)->()) {
         DispatchQueue.global(qos: .background).async {
@@ -289,6 +297,8 @@ class SyncModule: NSObject {
                     nFail += 1
                 }
             }
+            
+            _ = registerNotification(count: nUpload, ofType: NotificationType.upload)
 
             DispatchQueue.main.async {
                 onCompleted(nUpload, nSkip, nFail)
@@ -299,7 +309,7 @@ class SyncModule: NSObject {
     // delete photos (result: deleted, failed)
     static func deleteSelectedPhotosFromCloud(photoInfos: [FSPhotoInfo], onCompleted: @escaping(Int, Int, Int)->()) {
         DispatchQueue.global(qos: .background).async {
-            var nUpload: Int = 0
+            var nDelete: Int = 0
             var nSkip: Int = 0
             var nFail: Int = 0
             
@@ -320,14 +330,16 @@ class SyncModule: NSObject {
                     // delete from local database
                     SqliteManager.deletePhotoBy(cloudFileID: fsID)
 
-                    nUpload += 1
+                    nDelete += 1
                 } else {
                     nFail += 1
                 }
             }
+            
+            _ = registerNotification(count: nDelete, ofType: NotificationType.delete)
 
             DispatchQueue.main.async {
-                onCompleted(nUpload, nSkip, nFail)
+                onCompleted(nDelete, nSkip, nFail)
             }
         }
     }
@@ -472,6 +484,8 @@ class SyncModule: NSObject {
                     nFail += 1
                 }
             }
+            
+            _ = registerNotification(count: nUpload, ofType: NotificationType.upload)
 
             DispatchQueue.main.async {
                 onCompleted(nUpload, nSkip, nFail)
@@ -521,6 +535,8 @@ class SyncModule: NSObject {
                 }
                 debugPrint("------- uploaded one local photo --------")
             }
+            
+            _ = registerNotification(count: nUpload, ofType: NotificationType.upload)
 
             DispatchQueue.main.async {
                 onCompleted(nUpload, nSkip, nFail)
