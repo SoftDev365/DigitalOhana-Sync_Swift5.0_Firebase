@@ -36,7 +36,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,7 +44,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section == 2 {
+        if section == 3 {
             let view = UIView()
             view.backgroundColor = .clear
         
@@ -55,7 +55,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 2 {
+        if section == 3 {
             return tableView.frame.height - 230
         }
         
@@ -73,6 +73,12 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
         } else if indexPath.section == 1 {
             cell.setIcon(image: UIImage(systemName: "questionmark.circle"))
             cell.setLabel(title: "Help")
+            
+            let messages = Int(HelpCrunch.numberOfUnreadMessages())
+            cell.setBadgeNumber(number: messages)
+        } else if indexPath.section == 2 {
+            cell.setIcon(image: UIImage(systemName: "questionmark.circle"))
+            cell.setLabel(title: "Notifications")
             
             let messages = Int(HelpCrunch.numberOfUnreadMessages())
             cell.setBadgeNumber(number: messages)
@@ -94,7 +100,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             self.showHelpCrunch()
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 3 {
             self.logout()
         }
         
