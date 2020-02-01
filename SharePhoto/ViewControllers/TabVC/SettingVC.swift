@@ -56,7 +56,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 3 {
-            return tableView.frame.height - 230
+            return tableView.frame.height - 270
         }
         
         return 0
@@ -77,7 +77,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
             let messages = Int(HelpCrunch.numberOfUnreadMessages())
             cell.setBadgeNumber(number: messages)
         } else if indexPath.section == 2 {
-            cell.setIcon(image: UIImage(systemName: "questionmark.circle"))
+            cell.setIcon(image: UIImage(systemName: "bell"))
             cell.setLabel(title: "Notifications")
             
             let messages = Int(HelpCrunch.numberOfUnreadMessages())
@@ -91,20 +91,28 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            self.showHelpCrunch()
+        } else if indexPath.section == 2 {
+            self.showNotificationList()
+        } else if indexPath.section == 3 {
+            self.logout()
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func showHelpCrunch() {
         HelpCrunch.show(from: self) { (error) in
             // If you need to do something on completion of SDK view controller presenting
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            self.showHelpCrunch()
-        } else if indexPath.section == 3 {
-            self.logout()
+    func showNotificationList() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NotificationsVC") as? NotificationsVC {
+            navigationController?.pushViewController(vc, animated: true)
         }
-        
-        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func logout() {
