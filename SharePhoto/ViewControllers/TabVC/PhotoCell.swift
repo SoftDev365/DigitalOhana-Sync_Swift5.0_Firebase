@@ -24,6 +24,7 @@ class PhotoCell: UICollectionViewCell {
 
     var type: PhotoCellType!
     var fileID: String? = nil
+    var thumbFileID: String? = nil
     let cloudFolderPath = "central"
     
     var localAsset: PHAsset?
@@ -128,14 +129,14 @@ class PhotoCell: UICollectionViewCell {
     open func setCloudFile(_ fileID: String) {
         self.setEmpty()
         
+        let thumbFileID = GSModule.getThumbnailFileID(cloudFileID: fileID)
         self.type = .cloud
         self.fileID = fileID
-
-        let thumbFileID = GSModule.getThumbnailFileID(cloudFileID: fileID)
+        self.thumbFileID = thumbFileID
         
         GSModule.downloadImageFile(cloudFileID: thumbFileID, folderPath: self.cloudFolderPath, onCompleted: { (fileID, image) in
             // if cell point still the same photo (cell may be changed to the other while downloading)
-            if thumbFileID == fileID {
+            if self.thumbFileID == fileID {
                 self.ivPhoto?.image = image
             }
             //if SyncModule.checkPhotoIsDownloaded(fileID: self.filePath) == false {
@@ -158,6 +159,8 @@ class PhotoCell: UICollectionViewCell {
         let size = CGSize(width:width, height:width)
         self.type = .local
         self.localAsset = asset
+        
+        let identifier = asset.localIdentifier
 
         PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
             // skip twice calls
@@ -165,7 +168,10 @@ class PhotoCell: UICollectionViewCell {
             //if isDegraded {
             //   return
             //}
-            self.ivPhoto?.image = image
+            // if previous image loaded late, skip
+            if asset.localIdentifier == identifier {
+                self.ivPhoto?.image = image
+            }
         }
     }
     
@@ -175,8 +181,13 @@ class PhotoCell: UICollectionViewCell {
         self.type = .drive
         self.driveFile = file
         
+        self.ivPhoto?.image = UIImage.init(named: "noimage")
         if let thumnailLink = file.thumbnailLink {
-            self.ivPhoto?.loadImageUsingCache(withUrl: thumnailLink)
+            GDModule.downloadThumnail(urlString: thumnailLink) { (url, image) in
+                if self.driveFile!.thumbnailLink == url {
+                    self.ivPhoto?.image = image
+                }
+            }
         } else {
             GDModule.downloadImage(fileID: file.identifier!) { (fileID, image) in
                 if self.driveFile!.identifier == fileID {
