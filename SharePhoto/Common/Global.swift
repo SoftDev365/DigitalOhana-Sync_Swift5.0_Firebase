@@ -112,6 +112,15 @@ class Global: NSObject {
         Global.email = nil
     }
     
+    static func getString(fromDate: Date, withFormat format:String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+
+        let dateString = formatter.string(from: fromDate)
+
+        return dateString
+    }
+    
     static func getDateTimeString(interval: TimeInterval) -> String {
         let date = Date(timeIntervalSince1970: interval)
         let formatter = DateFormatter()
