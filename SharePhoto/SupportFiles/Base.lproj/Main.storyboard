@@ -811,10 +811,10 @@
             </objects>
             <point key="canvasLocation" x="-2813" y="133"/>
         </scene>
-        <!--View Controller-->
+        <!--GeneralVC-->
         <scene sceneID="OaF-sW-R8B">
             <objects>
-                <viewController id="RlM-jJ-9t9" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GeneralVC" id="RlM-jJ-9t9" customClass="GeneralVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ee8-sQ-aQG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -837,6 +837,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cZU-02-exi"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="rhz-Mi-rpG" id="JU7-En-SNw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YDR-wD-DRe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

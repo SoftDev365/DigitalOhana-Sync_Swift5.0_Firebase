@@ -92,7 +92,9 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 0 {
+            self.showGeneralSetting()
+        } else if indexPath.section == 1 {
             self.showHelpCrunch()
         } else if indexPath.section == 2 {
             self.showNotificationList()
@@ -101,6 +103,12 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func showGeneralSetting() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GeneralVC") as? GeneralVC {
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func showHelpCrunch() {

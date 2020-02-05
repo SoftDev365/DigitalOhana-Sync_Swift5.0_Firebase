@@ -8,23 +8,63 @@
 
 import UIKit
 
-class GeneralVC: UIViewController {
+class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
 
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
     }
-    */
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == 3 {
+            let view = UIView()
+            view.backgroundColor = .clear
+        
+            return view
+        }
 
+        return nil
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 3 {
+            return tableView.frame.height - 270
+        }
+        
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+
+        cell.textLabel?.text = "aaa"
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            self.showGeneralSetting()
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func showGeneralSetting() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GeneralVC") as? GeneralVC {
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }

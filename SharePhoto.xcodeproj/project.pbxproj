@@ -48,6 +48,7 @@
 		849E45EC23AF192D000FCC76 /* PHModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45EB23AF192C000FCC76 /* PHModuleSync.swift */; };
 		84A0F89123AA0F5300DA7BF6 /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */; };
 		84A1125923EAFD8700F81BC6 /* GeneralVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A1125823EAFD8700F81BC6 /* GeneralVC.swift */; };
+		84A1125B23EB060C00F81BC6 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CBDD9423AC2A15008AE632 /* PhotoCell.swift */; };
 		84A28E44238C85F20017DD06 /* PHModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E43238C85F20017DD06 /* PHModule.swift */; };
 		84A28E46238C904D0017DD06 /* ImagePickerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E45238C904D0017DD06 /* ImagePickerModule.swift */; };
 		84ADEFB023C7047F0037BBF2 /* mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 84ADEFAF23C7047F0037BBF2 /* mark.png */; };
@@ -242,8 +243,8 @@
 		84A1125723EAFD3700F81BC6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				84A1125823EAFD8700F81BC6 /* GeneralVC.swift */,
 				841362FE23D9AA9A00D38F05 /* SettingCell.swift */,
+				84A1125823EAFD8700F81BC6 /* GeneralVC.swift */,
 				849BCE4E23E13DC200180595 /* NotificationsVC.swift */,
 				84B4144723A0E44100075A80 /* SettingVC.swift */,
 			);
@@ -598,6 +599,7 @@
 				843FAADD23C9D3AA00A05196 /* GDModule.swift in Sources */,
 				843FAADF23C9D3AA00A05196 /* GFSModule.swift in Sources */,
 				843FAAE023C9D3AA00A05196 /* GFSModuleSync.swift in Sources */,
+				84A1125B23EB060C00F81BC6 /* PhotoCell.swift in Sources */,
 				843FAADC23C9D3AA00A05196 /* GDBModule.swift in Sources */,
 				843FAAD723C9D39500A05196 /* PHModuleSync.swift in Sources */,
 				843FAAD423C9D38A00A05196 /* ActivityView.swift in Sources */,
