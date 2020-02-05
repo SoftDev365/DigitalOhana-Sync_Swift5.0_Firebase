@@ -46,6 +46,18 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cellSelected = tableView.cellForRow(at: IndexPath(row: 0, section: 0))
+        cellSelected?.accessoryType = .none
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.accessoryType = .checkmark
+        
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        //self.perform(#selector(returnBack), with: nil, afterDelay: 0.25)
+    }
+    
+    @objc func returnBack() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
