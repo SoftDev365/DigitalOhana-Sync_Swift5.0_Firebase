@@ -244,12 +244,20 @@
 			children = (
 				84A1125823EAFD8700F81BC6 /* GeneralVC.swift */,
 				841362FE23D9AA9A00D38F05 /* SettingCell.swift */,
-				84B4144723A0E44100075A80 /* SettingVC.swift */,
-				84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */,
-				84E90E6223E03B810000FCC8 /* UserListVC.swift */,
 				849BCE4E23E13DC200180595 /* NotificationsVC.swift */,
+				84B4144723A0E44100075A80 /* SettingVC.swift */,
 			);
 			path = Setting;
+			sourceTree = "<group>";
+		};
+		84A1125A23EAFEB400F81BC6 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */,
+				84E90E6223E03B810000FCC8 /* UserListVC.swift */,
+				84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		84A28E42238C85A30017DD06 /* TableCell */ = {
@@ -264,7 +272,6 @@
 		84AA678723AB29E2001FE9FC /* TabVC */ = {
 			isa = PBXGroup;
 			children = (
-				84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */,
 				84688AD723A9869500D1D9E1 /* HomeVC.swift */,
 				84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */,
 				84C5F64A23B76C080048929F /* MainVC.swift */,
@@ -314,6 +321,7 @@
 				84D7CE3D238B3D7E00C15CF6 /* TableVC */,
 				84D7CE3E238B3DAA00C15CF6 /* AlbumVC */,
 				84A1125723EAFD3700F81BC6 /* Setting */,
+				84A1125A23EAFEB400F81BC6 /* Search */,
 				84AA678723AB29E2001FE9FC /* TabVC */,
 				849A974223822F8D003E985E /* NavigationRootVC.swift */,
 				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
