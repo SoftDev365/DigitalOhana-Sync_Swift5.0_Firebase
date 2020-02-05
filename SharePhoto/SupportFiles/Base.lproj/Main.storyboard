@@ -822,6 +822,41 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rhz-Mi-rpG">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchCell" id="tNJ-Ob-NaQ" customClass="SwitchCell" customModule="Ohana_Sync" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tNJ-Ob-NaQ" id="tsE-c5-P4n">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="INB-8s-tdd">
+                                                    <rect key="frame" x="350" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                                    <connections>
+                                                        <action selector="onSwitchOnOff" destination="tNJ-Ob-NaQ" eventType="valueChanged" id="Cpv-2M-h3a"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto Upload" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIa-nw-QMO">
+                                                    <rect key="frame" x="15" y="11.333333333333336" width="94.666666666666671" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="INB-8s-tdd" secondAttribute="trailing" constant="15" id="3Y4-Ml-gnR"/>
+                                                <constraint firstItem="NIa-nw-QMO" firstAttribute="centerY" secondItem="tsE-c5-P4n" secondAttribute="centerY" id="3YB-8m-FKc"/>
+                                                <constraint firstItem="INB-8s-tdd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NIa-nw-QMO" secondAttribute="trailing" constant="8" symbolic="YES" id="7NJ-vL-SVr"/>
+                                                <constraint firstItem="INB-8s-tdd" firstAttribute="centerY" secondItem="tsE-c5-P4n" secondAttribute="centerY" id="YVK-YT-DtT"/>
+                                                <constraint firstItem="NIa-nw-QMO" firstAttribute="leading" secondItem="tsE-c5-P4n" secondAttribute="leading" constant="15" id="hMT-u6-J0u"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="lblTitle" destination="NIa-nw-QMO" id="VEl-0r-hJn"/>
+                                            <outlet property="swcOnOff" destination="INB-8s-tdd" id="Aqq-ZD-JET"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="RlM-jJ-9t9" id="fAe-jr-n4H"/>
                                     <outlet property="delegate" destination="RlM-jJ-9t9" id="gb7-BZ-jw9"/>
@@ -844,6 +879,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YDR-wD-DRe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2813.04347826087" y="841.74107142857144"/>
+        </scene>
+        <!--Date Format ListVC-->
+        <scene sceneID="Af9-Wv-3ex">
+            <objects>
+                <viewController storyboardIdentifier="DateFormatListVC" id="dEC-MG-7JP" customClass="DateFormatListVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8Du-aU-NEs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9Sq-Nz-v5Y">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="dEC-MG-7JP" id="dZD-Xa-XQh"/>
+                                    <outlet property="delegate" destination="dEC-MG-7JP" id="tsO-J5-IVW"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9Sq-Nz-v5Y" firstAttribute="bottom" secondItem="pZM-9k-N5a" secondAttribute="bottom" id="43a-dY-dEb"/>
+                            <constraint firstItem="9Sq-Nz-v5Y" firstAttribute="trailing" secondItem="pZM-9k-N5a" secondAttribute="trailing" id="Dgg-7n-1MR"/>
+                            <constraint firstItem="9Sq-Nz-v5Y" firstAttribute="top" secondItem="pZM-9k-N5a" secondAttribute="top" id="aWN-Pr-f81"/>
+                            <constraint firstItem="9Sq-Nz-v5Y" firstAttribute="leading" secondItem="pZM-9k-N5a" secondAttribute="leading" id="s2E-6e-P8t"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pZM-9k-N5a"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="9Sq-Nz-v5Y" id="yAc-bY-KcT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3FF-cW-FqA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2017.3913043478262" y="841.74107142857144"/>
         </scene>
         <!--Date PickerVC-->
         <scene sceneID="wts-GJ-EZw">

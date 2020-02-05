@@ -41,6 +41,8 @@
 		8455A48123C88E0C005B8742 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8455A48023C88E0C005B8742 /* GoogleService-Info.plist */; };
 		846589A8237623520050AE40 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846589A7237623510050AE40 /* GoogleService-Info.plist */; };
 		84688AD823A9869500D1D9E1 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84688AD723A9869500D1D9E1 /* HomeVC.swift */; };
+		8469878323EB407800F6C4AC /* DateFormatListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469878223EB407800F6C4AC /* DateFormatListVC.swift */; };
+		8469878523EB459100F6C4AC /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469878423EB459100F6C4AC /* SwitchCell.swift */; };
 		848E2DD32385F11300620877 /* GFSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E2DD22385F11300620877 /* GFSModule.swift */; };
 		849A974323822F8D003E985E /* NavigationRootVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849A974223822F8D003E985E /* NavigationRootVC.swift */; };
 		849BCE4F23E13DC200180595 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849BCE4E23E13DC200180595 /* NotificationsVC.swift */; };
@@ -127,6 +129,8 @@
 		8455A48323C88F73005B8742 /* Ohana Sync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Ohana Sync.entitlements"; sourceTree = "<group>"; };
 		846589A7237623510050AE40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84688AD723A9869500D1D9E1 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		8469878223EB407800F6C4AC /* DateFormatListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatListVC.swift; sourceTree = "<group>"; };
+		8469878423EB459100F6C4AC /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		848E2DD22385F11300620877 /* GFSModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GFSModule.swift; sourceTree = "<group>"; };
 		849A974223822F8D003E985E /* NavigationRootVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRootVC.swift; sourceTree = "<group>"; };
 		849BCE4E23E13DC200180595 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
@@ -244,6 +248,8 @@
 			isa = PBXGroup;
 			children = (
 				841362FE23D9AA9A00D38F05 /* SettingCell.swift */,
+				8469878423EB459100F6C4AC /* SwitchCell.swift */,
+				8469878223EB407800F6C4AC /* DateFormatListVC.swift */,
 				84A1125823EAFD8700F81BC6 /* GeneralVC.swift */,
 				849BCE4E23E13DC200180595 /* NotificationsVC.swift */,
 				84B4144723A0E44100075A80 /* SettingVC.swift */,
@@ -634,6 +640,7 @@
 				842568A1237D4C1100F4CD7A /* GSGalleryVC.swift in Sources */,
 				841362FB23D992BC00D38F05 /* BadgeButtonItem.swift in Sources */,
 				840EEE002374215900361FB9 /* Alerts.swift in Sources */,
+				8469878523EB459100F6C4AC /* SwitchCell.swift in Sources */,
 				841362FD23D99FE500D38F05 /* HCModule.swift in Sources */,
 				84C90ED12389F1FC00EFFCCE /* LocalAlbumVC.swift in Sources */,
 				849E45EA23AED593000FCC76 /* GSModuleSync.swift in Sources */,
@@ -649,6 +656,7 @@
 				840A34C82397118500A14491 /* Global.swift in Sources */,
 				841362FF23D9AA9A00D38F05 /* SettingCell.swift in Sources */,
 				84A0F89123AA0F5300DA7BF6 /* LocationVC.swift in Sources */,
+				8469878323EB407800F6C4AC /* DateFormatListVC.swift in Sources */,
 				843DF2DB2373BF3B00F856ED /* GDExplorerController.swift in Sources */,
 				84F6A4AF23DFDE64008CDF7B /* DatePickerVC.swift in Sources */,
 				84D004CE237913CD00929662 /* GSExplorerController.swift in Sources */,
