@@ -36,7 +36,6 @@
 		843FAAE123C9D3AA00A05196 /* GSModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D004CD237913CD00929662 /* GSModule.swift */; };
 		843FAAE223C9D3AA00A05196 /* GSModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45E923AED593000FCC76 /* GSModuleSync.swift */; };
 		843FAAE323C9D3AA00A05196 /* SyncModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE2AAD2390B8A000F1BE53 /* SyncModule.swift */; };
-		843FAAE423C9D3E200A05196 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CBDD9423AC2A15008AE632 /* PhotoCell.swift */; };
 		8455A47723C8896B005B8742 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8455A47523C8896B005B8742 /* MainInterface.storyboard */; };
 		8455A47B23C8896B005B8742 /* Ohana Sync.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8455A47123C8896B005B8742 /* Ohana Sync.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8455A48123C88E0C005B8742 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8455A48023C88E0C005B8742 /* GoogleService-Info.plist */; };
@@ -48,6 +47,7 @@
 		849E45EA23AED593000FCC76 /* GSModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45E923AED593000FCC76 /* GSModuleSync.swift */; };
 		849E45EC23AF192D000FCC76 /* PHModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E45EB23AF192C000FCC76 /* PHModuleSync.swift */; };
 		84A0F89123AA0F5300DA7BF6 /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */; };
+		84A1125923EAFD8700F81BC6 /* GeneralVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A1125823EAFD8700F81BC6 /* GeneralVC.swift */; };
 		84A28E44238C85F20017DD06 /* PHModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E43238C85F20017DD06 /* PHModule.swift */; };
 		84A28E46238C904D0017DD06 /* ImagePickerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E45238C904D0017DD06 /* ImagePickerModule.swift */; };
 		84ADEFB023C7047F0037BBF2 /* mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 84ADEFAF23C7047F0037BBF2 /* mark.png */; };
@@ -132,6 +132,7 @@
 		849E45E923AED593000FCC76 /* GSModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSModuleSync.swift; sourceTree = "<group>"; };
 		849E45EB23AF192C000FCC76 /* PHModuleSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PHModuleSync.swift; sourceTree = "<group>"; };
 		84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationVC.swift; sourceTree = "<group>"; };
+		84A1125823EAFD8700F81BC6 /* GeneralVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralVC.swift; sourceTree = "<group>"; };
 		84A28E43238C85F20017DD06 /* PHModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHModule.swift; sourceTree = "<group>"; };
 		84A28E45238C904D0017DD06 /* ImagePickerModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerModule.swift; sourceTree = "<group>"; };
 		84ADEFAF23C7047F0037BBF2 /* mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark.png; path = Resource/mark.png; sourceTree = SOURCE_ROOT; };
@@ -238,10 +239,24 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		84A1125723EAFD3700F81BC6 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				84A1125823EAFD8700F81BC6 /* GeneralVC.swift */,
+				841362FE23D9AA9A00D38F05 /* SettingCell.swift */,
+				84B4144723A0E44100075A80 /* SettingVC.swift */,
+				84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */,
+				84E90E6223E03B810000FCC8 /* UserListVC.swift */,
+				849BCE4E23E13DC200180595 /* NotificationsVC.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		84A28E42238C85A30017DD06 /* TableCell */ = {
 			isa = PBXGroup;
 			children = (
 				843DF2DC2373CA9E00F856ED /* FileTableViewCell.swift */,
+				84CBDD9423AC2A15008AE632 /* PhotoCell.swift */,
 			);
 			path = TableCell;
 			sourceTree = "<group>";
@@ -249,15 +264,10 @@
 		84AA678723AB29E2001FE9FC /* TabVC */ = {
 			isa = PBXGroup;
 			children = (
-				84CBDD9423AC2A15008AE632 /* PhotoCell.swift */,
-				841362FE23D9AA9A00D38F05 /* SettingCell.swift */,
+				84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */,
 				84688AD723A9869500D1D9E1 /* HomeVC.swift */,
 				84A0F89023AA0F5300DA7BF6 /* LocationVC.swift */,
-				84B4144723A0E44100075A80 /* SettingVC.swift */,
-				84C18A7723DFA31000C86D45 /* SearchFieldVC.swift */,
-				84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */,
-				84E90E6223E03B810000FCC8 /* UserListVC.swift */,
-				849BCE4E23E13DC200180595 /* NotificationsVC.swift */,
+				84C5F64A23B76C080048929F /* MainVC.swift */,
 			);
 			path = TabVC;
 			sourceTree = "<group>";
@@ -290,7 +300,6 @@
 				84FAF70623877F4400A0E76C /* GoogleFirebase */,
 				84C7815023AB72A500D8F92B /* ViewControllers */,
 				84BE63C123717A45002F2C66 /* AppDelegate.swift */,
-				84C5F64A23B76C080048929F /* MainVC.swift */,
 				84BE63CF23717A48002F2C66 /* Info.plist */,
 				84C7815123AB732200D8F92B /* SupportFiles */,
 			);
@@ -300,9 +309,11 @@
 		84C7815023AB72A500D8F92B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				84A28E42238C85A30017DD06 /* TableCell */,
 				84D004CB2379137E00929662 /* PhotoGallery */,
 				84D7CE3D238B3D7E00C15CF6 /* TableVC */,
 				84D7CE3E238B3DAA00C15CF6 /* AlbumVC */,
+				84A1125723EAFD3700F81BC6 /* Setting */,
 				84AA678723AB29E2001FE9FC /* TabVC */,
 				849A974223822F8D003E985E /* NavigationRootVC.swift */,
 				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
@@ -336,7 +347,6 @@
 		84D7CE3D238B3D7E00C15CF6 /* TableVC */ = {
 			isa = PBXGroup;
 			children = (
-				84A28E42238C85A30017DD06 /* TableCell */,
 				843DF2DA2373BF3B00F856ED /* GDExplorerController.swift */,
 				84D004CC237913CD00929662 /* GSExplorerController.swift */,
 			);
@@ -584,7 +594,6 @@
 				843FAAD723C9D39500A05196 /* PHModuleSync.swift in Sources */,
 				843FAAD423C9D38A00A05196 /* ActivityView.swift in Sources */,
 				843FAAD523C9D38D00A05196 /* SqliteManager.swift in Sources */,
-				843FAAE423C9D3E200A05196 /* PhotoCell.swift in Sources */,
 				843FAAE223C9D3AA00A05196 /* GSModuleSync.swift in Sources */,
 				843FAAD623C9D39200A05196 /* PHModule.swift in Sources */,
 				843FAAE323C9D3AA00A05196 /* SyncModule.swift in Sources */,
@@ -602,6 +611,7 @@
 				84CBDD9523AC2A15008AE632 /* PhotoCell.swift in Sources */,
 				848E2DD32385F11300620877 /* GFSModule.swift in Sources */,
 				84C502DE23ADD15000EE073F /* GSAlbumVC.swift in Sources */,
+				84A1125923EAFD8700F81BC6 /* GeneralVC.swift in Sources */,
 				84A28E46238C904D0017DD06 /* ImagePickerModule.swift in Sources */,
 				84C5F64B23B76C090048929F /* MainVC.swift in Sources */,
 				84ADEFB223C705C10037BBF2 /* SplashVC.swift in Sources */,
