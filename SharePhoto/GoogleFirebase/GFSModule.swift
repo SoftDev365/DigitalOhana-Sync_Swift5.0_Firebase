@@ -161,13 +161,18 @@ class GFSModule: NSObject {
 
         let db = Firestore.firestore()
         
-        db.collection("users").document(userid).updateData([
+        // db.collection("users").document(userid).updateData([
+        // register new user (or overwrite newly, so must check first if exists)
+        db.collection("users").document(userid).setData([
             "email": email,
-            "name": username
+            "name": username,
+            "origin_name": username,
+            "allow": false
         ]) { err in
             if let err = err {
                 debugPrint(err)
 
+                /*
                 db.collection("users").document(userid).setData([
                     "email": email,
                     "name": username,
@@ -178,9 +183,40 @@ class GFSModule: NSObject {
                     } else {
                         //self.userID = ref!.documentID
                     }
-                }
+                }*/
             } else {
                 
+            }
+        }
+    }
+    
+    // update user display name
+    static func updateUser(displayName: String, onCompleted: @escaping (Bool) -> ()) {
+        guard let userid = Global.userid else { return }
+
+        let db = Firestore.firestore()
+        db.collection("users").document(userid).updateData([
+            "name": displayName
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false)
+            } else {
+                Global.username = displayName
+                onCompleted(true)
+            }
+        }
+    }
+    
+    static func getUserInfo(ID: String, onCompleted: @escaping (DocumentSnapshot?) -> ()) {
+        let db = Firestore.firestore()
+
+        db.collection("users").document(ID).getDocument { (snapshot, error) in
+            if let err = error {
+                debugPrint(err)
+                onCompleted(nil)
+            } else {
+                onCompleted(snapshot)
             }
         }
     }

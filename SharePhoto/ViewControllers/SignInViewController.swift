@@ -39,11 +39,12 @@ class SignInViewController: UIViewController {
         
         GIDSignIn.sharedInstance()?.scopes = [kGTLRAuthScopeDrive, kGTLRAuthScopeDriveFile]
         
-        //GIDSignIn.sharedInstance()?.setValue("P5WZ748D57.family-media-sync.SharedItems" forKey: "_keychainName")
+        // GIDSignIn.sharedInstance()?.setValue("P5WZ748D57.family-media-sync.SharedItems" forKey: "_keychainName")
         if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
             debugPrint("---- has auth in keychain -----");
             
             activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+
             // Attempt to renew a previously authenticated session without forcing the
             // user to go through the OAuth authentication flow.
             // Will notify GIDSignInDelegate of results via sign(_:didSignInFor:withError:)
@@ -95,13 +96,11 @@ class SignInViewController: UIViewController {
 
     @IBAction func onBtnGoogleSiginIn(_ sender: Any) {        
         activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
-        
-        // init Global parameters
+
         GDModule.defaultFolderID = nil
         Global.setNeedRefresh()
-        // Start Google's OAuth authentication flow
+
         GIDSignIn.sharedInstance()?.signIn()
-        //GIDSignIn.sharedInstance()?.signOut()
     }
     
     func registerUserForShareExtension(userid: String, email: String, username: String) {
@@ -114,13 +113,10 @@ class SignInViewController: UIViewController {
         }
     }
     
-    func initRootList() {
-        // Safe Present
-        //if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NavRootVC") as? NavigationRootVC {
+    func gotoMainVC() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC") as? MainVC {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-            //navigationController?.pushViewController(vc, animated: true)
         }
     }
     
@@ -131,53 +127,63 @@ class SignInViewController: UIViewController {
         //alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func waitForAllowingMessage() {
+        let alert = UIAlertController(title: "You are registered successfully. Wait for allow by admin.", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+        }))
+        //alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func signInWithGoogleUser(_ user: GIDGoogleUser) {
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
+        
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+            if error != nil {
+                self.activityView.hideActivitiIndicator()
+                debugPrint("---- signIn with credential failed-----");
+                return
+            }
+            
+            // get registered user info
+            GFSModule.getUserInfo(ID: user.userID) { (document) in
+                if let data = document?.data() {
+                    let allow = data["allow"] as? Bool
+                    let displayName = data["name"] as? String
+                    
+                    if displayName != nil {
+                        Global.username = displayName
+                    }
+
+                    if allow == true {
+                        self.registerUserForShareExtension(userid: user.userID, email: user.profile.email!, username: user.profile.name)
+                        HCModule.updateHelpCrunchUserInfo()
+                        self.gotoMainVC()
+                    } else {
+                        self.alertNotAllowedUserMessage()
+                    }
+                } else {
+                    GFSModule.registerUser()
+                    self.waitForAllowingMessage()
+                }
+                
+                self.activityView.hideActivitiIndicator()
+            }
+            
+            debugPrint("----Firebase signin complete-----");
+        }
+    }
 }
 
 extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
 
     // MARK: - GIDSignInDelegate
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        // A nil error indicates a successful login
-        if error == nil {
-            // Include authorization headers/values with each Drive API request.
-            GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
-            
-            let email = user!.profile.email
-            Global.user = user
-            Global.userid = user!.userID
-            Global.username = user!.profile.name
-            Global.email = email
-            GFSModule.registerUser()
-            
-            self.registerUserForShareExtension(userid: user!.userID, email: email!, username: user!.profile.name)
-            
-            guard let authentication = user.authentication else { return }
-            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,                                   accessToken: authentication.accessToken)
-            
-            Auth.auth().signIn(with: credential) { (authResult, error) in
-                //var user = Auth.auth().currentUser
-                //debugPrint("User is \(user)")
-                
-                if error != nil {
-                    self.activityView.hideActivitiIndicator()
-                    debugPrint("---- signIn with credential failed-----");
-                    return
-                }
-                
-                GFSModule.checkAllowOfUser(ID: user!.userID) { (allow) in
-                    self.activityView.hideActivitiIndicator()
-                    
-                    if( allow ) {
-                        HCModule.updateHelpCrunchUserInfo()
-                        self.initRootList()
-                    } else {
-                        self.alertNotAllowedUserMessage()
-                    }
-                }
-
-                debugPrint("----Firebase signin complete-----");
-            }
-        } else {
+        
+        // sign error
+        if error != nil {
             activityView.hideActivitiIndicator()
             
             GDModule.service.authorizer = nil
@@ -185,7 +191,19 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
             Global.userid = nil
             Global.username = nil
             Global.email = nil
+            return
         }
+
+        // Include authorization headers/values with each Drive API request.
+        GDModule.service.authorizer = user.authentication.fetcherAuthorizer()
+
+        Global.user = user
+        Global.userid = user.userID
+        Global.username = user.profile.name
+        Global.origin_name = user.profile.name
+        Global.email = user.profile.email
+
+        self.signInWithGoogleUser(user)
     }
 
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {

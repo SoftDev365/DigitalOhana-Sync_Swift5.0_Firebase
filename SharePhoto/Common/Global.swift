@@ -50,8 +50,10 @@ class Global: NSObject {
     
     static var user: GIDGoogleUser?
     static var userid: String?
+    static var origin_name: String?
     static var username: String?
     static var email: String?
+    static var date_format: String?
 
     static var needRefreshLocal = true
     static var needRefreshStorage = true
@@ -59,9 +61,7 @@ class Global: NSObject {
 
     static var sharedCloudPhotos: [FSPhotoInfo]?
     static var selectedCloudPhotos: [FSPhotoInfo]?
-    
     static var helpCrunchInited: Bool = false
-    
     static var searchOption: SearchOption = SearchOption()
 
     static func setNeedRefresh() {

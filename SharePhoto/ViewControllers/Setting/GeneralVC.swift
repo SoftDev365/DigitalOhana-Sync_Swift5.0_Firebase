@@ -66,7 +66,7 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, M
         let alertController = UIAlertController(title: "Edit display name", message: nil, preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "Edit", style: .default) { (_) in
             if let txtField = alertController.textFields?.first, let text = txtField.text {
-                self.updateDisplayName(text)
+                self.updateUser(displayName: text)
             }
         }
 
@@ -81,8 +81,23 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, M
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func updateDisplayName(_ text: String) {
-        Global.username = text
+    func alertEditNameFailed() {
+        let alertController = UIAlertController(title: "Edit name failed. May be due to Internet Connection!", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel) { (_) in }
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func updateUser(displayName: String) {
+        GFSModule.updateUser(displayName: displayName) { (success) in
+            if success {
+                Global.username = displayName
+                HCModule.updateHelpCrunchUserInfo()
+                self.tableView.reloadData()
+            } else {
+                self.alertEditNameFailed()
+            }
+        }
     }
     
     func showDateFormatListVC() {
