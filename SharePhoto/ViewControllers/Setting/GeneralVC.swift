@@ -96,7 +96,7 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, M
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients([])
-            mail.setMessageBody("<p>I invite you to use this app!</p>", isHTML: true)
+            mail.setMessageBody("<p>You can access to the testflight app from the follwing link!<br>https://testflight.apple.com/join/E7QR6QEl</p>", isHTML: true)
 
             present(mail, animated: true)
         } else {
