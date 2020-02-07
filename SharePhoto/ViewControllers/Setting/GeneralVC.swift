@@ -9,9 +9,10 @@
 import UIKit
 import MessageUI
 
-class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate  {
+class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, MFMailComposeViewControllerDelegate  {
 
     @IBOutlet weak var tableView: UITableView!
+    let activityView = ActivityView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,12 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, M
         self.tableView.delegate = self
         
         self.title = "General"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        self.tableView.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -38,10 +45,12 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, M
             cell.detailTextLabel?.text = Global.username
         } else if indexPath.row == 1 {
             cell.textLabel?.text = "DateTime Format"
-            cell.detailTextLabel?.text = "MM/DD/YYYY"
+            cell.detailTextLabel?.text = Global.date_format?.uppercased()
             cell.accessoryType = .disclosureIndicator
         } else if indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchCell", for: indexPath) as! SwitchCell
+            cell.delegate = self
+            cell.swcOnOff.isOn = Global.bAutoUpload
             return cell
         } else if indexPath.row == 3 {
             cell.textLabel?.text = "Invite"
@@ -90,7 +99,11 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, M
     }
     
     func updateUser(displayName: String) {
+        activityView.showActivityIndicator(self.view, withTitle: "")
+
         GFSModule.updateUser(displayName: displayName) { (success) in
+            self.activityView.hideActivitiIndicator()
+            
             if success {
                 Global.username = displayName
                 HCModule.updateHelpCrunchUserInfo()
@@ -104,6 +117,28 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, M
     func showDateFormatListVC() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DateFormatListVC") as? DateFormatListVC {
             navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func alertChangeAutoUploadFailed() {
+        let alertController = UIAlertController(title: "Changing AutoUpload setting failed. May be due to Internet Connection!", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel) { (_) in }
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func switchCell(_ cell: SwitchCell, changedOnOff isOn: Bool) {
+        activityView.showActivityIndicator(self.view, withTitle: "")
+        
+        GFSModule.updateUser(autoUpload: isOn) { (success) in
+            self.activityView.hideActivitiIndicator()
+            
+            if success {
+                
+            } else {
+                self.alertChangeAutoUploadFailed()
+                self.tableView.reloadData()
+            }
         }
     }
     

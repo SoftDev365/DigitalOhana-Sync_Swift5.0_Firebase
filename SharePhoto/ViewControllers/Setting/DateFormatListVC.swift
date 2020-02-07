@@ -65,8 +65,20 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
         self.navigationController?.popViewController(animated: true)
     }
     
+    func alertSaveFailed() {
+        let alertController = UIAlertController(title: "Save failed. May be due to Internet Connection!", message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel) { (_) in }
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     @objc func onBtnDone(sender: UIBarButtonItem) {
-        // Function body goes here
-        self.navigationController?.popViewController(animated: true)
+        GFSModule.updateUser(dateFormatIndex: self.selected) { (success) in
+            if success {
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.alertSaveFailed()
+            }
+        }
     }
 }
