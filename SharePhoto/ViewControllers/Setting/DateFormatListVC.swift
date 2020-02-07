@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
 
     @IBOutlet weak var tableView: UITableView!
     
+    var hud: MBProgressHUD = MBProgressHUD()
     var selected: Int = 0
     
     override func viewDidLoad() {
@@ -22,6 +24,7 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
         
         self.title = "Date Format"
         self.selected = Global.dtf_index
+        self.view.addSubview(self.hud)
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(onBtnDone))
     }
@@ -73,7 +76,11 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     @objc func onBtnDone(sender: UIBarButtonItem) {
+        hud.show(animated: true)
+        
         GFSModule.updateUser(dateFormatIndex: self.selected) { (success) in
+            self.hud.hide(animated: true)
+
             if success {
                 self.navigationController?.popViewController(animated: true)
             } else {

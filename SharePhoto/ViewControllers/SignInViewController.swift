@@ -13,12 +13,15 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 import Photos
 import HelpCrunchSDK
-import RappleProgressHUD
+import MBProgressHUD
 
 class SignInViewController: UIViewController {
     
     @IBOutlet weak var btnGoogleSignIn: UIButton!
-    let activityView = ActivityView()
+    var hud: MBProgressHUD = MBProgressHUD()
+    
+    var albumPhotos: [PHAsset] = []
+    var drivePhotos: [GTLRDrive_File] = []
     
     override open var shouldAutorotate: Bool {
         return false
@@ -30,6 +33,8 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.addSubview(self.hud)
 
         // Configure Google Sign In
         GIDSignIn.sharedInstance()?.delegate = self
@@ -43,7 +48,7 @@ class SignInViewController: UIViewController {
         if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
             debugPrint("---- has auth in keychain -----");
             
-            activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+            self.hud.show(animated: true)
 
             // Attempt to renew a previously authenticated session without forcing the
             // user to go through the OAuth authentication flow.
@@ -81,7 +86,7 @@ class SignInViewController: UIViewController {
         }*/
         
         replaceBackButtonToSignout()
-        self.navigationController?.isNavigationBarHidden = true   
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     func replaceBackButtonToSignout() {
@@ -95,7 +100,7 @@ class SignInViewController: UIViewController {
     }
 
     @IBAction func onBtnGoogleSiginIn(_ sender: Any) {        
-        activityView.showActivityIndicator(self.view, withTitle: "Sign In...")
+        self.hud.show(animated: true)
 
         GDModule.defaultFolderID = nil
         Global.setNeedRefresh()
@@ -110,6 +115,140 @@ class SignInViewController: UIViewController {
             userDefaults.set(username as AnyObject, forKey: "username")
             userDefaults.set(true, forKey: "remember")
             userDefaults.synchronize()
+        }
+    }
+    
+    func alertLocalUploadResult(nUpload:Int, nSkip: Int, nFail: Int) {
+        let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
+        let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.loadDriveFileList()
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func uploadLocalPhotos() {
+        self.hud.show(animated: true)
+
+        SyncModule.uploadSelectedLocalPhotos(assets: self.albumPhotos) { (nUpload, nSkip, nFail) in
+            DispatchQueue.main.async() {
+                self.alertLocalUploadResult(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
+            }
+        }
+    }
+    
+    func checkAndUploadLocalPhotos() {
+        if self.albumPhotos.count <= 0 {
+            self.loadDriveFileList()
+            return
+        }
+        
+        self.hud.hide(animated: true)
+
+        let nCount = self.albumPhotos.count
+        let strTitle = "There are \(nCount) new photos at Local.\nDo you want to upload them now?"
+        let alertController = UIAlertController(title: strTitle, message: nil, preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Yes", style: .default) { (_) in
+            self.uploadLocalPhotos()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            self.loadDriveFileList()
+        }
+
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func fetchFamilyAlbumPhotos() {
+        PHModule.getFamilyAlbumAssets { (result) in
+            self.albumPhotos = []
+            guard let photoList = result else {
+                self.loadDriveFileList()
+                return
+            }
+            
+            for index in 0 ..< photoList.count {
+                let asset = photoList[index]
+                if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == false {
+                    self.albumPhotos += [asset]
+                }
+            }
+            
+            self.checkAndUploadLocalPhotos()
+        }
+    }
+    
+    func alertDriveUploadResult(nUpload:Int, nSkip: Int, nFail: Int) {
+        let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
+        let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.gotoMainVC()
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func uploadDrivePhotos() {
+        self.hud.show(animated: true)
+
+        SyncModule.uploadSelectedDrivePhotos(files: self.drivePhotos) { (nUpload, nSkip, nFail) in
+            self.hud.hide(animated: true)
+            self.alertDriveUploadResult(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
+        }
+    }
+    
+    func checkAndUploadDrivePhotos() {
+        if self.drivePhotos.count <= 0 {
+            self.hud.hide(animated: true)
+            self.gotoMainVC()
+            return
+        }
+        
+        self.hud.hide(animated: true)
+
+        let nCount = self.albumPhotos.count
+        let strTitle = "There are \(nCount) new photos at Drive.\nDo you want to upload them now?"
+        let alertController = UIAlertController(title: strTitle, message: nil, preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Yes", style: .default) { (_) in
+            self.uploadDrivePhotos()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            self.gotoMainVC()
+        }
+
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func loadDriveFileList() {
+        self.hud.show(animated: true)
+
+        GDModule.listFiles() { (fileList) in
+            self.drivePhotos = []
+            
+            if let files = fileList?.files {
+                for file in files {
+                    if SyncModule.checkPhotoIsUploaded(driveFile: file) == false {
+                        self.drivePhotos += [file]
+                    }
+                }
+            }
+
+            self.checkAndUploadDrivePhotos()
+        }
+    }
+
+    func checkAndAutoUpload() {
+        if Global.bAutoUpload == false {
+            self.gotoMainVC()
+        } else {
+            self.hud.show(animated: true)
+            GFSModule.getAllPhotos { (success, photoList) in
+                self.fetchFamilyAlbumPhotos()
+            }
         }
     }
     
@@ -142,7 +281,7 @@ class SignInViewController: UIViewController {
         
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if error != nil {
-                self.activityView.hideActivitiIndicator()
+                self.hud.hide(animated: true)
                 debugPrint("---- signIn with credential failed-----");
                 return
             }
@@ -173,7 +312,7 @@ class SignInViewController: UIViewController {
                     if allow == true {
                         self.registerUserForShareExtension(userid: user.userID, email: user.profile.email!, username: user.profile.name)
                         HCModule.updateHelpCrunchUserInfo()
-                        self.gotoMainVC()
+                        self.checkAndAutoUpload()
                     } else {
                         self.alertNotAllowedUserMessage()
                     }
@@ -182,7 +321,7 @@ class SignInViewController: UIViewController {
                     self.waitForAllowingMessage()
                 }
                 
-                self.activityView.hideActivitiIndicator()
+                self.hud.hide(animated: true)
             }
             
             debugPrint("----Firebase signin complete-----");
@@ -197,8 +336,8 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
         
         // sign error
         if error != nil {
-            activityView.hideActivitiIndicator()
-            
+            self.hud.hide(animated: true)
+
             GDModule.service.authorizer = nil
             Global.user = nil
             Global.userid = nil

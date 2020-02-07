@@ -25,7 +25,7 @@ target 'SharePhoto' do
   pod 'HelpCrunchSDK', '~> 2.0.0'
   
   pod 'IQKeyboardManagerSwift'
-  pod 'RappleProgressHUD'
+  pod 'MBProgressHUD', '~> 1.2.0'
   
 end
 

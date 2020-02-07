@@ -124,6 +124,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Ohana Sync.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -135,11 +140,6 @@
 			<false/>
 		</dict>
 		<key>PromisesObjC.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>RappleProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

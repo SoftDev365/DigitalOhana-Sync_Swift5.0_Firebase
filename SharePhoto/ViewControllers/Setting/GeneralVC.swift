@@ -8,11 +8,12 @@
 
 import UIKit
 import MessageUI
+import MBProgressHUD
 
 class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, MFMailComposeViewControllerDelegate  {
 
     @IBOutlet weak var tableView: UITableView!
-    let activityView = ActivityView()
+    var hud: MBProgressHUD = MBProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
         self.tableView.delegate = self
         
         self.title = "General"
+        self.view.addSubview(hud)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,10 +101,10 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
     }
     
     func updateUser(displayName: String) {
-        activityView.showActivityIndicator(self.view, withTitle: "")
+        hud.show(animated: true)
 
         GFSModule.updateUser(displayName: displayName) { (success) in
-            self.activityView.hideActivitiIndicator()
+            self.hud.hide(animated: true)
             
             if success {
                 Global.username = displayName
@@ -128,10 +130,10 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
     }
     
     func switchCell(_ cell: SwitchCell, changedOnOff isOn: Bool) {
-        activityView.showActivityIndicator(self.view, withTitle: "")
+        hud.show(animated: true)
         
         GFSModule.updateUser(autoUpload: isOn) { (success) in
-            self.activityView.hideActivitiIndicator()
+            self.hud.hide(animated: true)
             
             if success {
                 

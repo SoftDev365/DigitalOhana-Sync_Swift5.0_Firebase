@@ -129,10 +129,15 @@ class Global: NSObject {
     static func getDateTimeString(interval: TimeInterval) -> String {
         let date = Date(timeIntervalSince1970: interval)
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        if let dateFormat = Global.date_format {
+            formatter.dateFormat = dateFormat + " HH:mm:ss"
+        } else {
+            formatter.dateFormat = Global.dtf_list[0] + " HH:mm:ss"
+        }
 
         let dateString = formatter.string(from: date)
-        
+
         return dateString
     }
     
