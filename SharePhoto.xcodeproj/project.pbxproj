@@ -715,7 +715,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Ohana Sync/Ohana Sync.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8.3;
+				CURRENT_PROJECT_VERSION = 8.4;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = "Ohana Sync/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -741,7 +741,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Ohana Sync/Ohana Sync.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8.3;
+				CURRENT_PROJECT_VERSION = 8.4;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = "Ohana Sync/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -883,7 +883,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SharePhoto/Ohana Sync.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8.3;
+				CURRENT_PROJECT_VERSION = 8.4;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = SharePhoto/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -908,7 +908,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SharePhoto/Ohana Sync.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8.3;
+				CURRENT_PROJECT_VERSION = 8.4;
 				DEVELOPMENT_TEAM = P5WZ748D57;
 				INFOPLIST_FILE = SharePhoto/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
