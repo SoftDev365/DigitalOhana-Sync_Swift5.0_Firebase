@@ -1324,24 +1324,9 @@
                         <viewLayoutGuide key="safeArea" id="oRM-ad-KRk"/>
                     </view>
                     <tabBarItem key="tabBarItem" tag="2" title="Location" image="photo.on.rectangle" catalog="system" id="gPh-aT-lKm"/>
-                    <navigationItem key="navigationItem" title="Location" id="hK8-B0-XNs">
-                        <barButtonItem key="leftBarButtonItem" image="questionmark.circle" catalog="system" id="KPN-Qw-umc">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="onBtnNavLeft:" destination="w9X-5K-wgt" id="QyT-yR-Nhc"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" id="Rtb-aH-bbO">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="onBtnNavRight:" destination="w9X-5K-wgt" id="8iR-3E-Jn4"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Location" id="hK8-B0-XNs"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
-                        <outlet property="btnNavLeft" destination="KPN-Qw-umc" id="1zz-WI-WPj"/>
-                        <outlet property="btnNavRight" destination="Rtb-aH-bbO" id="AGY-3u-iaa"/>
                         <outlet property="collectionView" destination="ixI-9n-Nwp" id="UWY-sX-tnw"/>
                     </connections>
                 </viewController>
@@ -1457,17 +1442,10 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Local" id="EJz-oU-XU7">
-                        <barButtonItem key="rightBarButtonItem" image="magnifyingglass" catalog="system" id="rpv-4o-d6F">
-                            <connections>
-                                <action selector="onBtnNavRight:" destination="sgj-ax-9uQ" id="Ro1-8P-ejI"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Local" id="EJz-oU-XU7"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
-                        <outlet property="btnNavRight" destination="rpv-4o-d6F" id="qGO-1y-gam"/>
                         <outlet property="btnToolSelectAll" destination="cR4-Jp-4UX" id="2iJ-jl-Zf7"/>
                         <outlet property="navItem" destination="EJz-oU-XU7" id="bOS-HR-6pk"/>
                     </connections>
