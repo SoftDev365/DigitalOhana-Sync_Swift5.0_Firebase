@@ -147,7 +147,7 @@ class SignInViewController: UIViewController {
         self.hud.hide(animated: true)
 
         let nCount = self.albumPhotos.count
-        let strTitle = "There are \(nCount) new photos at Local.\nDo you want to upload them now?"
+        let strTitle = "There are \(nCount) new photos at Local. Do you want to upload them now?"
         let alertController = UIAlertController(title: strTitle, message: nil, preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "Yes", style: .default) { (_) in
             self.uploadLocalPhotos()
@@ -208,8 +208,8 @@ class SignInViewController: UIViewController {
         
         self.hud.hide(animated: true)
 
-        let nCount = self.albumPhotos.count
-        let strTitle = "There are \(nCount) new photos at Drive.\nDo you want to upload them now?"
+        let nCount = self.drivePhotos.count
+        let strTitle = "There are \(nCount) new photos at Drive. Do you want to upload them now?"
         let alertController = UIAlertController(title: strTitle, message: nil, preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "Yes", style: .default) { (_) in
             self.uploadDrivePhotos()
