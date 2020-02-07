@@ -42,7 +42,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var backupSelection: [Int] = []
     
     @IBOutlet weak var navItem: UINavigationItem!
-    @IBOutlet weak var btnNavRight: UIBarButtonItem!
+    //@IBOutlet weak var btnNavRight: UIBarButtonItem!
     @IBOutlet weak var btnToolSelectAll: UIBarButtonItem!
     
     let activityView = ActivityView()

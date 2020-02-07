@@ -29,8 +29,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var viewMode: ViewMode = .location
 
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var btnNavLeft: UIBarButtonItem!
-    @IBOutlet weak var btnNavRight: UIBarButtonItem!
+    //@IBOutlet weak var btnNavLeft: UIBarButtonItem!
+    //@IBOutlet weak var btnNavRight: UIBarButtonItem!
     
     let activityView = ActivityView()
     
@@ -65,13 +65,14 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             return
         }
         
+        /*
         let messages = Int(HelpCrunch.numberOfUnreadMessages())
         btnNavLeft.addBadge(number: messages)
         if messages > 0 {
             btnNavLeft.addBadge(number: messages)
         } else {
             btnNavLeft.removeBadge()
-        }
+        }*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
