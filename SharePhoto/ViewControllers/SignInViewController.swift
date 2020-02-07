@@ -150,12 +150,25 @@ class SignInViewController: UIViewController {
             // get registered user info
             GFSModule.getUserInfo(ID: user.userID) { (document) in
                 if let data = document?.data() {
-                    let allow = data["allow"] as? Bool
-                    let displayName = data["name"] as? String
-                    
+                    let allow = data[UserField.allow] as? Bool
+                    let displayName = data[UserField.displayname] as? String
+                    let bAutoUpload = data[UserField.auto_upload] as? Bool
+                    let dateFormatIndex = data[UserField.dateFormatIndex] as? Int
+
                     if displayName != nil {
                         Global.username = displayName
                     }
+                    if bAutoUpload != nil {
+                        Global.bAutoUpload = bAutoUpload!
+                    } else {
+                        Global.bAutoUpload = true
+                    }
+                    if dateFormatIndex != nil {
+                        Global.dtf_index = dateFormatIndex!
+                    } else {
+                        Global.dtf_index = 0
+                    }
+                    Global.date_format = Global.dtf_list[Global.dtf_index]
 
                     if allow == true {
                         self.registerUserForShareExtension(userid: user.userID, email: user.profile.email!, username: user.profile.name)

@@ -12,7 +12,7 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
 
     @IBOutlet weak var tableView: UITableView!
     
-    var listFormat: [String] = [ "MM/dd/YYYY", "YYYY-MM-dd", "YYYY/MM/dd", "dd/MM/YYYY" ]
+    var selected: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +21,9 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
         self.tableView.delegate = self
         
         self.title = "Date Format"
+        self.selected = Global.dtf_index
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(onBtnDone))
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -28,17 +31,17 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listFormat.count
+        return Global.dtf_list.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
-        let format = self.listFormat[indexPath.row]
+        let format = Global.dtf_list[indexPath.row]
 
         cell.textLabel?.text = format.uppercased()
         cell.detailTextLabel?.text = Global.getString(fromDate: Date(), withFormat: format)
 
-        if indexPath.row == 0 {
+        if indexPath.row == selected {
             cell.accessoryType = .checkmark
         }
         
@@ -46,11 +49,12 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellSelected = tableView.cellForRow(at: IndexPath(row: 0, section: 0))
+        let cellSelected = tableView.cellForRow(at: IndexPath(row: selected, section: 0))
         cellSelected?.accessoryType = .none
         
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .checkmark
+        self.selected = indexPath.row
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -58,6 +62,11 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     @objc func returnBack() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func onBtnDone(sender: UIBarButtonItem) {
+        // Function body goes here
         self.navigationController?.popViewController(animated: true)
     }
 }

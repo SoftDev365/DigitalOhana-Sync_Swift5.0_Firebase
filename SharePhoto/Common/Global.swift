@@ -53,7 +53,12 @@ class Global: NSObject {
     static var origin_name: String?
     static var username: String?
     static var email: String?
-    static var date_format: String?
+    
+    static var dtf_list: [String] = [ "MM/dd/YYYY", "YYYY-MM-dd", "YYYY/MM/dd", "dd/MM/YYYY" ]
+    static var dtf_index: Int = 0       // date format index (settings)
+    static var date_format: String?     // date format string
+    
+    static var bAutoUpload: Bool = true  // Setting (Auto Upload enabled)
 
     static var needRefreshLocal = true
     static var needRefreshStorage = true

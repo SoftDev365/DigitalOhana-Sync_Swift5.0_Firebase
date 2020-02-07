@@ -39,6 +39,7 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, M
         } else if indexPath.row == 1 {
             cell.textLabel?.text = "DateTime Format"
             cell.detailTextLabel?.text = "MM/DD/YYYY"
+            cell.accessoryType = .disclosureIndicator
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchCell", for: indexPath)
             return cell

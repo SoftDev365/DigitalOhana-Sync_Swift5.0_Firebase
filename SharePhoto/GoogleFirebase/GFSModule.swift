@@ -9,6 +9,16 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 import GTMSessionFetcher
 
+class UserField {
+    static let userid: String = "userid"
+    static let email: String = "email"
+    static let displayname: String = "name"
+    static let originname: String = "origin_name"
+    static let allow: String = "allow"
+    static let dateFormatIndex: String = "dateFormatIndex"
+    static let auto_upload: String = "AutoUpload"
+}
+
 class PhotoField {
     static let taken: String = "taken"
     static let uploaded: String = "uploaded"
@@ -164,10 +174,12 @@ class GFSModule: NSObject {
         // db.collection("users").document(userid).updateData([
         // register new user (or overwrite newly, so must check first if exists)
         db.collection("users").document(userid).setData([
-            "email": email,
-            "name": username,
-            "origin_name": username,
-            "allow": false
+            UserField.email: email,
+            UserField.displayname: username,
+            UserField.originname: username,
+            UserField.dateFormatIndex: 0,
+            UserField.auto_upload: true,
+            UserField.allow: false
         ]) { err in
             if let err = err {
                 debugPrint(err)
@@ -196,13 +208,50 @@ class GFSModule: NSObject {
 
         let db = Firestore.firestore()
         db.collection("users").document(userid).updateData([
-            "name": displayName
+            UserField.displayname: displayName
         ]) { err in
             if let err = err {
                 debugPrint(err)
                 onCompleted(false)
             } else {
                 Global.username = displayName
+                onCompleted(true)
+            }
+        }
+    }
+    
+    // update user prefered DateTime format
+    static func updateUser(dateFormatIndex: Int, onCompleted: @escaping (Bool) -> ()) {
+        guard let userid = Global.userid else { return }
+
+        let db = Firestore.firestore()
+        db.collection("users").document(userid).updateData([
+            UserField.dateFormatIndex: dateFormatIndex
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false)
+            } else {
+                Global.dtf_index = dateFormatIndex
+                Global.date_format = Global.dtf_list[dateFormatIndex]
+                onCompleted(true)
+            }
+        }
+    }
+    
+    // update user AutoUpload setting (true or false)
+    static func updateUser(autoUpload: Bool, onCompleted: @escaping (Bool) -> ()) {
+        guard let userid = Global.userid else { return }
+
+        let db = Firestore.firestore()
+        db.collection("users").document(userid).updateData([
+            UserField.auto_upload: autoUpload
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false)
+            } else {
+                Global.bAutoUpload = autoUpload
                 onCompleted(true)
             }
         }
@@ -453,7 +502,7 @@ class GFSModule: NSObject {
         let db = Firestore.firestore()
 
         db.collection("photos").document(photoID).updateData([
-            "valid": true
+            PhotoField.valid: true
         ]) { err in
             if let err = err {
                 debugPrint(err)
