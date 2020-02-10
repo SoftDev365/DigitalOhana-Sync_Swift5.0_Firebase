@@ -41,9 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             debugPrint("----db open fail------")
         }
         
-        let configuration = HCSConfiguration(forOrganization: "leruthstech",
-                                                 applicationId: "3",
-                                                 applicationSecret: "ARfN5+9unBuWonwaXN9Cg+uLxEAg7BhD1lFYLLTL7yzirgdGIhsioQqgXnTHQGQh65dizk/JdzLozZ5SbxgaGA==")
+        let configuration = HCSConfiguration(forOrganization: "leruths",
+                                                 applicationId: "4",
+                                                 applicationSecret: "ZRoq/aOd9cNgEOLHpDmXLDDGR+14mtBGvBdpDui6fLt8NoBogtrF57I4Z6yWILYKEr2GWEcpQnfnMDiy9xmVzg==")
         
         configuration.shouldUsePushNotificationDelegate = true
         setupPrechatFormScreen(configuration: configuration)
