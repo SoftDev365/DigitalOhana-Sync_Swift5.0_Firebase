@@ -52,6 +52,15 @@ class PHModule: NSObject {
         return familyAlbum
     }
     
+    // get the all assets in Photos app
+    static func getAllAssets() -> PHFetchResult<PHAsset> {
+        let photosOptions = PHFetchOptions()
+        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+
+        return PHAsset.fetchAssets(with: photosOptions)
+    }
+    
     // get the assets in a collection
     static func getAssets(fromCollection collection: PHAssetCollection) -> PHFetchResult<PHAsset> {
         let photosOptions = PHFetchOptions()
