@@ -15,10 +15,9 @@ import Photos
 import HelpCrunchSDK
 import MBProgressHUD
 
-class SignInViewController: UIViewController {
+class SignInViewController: BaseVC {
     
     @IBOutlet weak var btnGoogleSignIn: UIButton!
-    var hud: MBProgressHUD = MBProgressHUD()
     
     var albumPhotos: [PHAsset] = []
     var drivePhotos: [GTLRDrive_File] = []
@@ -33,8 +32,6 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.addSubview(self.hud)
 
         // Configure Google Sign In
         GIDSignIn.sharedInstance()?.delegate = self
@@ -47,8 +44,8 @@ class SignInViewController: UIViewController {
         // GIDSignIn.sharedInstance()?.setValue("P5WZ748D57.family-media-sync.SharedItems" forKey: "_keychainName")
         if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
             debugPrint("---- has auth in keychain -----");
-            
-            self.hud.show(animated: true)
+
+            self.showBusyDialog("Sign In...")
 
             // Attempt to renew a previously authenticated session without forcing the
             // user to go through the OAuth authentication flow.
@@ -100,7 +97,7 @@ class SignInViewController: UIViewController {
     }
 
     @IBAction func onBtnGoogleSiginIn(_ sender: Any) {        
-        self.hud.show(animated: true)
+        self.showBusyDialog("Sign In...")
 
         GDModule.defaultFolderID = nil
         Global.setNeedRefresh()
@@ -129,7 +126,7 @@ class SignInViewController: UIViewController {
     }
     
     func uploadLocalPhotos() {
-        self.hud.show(animated: true)
+        self.showBusyDialog("Uploading...")
 
         SyncModule.uploadSelectedLocalPhotos(assets: self.albumPhotos) { (nUpload, nSkip, nFail) in
             DispatchQueue.main.async() {
@@ -144,7 +141,7 @@ class SignInViewController: UIViewController {
             return
         }
         
-        self.hud.hide(animated: true)
+        self.hideBusyDialog()
 
         let nCount = self.albumPhotos.count
         let strTitle = "There are \(nCount) new photos at Local. Do you want to upload them now?"
@@ -191,22 +188,21 @@ class SignInViewController: UIViewController {
     }
     
     func uploadDrivePhotos() {
-        self.hud.show(animated: true)
+        self.showBusyDialog("Uploading...")
 
         SyncModule.uploadSelectedDrivePhotos(files: self.drivePhotos) { (nUpload, nSkip, nFail) in
-            self.hud.hide(animated: true)
+            self.hideBusyDialog()
             self.alertDriveUploadResult(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
         }
     }
     
     func checkAndUploadDrivePhotos() {
+        self.hideBusyDialog()
+
         if self.drivePhotos.count <= 0 {
-            self.hud.hide(animated: true)
             self.gotoMainVC()
             return
         }
-        
-        self.hud.hide(animated: true)
 
         let nCount = self.drivePhotos.count
         let strTitle = "There are \(nCount) new photos at Drive. Do you want to upload them now?"
@@ -224,7 +220,7 @@ class SignInViewController: UIViewController {
     }
 
     func loadDriveFileList() {
-        self.hud.show(animated: true)
+        self.showBusyDialog()
 
         GDModule.listFiles() { (fileList) in
             self.drivePhotos = []
@@ -245,7 +241,7 @@ class SignInViewController: UIViewController {
         if Global.bAutoUpload == false {
             self.gotoMainVC()
         } else {
-            self.hud.show(animated: true)
+            self.showBusyDialog()
             GFSModule.getAllPhotos { (success, photoList) in
                 self.fetchFamilyAlbumPhotos()
             }
@@ -281,7 +277,7 @@ class SignInViewController: UIViewController {
         
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if error != nil {
-                self.hud.hide(animated: true)
+                self.hideBusyDialog()
                 debugPrint("---- signIn with credential failed-----");
                 return
             }
@@ -321,7 +317,7 @@ class SignInViewController: UIViewController {
                     self.waitForAllowingMessage()
                 }
                 
-                self.hud.hide(animated: true)
+                self.hideBusyDialog()
             }
             
             debugPrint("----Firebase signin complete-----");
@@ -336,7 +332,7 @@ extension SignInViewController: GIDSignInDelegate, GIDSignInUIDelegate {
         
         // sign error
         if error != nil {
-            self.hud.hide(animated: true)
+            self.hideBusyDialog()
 
             GDModule.service.authorizer = nil
             Global.user = nil
