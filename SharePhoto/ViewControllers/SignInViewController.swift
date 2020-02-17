@@ -220,7 +220,7 @@ class SignInViewController: BaseVC {
     }
 
     func loadDriveFileList() {
-        self.showBusyDialog()
+        self.showBusyDialog("Check Drive Photos...")
 
         GDModule.listFiles() { (fileList) in
             self.drivePhotos = []
@@ -241,7 +241,7 @@ class SignInViewController: BaseVC {
         if Global.bAutoUpload == false {
             self.gotoMainVC()
         } else {
-            self.showBusyDialog()
+            self.showBusyDialog("Check Phone Photos...")
             GFSModule.getAllPhotos { (success, photoList) in
                 self.fetchFamilyAlbumPhotos()
             }
@@ -284,6 +284,8 @@ class SignInViewController: BaseVC {
             
             // get registered user info
             GFSModule.getUserInfo(ID: user.userID) { (document) in
+                self.hideBusyDialog()
+
                 if let data = document?.data() {
                     let allow = data[UserField.allow] as? Bool
                     let displayName = data[UserField.displayname] as? String
@@ -316,8 +318,6 @@ class SignInViewController: BaseVC {
                     GFSModule.registerUser()
                     self.waitForAllowingMessage()
                 }
-                
-                self.hideBusyDialog()
             }
             
             debugPrint("----Firebase signin complete-----");
