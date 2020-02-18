@@ -62,13 +62,19 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     open func selectDefaultPhoneAlbum() {
-        self.sourceType = .local
-        self.phoneAlbum = PHModule.fetchFamilyAlbumCollection()
+        let album = PHModule.fetchFamilyAlbumCollection()
+        self.selectPhoneAlbum(album)
     }
     
     open func selectPhoneAlbum(_ album: PHAssetCollection?) {
         self.sourceType = .local
         self.phoneAlbum = album
+        
+        if album == nil {
+            self.title = "All"
+        } else {
+            self.title = album?.localizedTitle
+        }
     }
     
     open func selectDefaultDriveFolder() {
@@ -99,7 +105,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         self.collectionView.addSubview(refreshControl) // not required when using UITableViewController
         
         if self.sourceType == .local {
-            self.navItem.title = "Local"
+            //self.navItem.title = "Local"
             self.accessToPHLibrary()
         } else if self.sourceType == .drive {
             self.navItem.title = "Drive"
@@ -107,6 +113,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         } else if self.sourceType == .raspberrypi {
             
         }
+        
+        self.navigationItem.rightBarButtonItem = nil
     }
     
     @objc func refresh(_ sender: Any) {

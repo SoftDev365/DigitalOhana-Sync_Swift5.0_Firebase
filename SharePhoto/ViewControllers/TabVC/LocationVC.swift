@@ -193,15 +193,23 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func onChooseLocal() {
         if self.viewMode == .location {
+            /*
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
                 vc.set(viewmode: .show)
                 vc.selectDefaultPhoneAlbum()
                 navigationController?.pushViewController(vc, animated: true)
+            }*/
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlbumsVC") as? AlbumsVC {
+                navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .upload {
+            /*
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
                 vc.set(viewmode: .upload)
                 vc.selectDefaultPhoneAlbum()
+                navigationController?.pushViewController(vc, animated: true)
+            }*/
+            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlbumsVC") as? AlbumsVC {
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .download {

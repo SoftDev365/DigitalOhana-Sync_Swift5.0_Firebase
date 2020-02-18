@@ -31,7 +31,7 @@ class AlbumsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UI
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-        self.title = "Photo Albums"
+        self.title = "Albums"
         self.accessToPHLibrary()
     }
     
