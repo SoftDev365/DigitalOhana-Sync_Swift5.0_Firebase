@@ -110,7 +110,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     @objc func refresh(_ sender: Any) {
         if self.sourceType == .local {
-            self.fetchFamilyAlbumPhotos()
+            self.fetchAlbumPhotos()
         } else if self.sourceType == .drive {
             self.loadDriveFileList()
         } else if self.sourceType == .raspberrypi {
@@ -123,7 +123,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
         if (status == PHAuthorizationStatus.authorized) {
             // Access has been granted.
-            self.fetchFamilyAlbumPhotos()
+            self.fetchAlbumPhotos()
         }
         else if (status == PHAuthorizationStatus.denied) {
             // Access has been denied.
@@ -132,7 +132,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             // Access has not been determined.
             PHPhotoLibrary.requestAuthorization({ (newStatus) in
                 if (newStatus == PHAuthorizationStatus.authorized) {
-                    self.performSelector(onMainThread: #selector(self.fetchFamilyAlbumPhotos), with: nil, waitUntilDone: false)
+                    self.performSelector(onMainThread: #selector(self.fetchAlbumPhotos), with: nil, waitUntilDone: false)
                 }
                 else {
 
@@ -144,39 +144,35 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
-    @objc func fetchFamilyAlbumPhotos() {
-        PHModule.getFamilyAlbumAssets { (result) in
-            guard let photoList = result else {
-                DispatchQueue.main.async() {
-                    self.refreshControl.endRefreshing()
-                }
-                return
-            }
-            
-            self.albumPhotos = []
-            
-            var fileNames: [String] = []
-            for index in 0 ..< photoList.count {
-                let asset = photoList[index]
-                
-                if self.viewMode == .show {
-                    self.albumPhotos! += [asset]
-                } else if self.viewMode == .upload {
-                    if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == false {
-                        self.albumPhotos! += [asset]
-                    }
-                }
+    @objc func fetchAlbumPhotos() {
+        var photoList: PHFetchResult<PHAsset>!
 
-                fileNames += [asset.localIdentifier]
-            }
-            
-            SqliteManager.syncFileInfos(arrFiles: fileNames)
-
-            DispatchQueue.main.async() {
-                self.refreshControl.endRefreshing()
-                self.collectionView.reloadData()
-            }
+        if self.phoneAlbum == nil {
+            photoList = PHModule.getAllAssets()
+        } else {
+            photoList = PHModule.getAssets(fromCollection: self.phoneAlbum!)
         }
+            
+        self.albumPhotos = []
+            
+        var fileNames: [String] = []
+        for index in 0 ..< photoList.count {
+            let asset = photoList[index]
+            
+            if self.viewMode == .show {
+                self.albumPhotos! += [asset]
+            } else if self.viewMode == .upload {
+                if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == false {
+                    self.albumPhotos! += [asset]
+                }
+            }
+
+            fileNames += [asset.localIdentifier]
+        }
+
+        //SqliteManager.syncFileInfos(arrFiles: fileNames)
+        self.refreshControl.endRefreshing()
+        self.collectionView.reloadData()
     }
     
     func filterUploadedDriveFiles(files: [GTLRDrive_File]?) {
@@ -399,7 +395,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         PHModule.addPhotoToFamilyAssets(imagePhoto) { (bSuccess, _) in
             DispatchQueue.main.sync {
                 // update UI
-                self.fetchFamilyAlbumPhotos()
+                self.fetchAlbumPhotos()
             }
         }
     }
