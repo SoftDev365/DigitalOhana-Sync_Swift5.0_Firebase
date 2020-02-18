@@ -141,9 +141,10 @@ class AlbumsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UI
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            
+            self.gotoAlbum(nil)
         } else {
-            
+            let album = self.albumList!.object(at: indexPath.row-1)
+            self.gotoAlbum(album)
         }
     }
     
@@ -165,12 +166,6 @@ class AlbumsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UI
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 20.0
     }
-    
-    func onChooseAddFrame() {
-        let alert = UIAlertController(title: "Will be implemented soon.", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
 
     func hideToolBar(_ animated: Bool) {
         self.navigationController?.setToolbarHidden(true, animated: animated)
@@ -180,8 +175,12 @@ class AlbumsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UI
         self.navigationController?.setToolbarHidden(false, animated: animated)
     }
     
-    @IBAction func onAddPhoto(_ sender: UIButton) {
-        
+    func gotoAlbum(_ album: PHAssetCollection?) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
+            vc.set(viewmode: .upload)
+            vc.selectPhoneAlbum(album)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @IBAction func onBtnNavLeft(_ sender: Any) {

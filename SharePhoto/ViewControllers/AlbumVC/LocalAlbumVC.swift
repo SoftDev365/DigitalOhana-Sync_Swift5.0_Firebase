@@ -746,7 +746,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             }
         }
     }
-    
+
     func getSelectedCount() -> Int {
         if self.sourceType == .local {
             return self.selectedAlbumPhotos?.count ?? 0
