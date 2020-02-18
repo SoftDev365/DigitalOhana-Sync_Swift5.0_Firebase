@@ -64,7 +64,7 @@ class MainVC: UITabBarController, UITabBarControllerDelegate, ImagePickerModuleD
                 // Fallback on earlier versions
             }
         } else if item.tag == 2 {
-            self.navigationItem.title = "Location"
+            self.navigationItem.title = "Frame"
             if #available(iOS 13.0, *) {
                 btnUpload.image = UIImage.init(systemName: "square.and.arrow.up")
             } else {
