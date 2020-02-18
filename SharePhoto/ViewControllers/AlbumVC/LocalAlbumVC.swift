@@ -183,6 +183,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         
         if self.nUnSyncCount == 0 {
             self.hideToolBar(false)
+        } else {
+            self.showToolBar(true)
         }
     }
     
@@ -227,6 +229,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             self.collectionView.reloadData()
             if self.nUnSyncCount == 0 {
                 self.hideToolBar(false)
+            } else {
+                self.showToolBar(true)
             }
             self.activityView.hideActivitiIndicator()
         }
@@ -244,7 +248,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         //self.tabBarController?.tabBar.isHidden = false
         
         if self.bEditMode {
-            showToolBar(false)
+            //showToolBar(false)
         } else {
             showTabBar()
         }
@@ -732,8 +736,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 btnToolSelectAll.title = "Deselect All"
             }
         } else {
-            //btnToolSelectAll.title = "Select All"
             deselectAll()
+            btnToolSelectAll.title = "Select All"
         }
     }
     
