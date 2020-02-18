@@ -87,12 +87,8 @@ class PhotoCell: UICollectionViewCell {
         return self.checked
     }
     
-    open func setSelectable(_ selectable: Bool) {
-        if self.bSync {
-            return
-        }
-        
-        if selectable {
+    open func setSelectable(_ selectable: Bool) {        
+        if self.bSync == false && selectable {
             ivChkBox?.isHidden = false
         } else {
             ivChkBox?.isHidden = true
@@ -130,11 +126,7 @@ class PhotoCell: UICollectionViewCell {
     }
 
     open func setCheckboxStatus(_ bShow: Bool, checked: Bool) {
-        if self.bSync {
-            return
-        }
-        
-        if bShow == false {
+        if self.bSync || bShow == false {
             ivChkBox?.isHidden = true
             setPaddingToPhoto(0, animated: false)
         } else {

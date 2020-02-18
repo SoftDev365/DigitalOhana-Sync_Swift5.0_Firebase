@@ -180,6 +180,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         //SqliteManager.syncFileInfos(arrFiles: fileNames)
         self.refreshControl.endRefreshing()
         self.collectionView.reloadData()
+        
+        if self.nUnSyncCount == 0 {
+            self.hideToolBar(false)
+        }
     }
     
     func filterUploadedDriveFiles(files: [GTLRDrive_File]?) {
@@ -221,6 +225,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             }
             
             self.collectionView.reloadData()
+            if self.nUnSyncCount == 0 {
+                self.hideToolBar(false)
+            }
             self.activityView.hideActivitiIndicator()
         }
     }
@@ -319,7 +326,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             cell.setDriveFile(file, bSync: false)
         } else {
             cell.setDriveFile(file, bSync: true)
-        }        
+        }
 
         if self.bEditMode == false {
            cell.setSelectable(false)
@@ -553,7 +560,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     func isAllLocalFilesSelected() -> Bool {
         guard let photoList = self.albumPhotos else { return false }
         
-        for i in 0 ..< photoList.count {
+        //for i in 0 ..< photoList.count {
+        for i in 0 ..< self.nUnSyncCount {
             let asset = photoList[i]
             if isSelectedPhoto(asset) == false {
                 return false
@@ -566,7 +574,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     func isAllDriveFilesSelected() -> Bool {
         guard let photoList = self.drivePhotos else { return false }
         
-        for i in 0 ..< photoList.count {
+        //for i in 0 ..< photoList.count {
+        for i in 0 ..< self.nUnSyncCount {
             let asset = photoList[i]
             if isSelectedPhoto(asset) == false {
                 return false
@@ -577,6 +586,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
 
     func isAllSelected() -> Bool {
+        if self.nUnSyncCount == 0 {
+            return false
+        }
+        
         if self.sourceType == .local {
             return isAllLocalFilesSelected()
         } else if self.sourceType == .drive {
@@ -587,6 +600,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
    }
     
     func selectOrDeselectCell(_ indexPath: IndexPath, refreshCell: Bool) {
+        if indexPath.row >= self.nUnSyncCount {
+            return
+        }
 
         let cell = self.collectionView.cellForItem(at: indexPath) as! PhotoCell
         
@@ -624,7 +640,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     func selectAll() {
-        let nCount = self.collectionView(self.collectionView, numberOfItemsInSection: 0)
+        //let nCount = self.collectionView(self.collectionView, numberOfItemsInSection: 0)
+        let nCount = self.nUnSyncCount
         
         for i in 0 ..< nCount {
             if isSelectedPhoto(i) == false {
@@ -710,10 +727,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     @IBAction func onBtnSelectAll(_ sender: Any) {
         if btnToolSelectAll.title == "Select All" {
-            btnToolSelectAll.title = "Deselect All"
             selectAll()
+            if isAllSelected() {
+                btnToolSelectAll.title = "Deselect All"
+            }
         } else {
-            btnToolSelectAll.title = "Select All"
+            //btnToolSelectAll.title = "Select All"
             deselectAll()
         }
     }
