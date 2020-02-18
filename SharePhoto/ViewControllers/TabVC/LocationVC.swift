@@ -25,7 +25,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
        case download = 2
     }
     
-    let frameCount = 2
+    let frameCount = 0
     var viewMode: ViewMode = .location
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -110,42 +110,55 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //if self.viewMode == .location {
+        if self.viewMode == .location {
             return frameCount+1
-        //} else {
-        //    return frameCount
-        //}
+        } else {
+            return frameCount+3
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-
         guard let imgView = cell.viewWithTag(1) as? UIImageView else { return cell }
         guard let label = cell.viewWithTag(2) as? UILabel else { return cell }
-        
-        if indexPath.row == 0 {
-            label.text = "Local"
-            imgView.image = UIImage(named: "loc_phone")
-        } else if indexPath.row == 1 {
-            imgView.image = UIImage(named: "loc_drive")
-            label.text = "Drive"
-        } else if indexPath.row == frameCount {
-            imgView.image = UIImage(named: "loc_add")
-            label.text = "Add Frame"
+
+        if self.viewMode != .location {
+            if indexPath.row == 0 {
+                label.text = "Local"
+                imgView.image = UIImage(named: "loc_phone")
+            } else if indexPath.row == 1 {
+                imgView.image = UIImage(named: "loc_drive")
+                label.text = "Drive"
+            } else if indexPath.row == frameCount {
+                imgView.image = UIImage(named: "loc_add")
+                label.text = "Add Frame"
+            } else {
+                imgView.image = UIImage(named: "loc_frame")
+                label.text = "Frame"
+            }
         } else {
-            imgView.image = UIImage(named: "loc_frame")
-            label.text = "Frame"
+            if indexPath.row == frameCount {
+                imgView.image = UIImage(named: "loc_add")
+                label.text = "Add Frame"
+            } else {
+                imgView.image = UIImage(named: "loc_frame")
+                label.text = "Frame"
+            }
         }
  
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            onChooseLocal()
-        } else if indexPath.row == 1 {
-            onChooseDrive()
+        if self.viewMode != .location {
+            if indexPath.row == 0 {
+                onChooseLocal()
+            } else if indexPath.row == 1 {
+                onChooseDrive()
+            } else {
+                onChooseAddFrame()
+            }
         } else {
             onChooseAddFrame()
         }
