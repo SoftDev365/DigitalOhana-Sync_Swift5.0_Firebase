@@ -152,6 +152,7 @@ class AlbumsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UI
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (self.view.frame.size.width - 60)/2
+        
         return CGSize(width:width, height:width*1.2)
     }
 

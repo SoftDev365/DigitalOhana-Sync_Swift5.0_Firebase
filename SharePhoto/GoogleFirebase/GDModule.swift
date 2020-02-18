@@ -39,10 +39,10 @@ class GDModule: NSObject {
         }
     }
     
-    static func getFolderID( name: String, completion: @escaping (String?) -> Void) {
+    static func getFolderID( name: String, completion: @escaping (Bool, String?) -> Void) {
         
         guard let userEmail = Global.email else {
-            completion(nil)
+            completion(false, nil)
             return
         }
 
@@ -62,14 +62,14 @@ class GDModule: NSObject {
         service.executeQuery(query) { (_, result, error) in
             if( error != nil ) {
                 debugPrint(error!)
-                completion(nil)
+                completion(false, nil)
                 return
             }
       
             let folderList = result as! GTLRDrive_FileList
 
             // For brevity, assumes only one folder is returned.
-            completion(folderList.files?.first?.identifier)
+            completion(true, folderList.files?.first?.identifier)
         }
     }
     
@@ -80,8 +80,8 @@ class GDModule: NSObject {
             return
         }
         
-        getFolderID( name: Global.sharedFolderName) { folderID in
-            if folderID == nil {
+        getFolderID( name: Global.sharedFolderName) { success, folderID in
+            if success == true && folderID == nil {
                 self.createFolder(name: Global.sharedFolderName, parentFolderID: "root") { (createdFolderID) in
                     self.defaultFolderID = folderID
                     completion(folderID)

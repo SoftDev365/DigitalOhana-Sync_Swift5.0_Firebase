@@ -185,13 +185,20 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     func filterUploadedDriveFiles(files: [GTLRDrive_File]?) {
         self.drivePhotos = []
 
+        var syncPhotos: [GTLRDrive_File] = []
+        
         if let files = files {
             for file in files {
                 if SyncModule.checkPhotoIsUploaded(driveFile: file) == false {
                     self.drivePhotos! += [file]
+                } else {
+                    syncPhotos += [file]
                 }
             }
         }
+        
+        self.nUnSyncCount = self.drivePhotos!.count
+        self.drivePhotos! += syncPhotos
     }
     
     func loadDriveFileList() {
@@ -204,8 +211,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             if fileList != nil {
                 if self.viewMode == .show {
                     self.drivePhotos = fileList!.files
+                    self.nUnSyncCount = 0
                 } else if self.viewMode == .download {
                     self.drivePhotos = fileList!.files
+                    self.nUnSyncCount = 0
                 } else if self.viewMode == .upload {
                     self.filterUploadedDriveFiles(files: fileList!.files)
                 }
