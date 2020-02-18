@@ -290,7 +290,7 @@ class ShareViewController: UIViewController, UICollectionViewDelegate, UICollect
         if photoItem is PHAsset {
             let asset = photoItem as! PHAsset
             let width = UIScreen.main.scale*cell.frame.size.width
-            cell.setLocalAsset(asset, width: width)
+            cell.setLocalAsset(asset, width: width, bSync: false)
             cell.setSelectable(false)
         } else if photoItem is String {
             let filePath = photoItem as! String

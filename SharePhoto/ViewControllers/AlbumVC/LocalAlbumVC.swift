@@ -34,6 +34,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var sourceType: SourceType = .local
     var bEditMode: Bool = false
     
+    var nUnSyncCount: Int = 0
     var phoneAlbum: PHAssetCollection? = nil
     var albumPhotos: [PHAsset]?
 
@@ -154,6 +155,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
             
         self.albumPhotos = []
+        var syncPhotos: [PHAsset] = []
             
         var fileNames: [String] = []
         for index in 0 ..< photoList.count {
@@ -164,11 +166,16 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             } else if self.viewMode == .upload {
                 if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == false {
                     self.albumPhotos! += [asset]
+                } else {
+                    syncPhotos += [asset]
                 }
             }
 
             fileNames += [asset.localIdentifier]
         }
+        
+        self.nUnSyncCount = self.albumPhotos!.count
+        self.albumPhotos! += syncPhotos
 
         //SqliteManager.syncFileInfos(arrFiles: fileNames)
         self.refreshControl.endRefreshing()
@@ -271,7 +278,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
         //let width = UIScreen.main.scale*(self.view.frame.size.width - 4)/3
         let width = UIScreen.main.scale*cell.frame.size.width
-        cell.setLocalAsset(asset, width: width)
+        
+        if indexPath.row < self.nUnSyncCount {
+            cell.setLocalAsset(asset, width: width, bSync: false)
+        } else {
+            cell.setLocalAsset(asset, width: width, bSync: true)
+        }
 
         if self.bEditMode == false {
            cell.setSelectable(false)

@@ -33,8 +33,10 @@ class PhotoCell: UICollectionViewCell {
 
     var ivPhoto: UIImageView?
     var ivChkBox: UIImageView?
-    var checked: Bool = false
     var ivSync: UIImageView?
+    
+    var bSync: Bool = false
+    var checked: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -86,6 +88,10 @@ class PhotoCell: UICollectionViewCell {
     }
     
     open func setSelectable(_ selectable: Bool) {
+        if self.bSync {
+            return
+        }
+        
         if selectable {
             ivChkBox?.isHidden = false
         } else {
@@ -108,6 +114,10 @@ class PhotoCell: UICollectionViewCell {
     }
 
     open func setChecked(_ checked: Bool) {
+        if self.bSync {
+            return
+        }
+        
         self.checked = checked
 
         if checked {
@@ -120,6 +130,10 @@ class PhotoCell: UICollectionViewCell {
     }
 
     open func setCheckboxStatus(_ bShow: Bool, checked: Bool) {
+        if self.bSync {
+            return
+        }
+        
         if bShow == false {
             ivChkBox?.isHidden = true
             setPaddingToPhoto(0, animated: false)
@@ -156,12 +170,16 @@ class PhotoCell: UICollectionViewCell {
         }
     }
     
-    open func setLocalAsset(_ asset: PHAsset, width:CGFloat) {
+    open func setLocalAsset(_ asset: PHAsset, width:CGFloat, bSync: Bool) {
         self.setEmpty()
         
         let size = CGSize(width:width, height:width)
         self.type = .local
         self.localAsset = asset
+        self.bSync = bSync
+        
+        ivSync?.isHidden = !self.bSync
+        ivChkBox?.isHidden = self.bSync        
         
         let identifier = asset.localIdentifier
 
