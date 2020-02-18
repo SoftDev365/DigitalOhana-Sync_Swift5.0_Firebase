@@ -196,11 +196,15 @@ class PhotoCell: UICollectionViewCell {
         }
     }
     
-    open func setDriveFile(_ file: GTLRDrive_File) {
+    open func setDriveFile(_ file: GTLRDrive_File, bSync: Bool) {
         self.setEmpty()
         
         self.type = .drive
         self.driveFile = file
+        self.bSync = bSync
+        
+        ivSync?.isHidden = !self.bSync
+        ivChkBox?.isHidden = self.bSync
         
         self.ivPhoto?.image = UIImage.init(named: "noimage")
         if let thumnailLink = file.thumbnailLink {

@@ -314,7 +314,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         guard let photoList = self.drivePhotos else { return cell }
 
         let file = photoList[indexPath.row]
-        cell.setDriveFile(file)
+        
+        if indexPath.row < self.nUnSyncCount {
+            cell.setDriveFile(file, bSync: false)
+        } else {
+            cell.setDriveFile(file, bSync: true)
+        }        
 
         if self.bEditMode == false {
            cell.setSelectable(false)
