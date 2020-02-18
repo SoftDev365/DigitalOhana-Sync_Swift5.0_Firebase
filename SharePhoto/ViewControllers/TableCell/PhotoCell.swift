@@ -21,6 +21,7 @@ class PhotoCell: UICollectionViewCell {
     let tagPHOTO = 1
     let tagCHECKBOX = 2
     //let tagLABEL = 3
+    let tagSYNCICON = 5
 
     var type: PhotoCellType!
     var fileID: String? = nil
@@ -33,6 +34,7 @@ class PhotoCell: UICollectionViewCell {
     var ivPhoto: UIImageView?
     var ivChkBox: UIImageView?
     var checked: Bool = false
+    var ivSync: UIImageView?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,6 +42,7 @@ class PhotoCell: UICollectionViewCell {
         
         ivPhoto = self.viewWithTag(tagPHOTO) as? UIImageView
         ivChkBox = self.viewWithTag(tagCHECKBOX) as? UIImageView
+        ivSync = self.viewWithTag(tagSYNCICON) as? UIImageView
     }
     
     open func setEmpty() {
