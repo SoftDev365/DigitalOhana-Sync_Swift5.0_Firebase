@@ -264,6 +264,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             showTabBar()
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        hideToolBar(false)
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

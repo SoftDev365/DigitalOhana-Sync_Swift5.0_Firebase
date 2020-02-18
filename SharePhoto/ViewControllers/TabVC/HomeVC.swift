@@ -17,7 +17,7 @@ import HelpCrunchSDK
 
 private let reuseIdentifier = "PhotoCell"
 
-class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, SearchFieldVCDelegate {
+class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, SearchFieldVCDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var btnNavLeft: UIBarButtonItem!
@@ -34,8 +34,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     var photoList: [FSPhotoInfo]?
     var selectedPhotoList: [FSPhotoInfo]?
     var backupSelection: [Int] = []
+    
+    var albumPhotos: [PHAsset] = []
+    var drivePhotos: [GTLRDrive_File] = []
 
-    let activityView = ActivityView()
     let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
@@ -118,17 +120,11 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.numberOfUnreadMessagesChanged()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        activityView.relayoutPosition(self.view)
-    }
-    
     func loadFileList() {
         //GFSModule.getAllPhotos { (success, result) in
         GFSModule.searchPhotosByOptions { (success, result) in
             self.refreshControl.endRefreshing()
-            self.activityView.hideActivitiIndicator()
+            self.hideBusyDialog()
             
             if !success {
                 return
@@ -136,6 +132,10 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             
             self.photoList = result
             self.collectionView.reloadData()
+            
+            if Global.bNeedToSynchronize {
+                self.checkAndAutoUpload()
+            }
         }
         
         /*
@@ -229,7 +229,7 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     open func refreshFileList() {
         if Global.needRefreshStorage == true {
             Global.needRefreshStorage = false
-            activityView.showActivityIndicator(self.view, withTitle: "Loading...")
+            self.showBusyDialog("Loading...")
             self.loadFileList()
         }
     }
@@ -482,10 +482,9 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             return
         }
 
-        activityView.showActivityIndicator(self.view, withTitle: "Deleting...")
-        
+        self.showBusyDialog("Deleting...")
         SyncModule.deleteSelectedPhotosFromCloud(photoInfos: self.selectedPhotoList!) { (nDeleted, nSkipped, nFailed) in
-            self.activityView.hideActivitiIndicator()
+            self.hideBusyDialog()
             if nDeleted > 0 {
                 Global.setNeedRefresh()
             }
@@ -538,5 +537,177 @@ class HomeVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func didClickOnSearchButton() {
         Global.needRefreshStorage = true
         refreshFileList()
+    }
+    
+    //===============================================================================================//
+    func alertLocalUploadResult(nUpload:Int, nSkip: Int, nFail: Int) {
+        let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
+        let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.loadDriveFileList()
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func uploadLocalPhotos() {
+        self.showBusyDialog("Uploading...")
+
+        SyncModule.uploadSelectedLocalPhotos(assets: self.albumPhotos) { (nUpload, nSkip, nFail) in
+            DispatchQueue.main.async() {
+                self.alertLocalUploadResult(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
+            }
+        }
+    }
+    
+    func gotoCheckLocalPhotos() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
+            vc.set(viewmode: .upload)
+            vc.selectDefaultPhoneAlbum()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func checkAndUploadLocalPhotos() {
+        if self.albumPhotos.count <= 0 {
+            self.loadDriveFileList()
+            return
+        }
+        
+        self.hideBusyDialog()
+
+        let nCount = self.albumPhotos.count
+        let strTitle = "There are \(nCount) new photos found at Phone. Do you want to upload them now?"
+        let alertController = UIAlertController(title: strTitle, message: nil, preferredStyle: .actionSheet)
+        let uploadAction = UIAlertAction(title: "Upload", style: .default) { (_) in
+            self.uploadLocalPhotos()
+        }
+        let reviewAction = UIAlertAction(title: "Review", style: .default) { (_) in
+            self.gotoCheckLocalPhotos()
+        }
+        let neverAction = UIAlertAction(title: "Never alert", style: .default) { (_) in
+            self.onFinishSynchronize()
+        }
+        let cancelAction = UIAlertAction(title: "Remind me later", style: .cancel) { (_) in
+            self.loadDriveFileList()
+        }
+
+        alertController.addAction(uploadAction)
+        alertController.addAction(reviewAction)
+        alertController.addAction(neverAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func fetchFamilyAlbumPhotos() {
+        PHModule.getFamilyAlbumAssets { (result) in
+            self.albumPhotos = []
+            guard let photoList = result else {
+                self.loadDriveFileList()
+                return
+            }
+            
+            for index in 0 ..< photoList.count {
+                let asset = photoList[index]
+                if SyncModule.checkPhotoIsUploaded(localIdentifier: asset.localIdentifier) == false {
+                    self.albumPhotos += [asset]
+                }
+            }
+            
+            self.checkAndUploadLocalPhotos()
+        }
+    }
+    
+    func alertDriveUploadResult(nUpload:Int, nSkip: Int, nFail: Int) {
+        let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
+        let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.onFinishSynchronize()
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func uploadDrivePhotos() {
+        self.showBusyDialog("Uploading...")
+
+        SyncModule.uploadSelectedDrivePhotos(files: self.drivePhotos) { (nUpload, nSkip, nFail) in
+            self.hideBusyDialog()
+            self.alertDriveUploadResult(nUpload: nUpload, nSkip: nSkip, nFail: nFail)
+        }
+    }
+    
+    func gotoCheckDrivePhotos() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
+            vc.set(viewmode: .upload)
+            vc.selectDefaultDriveFolder()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func checkAndUploadDrivePhotos() {
+        self.hideBusyDialog()
+        
+        if self.drivePhotos.count <= 0 {
+            self.onFinishSynchronize()
+            return
+        }
+        
+        self.hideBusyDialog()
+
+        let nCount = self.drivePhotos.count
+        let strTitle = "There are \(nCount) new photos at Drive. Do you want to upload them now?"
+        let alertController = UIAlertController(title: strTitle, message: nil, preferredStyle: .actionSheet)
+        let uploadAction = UIAlertAction(title: "Upload", style: .default) { (_) in
+            self.uploadDrivePhotos()
+        }
+        let reviewAction = UIAlertAction(title: "Review", style: .default) { (_) in
+            self.gotoCheckDrivePhotos()
+        }
+        let neverAction = UIAlertAction(title: "Never alert", style: .default) { (_) in
+            self.onFinishSynchronize()
+        }
+        let cancelAction = UIAlertAction(title: "Remind me later", style: .cancel) { (_) in
+            self.loadDriveFileList()
+        }
+
+        alertController.addAction(uploadAction)
+        alertController.addAction(reviewAction)
+        alertController.addAction(neverAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func loadDriveFileList() {
+        self.showBusyDialog("Synchronize Drive...")
+
+        GDModule.listFiles() { (fileList) in
+            self.drivePhotos = []
+            
+            if let files = fileList?.files {
+                for file in files {
+                    if SyncModule.checkPhotoIsUploaded(driveFile: file) == false {
+                        self.drivePhotos += [file]
+                    }
+                }
+            }
+
+            self.checkAndUploadDrivePhotos()
+        }
+    }
+
+    func checkAndAutoUpload() {
+        if Global.bAutoUpload == false {
+            self.onFinishSynchronize()
+        } else {
+            self.showBusyDialog("Synchronize Phone...")
+            //GFSModule.getAllPhotos { (success, photoList) in
+                self.fetchFamilyAlbumPhotos()
+            //}
+        }
+    }
+    
+    func onFinishSynchronize() {
+        
     }
 }

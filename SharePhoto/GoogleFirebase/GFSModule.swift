@@ -356,6 +356,7 @@ class GFSModule: NSObject {
         return photoInfo
     }
     
+    /*
     static func searchPhotosByOptions(onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
         let options = Global.searchOption
         let db = Firestore.firestore()
@@ -395,6 +396,41 @@ class GFSModule: NSObject {
                 Global.sharedCloudPhotos = result
                 onCompleted(true, result)
             }
+        }
+    }*/
+    
+    static func searchPhotosByOptions(onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
+        let options = Global.searchOption
+        
+        self.getAllPhotos { (success, listPhotos) in
+            if success == false {
+                onCompleted(false, listPhotos)
+                return
+            }
+            
+            var result = [FSPhotoInfo]()
+            for info in listPhotos {
+                if options.bUserName == true && options.userid != nil {
+                    if info.userid != options.userid {
+                        continue
+                    }
+                }
+                
+                if options.bTakenDate == true && options.takenDateFrom != nil && options.takenDateTo != nil {
+                    if info.taken < options.takenDateFrom! || info.taken > options.takenDateTo! {
+                        continue
+                    }
+                }
+                if options.bUploadDate == true && options.uploadDateFrom != nil && options.uploadDateTo != nil {
+                    if info.uploaded < options.uploadDateFrom! || info.taken > options.uploadDateTo! {
+                        continue
+                    }
+                }
+                
+                result += [info]
+            }
+
+            onCompleted(true, result)
         }
     }
     

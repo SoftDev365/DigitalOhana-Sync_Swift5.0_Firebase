@@ -59,6 +59,7 @@ class Global: NSObject {
     static var date_format: String?     // date format string
     
     static var bAutoUpload: Bool = true  // Setting (Auto Upload enabled)
+    static var bNeedToSynchronize: Bool = false // check synchronizing
 
     static var needRefreshLocal = true
     static var needRefreshStorage = true
