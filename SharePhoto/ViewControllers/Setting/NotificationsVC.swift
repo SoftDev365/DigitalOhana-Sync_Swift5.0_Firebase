@@ -53,4 +53,30 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let info = self.notifications[indexPath.row]
+        
+        if info.type == NotificationType.upload {
+            self.gotoDetailPage(info: info)
+        }
+    }
+    
+    func gotoDetailPage(info: FSNotificationInfo) {
+        let options = Global.searchOption
+        
+        options.bUserName = true
+        options.userid = info.userid
+        options.userName = info.username
+        options.email = info.email
+        
+        options.bTakenDate = false
+        options.bUploadDate = true
+        options.uploadDateFrom = info.timestamp-1
+        options.uploadDateTo = info.timestamp+1
+        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
