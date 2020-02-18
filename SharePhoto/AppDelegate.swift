@@ -88,4 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // this push notification does not belong to HelpCrunch
         }
     }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        Global.bNeedToSynchronize = true
+    }
 }

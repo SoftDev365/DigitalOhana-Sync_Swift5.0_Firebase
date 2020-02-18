@@ -35,6 +35,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
     var selectedPhotoList: [FSPhotoInfo]?
     var backupSelection: [Int] = []
     
+    var bSynchronizeDrive: Bool = false
     var albumPhotos: [PHAsset] = []
     var drivePhotos: [GTLRDrive_File] = []
 
@@ -104,10 +105,15 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
         if Global.needDoneSelectionAtHome {
             switchModeTo(editMode: false)
         }
-        
+
         showTabBar()
         if self.bEditMode {
             showToolBar(false)
+        }
+        
+        if self.bSynchronizeDrive {
+            self.bSynchronizeDrive = false
+            self.loadDriveFileList()
         }
     }
 
@@ -564,6 +570,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
             vc.set(viewmode: .upload)
             vc.selectDefaultPhoneAlbum()
+            self.bSynchronizeDrive = true
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -668,7 +675,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
             self.onFinishSynchronize()
         }
         let cancelAction = UIAlertAction(title: "Remind me later", style: .cancel) { (_) in
-            self.loadDriveFileList()
+            self.onFinishSynchronize()
         }
 
         alertController.addAction(uploadAction)
@@ -697,6 +704,12 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
     }
 
     func checkAndAutoUpload() {
+        if Global.bNeedToSynchronize == false {
+            return
+        }
+        
+        Global.bNeedToSynchronize = false
+
         if Global.bAutoUpload == false {
             self.onFinishSynchronize()
         } else {
