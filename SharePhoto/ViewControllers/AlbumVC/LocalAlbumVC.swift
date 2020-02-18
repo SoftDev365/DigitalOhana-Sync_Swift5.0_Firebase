@@ -34,7 +34,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var sourceType: SourceType = .local
     var bEditMode: Bool = false
     
+    var phoneAlbum: PHAssetCollection? = nil
     var albumPhotos: [PHAsset]?
+
     var drivePhotos: [GTLRDrive_File]?
     
     var selectedAlbumPhotos: [PHAsset]?
@@ -42,12 +44,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var backupSelection: [Int] = []
     
     @IBOutlet weak var navItem: UINavigationItem!
-    //@IBOutlet weak var btnNavRight: UIBarButtonItem!
+    @IBOutlet weak var btnNavRight: UIBarButtonItem!
     @IBOutlet weak var btnToolSelectAll: UIBarButtonItem!
     
     let activityView = ActivityView()
     let refreshControl = UIRefreshControl()
-    
+
     open func set(viewmode: ViewMode) {
         self.viewMode = viewmode
         
@@ -58,9 +60,29 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
+    open func selectDefaultPhoneAlbum() {
+        self.sourceType = .local
+        self.phoneAlbum = PHModule.fetchFamilyAlbumCollection()
+    }
+    
+    open func selectPhoneAlbum(_ album: PHAssetCollection?) {
+        self.sourceType = .local
+        self.phoneAlbum = album
+    }
+    
+    open func selectDefaultDriveFolder() {
+        self.sourceType = .drive
+    }
+    
+    open func setDriveFolder(_ folderID: String) {
+        self.sourceType = .drive
+        //self.phoneAlbum = album
+    }
+    
+    /*
     open func set(sourceType: SourceType) {
         self.sourceType = sourceType
-    }
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -647,7 +669,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     // search (filter) button action
     @IBAction func onBtnNavRight(_ sender: Any) {
-        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlbumsVC") as? AlbumsVC {
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     // selected from each photo cell

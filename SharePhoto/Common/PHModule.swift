@@ -32,6 +32,15 @@ class PHModule: NSObject {
         }
     }
     
+    static func fetchAllAlbums() -> PHFetchResult<PHAssetCollection> {
+        //let fetchOptions = PHFetchOptions()
+        //fetchOptions.predicate = NSPredicate(format: "title != %@", Global.sharedFolderName)
+        //let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+        let albumList = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: nil)
+
+        return albumList
+    }
+    
     static func fetchFamilyAlbumCollection() -> PHAssetCollection? {        
         let fetchOptions = PHFetchOptions()
 
@@ -55,7 +64,7 @@ class PHModule: NSObject {
     // get the all assets in Photos app
     static func getAllAssets() -> PHFetchResult<PHAsset> {
         let photosOptions = PHFetchOptions()
-        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
 
         return PHAsset.fetchAssets(with: photosOptions)
@@ -64,8 +73,28 @@ class PHModule: NSObject {
     // get the assets in a collection
     static func getAssets(fromCollection collection: PHAssetCollection) -> PHFetchResult<PHAsset> {
         let photosOptions = PHFetchOptions()
-        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+
+        return PHAsset.fetchAssets(in: collection, options: photosOptions)
+    }
+    
+    // get the all assets in Photos app
+    static func getAllAssets(limitCount: Int) -> PHFetchResult<PHAsset> {
+        let photosOptions = PHFetchOptions()
+        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+        photosOptions.fetchLimit = limitCount
+
+        return PHAsset.fetchAssets(with: photosOptions)
+    }
+    
+    // get the assets in a collection
+    static func getAssets(fromCollection collection: PHAssetCollection, limitCount: Int) -> PHFetchResult<PHAsset> {
+        let photosOptions = PHFetchOptions()
+        photosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        photosOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+        photosOptions.fetchLimit = limitCount
 
         return PHAsset.fetchAssets(in: collection, options: photosOptions)
     }

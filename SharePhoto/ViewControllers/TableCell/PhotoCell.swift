@@ -169,7 +169,7 @@ class PhotoCell: UICollectionViewCell {
             //   return
             //}
             // if previous image loaded late, skip
-            if asset.localIdentifier == identifier {
+            if self.localAsset!.localIdentifier == identifier {
                 self.ivPhoto?.image = image
             }
         }

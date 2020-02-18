@@ -195,13 +195,13 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if self.viewMode == .location {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
                 vc.set(viewmode: .show)
-                vc.set(sourceType: .local)
+                vc.selectDefaultPhoneAlbum()
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .upload {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
                 vc.set(viewmode: .upload)
-                vc.set(sourceType: .local)
+                vc.selectDefaultPhoneAlbum()
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .download {
@@ -239,13 +239,13 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if self.viewMode == .location {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
                 vc.set(viewmode: .show)
-                vc.set(sourceType: .drive)
+                vc.selectDefaultDriveFolder()
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .upload {
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
                 vc.set(viewmode: .upload)
-                vc.set(sourceType: .drive)
+                vc.selectDefaultDriveFolder()
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .download {
