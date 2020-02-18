@@ -257,6 +257,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         
         if self.bEditMode {
             //showToolBar(false)
+            if self.nUnSyncCount > 0 {
+                showToolBar(false)
+            }
         } else {
             showTabBar()
         }
@@ -369,10 +372,12 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if self.bEditMode == true {
+        if self.bEditMode == true && indexPath.row < self.nUnSyncCount {
             selectOrDeselectCell(indexPath, refreshCell: true)
         } else if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GalleryVC") as? LocalGalleryVC {
+            
             hideTabBar()
+            hideToolBar(false)
             if self.sourceType == .local {
                 vc.setAlbumPhotos(self.albumPhotos!, page: indexPath.row)
             } else if self.sourceType == .drive {
