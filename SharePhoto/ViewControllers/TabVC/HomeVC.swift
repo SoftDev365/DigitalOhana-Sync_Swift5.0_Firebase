@@ -593,7 +593,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
             self.gotoCheckLocalPhotos()
         }
         let neverAction = UIAlertAction(title: "Never alert", style: .default) { (_) in
-            self.onFinishSynchronize()
+            self.onFinishSynchronize(turnOffAutoUpload: true)
         }
         let cancelAction = UIAlertAction(title: "Remind me later", style: .cancel) { (_) in
             self.loadDriveFileList()
@@ -629,7 +629,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
         let strMsg = Global.getProcessResultMsg(titles: ["Uploaded", "Skipped", "Failed"], counts: [nUpload, nSkip, nFail])
         let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            self.onFinishSynchronize()
+            self.onFinishSynchronize(turnOffAutoUpload: false)
         }))
 
         self.present(alert, animated: true, completion: nil)
@@ -656,7 +656,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
         self.hideBusyDialog()
         
         if self.drivePhotos.count <= 0 {
-            self.onFinishSynchronize()
+            self.onFinishSynchronize(turnOffAutoUpload: false)
             return
         }
         
@@ -672,10 +672,10 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
             self.gotoCheckDrivePhotos()
         }
         let neverAction = UIAlertAction(title: "Never alert", style: .default) { (_) in
-            self.onFinishSynchronize()
+            self.onFinishSynchronize(turnOffAutoUpload: true)
         }
         let cancelAction = UIAlertAction(title: "Remind me later", style: .cancel) { (_) in
-            self.onFinishSynchronize()
+            self.onFinishSynchronize(turnOffAutoUpload: false)
         }
 
         alertController.addAction(uploadAction)
@@ -711,7 +711,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
         Global.bNeedToSynchronize = false
 
         if Global.bAutoUpload == false {
-            self.onFinishSynchronize()
+            self.onFinishSynchronize(turnOffAutoUpload: false)
         } else {
             self.showBusyDialog("Synchronize Phone...")
             //GFSModule.getAllPhotos { (success, photoList) in
@@ -720,7 +720,12 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
         }
     }
     
-    func onFinishSynchronize() {
-        
+    func onFinishSynchronize(turnOffAutoUpload: Bool) {
+        if turnOffAutoUpload == true {
+            self.showBusyDialog()
+            GFSModule.updateUser(autoUpload: false) { (success) in
+                self.hideBusyDialog()
+            }
+        }
     }
 }
