@@ -39,7 +39,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = nil
+        //self.navigationItem.rightBarButtonItem = nil
         //self.tabBarController?.tabBar.isHidden = true//bIsFullscreen
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
@@ -107,8 +107,9 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
         if curPage >= photoList.count {
             return
         }
+        
         let photoInfo = photoList[curPage]
-        let fsID = photoInfo.id
+        let fsID = photoInfo.id        
         
         // hide download button if already downloaded
         if SyncModule.checkPhotoIsDownloaded(cloudFileID: fsID) == true {
