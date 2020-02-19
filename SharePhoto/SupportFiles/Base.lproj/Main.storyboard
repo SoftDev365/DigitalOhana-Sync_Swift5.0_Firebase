@@ -1724,19 +1724,19 @@
                                                     <rect key="frame" x="0.0" y="300" width="300" height="60"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yLC-Tz-ZGH" userLabel="TItle">
-                                                            <rect key="frame" x="20" y="19.666666666666686" width="44" height="21"/>
+                                                            <rect key="frame" x="10" y="21" width="37.333333333333336" height="18"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                             <variation key="heightClass=regular-widthClass=compact">
-                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             </variation>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstItem="yLC-Tz-ZGH" firstAttribute="leading" secondItem="CA9-By-iAB" secondAttribute="leading" constant="20" id="THR-J5-b41"/>
+                                                        <constraint firstItem="yLC-Tz-ZGH" firstAttribute="leading" secondItem="CA9-By-iAB" secondAttribute="leading" constant="10" id="THR-J5-b41"/>
                                                         <constraint firstAttribute="width" secondItem="CA9-By-iAB" secondAttribute="height" multiplier="100:20" id="WRd-Wt-uyU"/>
                                                         <constraint firstItem="yLC-Tz-ZGH" firstAttribute="centerY" secondItem="CA9-By-iAB" secondAttribute="centerY" id="lw1-Tf-3VG"/>
                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yLC-Tz-ZGH" secondAttribute="trailing" constant="20" symbolic="YES" id="ru2-kn-knk"/>

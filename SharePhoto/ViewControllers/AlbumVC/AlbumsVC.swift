@@ -109,7 +109,9 @@ class AlbumsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UI
             let size = CGSize(width:width, height:height)
 
             PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
-                imgView.image = image
+                if image != nil {
+                    imgView.image = image
+                }
             }
         }
     }
