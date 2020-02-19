@@ -9,12 +9,21 @@
 import UIKit
 import MBProgressHUD
 
-class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDelegate  {
+class DateFormatListVC: BaseVC, UITableViewDataSource, UITableViewDelegate  {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var hud: MBProgressHUD = MBProgressHUD()
+    enum ViewMode: Int {
+       case dateFormat = 0
+       case timeFormat = 1
+    }
+    
+    var viewMode: ViewMode = .dateFormat
     var selected: Int = 0
+    
+    func set(viewMode: ViewMode) {
+        self.viewMode = viewMode
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,9 +31,13 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-        self.title = "Date Format"
-        self.selected = Global.dtf_index
-        self.view.addSubview(self.hud)
+        if self.viewMode == .dateFormat {
+            self.title = "Date Format"
+            self.selected = Global.date_format_index
+        } else {
+            self.title = "Time Format"
+            self.selected = Global.time_format_index
+        }
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(onBtnDone))
     }
@@ -34,12 +47,16 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Global.dtf_list.count
+        if self.viewMode == .dateFormat {
+            return Global.date_format_list.count
+        } else {
+            return Global.time_format_list.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
-        let format = Global.dtf_list[indexPath.row]
+        let format = self.viewMode == .dateFormat ? Global.date_format_list[indexPath.row] : Global.time_format_list[indexPath.row]
 
         cell.textLabel?.text = format.uppercased()
         cell.detailTextLabel?.text = Global.getString(fromDate: Date(), withFormat: format)
@@ -76,15 +93,25 @@ class DateFormatListVC: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     @objc func onBtnDone(sender: UIBarButtonItem) {
-        hud.show(animated: true)
+        self.showBusyDialog()
         
-        GFSModule.updateUser(dateFormatIndex: self.selected) { (success) in
-            self.hud.hide(animated: true)
-
-            if success {
-                self.navigationController?.popViewController(animated: true)
-            } else {
-                self.alertSaveFailed()
+        if self.viewMode == .dateFormat {
+            GFSModule.updateUser(dateFormatIndex: self.selected) { (success) in
+                self.hideBusyDialog()
+                if success {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.alertSaveFailed()
+                }
+            }
+        } else {
+            GFSModule.updateUser(timeFormatIndex: self.selected) { (success) in
+                self.hideBusyDialog()
+                if success {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.alertSaveFailed()
+                }
             }
         }
     }

@@ -298,7 +298,9 @@ class SyncModule: NSObject {
                 }
             }
             
-            _ = registerNotification(count: nUpload, ofType: NotificationType.upload)
+            if nUpload > 0 {
+                _ = registerNotification(count: nUpload, ofType: NotificationType.upload)
+            }
 
             DispatchQueue.main.async {
                 onCompleted(nUpload, nSkip, nFail)
@@ -485,7 +487,9 @@ class SyncModule: NSObject {
                 }
             }
             
-            _ = registerNotification(count: nUpload, ofType: NotificationType.upload)
+            if nUpload > 0 {
+                _ = registerNotification(count: nUpload, ofType: NotificationType.upload)
+            }
 
             DispatchQueue.main.async {
                 onCompleted(nUpload, nSkip, nFail)

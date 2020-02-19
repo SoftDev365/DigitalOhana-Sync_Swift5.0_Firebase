@@ -1,5 +1,5 @@
 //
-//  GSAlbumVC.swift
+//  HomeVC.swift
 //  SharePhoto
 //
 //  Created by Admin on 11/22/19.
@@ -128,7 +128,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
     
     func loadFileList() {
         //GFSModule.getAllPhotos { (success, result) in
-        GFSModule.searchPhotosByOptions { (success, result) in
+        GFSModule.searchPhotosBy(options: Global.searchOption) { (success, result) in
             self.refreshControl.endRefreshing()
             self.hideBusyDialog()
             

@@ -63,7 +63,7 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func gotoDetailPage(info: FSNotificationInfo) {
-        let options = Global.searchOption
+        let options = Global.notificationOption
         
         options.bUserName = true
         options.userid = info.userid
@@ -72,10 +72,10 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         options.bTakenDate = false
         options.bUploadDate = true
-        options.uploadDateFrom = info.timestamp-1
-        options.uploadDateTo = info.timestamp+1
+        options.uploadDateFrom = info.timestamp - 60
+        options.uploadDateTo = info.timestamp + 5
         
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NFDetailPage") as? NFDetailPage {
             navigationController?.pushViewController(vc, animated: true)
         }
     }

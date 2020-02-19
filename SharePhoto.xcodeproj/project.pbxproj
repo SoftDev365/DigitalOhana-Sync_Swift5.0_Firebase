@@ -55,6 +55,7 @@
 		84A1125B23EB060C00F81BC6 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CBDD9423AC2A15008AE632 /* PhotoCell.swift */; };
 		84A28E44238C85F20017DD06 /* PHModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E43238C85F20017DD06 /* PHModule.swift */; };
 		84A28E46238C904D0017DD06 /* ImagePickerModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A28E45238C904D0017DD06 /* ImagePickerModule.swift */; };
+		84A4C03A23FCC81D00F2AD75 /* NFDetailPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A4C03923FCC81C00F2AD75 /* NFDetailPage.swift */; };
 		84ADEFB023C7047F0037BBF2 /* mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 84ADEFAF23C7047F0037BBF2 /* mark.png */; };
 		84ADEFB223C705C10037BBF2 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ADEFB123C705C10037BBF2 /* SplashVC.swift */; };
 		84B4144823A0E44100075A80 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4144723A0E44100075A80 /* SettingVC.swift */; };
@@ -144,6 +145,7 @@
 		84A1125823EAFD8700F81BC6 /* GeneralVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralVC.swift; sourceTree = "<group>"; };
 		84A28E43238C85F20017DD06 /* PHModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHModule.swift; sourceTree = "<group>"; };
 		84A28E45238C904D0017DD06 /* ImagePickerModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerModule.swift; sourceTree = "<group>"; };
+		84A4C03923FCC81C00F2AD75 /* NFDetailPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFDetailPage.swift; sourceTree = "<group>"; };
 		84ADEFAF23C7047F0037BBF2 /* mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark.png; path = Resource/mark.png; sourceTree = SOURCE_ROOT; };
 		84ADEFB123C705C10037BBF2 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SplashVC.swift; path = SharePhoto/ViewControllers/SplashVC.swift; sourceTree = SOURCE_ROOT; };
 		84B4144723A0E44100075A80 /* SettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				8469878423EB459100F6C4AC /* SwitchCell.swift */,
 				8469878223EB407800F6C4AC /* DateFormatListVC.swift */,
 				84A1125823EAFD8700F81BC6 /* GeneralVC.swift */,
+				84A4C03923FCC81C00F2AD75 /* NFDetailPage.swift */,
 				849BCE4E23E13DC200180595 /* NotificationsVC.swift */,
 				84B4144723A0E44100075A80 /* SettingVC.swift */,
 			);
@@ -665,6 +668,7 @@
 				84BCF77C237268FE00367EAB /* GDModule.swift in Sources */,
 				84C18A7823DFA31000C86D45 /* SearchFieldVC.swift in Sources */,
 				849A974323822F8D003E985E /* NavigationRootVC.swift in Sources */,
+				84A4C03A23FCC81D00F2AD75 /* NFDetailPage.swift in Sources */,
 				8425689F237D475C00F4CD7A /* ImageZoomView.swift in Sources */,
 				84D85D482384A1710042C4DF /* GDBModule.swift in Sources */,
 				840EEE022374957000361FB9 /* ActivityView.swift in Sources */,

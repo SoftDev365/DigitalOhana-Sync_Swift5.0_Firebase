@@ -156,21 +156,19 @@ class SignInViewController: BaseVC {
                     let displayName = data[UserField.displayname] as? String
                     let bAutoUpload = data[UserField.auto_upload] as? Bool
                     let dateFormatIndex = data[UserField.dateFormatIndex] as? Int
+                    let timeFormatIndex = data[UserField.timeFormatIndex] as? Int
 
                     if displayName != nil {
                         Global.username = displayName
                     }
-                    if bAutoUpload != nil {
-                        Global.bAutoUpload = bAutoUpload!
-                    } else {
-                        Global.bAutoUpload = true
-                    }
-                    if dateFormatIndex != nil {
-                        Global.dtf_index = dateFormatIndex!
-                    } else {
-                        Global.dtf_index = 0
-                    }
-                    Global.date_format = Global.dtf_list[Global.dtf_index]
+                    
+                    Global.bAutoUpload = bAutoUpload ?? true
+                    
+                    Global.date_format_index = dateFormatIndex ?? 0
+                    Global.date_format = Global.date_format_list[Global.date_format_index]
+                    
+                    Global.time_format_index = timeFormatIndex ?? 0
+                    Global.time_format = Global.time_format_list[Global.time_format_index]
 
                     if allow == true {
                         self.registerUserForShareExtension(userid: user.userID, email: user.profile.email!, username: user.profile.name)

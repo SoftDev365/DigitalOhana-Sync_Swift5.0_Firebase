@@ -54,9 +54,13 @@ class Global: NSObject {
     static var username: String?
     static var email: String?
     
-    static var dtf_list: [String] = [ "MM/dd/YYYY", "YYYY-MM-dd", "YYYY/MM/dd", "dd/MM/YYYY" ]
-    static var dtf_index: Int = 0       // date format index (settings)
-    static var date_format: String?     // date format string
+    static var date_format_list: [String] = [ "MM/dd/YYYY", "dd/MM/YYYY", "YYYY/MM/dd" ]
+    static var date_format_index: Int = 0   // date format index (settings)
+    static var date_format: String?         // date format string
+    
+    static var time_format_list: [String] = [ "HH:mm:ss", "h:mm:ss a" ]
+    static var time_format_index: Int = 0   // time format index (settings)
+    static var time_format: String?         // time format string
     
     static var bAutoUpload: Bool = true  // Setting (Auto Upload enabled)
     static var bNeedToSynchronize: Bool = false // check synchronizing
@@ -69,6 +73,7 @@ class Global: NSObject {
     static var selectedCloudPhotos: [FSPhotoInfo]?
     static var helpCrunchInited: Bool = false
     static var searchOption: SearchOption = SearchOption()
+    static var notificationOption: SearchOption = SearchOption()
 
     static func setNeedRefresh() {
         needRefreshLocal = true
@@ -131,12 +136,10 @@ class Global: NSObject {
         let date = Date(timeIntervalSince1970: interval)
         let formatter = DateFormatter()
         
-        if let dateFormat = Global.date_format {
-            formatter.dateFormat = dateFormat + " HH:mm:ss"
-        } else {
-            formatter.dateFormat = Global.dtf_list[0] + " HH:mm:ss"
-        }
+        let date_format = Global.date_format ?? Global.date_format_list[0]
+        let time_format = Global.time_format ?? Global.time_format_list[0]
 
+        formatter.dateFormat = date_format + " " + time_format
         let dateString = formatter.string(from: date)
 
         return dateString

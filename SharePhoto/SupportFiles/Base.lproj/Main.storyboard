@@ -1744,6 +1744,76 @@
             </objects>
             <point key="canvasLocation" x="-1242" y="-1390"/>
         </scene>
+        <!--Detail Page-->
+        <scene sceneID="WOO-rS-0sd">
+            <objects>
+                <viewController storyboardIdentifier="NFDetailPage" id="oJW-IZ-2ld" customClass="NFDetailPage" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Fg-5K-ogF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XxL-Yl-IDg">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ufi-OJ-zkO">
+                                    <size key="itemSize" width="300" height="300"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="f2U-9k-nex" customClass="PhotoCell" customModule="Ohana_Sync" customModuleProvider="target">
+                                        <rect key="frame" x="57" y="0.0" width="300" height="300"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XCK-0D-foU">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ha0-EJ-QnE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox_d" translatesAutoresizingMaskIntoConstraints="NO" id="7dB-MK-XtD">
+                                                    <rect key="frame" x="235" y="5" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="7dB-MK-XtD" secondAttribute="height" multiplier="1:1" id="TOt-OL-U7K"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="ha0-EJ-QnE" firstAttribute="leading" secondItem="XCK-0D-foU" secondAttribute="leading" identifier="left_padding" id="IjT-3y-zjw"/>
+                                                <constraint firstAttribute="bottom" secondItem="ha0-EJ-QnE" secondAttribute="bottom" identifier="bottom_padding" id="J2s-RH-Gdr"/>
+                                                <constraint firstAttribute="trailing" secondItem="7dB-MK-XtD" secondAttribute="trailing" constant="5" id="Q8m-uT-jut"/>
+                                                <constraint firstItem="7dB-MK-XtD" firstAttribute="top" secondItem="XCK-0D-foU" secondAttribute="top" constant="5" id="W5b-6y-O2A"/>
+                                                <constraint firstItem="ha0-EJ-QnE" firstAttribute="top" secondItem="XCK-0D-foU" secondAttribute="top" identifier="top_padding" id="qEe-UD-vWc"/>
+                                                <constraint firstItem="7dB-MK-XtD" firstAttribute="width" secondItem="XCK-0D-foU" secondAttribute="width" multiplier="0.2" id="tuP-hy-1VQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="ha0-EJ-QnE" secondAttribute="trailing" identifier="right_padding" id="w3A-f9-mVH"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <size key="customSize" width="300" height="300"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="l5k-ir-AYC" firstAttribute="bottom" secondItem="XxL-Yl-IDg" secondAttribute="bottom" id="4XG-5a-nTj"/>
+                            <constraint firstItem="XxL-Yl-IDg" firstAttribute="top" secondItem="l5k-ir-AYC" secondAttribute="top" id="QhE-Qw-AF8"/>
+                            <constraint firstItem="l5k-ir-AYC" firstAttribute="trailing" secondItem="XxL-Yl-IDg" secondAttribute="trailing" id="kEb-Qt-mOS"/>
+                            <constraint firstItem="XxL-Yl-IDg" firstAttribute="leading" secondItem="l5k-ir-AYC" secondAttribute="leading" id="oFM-pS-FiD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="l5k-ir-AYC"/>
+                    </view>
+                    <toolbarItems/>
+                    <connections>
+                        <outlet property="collectionView" destination="XxL-Yl-IDg" id="iwo-Kd-C79"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rXa-1w-6p4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="209" y="133"/>
+        </scene>
     </scenes>
     <resources>
         <image name="arrow.2.circlepath" catalog="system" width="64" height="50"/>

@@ -36,7 +36,7 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -46,15 +46,19 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
             cell.textLabel?.text = "Display Name"
             cell.detailTextLabel?.text = Global.username
         } else if indexPath.row == 1 {
-            cell.textLabel?.text = "DateTime Format"
+            cell.textLabel?.text = "Date Format"
             cell.detailTextLabel?.text = Global.date_format?.uppercased()
             cell.accessoryType = .disclosureIndicator
         } else if indexPath.row == 2 {
+            cell.textLabel?.text = "Time Format"
+            cell.detailTextLabel?.text = Global.time_format?.uppercased()
+            cell.accessoryType = .disclosureIndicator
+        } else if indexPath.row == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchCell", for: indexPath) as! SwitchCell
             cell.delegate = self
             cell.swcOnOff.isOn = Global.bAutoUpload
             return cell
-        } else if indexPath.row == 3 {
+        } else if indexPath.row == 4 {
             cell.textLabel?.text = "Invite"
             cell.detailTextLabel?.text = "Send email to friend"
         }
@@ -66,8 +70,10 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
         if indexPath.row == 0 {
             self.inputDisplayName()
         } else if indexPath.row == 1 {
-            self.showDateFormatListVC()
-        } else if indexPath.row == 3 {
+            self.showDateFormatListVC(true)
+        } else if indexPath.row == 2 {
+            self.showDateFormatListVC(false)
+        } else if indexPath.row == 4 {
             self.sendInviteEmail()
         }
         
@@ -116,8 +122,14 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
         }
     }
     
-    func showDateFormatListVC() {
+    func showDateFormatListVC(_ bDateFormat: Bool) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DateFormatListVC") as? DateFormatListVC {
+            if bDateFormat {
+                vc.set(viewMode: .dateFormat)
+            } else {
+                vc.set(viewMode: .timeFormat)
+            }
+            
             navigationController?.pushViewController(vc, animated: true)
         }
     }

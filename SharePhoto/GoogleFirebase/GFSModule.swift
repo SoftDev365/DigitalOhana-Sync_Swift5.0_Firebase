@@ -16,6 +16,7 @@ class UserField {
     static let originname: String = "origin_name"
     static let allow: String = "allow"
     static let dateFormatIndex: String = "dateFormatIndex"
+    static let timeFormatIndex: String = "timeFormatIndex"
     static let auto_upload: String = "AutoUpload"
 }
 
@@ -220,7 +221,7 @@ class GFSModule: NSObject {
         }
     }
     
-    // update user prefered DateTime format
+    // update user prefered date format
     static func updateUser(dateFormatIndex: Int, onCompleted: @escaping (Bool) -> ()) {
         guard let userid = Global.userid else { return }
 
@@ -232,8 +233,27 @@ class GFSModule: NSObject {
                 debugPrint(err)
                 onCompleted(false)
             } else {
-                Global.dtf_index = dateFormatIndex
-                Global.date_format = Global.dtf_list[dateFormatIndex]
+                Global.date_format_index = dateFormatIndex
+                Global.date_format = Global.date_format_list[dateFormatIndex]
+                onCompleted(true)
+            }
+        }
+    }
+    
+    // update user prefered time format
+    static func updateUser(timeFormatIndex: Int, onCompleted: @escaping (Bool) -> ()) {
+        guard let userid = Global.userid else { return }
+
+        let db = Firestore.firestore()
+        db.collection("users").document(userid).updateData([
+            UserField.timeFormatIndex: timeFormatIndex
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false)
+            } else {
+                Global.time_format_index = timeFormatIndex
+                Global.time_format = Global.time_format_list[timeFormatIndex]
                 onCompleted(true)
             }
         }
@@ -399,9 +419,7 @@ class GFSModule: NSObject {
         }
     }*/
     
-    static func searchPhotosByOptions(onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
-        let options = Global.searchOption
-        
+    static func searchPhotosBy(options: SearchOption, onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
         self.getAllPhotos { (success, listPhotos) in
             if success == false {
                 onCompleted(false, listPhotos)
@@ -421,8 +439,13 @@ class GFSModule: NSObject {
                         continue
                     }
                 }
+
                 if options.bUploadDate == true && options.uploadDateFrom != nil && options.uploadDateTo != nil {
-                    if info.uploaded < options.uploadDateFrom! || info.taken > options.uploadDateTo! {
+                    //let strDate1 = Global.getDateTimeString(interval: options.uploadDateFrom!)
+                    //let strDate2 = Global.getDateTimeString(interval: options.uploadDateTo!)
+                    //let strDate3 = Global.getDateTimeString(interval: info.uploaded)
+                    
+                    if info.uploaded < options.uploadDateFrom! || info.uploaded > options.uploadDateTo! {
                         continue
                     }
                 }
