@@ -93,7 +93,7 @@ class SignInViewController: BaseVC {
         replaceBackButtonToSignout()
     }
 
-    @IBAction func onBtnGoogleSiginIn(_ sender: Any) {        
+    @IBAction func onBtnGoogleSiginIn(_ sender: Any) {
         self.showBusyDialog("Sign In...")
 
         GDModule.defaultFolderID = nil

@@ -224,7 +224,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIS-xG-jes" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1294" y="-646"/>
+            <point key="canvasLocation" x="-1271" y="-646"/>
         </scene>
         <!--Shared Storage-->
         <scene sceneID="cbI-2j-9iQ">
@@ -309,6 +309,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQ3-TI-hLn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2813" y="-1390"/>
+        </scene>
+        <!--Code ReaderVC-->
+        <scene sceneID="fmK-Nz-UH2">
+            <objects>
+                <viewController storyboardIdentifier="QRCodeReaderVC" id="Ikn-Oa-6w8" customClass="QRCodeReaderVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UPH-Gq-ZxW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5X-cP-OB2">
+                                <rect key="frame" x="182" y="769" width="50" height="48.666666666666629"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="2iI-w6-dJr"/>
+                                    <constraint firstAttribute="height" constant="50" id="i1t-xK-4R5"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" backgroundImage="xmark.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="onBtnExit:" destination="Ikn-Oa-6w8" eventType="touchUpInside" id="eEb-WL-PaR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="v5X-cP-OB2" firstAttribute="centerX" secondItem="fqX-mP-MMp" secondAttribute="centerX" id="XJ6-ev-hMc"/>
+                            <constraint firstItem="fqX-mP-MMp" firstAttribute="bottom" secondItem="v5X-cP-OB2" secondAttribute="bottom" constant="44" id="leh-7U-n6t"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fqX-mP-MMp"/>
+                    </view>
+                    <connections>
+                        <outlet property="btnExit" destination="v5X-cP-OB2" id="qdy-G2-0aC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BVl-MC-03U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5251" y="122"/>
         </scene>
         <!--Settings-->
         <scene sceneID="jPj-r8-ABX">
@@ -1833,6 +1869,7 @@
         <image name="square.and.arrow.down" catalog="system" width="60" height="64"/>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
         <image name="trash" catalog="system" width="60" height="64"/>
+        <image name="xmark.circle" catalog="system" width="64" height="60"/>
         <namedColor name="color_std_bg">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

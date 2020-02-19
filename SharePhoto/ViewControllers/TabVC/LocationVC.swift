@@ -130,7 +130,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             } else if indexPath.row == 1 {
                 imgView.image = UIImage(named: "loc_drive")
                 label.text = "Drive"
-            } else if indexPath.row == frameCount {
+            } else if indexPath.row == frameCount+2 {
                 imgView.image = UIImage(named: "loc_add")
                 label.text = "Add Frame"
             } else {
@@ -279,10 +279,18 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
     }
     
+    func gotoQRCodeReader() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "QRCodeReaderVC") as? QRCodeReaderVC {
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     func onChooseAddFrame() {
-        let alert = UIAlertController(title: "Will be implemented soon.", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        //let alert = UIAlertController(title: "Will be implemented soon.", message: nil, preferredStyle: .alert)
+        //alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: nil))
+        //self.present(alert, animated: true, completion: nil)
+        self.gotoQRCodeReader()
     }
 
     func hideToolBar(_ animated: Bool) {

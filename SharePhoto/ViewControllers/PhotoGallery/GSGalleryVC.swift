@@ -39,6 +39,7 @@ class GSGalleryVC: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.rightBarButtonItem = nil
         //self.tabBarController?.tabBar.isHidden = true//bIsFullscreen
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
