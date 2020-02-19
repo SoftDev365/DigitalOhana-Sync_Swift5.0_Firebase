@@ -53,7 +53,7 @@ class NFDetailPage: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
 
-        //showTabBar()
+        showTabBar()
     }
 
     override func viewDidAppear(_ animated: Bool) {
