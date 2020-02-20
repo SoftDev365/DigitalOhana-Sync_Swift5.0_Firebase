@@ -72,7 +72,7 @@ class SettingVC : UIViewController, UITableViewDataSource, UITableViewDelegate  
             cell.accessoryType = .disclosureIndicator
         } else if indexPath.section == 1 {
             cell.setIcon(image: UIImage(systemName: "questionmark.circle"))
-            cell.setLabel(title: "Help")
+            cell.setLabel(title: "Contact")
             
             let messages = Int(HelpCrunch.numberOfUnreadMessages())
             cell.setBadgeNumber(number: messages)
