@@ -287,10 +287,17 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     func onChooseAddFrame() {
-        //let alert = UIAlertController(title: "Will be implemented soon.", message: nil, preferredStyle: .alert)
-        //alert.addAction(UIAlertAction.init(title: "Ok", style: .cancel, handler: nil))
-        //self.present(alert, animated: true, completion: nil)
-        self.gotoQRCodeReader()
+        let alert = UIAlertController(title: "Register or order a frame?", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Register", style: .default, handler: { _ in
+            self.gotoQRCodeReader()
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Order", style: .default, handler: { _ in
+            //self.gotoQRCodeReader()
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     func hideToolBar(_ animated: Bool) {
