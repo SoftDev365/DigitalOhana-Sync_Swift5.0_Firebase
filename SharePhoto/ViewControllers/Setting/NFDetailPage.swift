@@ -19,6 +19,7 @@ class NFDetailPage: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
     @IBOutlet weak var collectionView: UICollectionView!
     var photoList: [FSPhotoInfo]?
 
+    var notificationInfo: FSNotificationInfo? = nil
     let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
@@ -86,6 +87,11 @@ class NFDetailPage: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let photoList = self.photoList else { return 0 }
+        
+        // from recent 300s (so latest count)
+        if self.notificationInfo != nil && photoList.count > self.notificationInfo!.count {
+            return self.notificationInfo!.count
+        }
 
         return photoList.count
     }

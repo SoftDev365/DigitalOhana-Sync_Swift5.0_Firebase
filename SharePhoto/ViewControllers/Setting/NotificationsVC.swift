@@ -78,15 +78,16 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         if upload {
             options.bUploadDate = true
-            options.uploadDateFrom = info.timestamp - 60
+            options.uploadDateFrom = info.timestamp - 300
             options.uploadDateTo = info.timestamp + 5
         } else {
             options.bDeletedDate = true
-            options.deletedDateFrom = info.timestamp - 60
+            options.deletedDateFrom = info.timestamp - 30
             options.deletedDateTo = info.timestamp + 5
         }
 
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NFDetailPage") as? NFDetailPage {
+            vc.notificationInfo = info
             navigationController?.pushViewController(vc, animated: true)
         }
     }

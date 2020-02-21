@@ -510,7 +510,10 @@ class GFSModule: NSObject {
                     }
                 }
                 
-                Global.sharedCloudPhotos = result
+                // exclude delete file (for the check uploaded or downloaded)
+                if withDeleted == false {
+                    Global.sharedCloudPhotos = result
+                }
                 onCompleted(true, result)
             }
         }
