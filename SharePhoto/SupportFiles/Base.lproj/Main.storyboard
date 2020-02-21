@@ -1283,7 +1283,7 @@
             </objects>
             <point key="canvasLocation" x="-4330" y="-646"/>
         </scene>
-        <!--Frame-->
+        <!--Frames-->
         <scene sceneID="Jnf-pI-Akh">
             <objects>
                 <viewController storyboardIdentifier="LocationVC" id="w9X-5K-wgt" customClass="LocationVC" customModule="Ohana_Sync" customModuleProvider="target" sceneMemberID="viewController">
@@ -1359,8 +1359,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oRM-ad-KRk"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="2" title="Frame" image="photo.on.rectangle" catalog="system" id="gPh-aT-lKm"/>
-                    <navigationItem key="navigationItem" title="Frame" id="hK8-B0-XNs"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Frames" image="photo.on.rectangle" catalog="system" id="gPh-aT-lKm"/>
+                    <navigationItem key="navigationItem" title="Frames" id="hK8-B0-XNs"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="ixI-9n-Nwp" id="UWY-sX-tnw"/>

@@ -81,8 +81,8 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
     }
     
     func inputDisplayName() {
-        let alertController = UIAlertController(title: "Edit display name", message: nil, preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "Edit", style: .default) { (_) in
+        let alertController = UIAlertController(title: "Display name", message: nil, preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Submit", style: .default) { (_) in
             if let txtField = alertController.textFields?.first, let text = txtField.text {
                 self.updateUser(displayName: text)
             }
