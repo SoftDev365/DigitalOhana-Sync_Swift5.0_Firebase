@@ -11,14 +11,14 @@ import GTMSessionFetcher
 
 class GFSModuleSync: NSObject {
     
-    static func getAllPhotos() -> [FSPhotoInfo] {
+    static func getAllPhotos(withDeleted: Bool) -> [FSPhotoInfo] {
         var photos: [FSPhotoInfo] = []
         var bProcessing = true
         
-        GFSModule.getAllPhotos { (success, result) in
+        GFSModule.getAllPhotos(withDeleted: withDeleted, onCompleted: { (success, result) in
             photos = result
             bProcessing = false
-        }
+        })
 
         // block while processing
         while bProcessing {

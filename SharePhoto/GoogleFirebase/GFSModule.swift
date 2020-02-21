@@ -33,6 +33,8 @@ class PhotoField {
     static let sourceType: String = "sourceType"
     static let sourceID: String = "sourceID"
     static let valid: String = "valid"
+    static let deleted: String = "delete"
+    static let deletedTime: String = "deletedTime"
 }
 
 class NotificationField {
@@ -50,6 +52,8 @@ enum SourceType : Int {
 }
 
 class FSPhotoInfo {
+    var valid: Bool = false             // validation (false, true)
+    
     var id: String
     
     var userid: String                  // owner id, users collection on firestore db
@@ -66,7 +70,8 @@ class FSPhotoInfo {
     var size: CGSize = CGSize(width: 0, height: 0) // photo dimensions
     var tag: String                     // tag
 
-    var valid: Bool = false             // validation (false, true)
+    var deleted: Bool = false           // deleted flag
+    var deletedTime: TimeInterval = 0   // time interval
     
     init() {
         self.id = ""
@@ -83,6 +88,8 @@ class FSPhotoInfo {
         
         self.uploaded = Date().timeIntervalSince1970
         self.valid = false
+        
+        self.deleted = false
     }
 }
 
@@ -373,6 +380,20 @@ class GFSModule: NSObject {
             photoInfo.size = CGSize(width: 0, height: 0)
         }
         
+        let deletedFlag = data[PhotoField.deleted]
+        if deletedFlag is Bool {
+            photoInfo.deleted = (data[PhotoField.deleted] as! Bool)
+        } else {
+            photoInfo.deleted = false
+        }
+        
+        let deletedTime = data[PhotoField.deletedTime]
+        if deletedTime is TimeInterval {
+            photoInfo.deletedTime = deletedTime as! TimeInterval
+        } else {
+            photoInfo.deletedTime = 0
+        }
+        
         return photoInfo
     }
     
@@ -419,8 +440,8 @@ class GFSModule: NSObject {
         }
     }*/
     
-    static func searchPhotosBy(options: SearchOption, onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
-        self.getAllPhotos { (success, listPhotos) in
+    static func searchPhotosBy(withDeleted: Bool, options: SearchOption, onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
+        self.getAllPhotos(withDeleted: withDeleted, onCompleted: { (success, listPhotos) in
             if success == false {
                 onCompleted(false, listPhotos)
                 return
@@ -441,11 +462,13 @@ class GFSModule: NSObject {
                 }
 
                 if options.bUploadDate == true && options.uploadDateFrom != nil && options.uploadDateTo != nil {
-                    //let strDate1 = Global.getDateTimeString(interval: options.uploadDateFrom!)
-                    //let strDate2 = Global.getDateTimeString(interval: options.uploadDateTo!)
-                    //let strDate3 = Global.getDateTimeString(interval: info.uploaded)
-                    
                     if info.uploaded < options.uploadDateFrom! || info.uploaded > options.uploadDateTo! {
+                        continue
+                    }
+                }
+                
+                if options.bDeletedDate == true && options.deletedDateFrom != nil && options.deletedDateTo != nil {
+                    if info.deletedTime < options.deletedDateFrom! || info.deletedTime > options.deletedDateTo! {
                         continue
                     }
                 }
@@ -454,10 +477,10 @@ class GFSModule: NSObject {
             }
 
             onCompleted(true, result)
-        }
+        })
     }
     
-    static func getAllPhotos(onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
+    static func getAllPhotos(withDeleted: Bool, onCompleted: @escaping (Bool, [FSPhotoInfo]) -> ()) {
         let db = Firestore.firestore()
         let refPhotos = db.collection("photos")
 
@@ -470,13 +493,20 @@ class GFSModule: NSObject {
                 var result = [FSPhotoInfo]()
 
                 for document in querySnapshot!.documents {
-                    // check validation
-                    let data = document.data()
-                    let valid = data["valid"] as! Bool
+                    let info = self.convertToPhotoInfo(document: document)
                     
-                    if valid == true {
-                        let info = self.convertToPhotoInfo(document: document)
-                        result += [info]
+                    // include deleted files
+                    if withDeleted == false && info.deleted == true {
+                        continue
+                    } else {
+                        // check validation
+                        let data = document.data()
+                        let valid = data["valid"] as! Bool
+                        
+                        if valid == true {
+                            let info = self.convertToPhotoInfo(document: document)
+                            result += [info]
+                        }
                     }
                 }
                 
@@ -542,7 +572,9 @@ class GFSModule: NSObject {
             PhotoField.sizeHeight: info.size.height,
             PhotoField.location: info.location,
             PhotoField.tag: info.tag,
-            PhotoField.valid: false] as [String : Any]
+            PhotoField.valid: false,
+            PhotoField.deleted: false,
+            ] as [String : Any]
 
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
@@ -575,10 +607,22 @@ class GFSModule: NSObject {
     static func deletePhoto(photoID: String, onCompleted: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
 
+        /*
         db.collection("photos").document(photoID).delete { (err) in
             if let err = err {
                 debugPrint(err)
                 onCompleted(false)
+            } else {
+                onCompleted(true)
+            }
+        }*/
+        db.collection("photos").document(photoID).updateData([
+            PhotoField.deleted: true,
+            PhotoField.deletedTime: Date().timeIntervalSince1970
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                
             } else {
                 onCompleted(true)
             }

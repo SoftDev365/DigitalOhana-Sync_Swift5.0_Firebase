@@ -128,7 +128,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
     
     func loadFileList() {
         //GFSModule.getAllPhotos { (success, result) in
-        GFSModule.searchPhotosBy(options: Global.searchOption) { (success, result) in
+        GFSModule.searchPhotosBy(withDeleted: false, options: Global.searchOption) { (success, result) in
             self.refreshControl.endRefreshing()
             self.hideBusyDialog()
             

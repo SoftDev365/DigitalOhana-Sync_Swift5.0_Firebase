@@ -65,7 +65,7 @@ class NFDetailPage: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
     
     func loadFileList() {
         //GFSModule.getAllPhotos { (success, result) in
-        GFSModule.searchPhotosBy(options: Global.notificationOption) { (success, result) in
+        GFSModule.searchPhotosBy(withDeleted: true, options: Global.notificationOption) { (success, result) in
             self.refreshControl.endRefreshing()
             self.hideBusyDialog()
             

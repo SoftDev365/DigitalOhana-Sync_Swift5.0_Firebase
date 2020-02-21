@@ -70,7 +70,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
     func loadFileList() {
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
         
-        GFSModule.getAllPhotos { (success, result) in
+        GFSModule.getAllPhotos(withDeleted: false, onCompleted: { (success, result) in
             if !success {
                 return
             }
@@ -78,7 +78,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
             self.photoList = result
             self.collectionView.reloadData()
             self.activityView.hideActivitiIndicator()
-        }
+        })
         
         /*
         GSModule.getImageFileList("central") { (fileList) in

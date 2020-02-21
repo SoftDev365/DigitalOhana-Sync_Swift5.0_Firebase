@@ -789,7 +789,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         if nUpload > 0 {
             Global.setNeedRefresh()
             
-            GFSModule.getAllPhotos { (success, photoList) in
+            GFSModule.getAllPhotos(withDeleted: false) { (success, photoList) in
                 DispatchQueue.main.async() {
                     self.activityView.hideActivitiIndicator()
                     self.alertUploadResult(nUpload: nUpload, nSkip: nSkip, nFail: nFail)

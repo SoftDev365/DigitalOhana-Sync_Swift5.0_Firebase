@@ -58,11 +58,13 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         let info = self.notifications[indexPath.row]
         
         if info.type == NotificationType.upload {
-            self.gotoDetailPage(info: info)
+            self.gotoDetailPage(info: info, upload: true)
+        } else {
+            self.gotoDetailPage(info: info, upload: false)
         }
     }
     
-    func gotoDetailPage(info: FSNotificationInfo) {
+    func gotoDetailPage(info: FSNotificationInfo, upload: Bool) {
         let options = Global.notificationOption
         
         options.bUserName = true
@@ -71,10 +73,19 @@ class NotificationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         options.email = info.email
         
         options.bTakenDate = false
-        options.bUploadDate = true
-        options.uploadDateFrom = info.timestamp - 60
-        options.uploadDateTo = info.timestamp + 5
+        options.bUploadDate = false
+        options.bDeletedDate = false
         
+        if upload {
+            options.bUploadDate = true
+            options.uploadDateFrom = info.timestamp - 60
+            options.uploadDateTo = info.timestamp + 5
+        } else {
+            options.bDeletedDate = true
+            options.deletedDateFrom = info.timestamp - 60
+            options.deletedDateTo = info.timestamp + 5
+        }
+
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NFDetailPage") as? NFDetailPage {
             navigationController?.pushViewController(vc, animated: true)
         }

@@ -12,15 +12,18 @@ import GoogleAPIClientForREST
 import GTMSessionFetcher
 
 class SearchOption: NSObject {
+    var bUserName: Bool = false
     var bTakenDate: Bool = false
     var bUploadDate: Bool = false
-    var bUserName: Bool = false
-    
+    var bDeletedDate: Bool = false
+
     var takenDateFrom: TimeInterval?
     var takenDateTo: TimeInterval?
     var uploadDateFrom: TimeInterval?
     var uploadDateTo: TimeInterval?
-    
+    var deletedDateFrom: TimeInterval?
+    var deletedDateTo: TimeInterval?
+
     var userid: String?
     var userName: String?
     var email: String?
