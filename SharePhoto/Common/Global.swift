@@ -103,7 +103,7 @@ class Global: NSObject {
     }
     
     static func getThumbnail(image: UIImage) -> UIImage {
-        let imageData = image.pngData()!
+        let imageData = image.jpegData(compressionQuality: 1.0)!
         let options = [
             kCGImageSourceCreateThumbnailWithTransform: true,
             kCGImageSourceCreateThumbnailFromImageAlways: true,
