@@ -185,7 +185,7 @@ class GDExplorerController: UITableViewController {
         actions.append(("Cancel", UIAlertAction.Style.cancel))
 
         //self = ViewController
-        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this image?", actions: actions) { (index) in
+        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Delete this image?", actions: actions) { (index) in
             print("call action \(index)")
             
             if index == 0 {

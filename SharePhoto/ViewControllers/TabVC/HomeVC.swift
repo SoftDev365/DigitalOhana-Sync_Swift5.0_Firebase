@@ -517,7 +517,7 @@ class HomeVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINa
         actions.append(("Yes", UIAlertAction.Style.default))
         actions.append(("Cancel", UIAlertAction.Style.cancel))
 
-        Alerts.showActionsheet(viewController: self, title: "Are you sure you delete selected photos?", message: "", actions: actions) { (index) in
+        Alerts.showActionsheet(viewController: self, title: "Delete the selected photos?", message: "", actions: actions) { (index) in
             if index == 0 {
                 self.deleteSelectedPhotos();
             }

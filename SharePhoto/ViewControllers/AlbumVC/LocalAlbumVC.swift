@@ -429,7 +429,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         actions.append(("Cancel", UIAlertAction.Style.cancel))
 
         //self = ViewController
-        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this item?", actions: actions) { (index) in
+        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Delete this item?", actions: actions) { (index) in
             if index == 0 {
                 self.deleteFile(rowIndex)
             }
@@ -831,7 +831,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             return
         }
 
-        let alert = UIAlertController(title: "Are you sure you upload selected photos?", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Upload the selected photos?", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             self.uploadSelectedPhotos()
         }))

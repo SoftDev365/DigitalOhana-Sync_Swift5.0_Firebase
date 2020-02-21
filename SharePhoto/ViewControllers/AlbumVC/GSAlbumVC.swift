@@ -177,7 +177,7 @@ class GSAlbumVC: UICollectionViewController, UINavigationControllerDelegate, UIC
         actions.append(("Cancel", UIAlertAction.Style.cancel))
 
         //self = ViewController
-        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Are you sure you delete this item?", actions: actions) { (index) in
+        Alerts.showActionsheet(viewController: self, title: "Warning", message: "Delete this item?", actions: actions) { (index) in
             print("call action \(index)")
 
             if index == 0 {
