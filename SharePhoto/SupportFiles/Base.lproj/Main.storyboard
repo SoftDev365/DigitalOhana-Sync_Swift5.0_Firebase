@@ -1437,18 +1437,18 @@
                                             </connections>
                                         </button>
                                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.2.circlepath" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vY6-xA-nUz">
-                                            <rect key="frame" x="235" y="6" width="60" height="58.666666666666671"/>
-                                            <color key="tintColor" red="0.10956228599999999" green="0.3889516388" blue="0.29457405819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <rect key="frame" x="230" y="1" width="70" height="68.666666666666671"/>
+                                            <color key="tintColor" red="0.0" green="0.3556025256849315" blue="0.44547303080273976" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="vY6-xA-nUz" firstAttribute="height" secondItem="3dc-bg-uDd" secondAttribute="height" id="1Ar-T6-o31"/>
+                                        <constraint firstItem="vY6-xA-nUz" firstAttribute="height" secondItem="3dc-bg-uDd" secondAttribute="height" constant="10" id="1Ar-T6-o31"/>
                                         <constraint firstItem="3dc-bg-uDd" firstAttribute="width" secondItem="3dc-bg-uDd" secondAttribute="height" multiplier="1:1" id="2nn-fh-Zrs"/>
                                         <constraint firstItem="ol1-la-1bR" firstAttribute="top" secondItem="FhX-3S-dp3" secondAttribute="top" identifier="top_padding" id="3fx-Dq-h23"/>
                                         <constraint firstItem="Y15-Af-foS" firstAttribute="width" secondItem="FhX-3S-dp3" secondAttribute="width" id="57H-8H-IY5"/>
                                         <constraint firstItem="ol1-la-1bR" firstAttribute="leading" secondItem="FhX-3S-dp3" secondAttribute="leading" identifier="left_padding" id="5xQ-7z-TEm"/>
-                                        <constraint firstItem="vY6-xA-nUz" firstAttribute="centerX" secondItem="3dc-bg-uDd" secondAttribute="centerX" id="8fk-Rm-ReY"/>
                                         <constraint firstAttribute="trailing" secondItem="iwe-rV-3Nl" secondAttribute="trailing" id="AHe-cy-2yI"/>
+                                        <constraint firstItem="vY6-xA-nUz" firstAttribute="top" secondItem="FhX-3S-dp3" secondAttribute="top" id="IRB-Ef-geD"/>
                                         <constraint firstAttribute="bottom" secondItem="Y15-Af-foS" secondAttribute="bottom" id="Wpl-f7-sp2"/>
                                         <constraint firstItem="iwe-rV-3Nl" firstAttribute="bottom" secondItem="FhX-3S-dp3" secondAttribute="bottom" id="Zmd-at-PdB"/>
                                         <constraint firstAttribute="bottom" secondItem="ol1-la-1bR" secondAttribute="bottom" identifier="bottom_padding" id="fM4-Kn-BHF"/>
@@ -1457,8 +1457,8 @@
                                         <constraint firstItem="3dc-bg-uDd" firstAttribute="top" secondItem="FhX-3S-dp3" secondAttribute="top" constant="5" id="jrk-cy-qeW"/>
                                         <constraint firstItem="3dc-bg-uDd" firstAttribute="width" secondItem="3dc-bg-uDd" secondAttribute="height" multiplier="1:1" id="npc-Oj-OhL"/>
                                         <constraint firstAttribute="trailing" secondItem="ol1-la-1bR" secondAttribute="trailing" identifier="right_padding" id="rqS-Z0-7Ga"/>
-                                        <constraint firstItem="vY6-xA-nUz" firstAttribute="width" secondItem="3dc-bg-uDd" secondAttribute="width" id="tXj-hm-f3D"/>
-                                        <constraint firstItem="vY6-xA-nUz" firstAttribute="centerY" secondItem="3dc-bg-uDd" secondAttribute="centerY" id="vnA-pg-6YG"/>
+                                        <constraint firstItem="vY6-xA-nUz" firstAttribute="width" secondItem="3dc-bg-uDd" secondAttribute="width" constant="10" id="tXj-hm-f3D"/>
+                                        <constraint firstAttribute="trailing" secondItem="vY6-xA-nUz" secondAttribute="trailing" id="vYb-dF-yaQ"/>
                                         <constraint firstAttribute="trailing" secondItem="3dc-bg-uDd" secondAttribute="trailing" constant="5" id="vxN-X7-LtC"/>
                                     </constraints>
                                 </collectionViewCellContentView>
