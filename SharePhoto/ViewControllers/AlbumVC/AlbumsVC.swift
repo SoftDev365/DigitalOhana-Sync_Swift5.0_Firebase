@@ -104,9 +104,19 @@ class AlbumsVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UI
             let asset = photos[0]
             
             //let identifier = asset.localIdentifier
-            let width = imgView.bounds.width*UIScreen.main.scale
-            let height = imgView.bounds.height*UIScreen.main.scale
+            let width = 256//imgView.bounds.width//*UIScreen.main.scale
+            let height = 256//imgView.bounds.height//*UIScreen.main.scale
             let size = CGSize(width:width, height:height)
+            
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .highQualityFormat
+            options.resizeMode = .fast
+            options.isSynchronous = false
+            options.isNetworkAccessAllowed = true
+
+            options.progressHandler = { (progress, error, stop, info) in
+                print("progress: \(progress)")
+            }
 
             PHCachingImageManager.default().requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: nil) { (image, info) in
                 if image != nil {
