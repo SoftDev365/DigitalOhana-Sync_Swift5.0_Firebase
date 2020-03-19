@@ -17,7 +17,7 @@ import HelpCrunchSDK
 
 private let reuseIdentifier = "FrameCell"
 
-class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout  {
+class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, QRCodeReaderVCDelegate  {
 
     enum ViewMode: Int {
        case location = 0
@@ -279,9 +279,39 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
     }
     
+    func registerRPIFrame(ID: String, title: String) {
+        GFSModule.registerRPIFrame(ID: ID, title: title) { (success) in
+            
+        }
+    }
+    
+    func inputFrameNameAndRegister(frameID: String) {
+        let alertController = UIAlertController(title: "Frame name", message: nil, preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Add", style: .default) { (_) in
+            if let txtField = alertController.textFields?.first, let text = txtField.text {
+                self.registerRPIFrame(ID: frameID, title: text)
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        alertController.addTextField { (textField) in
+            textField.text = ""
+            textField.placeholder = "Frame name"
+        }
+
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func onFoundRPIFrame(ID: String) {
+        inputFrameNameAndRegister(frameID: ID)
+    }
+    
     func gotoQRCodeReader() {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "QRCodeReaderVC") as? QRCodeReaderVC {
             vc.modalPresentationStyle = .fullScreen
+            vc.delegate = self
             self.present(vc, animated: true, completion: nil)
         }
     }

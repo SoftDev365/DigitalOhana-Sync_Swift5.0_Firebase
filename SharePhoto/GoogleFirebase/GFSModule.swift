@@ -703,4 +703,23 @@ class GFSModule: NSObject {
             }
         }
     }
+    
+    // update user display name
+    static func registerRPIFrame(ID: String, title: String, onCompleted: @escaping (Bool) -> ()) {
+        guard let userid = Global.userid else { return }
+
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(userid).collection("frames").addDocument(data: [
+            "ID": ID,
+            "title": title,
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false)
+            } else {
+                onCompleted(true)
+            }
+        }
+    }
 }

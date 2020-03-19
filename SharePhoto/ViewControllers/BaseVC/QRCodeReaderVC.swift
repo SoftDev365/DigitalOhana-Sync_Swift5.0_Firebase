@@ -9,11 +9,16 @@
 import AVFoundation
 import UIKit
 
+protocol QRCodeReaderVCDelegate: AnyObject {
+    func onFoundRPIFrame(ID: String)
+}
+
 class QRCodeReaderVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     
     @IBOutlet weak var btnExit: UIButton!
+    var delegate: QRCodeReaderVCDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,20 +86,29 @@ class QRCodeReaderVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
 
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        captureSession.stopRunning()
 
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            found(code: stringValue)
+            
+            print("QRCode: " + stringValue)
+            
+            if stringValue.hasPrefix(Global.rpi_device_qrcode_prefix) {
+                captureSession.stopRunning()
+                AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                dismiss(animated: true)
+                
+                found(code: stringValue)
+            }
         }
-
-        dismiss(animated: true)
     }
 
     func found(code: String) {
-        print(code)
+        let header = Global.rpi_device_qrcode_prefix
+        let deviceID = String(code.suffix(header.count))
+        
+        print("DeviceID: " + deviceID)
+        self.delegate?.onFoundRPIFrame(ID: deviceID)
     }
 
     override var prefersStatusBarHidden: Bool {

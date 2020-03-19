@@ -50,6 +50,7 @@ class SearchOption: NSObject {
 
 class Global: NSObject {
     static let sharedFolderName = "Ohana Sync"
+    static let rpi_device_qrcode_prefix = "OhanaSync RPI Device ID:"
     
     static var user: GIDGoogleUser?
     static var userid: String?
