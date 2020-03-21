@@ -17,7 +17,7 @@ import HelpCrunchSDK
 
 private let reuseIdentifier = "FrameCell"
 
-class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, QRCodeReaderVCDelegate  {
+class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, QRCodeReaderVCDelegate  {
 
     enum ViewMode: Int {
        case location = 0
@@ -25,7 +25,7 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
        case download = 2
     }
     
-    let frameCount = 0
+    var frames: [FSFrameInfo] = []
     var viewMode: ViewMode = .location
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -57,6 +57,19 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
         if self.viewMode != .location {
             NotificationCenter.default.addObserver(self, selector: #selector(numberOfUnreadMessagesChanged), name: NSNotification.Name.HCSUnreadMessages, object: nil)
+        }
+        
+        self.loadFrames()
+    }
+    
+    func loadFrames() {
+        self.showBusyDialog()
+        
+        GFSModule.getAllFrames { (success, result) in
+            self.hideBusyDialog()
+            
+            self.frames = result
+            self.collectionView.reloadData()
         }
     }
 
@@ -110,10 +123,12 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.viewMode == .location {
-            return frameCount+1
-        } else {
-            return frameCount+3
+        if self.viewMode == .upload { // upload from local or drive
+            return 2
+        } else if self.viewMode == .location { // location shows only frames
+            return frames.count + 1
+        } else { // download to all
+            return frames.count + 3
         }
     }
 
@@ -122,6 +137,8 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         guard let imgView = cell.viewWithTag(1) as? UIImageView else { return cell }
         guard let label = cell.viewWithTag(2) as? UILabel else { return cell }
+        
+        let frameCount = frames.count
 
         if self.viewMode != .location {
             if indexPath.row == 0 {
@@ -134,16 +151,18 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 imgView.image = UIImage(named: "loc_add")
                 label.text = "Add Frame"
             } else {
+                let index = indexPath.row - 2
+                label.text = self.frames[index].title
                 imgView.image = UIImage(named: "loc_frame")
-                label.text = "Frame"
             }
         } else {
             if indexPath.row == frameCount {
                 imgView.image = UIImage(named: "loc_add")
                 label.text = "Add Frame"
             } else {
+                let index = indexPath.row - 2
+                label.text = self.frames[index].title
                 imgView.image = UIImage(named: "loc_frame")
-                label.text = "Frame"
             }
         }
  
@@ -280,8 +299,12 @@ class LocationVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     func registerRPIFrame(ID: String, title: String) {
+        self.showBusyDialog()
+        
         GFSModule.registerRPIFrame(ID: ID, title: title) { (success) in
-            
+            self.hideBusyDialog()
+
+            self.loadFrames()
         }
     }
     

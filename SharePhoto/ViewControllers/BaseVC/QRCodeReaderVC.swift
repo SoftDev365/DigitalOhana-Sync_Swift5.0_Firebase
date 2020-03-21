@@ -105,7 +105,8 @@ class QRCodeReaderVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     func found(code: String) {
         let header = Global.rpi_device_qrcode_prefix
-        let deviceID = String(code.suffix(header.count))
+        let len = code.count - header.count
+        let deviceID = String(code.suffix(len))
         
         print("DeviceID: " + deviceID)
         self.delegate?.onFoundRPIFrame(ID: deviceID)

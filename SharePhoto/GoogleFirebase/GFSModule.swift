@@ -46,6 +46,11 @@ class NotificationField {
     static let count: String = "count"
 }
 
+class FrameField {
+    static let frameid: String = "ID"
+    static let title: String = "title"
+}
+
 enum SourceType : Int {
     case asset = 0
     case drive = 1
@@ -119,6 +124,19 @@ class FSNotificationInfo {
     }
 }
 
+class FSFrameInfo {
+    var frameid: String    // frameid, same as RPI device unique serial number
+    var title: String      // frame name
+
+    var reg_time: TimeInterval = 0     // register timestamp
+
+    init() {
+        self.frameid = ""
+        self.title = ""
+        self.reg_time = Date().timeIntervalSince1970
+    }
+}
+
 extension Dictionary {
     mutating func merge(dict: [Key: Value]){
         for (k, v) in dict {
@@ -187,7 +205,7 @@ class GFSModule: NSObject {
             UserField.originname: username,
             UserField.dateFormatIndex: 0,
             UserField.auto_upload: true,
-            UserField.allow: false
+            UserField.allow: true
         ]) { err in
             if let err = err {
                 debugPrint(err)
@@ -710,15 +728,46 @@ class GFSModule: NSObject {
 
         let db = Firestore.firestore()
         
-        db.collection("users").document(userid).collection("frames").addDocument(data: [
-            "ID": ID,
+        db.collection("users").document(userid).collection("frames").document(ID).setData([
             "title": title,
+            "reg_time": Date().timeIntervalSince1970,
         ]) { err in
             if let err = err {
                 debugPrint(err)
                 onCompleted(false)
             } else {
                 onCompleted(true)
+            }
+        }
+    }
+    
+    static func getAllFrames(onCompleted: @escaping (Bool, [FSFrameInfo]) -> ()) {
+        guard let userid = Global.userid else { return }
+        
+        let db = Firestore.firestore()
+        let refPhotos = db.collection("users").document(userid).collection("frames")
+
+        // order by uploaded date DESC
+        refPhotos.getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting photos documents:\(err)")
+                onCompleted(false, [])
+            } else {
+                var result = [FSFrameInfo]()
+
+                for document in querySnapshot!.documents {
+                    
+                    let frame = FSFrameInfo()
+                    let data = document.data()
+                    
+                    frame.frameid = document.documentID
+                    frame.title = data["title"] as! String
+                    frame.reg_time = data["reg_time"] as! TimeInterval
+                    
+                    result += [frame]
+                }
+                
+                onCompleted(true, result)
             }
         }
     }
