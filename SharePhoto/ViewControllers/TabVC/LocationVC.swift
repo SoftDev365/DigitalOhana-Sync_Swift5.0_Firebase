@@ -174,7 +174,7 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
             if indexPath.row == self.frames.count {
                 onChooseAddFrame()
             } else {
-                
+                gotoFrameView(index: indexPath.row-2)
             }
         } else if self.viewMode == .upload {
             if indexPath.row == 0 {
@@ -245,6 +245,16 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
         }))
         alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func gotoFrameView(index: Int) {
+        let frame = self.frames[index]
+        
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
+            vc.set(viewmode: .show)
+            vc.setFrameID(frame.frameid)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func downloadSelectedPhotosToLocal() {
