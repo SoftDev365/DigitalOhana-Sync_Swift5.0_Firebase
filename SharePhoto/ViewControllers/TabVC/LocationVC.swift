@@ -160,7 +160,7 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
                 imgView.image = UIImage(named: "loc_add")
                 label.text = "Add Frame"
             } else {
-                let index = indexPath.row - 2
+                let index = indexPath.row
                 label.text = self.frames[index].title
                 imgView.image = UIImage(named: "loc_frame")
             }
@@ -308,6 +308,15 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
         }
     }
     
+    func alertFrameAlreadyRegistered() {
+        let alertController = UIAlertController(title: "Frame already registered", message: nil, preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { (_) in
+        }
+
+        alertController.addAction(confirmAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     func inputFrameNameAndRegister(frameID: String) {
         let alertController = UIAlertController(title: "Frame name", message: nil, preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "Add", style: .default) { (_) in
@@ -327,8 +336,25 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func checkAlreadyRegistered(frameID: String) -> Bool {
+        for i in 0..<self.frames.count {
+            let frame = self.frames[i]
+            if frame.frameid.compare(frameID) == .orderedSame {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     func onFoundRPIFrame(ID: String) {
-        inputFrameNameAndRegister(frameID: ID)
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.25) {
+            if self.checkAlreadyRegistered(frameID: ID) {
+                self.alertFrameAlreadyRegistered()
+            } else {
+                self.inputFrameNameAndRegister(frameID: ID)
+            }
+        }
     }
     
     func gotoQRCodeReader() {
