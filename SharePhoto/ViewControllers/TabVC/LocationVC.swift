@@ -170,16 +170,28 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if self.viewMode != .location {
+        if self.viewMode == .location {
+            if indexPath.row == self.frames.count {
+                onChooseAddFrame()
+            } else {
+                
+            }
+        } else if self.viewMode == .upload {
             if indexPath.row == 0 {
                 onChooseLocal()
             } else if indexPath.row == 1 {
                 onChooseDrive()
-            } else {
-                onChooseAddFrame()
             }
-        } else {
-            onChooseAddFrame()
+        } else if self.viewMode == .download {
+            if indexPath.row == 0 {
+                onChooseLocal()
+            } else if indexPath.row == 1 {
+                onChooseDrive()
+            } else if indexPath.row == self.frames.count+2 {
+                onChooseAddFrame()
+            } else {
+                confirmDownloadToFrame(index: indexPath.row-2)
+            }
         }
     }
     
@@ -200,6 +212,39 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
         collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10.0
+    }
+    
+    func downloadSelectedPhotosToFrame(index: Int) {
+        self.activityView.showActivityIndicator(self.view, withTitle: "Downloading...")
+        
+        let frame = self.frames[index]
+        SyncModule.downloadSelectedPhotosToFrame(ID: frame.frameid) { (nDownloaded, nSkipped, nFailed) in
+            self.activityView.hideActivitiIndicator()
+            
+            if nDownloaded > 0 {
+                Global.needRefreshLocal = true
+            }
+            Global.needDoneSelectionAtHome = true
+            
+            let strMsg = Global.getProcessResultMsg(titles: ["Downloaded", "Skipped", "Failed"], counts: [nDownloaded, nSkipped, nFailed])
+            let alert = UIAlertController(title: strMsg, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func confirmDownloadToFrame(index: Int) {
+        let frame = self.frames[index]
+        
+        let alert = UIAlertController(title: "Download to " + frame.title + "?", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            self.downloadSelectedPhotosToFrame(index: index)
+        }))
+        alert.addAction(UIAlertAction.init(title: "No", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func downloadSelectedPhotosToLocal() {
@@ -225,22 +270,10 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func onChooseLocal() {
         if self.viewMode == .location {
-            /*
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
-                vc.set(viewmode: .show)
-                vc.selectDefaultPhoneAlbum()
-                navigationController?.pushViewController(vc, animated: true)
-            }*/
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlbumsVC") as? AlbumsVC {
                 navigationController?.pushViewController(vc, animated: true)
             }
         } else if self.viewMode == .upload {
-            /*
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
-                vc.set(viewmode: .upload)
-                vc.selectDefaultPhoneAlbum()
-                navigationController?.pushViewController(vc, animated: true)
-            }*/
             if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AlbumsVC") as? AlbumsVC {
                 navigationController?.pushViewController(vc, animated: true)
             }
@@ -343,7 +376,7 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
                 return true
             }
         }
-        
+
         return false
     }
     

@@ -129,4 +129,22 @@ class GFSModuleSync: NSObject {
 
         return bResult
     }
+    
+    // add photo to frame
+    static func addPhotoToFrame(ID: String, photoID:String) -> Bool {
+        var bResult: Bool = false
+        var bProcessing = true
+        
+        GFSModule.addPhotoToFrame(ID:ID, photoID:photoID) { (success) in
+            bResult = success
+            bProcessing = false
+        }
+
+        // block while processing
+        while bProcessing {
+            Thread.sleep(forTimeInterval: 0.005)
+        }
+
+        return bResult
+    }
 }

@@ -548,4 +548,32 @@ class SyncModule: NSObject {
         }
     }
 
+    // download batch selected photos from cloud to frame (result: download, skip, fail)
+    static func downloadSelectedPhotosToFrame(ID:String, onCompleted: @escaping(Int, Int, Int)->()) {
+
+        var nDownloaded = 0
+        let nSkipped = 0
+        var nFailed = 0
+        
+        guard let photoInfos = Global.selectedCloudPhotos else {
+            onCompleted(0, 0, 0)
+            return
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            for photoInfo in photoInfos {
+                let fsID = photoInfo.id
+
+                if GFSModuleSync.addPhotoToFrame(ID: ID, photoID: fsID) == true {
+                    nDownloaded += 1
+                } else {
+                    nFailed += 1
+                }
+            }
+            
+            DispatchQueue.main.async {
+                onCompleted(nDownloaded, nSkipped, nFailed)
+            }
+        }
+    }
 }

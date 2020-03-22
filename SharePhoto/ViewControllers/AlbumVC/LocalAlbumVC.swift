@@ -27,7 +27,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     enum SourceType: Int {
         case local = 0
         case drive = 1
-        case raspberrypi = 2
+        case frame = 2
     }
 
     var viewMode: ViewMode = .show
@@ -44,6 +44,9 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var selectedDrivePhotos: [GTLRDrive_File]?
     var backupSelection: [Int] = []
     
+    var frameID: String?
+    var photoList: [FSFramePhotoInfo]?
+
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var btnNavRight: UIBarButtonItem!
     @IBOutlet weak var btnToolSelectAll: UIBarButtonItem!
@@ -86,6 +89,11 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         //self.phoneAlbum = album
     }
     
+    open func setFrameID(_ frameID: String) {
+        self.sourceType = .frame
+        self.frameID = frameID
+    }
+    
     /*
     open func set(sourceType: SourceType) {
         self.sourceType = sourceType
@@ -110,7 +118,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         } else if self.sourceType == .drive {
             self.navItem.title = "Drive"
             self.loadDriveFileList()
-        } else if self.sourceType == .raspberrypi {
+        } else if self.sourceType == .frame {
             
         }
         
@@ -122,8 +130,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             self.fetchAlbumPhotos()
         } else if self.sourceType == .drive {
             self.loadDriveFileList()
-        } else if self.sourceType == .raspberrypi {
-            
+        } else if self.sourceType == .frame {
+            self.loadFramePhotoList()
         }
     }
     
@@ -244,6 +252,19 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         }
     }
     
+    func loadFramePhotoList() {
+        self.refreshControl.endRefreshing()
+        activityView.showActivityIndicator(self.view, withTitle: "Loading...")
+
+        GFSModule.getAllPhotosOfFrame(ID: self.frameID!) { (success, result) in
+            self.photoList = result
+            self.collectionView.reloadData()
+            self.hideToolBar(false)
+
+            self.activityView.hideActivitiIndicator()
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -294,7 +315,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         } else if self.sourceType == .drive {
             return self.drivePhotos?.count ?? 0
         } else {
-            return 0
+            return self.photoList?.count ?? 0
         }
     }
 
@@ -364,6 +385,16 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
         return cell
     }
+    
+    func getFrameCell(_ cell: PhotoCell, indexPath: IndexPath) -> UICollectionViewCell {
+        guard let photoList = self.photoList else { return cell }
+
+        let photo = photoList[indexPath.row]
+        cell.setCloudFile(photo.id)
+        cell.setSelectable(false)
+
+        return cell
+    }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
@@ -373,7 +404,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         } else if self.sourceType == .drive {
             return getDriveCell(cell, indexPath: indexPath)
         } else {
-            return cell
+            return getFrameCell(cell, indexPath: indexPath)
         }
     }
 

@@ -51,6 +51,11 @@ class FrameField {
     static let title: String = "title"
 }
 
+class FramePhotoField {
+    static let regtime: String = "regtime"
+    static let userid: String = "userid"
+}
+
 enum SourceType : Int {
     case asset = 0
     case drive = 1
@@ -137,6 +142,18 @@ class FSFrameInfo {
     }
 }
 
+class FSFramePhotoInfo {
+    var id: String
+    
+    var userid: String                  // owner id, users collection on firestore db
+    var regtime: TimeInterval = 0       // photo registered time
+    
+    init() {
+        self.id = ""
+        self.userid = Global.userid!
+    }
+}
+
 extension Dictionary {
     mutating func merge(dict: [Key: Value]){
         for (k, v) in dict {
@@ -146,6 +163,10 @@ extension Dictionary {
 }
 
 class GFSModule: NSObject {
+    
+    static func getCollectionNameOfFrame(ID: String) -> String {
+        return "frame_" + ID;
+    }
 
     static func fetchUsers() {
         let db = Firestore.firestore()
@@ -767,6 +788,67 @@ class GFSModule: NSObject {
                     result += [frame]
                 }
                 
+                onCompleted(true, result)
+            }
+        }
+    }
+    
+    // add photo to frame
+    static func addPhotoToFrame(ID: String, photoID:String, onCompleted: @escaping (Bool) -> ()) {
+        guard let userid = Global.userid else { return }
+
+        let frameCollection = GFSModule.getCollectionNameOfFrame(ID: ID)
+        let db = Firestore.firestore()
+        
+        db.collection(frameCollection).document(photoID).setData([
+            FramePhotoField.regtime: Date().timeIntervalSince1970,
+            FramePhotoField.userid: userid,
+        ]) { err in
+            if let err = err {
+                debugPrint(err)
+                onCompleted(false)
+            } else {
+                onCompleted(true)
+            }
+        }
+    }
+    
+    static func convertToFramePhotoInfo(document: QueryDocumentSnapshot) -> FSFramePhotoInfo {
+        let photoInfo = FSFramePhotoInfo()
+        
+        let data = document.data()
+        
+        photoInfo.id = document.documentID
+        photoInfo.userid = (data[PhotoField.userid] as! String)
+        
+        let regtime = data[FramePhotoField.regtime]
+        if regtime is TimeInterval {
+            photoInfo.regtime = regtime as! TimeInterval
+        } else {
+            photoInfo.regtime = Date().timeIntervalSince1970
+        }
+        
+        return photoInfo
+    }
+    
+    static func getAllPhotosOfFrame(ID: String, onCompleted: @escaping (Bool, [FSFramePhotoInfo]) -> ()) {
+        let db = Firestore.firestore()
+        let frameCollection = GFSModule.getCollectionNameOfFrame(ID: ID)
+        let refPhotos = db.collection(frameCollection)
+
+        // order by uploaded date DESC
+        refPhotos.order(by: FramePhotoField.regtime, descending: true).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting photos documents:\(err)")
+                onCompleted(false, [])
+            } else {
+                var result = [FSFramePhotoInfo]()
+
+                for document in querySnapshot!.documents {
+                    let info = self.convertToFramePhotoInfo(document: document)
+                    result += [info]
+                }
+
                 onCompleted(true, result)
             }
         }
