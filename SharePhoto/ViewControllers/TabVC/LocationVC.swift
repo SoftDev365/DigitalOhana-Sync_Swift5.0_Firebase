@@ -174,7 +174,7 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
             if indexPath.row == self.frames.count {
                 onChooseAddFrame()
             } else {
-                gotoFrameView(index: indexPath.row-2)
+                gotoFrameView(index: indexPath.row)
             }
         } else if self.viewMode == .upload {
             if indexPath.row == 0 {
@@ -252,7 +252,7 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
         
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocalAlbum") as? LocalAlbumVC {
             vc.set(viewmode: .show)
-            vc.setFrameID(frame.frameid)
+            vc.setFrameID(frame.frameid, withTitle:frame.title)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

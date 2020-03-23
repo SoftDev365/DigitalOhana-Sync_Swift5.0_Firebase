@@ -45,7 +45,8 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     var backupSelection: [Int] = []
     
     var frameID: String?
-    var photoList: [FSFramePhotoInfo]?
+    var frameTitle: String = "Frame"
+    var framePhotos: [FSFramePhotoInfo]?
 
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var btnNavRight: UIBarButtonItem!
@@ -89,9 +90,10 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         //self.phoneAlbum = album
     }
     
-    open func setFrameID(_ frameID: String) {
+    open func setFrameID(_ frameID: String, withTitle title:String) {
         self.sourceType = .frame
         self.frameID = frameID
+        self.frameTitle = title
     }
     
     /*
@@ -113,15 +115,16 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         self.collectionView.addSubview(refreshControl) // not required when using UITableViewController
         
         if self.sourceType == .local {
-            //self.navItem.title = "Local"
-            self.accessToPHLibrary()
+            self.navItem.title = "Phone"
+            self.fetchAlbumPhotos()
         } else if self.sourceType == .drive {
             self.navItem.title = "Drive"
             self.loadDriveFileList()
         } else if self.sourceType == .frame {
-            
+            self.navItem.title = self.frameTitle
+            self.loadFramePhotoList()
         }
-        
+
         self.navigationItem.rightBarButtonItem = nil
     }
     
@@ -257,7 +260,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         activityView.showActivityIndicator(self.view, withTitle: "Loading...")
 
         GFSModule.getAllPhotosOfFrame(ID: self.frameID!) { (success, result) in
-            self.photoList = result
+            self.framePhotos = result
             self.collectionView.reloadData()
             self.hideToolBar(false)
 
@@ -315,7 +318,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
         } else if self.sourceType == .drive {
             return self.drivePhotos?.count ?? 0
         } else {
-            return self.photoList?.count ?? 0
+            return self.framePhotos?.count ?? 0
         }
     }
 
@@ -387,7 +390,7 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     func getFrameCell(_ cell: PhotoCell, indexPath: IndexPath) -> UICollectionViewCell {
-        guard let photoList = self.photoList else { return cell }
+        guard let photoList = self.framePhotos else { return cell }
 
         let photo = photoList[indexPath.row]
         cell.setCloudFile(photo.id)
@@ -415,10 +418,13 @@ class LocalAlbumVC: UICollectionViewController, UICollectionViewDelegateFlowLayo
             
             hideTabBar()
             hideToolBar(false)
+            
             if self.sourceType == .local {
                 vc.setAlbumPhotos(self.albumPhotos!, page: indexPath.row)
             } else if self.sourceType == .drive {
                 vc.setDrivePhotos(self.drivePhotos!, page: indexPath.row)
+            } else {
+                vc.setFramePhotos(self.framePhotos!, page: indexPath.row)
             }
 
             navigationController?.pushViewController(vc, animated: true)

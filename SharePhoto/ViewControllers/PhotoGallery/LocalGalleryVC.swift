@@ -15,12 +15,13 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
     enum SourceType: Int {
         case local = 0
         case drive = 1
-        case raspberrypi = 2
+        case frame = 2
     }
 
     var sourceType: SourceType = .local
     var albumPhotos: [PHAsset]? = nil
     var drivePhotos: [GTLRDrive_File]?
+    var framePhotos: [FSFramePhotoInfo]? = nil
     
     var imgViewList: [ImageZoomView]?
     var curPage: Int = 0
@@ -50,6 +51,12 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         self.drivePhotos = photos
         self.curPage = page
         self.sourceType = .drive
+    }
+    
+    func setFramePhotos(_ photos: [FSFramePhotoInfo], page: Int) {
+        self.framePhotos = photos
+        self.curPage = page
+        self.sourceType = .frame
     }
 
     override func viewDidLoad() {
@@ -91,21 +98,24 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
     func getPhotoCount() -> Int {
         if self.sourceType == .local {
             return self.albumPhotos?.count ?? 0
-        } else {
+        } else if self.sourceType == .drive {
             return self.drivePhotos?.count ?? 0
+        } else {
+            return self.framePhotos?.count ?? 0
         }
     }
     
     func createPhotoView(index: Int) -> ImageZoomView {
         if self.sourceType == .local {
             return ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), asset: self.albumPhotos![index])
-        } else {
+        } else if self.sourceType == .drive {
             return ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), driveFile: self.drivePhotos![index])
+        } else {
+            return ImageZoomView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), cloudID: self.framePhotos![index].id)
         }
     }
     
     func initContentImageViews() {
-        
         let nCount = getPhotoCount()
         self.imgViewList = [ImageZoomView]()
 
@@ -160,7 +170,7 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
         let w = size.width
         let h = size.height
         
-        for i in 0...(imgViewList.count-1) {
+        for i in 0..<imgViewList.count {
             let item = imgViewList[i]
             let rect = CGRect(x: w*CGFloat(i), y: 0, width: w, height: h)
             item.frame = rect
@@ -187,7 +197,7 @@ class LocalGalleryVC: UIViewController, UIScrollViewDelegate {
 
         curPage = (Int)(self.scrView.contentOffset.x / self.scrView.bounds.width)
         
-        for i in 0...(imgViewList.count-1) {
+        for i in 0..<imgViewList.count {
             let item = imgViewList[i]
             
             if i != curPage {

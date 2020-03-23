@@ -81,6 +81,16 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
         self.bLoading = false
     }
     
+    init(frame: CGRect, cloudID: String) {
+        super.init(frame: frame)
+
+        initControls()
+        
+        self.sourceType = .cloud
+        self.sourceCloudID = cloudID
+        self.bLoading = false
+    }
+    
     func loadLocalPhoto() {
         guard let asset = self.sourceAsset else {
             self.bLoading = false
@@ -239,7 +249,6 @@ class ImageZoomView: UIScrollView, UIScrollViewDelegate {
     }
     
     func recalcZoomScale() {
-
         guard let imgView = self.imgView else { return }
         guard let image = imgView.image else { return }
 
