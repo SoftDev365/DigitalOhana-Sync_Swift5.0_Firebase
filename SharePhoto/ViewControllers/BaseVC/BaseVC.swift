@@ -20,17 +20,23 @@ class BaseVC: UIViewController {
     }
     
     func showBusyDialog() {
-        self.hud.label.text = ""
-        self.hud.show(animated: true)
+        DispatchQueue.main.async {
+            self.hud.label.text = ""
+            self.hud.show(animated: true)
+        }
     }
     
     func showBusyDialog(_ title: String) {
-        self.hud.label.text = title
-        self.hud.show(animated: true)
+        DispatchQueue.main.async {
+            self.hud.label.text = title
+            self.hud.show(animated: true)
+        }
     }
     
     func hideBusyDialog() {
-        self.hud.hide(animated: true)
+        DispatchQueue.main.async {
+            self.hud.hide(animated: true)
+        }
     }
 
 }

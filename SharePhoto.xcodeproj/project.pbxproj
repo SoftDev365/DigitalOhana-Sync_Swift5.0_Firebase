@@ -83,6 +83,9 @@
 		84F6A4AF23DFDE64008CDF7B /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6A4AE23DFDE64008CDF7B /* DatePickerVC.swift */; };
 		84F90E8C23B16A8B00A5202A /* GFSModuleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F90E8B23B16A8B00A5202A /* GFSModuleSync.swift */; };
 		982CA3432B9D7D26CDCAC42C /* Pods_SharePhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */; };
+		D27422F6247826FA005B2BBC /* OrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27422F5247826FA005B2BBC /* OrderVC.swift */; };
+		D27422F824782F91005B2BBC /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27422F724782F91005B2BBC /* InputCell.swift */; };
+		D2F25B112479A878000EF761 /* OrderItemListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F25B102479A878000EF761 /* OrderItemListVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +180,9 @@
 		A04DAABF438DDC1E4E24BAA0 /* Pods_Ohana_Sync.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ohana_Sync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5440FAA37D46DEBA833062B /* Pods_SharePhoto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SharePhoto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0CF714DA850A4111CE21596 /* Pods-Ohana Sync.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ohana Sync.release.xcconfig"; path = "Target Support Files/Pods-Ohana Sync/Pods-Ohana Sync.release.xcconfig"; sourceTree = "<group>"; };
+		D27422F5247826FA005B2BBC /* OrderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderVC.swift; sourceTree = "<group>"; };
+		D27422F724782F91005B2BBC /* InputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
+		D2F25B102479A878000EF761 /* OrderItemListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItemListVC.swift; sourceTree = "<group>"; };
 		F42887ECE70F9335ECF15268 /* Pods-Ohana Sync.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ohana Sync.debug.xcconfig"; path = "Target Support Files/Pods-Ohana Sync/Pods-Ohana Sync.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -348,6 +354,7 @@
 				84D7CE3E238B3DAA00C15CF6 /* AlbumVC */,
 				84A1125723EAFD3700F81BC6 /* Setting */,
 				84A1125A23EAFEB400F81BC6 /* Search */,
+				D27422F4247826D6005B2BBC /* Order */,
 				84AA678723AB29E2001FE9FC /* TabVC */,
 				849A974223822F8D003E985E /* NavigationRootVC.swift */,
 				84BE63C523717A45002F2C66 /* SignInViewController.swift */,
@@ -410,6 +417,16 @@
 				84BE2AAD2390B8A000F1BE53 /* SyncModule.swift */,
 			);
 			path = GoogleFirebase;
+			sourceTree = "<group>";
+		};
+		D27422F4247826D6005B2BBC /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				D27422F5247826FA005B2BBC /* OrderVC.swift */,
+				D2F25B102479A878000EF761 /* OrderItemListVC.swift */,
+				D27422F724782F91005B2BBC /* InputCell.swift */,
+			);
+			path = Order;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -657,8 +674,10 @@
 				84688AD823A9869500D1D9E1 /* HomeVC.swift in Sources */,
 				843DF2DD2373CA9F00F856ED /* FileTableViewCell.swift in Sources */,
 				84BE2AAE2390B8A000F1BE53 /* SyncModule.swift in Sources */,
+				D27422F6247826FA005B2BBC /* OrderVC.swift in Sources */,
 				84A28E44238C85F20017DD06 /* PHModule.swift in Sources */,
 				849BCE4F23E13DC200180595 /* NotificationsVC.swift in Sources */,
+				D2F25B112479A878000EF761 /* OrderItemListVC.swift in Sources */,
 				842568A1237D4C1100F4CD7A /* GSGalleryVC.swift in Sources */,
 				841362FB23D992BC00D38F05 /* BadgeButtonItem.swift in Sources */,
 				840EEE002374215900361FB9 /* Alerts.swift in Sources */,
@@ -677,6 +696,7 @@
 				84D85D482384A1710042C4DF /* GDBModule.swift in Sources */,
 				840EEE022374957000361FB9 /* ActivityView.swift in Sources */,
 				849E45EC23AF192D000FCC76 /* PHModuleSync.swift in Sources */,
+				D27422F824782F91005B2BBC /* InputCell.swift in Sources */,
 				840A34C82397118500A14491 /* Global.swift in Sources */,
 				841362FF23D9AA9A00D38F05 /* SettingCell.swift in Sources */,
 				84A0F89123AA0F5300DA7BF6 /* LocationVC.swift in Sources */,

@@ -21,7 +21,7 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
 
     enum ViewMode: Int {
        case location = 0
-       case upload = 1
+       case upload   = 1
        case download = 2
     }
     
@@ -408,6 +408,15 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
         }
     }
     
+    func gotoOrder() {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrderVC") as? OrderVC {
+            vc.modalPresentationStyle = .fullScreen
+//            vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: true)
+//            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     func onChooseAddFrame() {
         let alert = UIAlertController(title: "Register or order a frame?", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Register", style: .default, handler: { _ in
@@ -415,7 +424,7 @@ class LocationVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, 
         }))
         
         alert.addAction(UIAlertAction.init(title: "Order", style: .default, handler: { _ in
-            //self.gotoQRCodeReader()
+            self.gotoOrder()
         }))
         
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .default, handler: nil))

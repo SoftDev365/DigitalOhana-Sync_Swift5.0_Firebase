@@ -23,6 +23,8 @@ class GeneralVC: UIViewController, UITableViewDataSource, UITableViewDelegate, S
         
         self.title = "General"
         self.view.addSubview(hud)
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -66,6 +66,9 @@ class Global: NSObject {
     static var time_format_index: Int = 0   // time format index (settings)
     static var time_format: String?         // time format string
     
+    static var order_screen_size_list: [String] = ["3.5", "7"]
+    static var order_storage_capacity_list: [String] = ["32GB", "64GB", "128GB", "256GB"]
+
     static var bAutoUpload: Bool = true  // Setting (Auto Upload enabled)
     static var bNeedToSynchronize: Bool = false // check synchronizing
 
